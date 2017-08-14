@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="base" basedir="." default="deploy" xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <property name="workingCopy" value="deploy/working" />
+    <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
+
+    <condition property="have-node" else="false">
+        <and>
+            <available file="${basedir}/../node_modules" type="dir"/>
+        </and>
+    </condition>
+
+    <target name="core-modification-warning">
+        <echo>WARNING: A core cartridge has been modified. Typically this is not correct and the modifications should be made in a site or organization cartridge.</echo>
+    </target>
+
+    <target name="check-node" unless="${have-node}">
+        <echo level="info">The node_modules directory was not found.</echo>
+        <echo level="info">Please ensure the node modules are installed in the following directory:</echo>
+        <echo level="info">- ${basedir}</echo>
+        <echo level="info">Using the following command:</echo>
+        <echo level="info">&gt; npm install</echo>
+        <echo level="info">Users on Mac or Linux may need to use sudo:</echo>
+        <echo level="info">&gt; sudo npm install</echo>
+        <fail message="The directory 'node_modules' is missing."/>
+    </target>
+
+    <target name="deploy">
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --deploy
+                --basedir="${basedir}"
+                --buildVersion="${buildVersion}"
+                --cartridgeSuffix="${cartridgeSuffix}"
+                --user="${user}"
+                --password="${password}"
+                --twoFactor="${twoFactor}"
+                --twoFactorp12="${twoFactorp12}"
+                --twoFactorPassword="${twoFactorPassword}"
+                --instances="${instances}"
+                --instanceRoot="${instanceRoot}"
+                --activationInstances="${activationInstances}"
+                --overwriteRelease="${overwriteRelease}"
+                --revisionCartridgeName="${revisionCartridgeName}"
+            '/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value='export PATH=/usr/local/bin:$PATH;
+                cd "${basedir}";
+                gulp deploy
+                --basedir="${basedir}"
+                --buildVersion="${buildVersion}"
+                --cartridgeSuffix="${cartridgeSuffix}"
+                --user="${user}"
+                --password="${password}"
+                --twoFactor="${twoFactor}"
+                --twoFactorp12="${twoFactorp12}"
+                --twoFactorPassword="${twoFactorPassword}"
+                --instances="${instances}"
+                --instanceRoot="${instanceRoot}"
+                --activationInstances="${activationInstances}"
+                --overwriteRelease="${overwriteRelease}"
+                --revisionCartridgeName="${revisionCartridgeName}"
+            '/>
+        </exec>
+        <echo level="info">Deployment done!</echo>
+    </target>
+
+    <target name="css" depends="check-node" if="${have-node}">
+        <echo level="info">Running CSS build task for ${os.name} in ${basedir}</echo>
+        <echo level="info">Sass Linter running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --lint css'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --lint css"/>
+        </exec>
+        <echo level="info">Sass Linter Successful</echo>
+        <echo level="info">
+        </echo>
+        <echo level="info">Sass Compiler running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --compile css'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --compile css"/>
+        </exec>
+        <echo level="info">Styles build done!</echo>
+    </target>
+
+    <target name="js" depends="check-node" if="${have-node}">
+        <echo level="info">JavaScript Linter running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --lint js'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --lint js"/>
+        </exec>
+        <echo level="info">JavaScript Linter Successful</echo>
+        <echo level="info">
+        </echo>
+        <echo level="info">JavaScript Compiler running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --compile js'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --compile js"/>
+        </exec>
+        <echo level="info">Client javascript build done!</echo>
+    </target>
+
+</project>
+
