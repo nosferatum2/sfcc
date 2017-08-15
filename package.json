@@ -13,7 +13,7 @@
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
-    "compile:scss": "node build_tools/ --compile css",
+    "compile:scss": "node build_tools/build --compile css",
     "compile:js": "node build_tools/build --compile js",
     "compile:fonts": "node bin/Makefile compileFonts",
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
