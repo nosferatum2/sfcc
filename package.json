@@ -30,8 +30,7 @@
   "contributors": [
     "Ryan Walter <rwalter@lyonscg.com>"
   ],
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/demandware/storefront-base#readme",
+  "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
   "devDependencies": {
     "@tridnguyen/config": "^2.3.1",
     "autoprefixer": "^6.7.6",
