@@ -24,12 +24,11 @@ const optionator = require('optionator')({
     }, {
         option: 'upload',
         type: '[path::String]',
-        description: 'Upload a file to a sandbox. Requires dw.json file at the root directory.'
+        description: 'Upload a file to a sandbox. Requires dw.json file in the build_tools directory.'
     }, {
         option: 'upload-cartridge',
         type: 'Boolean',
-        description: 'Upload a cartridge. Requires dw.json file at the root directory.',
-        default: 'true'
+        description: 'Upload a cartridge. Requires dw.json file in the build_tools directory.'
     }, {
         option: 'test',
         type: '[path::String]',
@@ -91,7 +90,8 @@ const optionator = require('optionator')({
         option: 'skip-upload',
         type: 'Boolean',
         description: 'Skips the upload step',
-        required: false
+        required: false,
+        default: false
     }, {
         option: 'root',
         type: 'String',
@@ -117,7 +117,8 @@ const optionator = require('optionator')({
         option: 'self-signed',
         type: 'Boolean',
         description: 'Stops the check for a signature on the SSL cert.',
-        required: false
+        required: false,
+        default: false
     }]
 });
 
@@ -213,7 +214,6 @@ if (options.uploadCartridge) {
 
     const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
 
-    console.log(dwuploadScript);
     shell.exec(dwuploadScript);
 
     shell.rm(path.join(cwd, '../cartridges/dw.json'));
@@ -222,9 +222,9 @@ if (options.uploadCartridge) {
 
 // run unittests
 if (options.test) {
-    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
-        path.resolve(cwd, './node_modules/.bin/_mocha') :
-        path.resolve(pwd, './node_modules/.bin/_mocha');
+    const mocha = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/_mocha')) ?
+        path.resolve(cwd, '../node_modules/.bin/_mocha') :
+        path.resolve(pwd, '../node_modules/.bin/_mocha');
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
@@ -237,18 +237,16 @@ if (options.test) {
 
 // run unittest coverage
 if (options.cover) {
-    const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
-        path.resolve(cwd, './node_modules/.bin/istanbul') :
-        path.resolve(pwd, './node_modules/.bin/istanbul');
-    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
-        path.resolve(cwd, './node_modules/.bin/_mocha') :
-        path.resolve(pwd, './node_modules/.bin/_mocha');
+    const istanbul = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/istanbul')) ?
+        path.resolve(cwd, '../node_modules/.bin/istanbul') :
+        path.resolve(pwd, '../node_modules/.bin/istanbul');
+    const mocha = '../node_modules/mocha/bin/_mocha';
 
     const subprocess = spawn(
         istanbul +
         ' cover ' +
         mocha +
-        ' -- -R spec test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd });
+        ' -- -R spec ../test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd });
 
     subprocess.on('exit', code => {
         process.exit(code);

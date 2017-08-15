@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="base" basedir="." default="deploy" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="builders" basedir="." default="deploy" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
     <property name="workingCopy" value="deploy/working" />
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
@@ -25,46 +25,39 @@
         <fail message="The directory 'node_modules' is missing."/>
     </target>
 
-    <target name="deploy">
+    <target name="deploy" depends="cover,css,js,upload">
+        <echo level="info">Deployment complete!</echo>
+    </target>
+
+    <target name="upload">
+        <echo level="info">Upload in progress...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='node build --deploy
-                --basedir="${basedir}"
-                --buildVersion="${buildVersion}"
-                --cartridgeSuffix="${cartridgeSuffix}"
-                --user="${user}"
-                --password="${password}"
-                --twoFactor="${twoFactor}"
-                --twoFactorp12="${twoFactorp12}"
-                --twoFactorPassword="${twoFactorPassword}"
-                --instances="${instances}"
-                --instanceRoot="${instanceRoot}"
-                --activationInstances="${activationInstances}"
-                --overwriteRelease="${overwriteRelease}"
-                --revisionCartridgeName="${revisionCartridgeName}"
-            '/>
+            <arg line='node build --upload-cartridge' />
+            <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
+            <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
+            <arg value='--username="${user}"' if:set="user" />
+            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
+            <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
+            <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
+            <arg value='--hostname="${hostname}"' if:set='hostname' />
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value='export PATH=/usr/local/bin:$PATH;
-                cd "${basedir}";
-                gulp deploy
-                --basedir="${basedir}"
-                --buildVersion="${buildVersion}"
-                --cartridgeSuffix="${cartridgeSuffix}"
-                --user="${user}"
-                --password="${password}"
-                --twoFactor="${twoFactor}"
-                --twoFactorp12="${twoFactorp12}"
-                --twoFactorPassword="${twoFactorPassword}"
-                --instances="${instances}"
-                --instanceRoot="${instanceRoot}"
-                --activationInstances="${activationInstances}"
-                --overwriteRelease="${overwriteRelease}"
-                --revisionCartridgeName="${revisionCartridgeName}"
-            '/>
+            <arg line='export PATH=/usr/local/bin:$PATH;' />
+            <arg line='cd "${basedir}";' />
+            <arg line='node build --upload-cartridge' />
+            <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
+            <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
+            <arg value='--username="${user}"' if:set="user" />
+            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
+            <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
+            <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
+            <arg value='--hostname="${hostname}"' if:set='hostname' />
         </exec>
-        <echo level="info">Deployment done!</echo>
+        <echo level="info">Upload complete!</echo>
     </target>
 
     <target name="css" depends="check-node" if="${have-node}">
@@ -116,6 +109,17 @@
             <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --compile js"/>
         </exec>
         <echo level="info">Client javascript build done!</echo>
+    </target>
+
+    <target name="cover" depends="check-node" if="${have-node}">
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --cover'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --cover"/>
+        </exec>
     </target>
 
 </project>
