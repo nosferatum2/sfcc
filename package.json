@@ -1,25 +1,25 @@
 {
-  "name": "LYONSCG MFRA",
+  "name": "LYONSCG-MFRA",
   "version": "0.0.22",
   "description": "LYONSCG Mobile First Reference Application",
   "engines": {
     "node": ">=4.0"
   },
   "scripts": {
-    "test": "sgmf-scripts --test test/unit/**/*.js",
+    "test": "node build_tools/build --test test/unit/**/*.js",
     "test:appium": "node bin/Makefile functional -- appium -- ",
-    "cover": "sgmf-scripts --cover",
+    "cover": "node build_tools/build --cover",
     "test:integration": "node bin/Makefile integration -- ",
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
     "compile:scss": "node build_tools/ --compile css",
-    "compile:js": "sgmf-scripts --compile js",
+    "compile:js": "node build_tools/build --compile js",
     "compile:fonts": "node bin/Makefile compileFonts",
-    "lint": "sgmf-scripts --lint css && sgmf-scripts --lint js",
-    "upload": "sgmf-scripts --upload",
-    "uploadCartridge": "sgmf-scripts --uploadCartridge app_storefront_base && sgmf-scripts --uploadCartridge modules",
-    "watch": "sgmf-scripts --watch",
+    "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
+    "upload": "node build_tools/build --upload",
+    "uploadCartridge": "node build_tools/build --upload-cartridge --cartridge app_storefront_base && node build_tools/build --upload-cartridge --cartridge modules",
+    "watch": "node build_tools/build --watch",
     "release": "node bin/Makefile release --"
   },
   "repository": {
