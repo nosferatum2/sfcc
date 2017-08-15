@@ -16,9 +16,9 @@ module.exports = (cartridgeName, cwd) => {
     shell.ShellString(JSON.stringify(dw, null, 2)).to(path.join(cwd, 'dw.json'));
 
     // create folder structure
-    shell.mkdir(path.join(cwd, 'cartridges'));
-    shell.mkdir(path.join(cwd, 'cartridges', cartridgeName));
-    const cartridgePath = path.join(cwd, 'cartridges', cartridgeName, 'cartridge');
+    shell.mkdir(path.join(cwd, '../cartridges'));
+    shell.mkdir(path.join(cwd, '../cartridges', cartridgeName));
+    const cartridgePath = path.join(cwd, '../cartridges', cartridgeName, 'cartridge');
     shell.mkdir(cartridgePath);
     shell.mkdir(path.join(cartridgePath, 'controllers'));
     shell.mkdir(path.join(cartridgePath, 'models'));
@@ -34,7 +34,7 @@ module.exports = (cartridgeName, cwd) => {
     // create .project file for cartrdige
 
     shell.ShellString(dotProject(cartridgeName))
-        .to(path.join(cwd, 'cartridges', cartridgeName, '.project'));
+        .to(path.join(cwd, '../cartridges', cartridgeName, '.project'));
 
     // create .properties file for cartridge
 
