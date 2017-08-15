@@ -315,7 +315,7 @@ if (options['create-cartridge']) {
 
 if (options.watch) {
     const packageFile = require(path.join(cwd, '../package.json'));
-    fs.watch(path.join(cwd, 'cartridges'), { recursive: true }, (event, filename) => {
+    fs.watch(path.join(cwd, '../cartridges'), { recursive: true }, (event, filename) => {
         if ([
             '.scss',
             '.js',
