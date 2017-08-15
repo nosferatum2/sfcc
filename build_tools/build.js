@@ -46,7 +46,7 @@ const optionator = require('optionator')({
         option: 'lint',
         type: 'String',
         description: 'Lint scss/js files.',
-        enum: ['js', 'css']
+        enum: ['js', 'server-js', 'css']
     }, {
         option: 'create-cartridge',
         type: 'String',
@@ -282,6 +282,20 @@ if (options.lint) {
             process.exit(code);
         });
     }
+
+    if (options.lint === 'server-js') {
+        const subprocess = spawn(
+            path.resolve(cwd, '../node_modules/.bin/eslint') +
+            ' ../cartridges/**/controllers/**/*.js' +
+            ' ../cartridges/**/models/**/*.js' +
+            ' ../cartridges/**/scripts/**/*.js' +
+            ' ../cartridges/modules/**/*.js' , { stdio: 'inherit', shell: true, cwd });
+
+        subprocess.on('exit', code => {
+            process.exit(code);
+        });
+    }
+
     if (options.lint === 'css') {
         const subprocess = spawn(
             path.resolve(cwd, '../node_modules/.bin/stylelint') +

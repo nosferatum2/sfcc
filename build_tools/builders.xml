@@ -74,7 +74,7 @@
         <echo level="info">Sass Linter Successful</echo>
         <echo level="info">
         </echo>
-        <echo level="info">Sass Compiler running...</echo>
+        <echo level="info">Sass build running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg value='node build --compile css'/>
@@ -87,7 +87,7 @@
     </target>
 
     <target name="js" depends="check-node" if="${have-node}">
-        <echo level="info">JavaScript Linter running...</echo>
+        <echo level="info">Client JavaScript Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg value='node build --lint js'/>
@@ -96,10 +96,10 @@
             <arg value="-c"/>
             <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --lint js"/>
         </exec>
-        <echo level="info">JavaScript Linter Successful</echo>
+        <echo level="info">Client JavaScript Linter Successful</echo>
         <echo level="info">
         </echo>
-        <echo level="info">JavaScript Compiler running...</echo>
+        <echo level="info">Client JavaScript build running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg value='node build --compile js'/>
@@ -108,10 +108,24 @@
             <arg value="-c"/>
             <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --compile js"/>
         </exec>
-        <echo level="info">Client javascript build done!</echo>
+        <echo level="info">Client JavaScript build done!</echo>
+    </target>
+    
+    <target name="server-js" depends="check-node" if="${have-node}">
+        <echo level="info">Server JavaScript Linter running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='node build --lint server-js'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --lint server-js"/>
+        </exec>
+        <echo level="info">Server JavaScript Linter Successful</echo>
     </target>
 
     <target name="cover" depends="check-node" if="${have-node}">
+        <echo level="info">Test coverage running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg value='node build --cover'/>
@@ -120,6 +134,7 @@
             <arg value="-c"/>
             <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --cover"/>
         </exec>
+        <echo level="info">Test coverage complete!</echo>
     </target>
 
 </project>
