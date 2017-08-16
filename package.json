@@ -70,18 +70,24 @@
     "url": "^0.11.0",
     "wdio-sauce-service": "~0.1",
     "webdriverio": "^3.3.0",
-    "webpack": "^2.2.1",
+    "webpack": "^3.5.5",
     "xml2js": "^0.4.17"
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "slick-carousel": "^1.7.1",
+    "svg4everybody": "^2.1.9"
   },
   "browserslist": [
     "last 2 versions",
     "ie >= 10"
   ],
+  "paths": {
+    "base": "../cartridges/app_storefront_base",
+    "lyonscg": "../cartridges/app_lyonscg"
+  },
   "packageName": "app_storefront_base"
 }

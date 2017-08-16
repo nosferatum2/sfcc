@@ -11,9 +11,8 @@ const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const chalk = require('chalk');
 
-const cwd = process.cwd();
 const pwd = __dirname;
-const TEMP_DIR = path.resolve(cwd, './tmp');
+const TEMP_DIR = path.resolve(pwd, './tmp');
 
 // Base Build Options
 const optionator = require('optionator')({
@@ -128,7 +127,7 @@ const uploadCartridgeOptionator = require('optionator')({
 });
 
 function checkForDwJson() {
-    return fs.existsSync(path.join(cwd, 'dw.json'));
+    return fs.existsSync(path.join(pwd, 'dw.json'));
 }
 
 function clearTmp() {
@@ -138,12 +137,10 @@ function clearTmp() {
 function uploadFiles(files) {
     shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
 
-    const dwupload = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/dwupload')) ?
-        path.resolve(cwd, '../node_modules/.bin/dwupload') :
-        path.resolve(pwd, '../node_modules/.bin/dwupload');
+    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
     files.forEach(file => {
-        const relativePath = path.relative(path.join(cwd, '../cartridges/'), file);
+        const relativePath = path.relative(path.join(pwd, '../cartridges/'), file);
         shell.exec('cd ../cartridges && node ' +
             dwupload +
             ' --file ' + relativePath);
@@ -181,7 +178,7 @@ if (options.upload) {
 // upload cartridge
 if (options.uploadCartridge) {
     if (checkForDwJson) {
-        shell.cp(path.join(cwd, 'dw.json'), path.join(cwd, '../cartridges/'));
+        shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
     } else {
         console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
     }
@@ -208,54 +205,48 @@ if (options.uploadCartridge) {
         }
     });
 
-    const dwupload = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/dwupload')) ?
-        path.resolve(cwd, '../node_modules/.bin/dwupload') :
-        path.resolve(pwd, '../node_modules/.bin/dwupload');
+    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
     const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
 
     shell.exec(dwuploadScript);
 
-    shell.rm(path.join(cwd, '../cartridges/dw.json'));
+    shell.rm(path.join(pwd, '../cartridges/dw.json'));
     process.exit(0);
 }
 
-// run unittests
+// run unit tests
 if (options.test) {
-    const mocha = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/_mocha')) ?
-        path.resolve(cwd, '../node_modules/.bin/_mocha') :
-        path.resolve(pwd, '../node_modules/.bin/_mocha');
+    const mocha = path.resolve(pwd, '../node_modules/.bin/_mocha');
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
-        options.test.join(' '), { stdio: 'inherit', shell: true, cwd });
+        options.test.join(' '), { stdio: 'inherit', shell: true, cwd: pwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
     });
 }
 
-// run unittest coverage
+// run unit test coverage
 if (options.cover) {
-    const istanbul = fs.existsSync(path.resolve(cwd, '../node_modules/.bin/istanbul')) ?
-        path.resolve(cwd, '../node_modules/.bin/istanbul') :
-        path.resolve(pwd, '../node_modules/.bin/istanbul');
+    const istanbul = path.resolve(pwd, '../node_modules/.bin/istanbul');
     const mocha = '../node_modules/mocha/bin/_mocha';
 
     const subprocess = spawn(
         istanbul +
         ' cover ' +
         mocha +
-        ' -- -R spec ../test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd });
+        ' -- -R spec ../test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
     });
 }
 
-// compile static assetts
+// compile static assets
 if (options.compile) {
-    const packageFile = require(path.join(cwd, '../package.json'));
+    const packageFile = require(path.join(pwd, '../package.json'));
     if (options.compile === 'js') {
         js(packageFile, pwd, code => {
             process.exit(code);
@@ -275,8 +266,8 @@ if (options.compile) {
 if (options.lint) {
     if (options.lint === 'js') {
         const subprocess = spawn(
-            path.resolve(cwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/**/client/js/**/*.js', { stdio: 'inherit', shell: true, cwd });
+            path.resolve(pwd, '../node_modules/.bin/eslint') +
+            ' ../cartridges/**/client/js/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -285,11 +276,11 @@ if (options.lint) {
 
     if (options.lint === 'server-js') {
         const subprocess = spawn(
-            path.resolve(cwd, '../node_modules/.bin/eslint') +
+            path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' ../cartridges/**/controllers/**/*.js' +
             ' ../cartridges/**/models/**/*.js' +
             ' ../cartridges/**/scripts/**/*.js' +
-            ' ../cartridges/modules/**/*.js' , { stdio: 'inherit', shell: true, cwd });
+            ' ../cartridges/modules/**/*.js' , { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -298,8 +289,8 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         const subprocess = spawn(
-            path.resolve(cwd, '../node_modules/.bin/stylelint') +
-            ' --syntax scss "../**/*.scss"', { stdio: 'inherit', shell: true, cwd });
+            path.resolve(pwd, '../node_modules/.bin/stylelint') +
+            ' --syntax scss "../**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -307,15 +298,15 @@ if (options.lint) {
     }
 }
 
-if (options['create-cartridge']) {
-    const cartridgeName = options['create-cartridge'];
+if (options.createCartridge) {
+    const cartridgeName = options.createCartridge;
     console.log('Created folders and files for cartridge ' + cartridgeName);
-    createCartridge(cartridgeName, cwd);
+    createCartridge(cartridgeName, pwd);
 }
 
 if (options.watch) {
-    const packageFile = require(path.join(cwd, '../package.json'));
-    fs.watch(path.join(cwd, '../cartridges'), { recursive: true }, (event, filename) => {
+    const packageFile = require(path.join(pwd, '../package.json'));
+    fs.watch(path.join(pwd, '../cartridges'), { recursive: true }, (event, filename) => {
         if ([
             '.scss',
             '.js',
