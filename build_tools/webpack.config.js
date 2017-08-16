@@ -8,7 +8,7 @@ var webpack = require('webpack');
 var createJSPath = function () {
     var result = {};
 
-    var jsFiles = ls('./cartridges/app_storefront_base/cartridge/client/js/default/*.js');
+    var jsFiles = ls('../cartridges/app_storefront_base/cartridge/client/js/default/*.js');
 
     jsFiles.forEach(function (filePath) {
         var name = path.basename(filePath, '.js');
@@ -22,7 +22,7 @@ module.exports = [{
     name: 'js',
     entry: createJSPath(),
     output: {
-        path: path.resolve('./cartridges/app_storefront_base/cartridge/static/default/js/'),
+        path: path.resolve('../cartridges/app_storefront_base/cartridge/static/default/js/'),
         filename: '[name].js'
     },
     module: {
