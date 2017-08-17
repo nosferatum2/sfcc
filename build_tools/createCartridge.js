@@ -8,13 +8,6 @@ const dotProject = require('./cartridgeTemplates/dotProject');
 const projectProperties = require('./cartridgeTemplates/projectProperties');
 
 module.exports = (cartridgeName, cwd) => {
-    // create package.json file with the name provided
-    const packageJson = packageTemplate(cartridgeName);
-    shell.ShellString(JSON.stringify(packageJson, null, 2)).to(path.join(cwd, 'package.json'));
-
-    // created empty dw.json file
-    shell.ShellString(JSON.stringify(dw, null, 2)).to(path.join(cwd, 'dw.json'));
-
     // create folder structure
     shell.mkdir(path.join(cwd, '../cartridges'));
     shell.mkdir(path.join(cwd, '../cartridges', cartridgeName));
@@ -40,30 +33,4 @@ module.exports = (cartridgeName, cwd) => {
 
     shell.ShellString(projectProperties(cartridgeName))
         .to(path.join(cartridgePath, cartridgeName + '.properties'));
-
-    // create eslintrc.json file
-
-    const eslintFile = {
-        root: true,
-        extends: 'airbnb-base/legacy'
-    };
-
-    shell.ShellString(JSON.stringify(eslintFile, null, 2)).to(path.join(cwd, '.eslintrc.json'));
-
-    // create stylelint file
-
-    const stylelintFile = {
-        extends: 'stylelint-config-standard',
-        plugins: [
-            'stylelint-scss'
-        ]
-    };
-
-    shell.ShellString(JSON.stringify(stylelintFile, null, 2))
-        .to(path.join(cwd, '.stylelintrc.json'));
-
-    // install npm dependencies
-    console.log('Installing dependencies');
-
-    shell.exec('npm install', { cwd });
 };
