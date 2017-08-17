@@ -37,8 +37,12 @@ function copyOneProject(basePath, destinationPath) {
     const locales = getDirectories(basePath);
     locales.forEach(locale => {
         const resolvedDestination = path.join(destinationPath, locale);
+        const sassPath = path.join(basePath, locale, '*');
         shell.mkdir('-p', resolvedDestination);
-        shell.cp('-r', path.join(basePath, locale, '*'), destinationPath);
+
+        if (fs.existsSync(path.join(basePath, locale)) && shell.ls(path.join(basePath, locale)).length) {
+            shell.cp('-r', sassPath, resolvedDestination);
+        }
     });
 }
 
@@ -79,12 +83,8 @@ module.exports = function compileCss(packageFile) {
 
     libraries.push(path.join(pwd, '../node_modules'));
     libraries.push(path.join(pwd, '../node_modules/flag-icon-css/sass'));
-    sourceDir =
-        path.join(pwd,
-            '../cartridges/'
-            + currentCartridgeName
-            + '/cartridge/client/scss/');
-    filePattern = sourceDir + '/**/*.scss';
+    sourceDir = TEMP_SCSS_SOURCE_DIR;
+    filePattern = path.join(sourceDir, '**/*.scss');
 
     const sassRenderer = filePath =>
         (resolve, reject) => {

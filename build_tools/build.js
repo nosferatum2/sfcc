@@ -280,7 +280,8 @@ if (options.lint) {
             ' ../cartridges/**/controllers/**/*.js' +
             ' ../cartridges/**/models/**/*.js' +
             ' ../cartridges/**/scripts/**/*.js' +
-            ' ../cartridges/modules/**/*.js' , { stdio: 'inherit', shell: true, cwd: pwd });
+            ' ../cartridges/modules/server/*.js' +
+            ' ../cartridges/modules/server.js' , { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);

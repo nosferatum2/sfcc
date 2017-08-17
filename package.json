@@ -87,7 +87,9 @@
   ],
   "paths": {
     "base": "../cartridges/app_storefront_base",
-    "lyonscg": "../cartridges/app_lyonscg"
+    "lyonscg": "../cartridges/app_lyonscg",
+    "org": "../cartridges/org_organizationid",
+    "site": "../cartridges/site_siteid"
   },
   "packageName": "app_storefront_base"
 }

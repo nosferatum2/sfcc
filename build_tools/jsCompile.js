@@ -25,7 +25,11 @@ module.exports = (packageFile, pwd, callback) => {
         shell.cp('-r', currentJsDir, TEMP_JS_DIR);
         Object.keys(modules).forEach(key => {
             const currentPath = path.join(pwd, modules[key], 'cartridge/client/js/default/*');
-            shell.cp('-R', currentPath, TEMP_JS_DIR);
+
+            if (fs.existsSync(path.join(pwd, modules[key], 'cartridge/client/js/default')) && 
+                    shell.ls(path.join(pwd, modules[key], 'cartridge/client/js/default')).length) {
+                shell.cp('-r', currentPath, TEMP_JS_DIR);
+            }
         });
     }
     const webpack = path.resolve(pwd, '../node_modules/.bin/webpack');
