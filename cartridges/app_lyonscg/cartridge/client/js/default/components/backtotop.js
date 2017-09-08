@@ -4,7 +4,7 @@ var offsetTrigger = 300;
 var scrollSpeed = 4000; // in px per sec
 var hideBelow = 0; // min breakpoint in px
 var hideAbove = Infinity; // max breakpoint in px (default is Infinity, a.k.a. no maximum)
-var $btn = $('.back-to-top');
+var $backToTopButton = $('.back-to-top');
 
 var backtotop = {
     isVisible: true,
@@ -21,7 +21,7 @@ var backtotop = {
         };
 
         // When the user clicks on the button, scroll back to the top of the document
-        $btn.on('click', function () {
+        $backToTopButton.on('click', function () {
             backtotop.scroll();
         });
 
@@ -37,7 +37,7 @@ var backtotop = {
             return;
         }
         if (!backtotop.isVisible) {
-            $btn.fadeIn('fast').removeClass('active');
+            $backToTopButton.fadeIn('fast').removeClass('active');
             backtotop.isVisible = true;
         }
     },
@@ -46,7 +46,7 @@ var backtotop = {
             return;
         }
         if (backtotop.isVisible) {
-            $btn.fadeOut('fast');
+            $backToTopButton.fadeOut('fast');
             backtotop.isVisible = false;
         }
     },
@@ -54,28 +54,29 @@ var backtotop = {
         if (backtotop.isScrolling) {
             return;
         }
-        var w = $(window).innerWidth();
-        if (w >= hideBelow && w < hideAbove && ($(window).scrollTop() > offsetTrigger)) {
+        var width = $(window).innerWidth();
+        if (width >= hideBelow && width < hideAbove && ($(window).scrollTop() > offsetTrigger)) {
             backtotop.show();
         } else {
             backtotop.hide();
         }
     },
     reset: function () {
-        $btn.removeClass('active');
-        $btn.removeAttr('style');
+        $backToTopButton.removeClass('active');
+        $backToTopButton.removeAttr('style');
         backtotop.hide();
         backtotop.isVisible = false;
+        backtotop.isScrolling = false;
     },
     scroll: function () {
         if (backtotop.isScrolling) {
             return;
         }
         backtotop.show(); // just in case
-        $btn.addClass('active');
-        $btn.blur();
+        $backToTopButton.addClass('active');
+        $backToTopButton.blur();
         backtotop.isScrolling = true;
-        var distanceToTop = $btn.offset().top;
+        var distanceToTop = $backToTopButton.offset().top;
         var animationDuration = distanceToTop / (scrollSpeed / 1000);
         $('html, body')
             .stop(true, true)
