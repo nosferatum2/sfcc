@@ -18,13 +18,7 @@
         <div class="hp-product-grid">
             <isslot id="home-products" description="Product tiles on the home page." context="global" />
         </div>
-
-        <div class="home-product-caro">
-            <isslot id="home-product-caro" description="Example product carousel on the home page." context="global" />
-        </div>
-
     </div>
-
 
     <div class="homepage shop-the-style">
         <isslot id="home-product-set" description="Link to a Product Set." context="global" />
