@@ -70,6 +70,9 @@ function fillModalElement(productUrl, selectedValueUrl) {
             $('#quickViewModal .full-pdp-link').attr('href', productUrl);
             $('#quickViewModal .size-chart').attr('href', productUrl);
             $('#quickViewModal').modal('show');
+            $('#quickViewModal').on('shown.bs.modal', function () {
+                base.carouselInit();
+            });
             $.spinner().stop();
         },
         error: function () {
@@ -121,6 +124,7 @@ module.exports = {
                 $('.modal.show .full-pdp-link')
                     .attr('href', response.data.product.selectedProductUrl);
             }
+            base.carouselInit();
         });
     },
     updateAddToCart: function () {

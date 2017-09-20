@@ -1,4 +1,21 @@
 'use strict';
+var slickConfigs = require('../config/slickConfigs');
+
+/**
+ * Init the product carousel using a predefined slick configuration
+ * @return {jquery} - an initialized slick carousel
+ */
+function carouselInit() {
+    return $('.product-carousel').slick(slickConfigs.pdp);
+}
+
+/**
+ * Deconstruct (unslick) the carousel, removing classes and handlers added on slick initialize.
+ * @return {jquery} - unslicked DOM element
+ */
+function carouselUnslick() {
+    return $('.product-carousel').slick('unslick');
+}
 
 /**
  * Retrieves the relevant pid value
@@ -252,10 +269,14 @@ function handleVariantResponse(response, $productContainer) {
 
     // Update primary images
     var primaryImageUrls = response.product.images;
-    primaryImageUrls.large.forEach(function (imageUrl, idx) {
-        $productContainer.find('.primary-images').find('img').eq(idx)
-            .attr('src', imageUrl.url);
-    });
+    if (primaryImageUrls.large) {
+        // Unslick the existing images to prepare them for direct js manipulation
+        carouselUnslick();
+        primaryImageUrls.large.forEach(function (imageUrl, idx) {
+            $productContainer.find('.primary-images').find('img').eq(idx)
+                .attr('src', imageUrl.url);
+        });
+    }
 
     // Update pricing
     var $priceSelector = $('.prices .price', $productContainer).length
@@ -407,6 +428,10 @@ function getOptions($productContainer) {
 
 module.exports = {
     attributeSelect: attributeSelect,
+
+    carouselInit: carouselInit,
+
+    carouselUnslick: carouselUnslick,
 
     colorAttribute: function () {
         $(document).on('click', '[data-attr="color"] a', function (e) {

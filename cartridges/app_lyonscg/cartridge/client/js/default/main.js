@@ -1,8 +1,4 @@
 window.jQuery = window.$ = require('jquery');
-// Activate SVG4Everybody
-var svg4everybody = require('svg4everybody');
-svg4everybody();
-require('slick-carousel');
 
 var processInclude = require('./util');
 
@@ -19,3 +15,5 @@ $(document).ready(function () {
 
 require('./thirdparty/bootstrap');
 require('./components/spinner');
+require('svg4everybody');
+require('slick-carousel');

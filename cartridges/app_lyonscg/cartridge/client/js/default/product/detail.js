@@ -10,6 +10,8 @@ module.exports = {
 
     addToCart: base.addToCart,
 
+    carousel: base.carouselInit,
+
     updateAttributesAndDetails: function () {
         $('body').on('product:statusUpdate', function (e, data) {
             var $productContainer = $('.product-detail[data-pid="' + data.id + '"]');
@@ -59,6 +61,7 @@ module.exports = {
                 $('.product-id').text(response.data.product.id);
                 $('.product-detail:not(".bundle-item")').data('pid', response.data.product.id);
             }
+            base.carouselInit();
         });
     },
     updateAddToCart: function () {
