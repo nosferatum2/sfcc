@@ -213,3 +213,18 @@ $slick-opacity-not-active: 0.25 !default;
         }
     }
 }
+
+.product-tile-caro {
+    .slick-prev,
+    .slick-next {
+        top: 35%;
+    }
+
+    .slick-prev {
+        left: 15px;
+    }
+
+    .slick-next {
+        right: 15px;
+    }
+}
