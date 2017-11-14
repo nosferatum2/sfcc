@@ -40,7 +40,7 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
  * @constructor
  */
 function Locale(currentLocale, allowedLocales, siteId) {
-    var currentCountry = !currentLocale ? countries[0]
+    var currentCountry = !currentLocale || currentLocale.country === '' ? countries[0]
         : countries.filter(function (country) {
             return country.id === currentLocale.ID;
         })[0];
