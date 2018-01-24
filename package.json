@@ -6,7 +6,7 @@
     "node": ">=4.0"
   },
   "scripts": {
-    "test": "node build_tools/build --test test/unit/**/*.js",
+    "test": "node build_tools/build --test ../test/unit/**/*.js",
     "test:appium": "node bin/Makefile functional -- appium -- ",
     "cover": "node build_tools/build --cover",
     "test:integration": "node bin/Makefile integration -- ",
