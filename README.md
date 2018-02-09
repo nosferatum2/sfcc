@@ -1,3 +1,5 @@
+**Have a bug fix or feature request for the Mobile First RefApp?** [Please submit to this form.](https://goo.gl/forms/QxZwGX88fCyGzlUx2)
+
 # SiteGenesis Mobile First
 
 This is a repository for the mobile-optimized version of SiteGenesis.
@@ -177,7 +179,7 @@ npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandwa
 ```
 
 ```
-npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium â€”name appiumIntegrationBranch
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium —name appiumIntegrationBranch
 ```
 
 **Note:** To run both browsers with one command :
