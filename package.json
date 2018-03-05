@@ -89,7 +89,8 @@
     "base": "../cartridges/app_storefront_base",
     "lyonscg": "../cartridges/app_lyonscg_mfra",
     "org": "../cartridges/org_organizationid",
-    "site": "../cartridges/site_siteid"
+    "site": "../cartridges/site_siteid",
+    "contentui": "../../content-ui/ui_content"
   },
   "packageName": "app_storefront_base"
 }

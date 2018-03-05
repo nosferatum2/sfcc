@@ -91,7 +91,7 @@ module.exports = function compileCss(packageFile) {
             sass.render({
                 file: filePath,
                 includePaths: libraries,
-                outputStyle: 'compressed',
+                outputStyle: 'expanded',
                 importer: (url) => {
                     let resultUrl = url;
                     const pathParts = url.split(path.sep);

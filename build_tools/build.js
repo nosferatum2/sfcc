@@ -208,6 +208,7 @@ if (options.uploadCartridge) {
     const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
     const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
+    console.log(dwuploadScript);
 
     shell.exec(dwuploadScript);
 
