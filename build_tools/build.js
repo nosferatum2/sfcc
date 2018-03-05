@@ -177,6 +177,7 @@ if (options.upload) {
 
 // upload cartridge
 if (options.uploadCartridge) {
+    console.log('Uploading the cartridges...');
     if (checkForDwJson) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
     } else {
