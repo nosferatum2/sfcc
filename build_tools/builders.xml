@@ -45,9 +45,8 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg line='node build' />
-            <arg value='--upload-cartridge' />
-            <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
+            <arg line='node build --upload-cartridge' />
+            <arg value='--code-version="${buildVersion}"' />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
             <arg value='--username="${user}"' if:set="user" />
             <arg value='--password="${password}"' if:set="password" />
