@@ -158,8 +158,6 @@ function camelCase(str) {
 
 const options = optionator.parse(process.argv);
 
-console.log(options);
-
 if (options.help) {
     console.log(optionator.generateHelp());
     process.exit(0);
@@ -167,7 +165,7 @@ if (options.help) {
 
 // upload a file
 if (options.upload) {
-    if (!checkForDwJson) {
+    if (!checkForDwJson()) {
         console.error(chalk.red('Could not find dw.json file at the root of the project.'));
         process.exit(1);
     }
@@ -179,8 +177,7 @@ if (options.upload) {
 
 // upload cartridge
 if (options.uploadCartridge) {
-    console.log('Uploading the cartridges...');
-    if (checkForDwJson) {
+    if (checkForDwJson()) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
     } else {
         console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
@@ -211,11 +208,14 @@ if (options.uploadCartridge) {
     const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
     const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
-    console.log(dwuploadScript);
+    console.log('Upload Commands: '+ dwuploadScript);
 
     shell.exec(dwuploadScript);
 
-    shell.rm(path.join(pwd, '../cartridges/dw.json'));
+    if (checkForDwJson()) {
+        shell.rm(path.join(pwd, '../cartridges/dw.json'));
+    }
+
     process.exit(0);
 }
 
