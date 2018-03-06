@@ -45,15 +45,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg line='node build --upload-cartridge' />
-            <arg value='--code-version="${buildVersion}"' />
-            <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
-            <arg value='--username="${user}"' if:set="user" />
-            <arg value='--password="${password}"' if:set="password" />
-            <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
-            <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
-            <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
-            <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg line='export PATH=/usr/local/bin:$PATH; cd "${basedir}"; node build --upload-cartridge' />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>
