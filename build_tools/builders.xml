@@ -45,9 +45,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg line='export PATH=/usr/local/bin:$PATH;' />
-            <arg line='cd "${basedir}";' />
-            <arg line='node build --upload-cartridge' />
+            <arg line='export PATH=/usr/local/bin:$PATH; cd "${basedir}"; node build --upload-cartridge' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
             <arg value='--username="${user}"' if:set="user" />
