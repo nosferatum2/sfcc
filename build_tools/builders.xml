@@ -43,14 +43,14 @@
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
             <arg value='--hostname="${hostname}"' if:set="hostname" />
         </exec>
-        <exec executable="node" osfamily="unix" failonerror="true" output="log.txt">
+        <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
             <arg value='--upload-cartridge' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
             <arg value='--username="${user}"' if:set="user" />
             <arg value='--password="${password}"' if:set="password" />
-            <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
+            <arg value='--self-signed=${selfSigned}' if:set="selfSigned" />
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
             <arg value='--hostname="${hostname}"' if:set="hostname" />
