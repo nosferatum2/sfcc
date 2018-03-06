@@ -10,6 +10,7 @@ const css = require('./cssCompile');
 const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const chalk = require('chalk');
+const util = require('util');
 
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(pwd, './tmp');
@@ -156,6 +157,12 @@ function camelCase(str) {
     });
 }
 
+function getDirectories(path) {
+    return fs.readdirSync(path).filter(function (file) {
+      return fs.statSync(path+'/'+file).isDirectory();
+    });
+}
+
 const options = optionator.parse(process.argv);
 
 if (options.help) {
@@ -197,13 +204,23 @@ if (options.uploadCartridge) {
             'passphrase',
             'self-signed'
         ],
-        uploadArguments = [];
+        uploadArguments = [],
+        cartridgesFound = false;
 
     uploadOptions.forEach(uploadOption => {
         if (options[camelCase(uploadOption)]) {
             uploadArguments.push('--' + uploadOption, options[camelCase(uploadOption)]);
+
+            if (uploadOption === 'cartridge') {
+                cartridgesFound = true;
+            }
         }
     });
+
+    if (!cartridgesFound) {
+        var cartridges = getDirectories('../cartridges').join(',');
+        uploadArguments.push('--cartridge', cartridges);
+    }
 
     const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
