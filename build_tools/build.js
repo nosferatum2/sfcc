@@ -158,6 +158,8 @@ function camelCase(str) {
 
 const options = optionator.parse(process.argv);
 
+console.log(options);
+
 if (options.help) {
     console.log(optionator.generateHelp());
     process.exit(0);

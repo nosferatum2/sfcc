@@ -88,8 +88,8 @@
   "paths": {
     "base": "../cartridges/app_storefront_base",
     "lyonscg": "../cartridges/app_lyonscg_mfra",
-    "org": "../cartridges/org_organizationid",
-    "site": "../cartridges/site_siteid"
+    "org": "../cartridges/org_organizationid_mfra",
+    "site": "../cartridges/site_siteid_mfra"
   },
   "packageName": "app_storefront_base"
 }
