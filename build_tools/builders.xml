@@ -45,7 +45,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg line='export PATH=/usr/local/bin:$PATH; cd "${basedir}"; node build --upload-cartridge' />
+            <arg line='node build --upload-cartridge' />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>
