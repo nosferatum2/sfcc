@@ -5,10 +5,10 @@ require('shelljs/make');
 var path = require('path');
 var webpack = require('webpack');
 
-var createJSPath = function () {
+var createJSPath = function (cartridge) {
     var result = {};
 
-    var jsFiles = ls('./tmp/js/*.js');
+    var jsFiles = ls('./tmp/'+ cartridge +'/js/*.js');
 
     jsFiles.forEach(function (filePath) {
         var name = path.basename(filePath, '.js');
@@ -18,32 +18,34 @@ var createJSPath = function () {
     return result;
 };
 
-module.exports = [{
-    name: 'js',
-    entry: createJSPath(),
-    output: {
-        path: path.resolve('../cartridges/app_storefront_base/cartridge/static/default/js/'),
-        filename: '[name].js'
-    },
-    module: {
-        loaders: [
-            {
-                test: /bootstrap(.)*\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
-                }
-            }
-        ]
-    },
-    plugins: [new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        sourceMap: true,
-        compress: {
-            drop_console: true
+module.exports = function(env) {
+    return {
+        name: 'js',
+        entry: createJSPath(env.cartridge),
+        output: {
+            path: path.resolve('../cartridges/'+ env.cartridge +'/cartridge/static/default/js/'),
+            filename: '[name].js'
         },
-        mangle: {
-            except: ['$', 'exports', 'require']
-        }
-    })]
-}];
+        module: {
+            loaders: [
+                {
+                    test: /bootstrap(.)*\.js$/,
+                    loader: 'babel-loader',
+                    query: {
+                        presets: ['es2015']
+                    }
+                }
+            ]
+        },
+        plugins: [new webpack.optimize.UglifyJsPlugin({
+            minimize: true,
+            sourceMap: true,
+            compress: {
+                drop_console: true
+            },
+            mangle: {
+                except: ['$', 'exports', 'require']
+            }
+        })]
+    };
+};

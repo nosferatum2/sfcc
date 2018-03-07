@@ -13,12 +13,12 @@ const chalk = require('chalk');
 const util = require('util');
 
 const pwd = __dirname;
-const TEMP_DIR = path.resolve(pwd, './tmp');
 
 // Base Build Options
 const optionator = require('optionator')({
     options: [{
         option: 'help',
+        alias: 'h',
         type: 'Boolean',
         description: 'Generate help message'
     }, {
@@ -129,10 +129,6 @@ const uploadCartridgeOptionator = require('optionator')({
 
 function checkForDwJson() {
     return fs.existsSync(path.join(pwd, 'dw.json'));
-}
-
-function clearTmp() {
-    shell.rm('-rf', TEMP_DIR);
 }
 
 function uploadFiles(files) {
@@ -274,13 +270,7 @@ if (options.compile) {
         });
     }
     if (options.compile === 'css') {
-        css(packageFile).then(() => {
-            clearTmp();
-            console.log(chalk.green('SCSS files compiled.'));
-        }).catch(error => {
-            clearTmp();
-            console.error(chalk.red('Could not compile css files.'), error);
-        });
+        css(packageFile);
     }
 }
 
