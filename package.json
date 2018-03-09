@@ -95,5 +95,16 @@
       },
       "packageName": "app_storefront_base"
     }
-  ]
+  ],
+  "dataBundles" : {
+    "core-config": [
+      "core",
+      "config_test"
+    ],
+    "core-config-data": [
+      "core",
+      "config_test",
+      "data_test"
+    ]
+  }
 }
