@@ -36,7 +36,7 @@
             <arg line='node build --upload-cartridge' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
-            <arg value='--username="${user}"' if:set="user" />
+            <arg value='--username="${username}"' if:set="username" />
             <arg value='--password="${password}"' if:set="password" />
             <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />

@@ -33,10 +33,9 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">Text Field</display>
                         <value>input</value>
-                        <default>true</default>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">Select Box</display>
@@ -53,10 +52,9 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <value-definitions>
-                    <value-definition>
+                    <value-definition default="true">
                         <display xml:lang="x-default">Left Side Bar</display>
                         <value>side-bar</value>
-                        <default>true</default>
                     </value-definition>
                     <value-definition>
                         <display xml:lang="x-default">Top Menu</display>

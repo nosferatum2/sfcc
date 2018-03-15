@@ -47,6 +47,7 @@
     "eslint-config-airbnb-base": "^5.0.1",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-sitegenesis": "~1.0.0",
+    "folder-zip": "0.0.5",
     "globalize": "^1.1.1",
     "inquirer": "^3.0.6",
     "istanbul": "^0.4.4",
@@ -58,9 +59,12 @@
     "node-sass": "^4.5.0",
     "onchange": "^3.2.1",
     "optionator": "^0.8.2",
+    "promise-retry": "^1.1.1",
     "properties-parser": "^0.3.0",
     "proxyquire": "1.7.4",
-    "request-promise": "^4.1.1",
+    "q": "^1.5.1",
+    "request": "^2.85.0",
+    "request-promise-native": "^1.0.5",
     "selenium-standalone": "^5.9.0",
     "shelljs": "^0.7.0",
     "sinon": "^1.17.4",
@@ -96,15 +100,26 @@
       "packageName": "app_storefront_base"
     }
   ],
-  "dataBundles" : {
-    "core-config": [
-      "core",
-      "config_test"
-    ],
-    "core-config-data": [
-      "core",
-      "config_test",
-      "data_test"
-    ]
+  "deployment": {
+    "instanceRoot": ".evaluation.dw.demandware.net",
+    "dataOptions": {
+      "archivePath": "../data_impex",
+      "lastDeploymentFileName": "lastbuild.properties",
+      "uploadPath": "/on/demandware.servlet/webdav/Sites/Impex/src/instance/"
+    },
+    "dataBundles": {
+      "core": [
+        "core"
+      ],
+      "core-config": [
+        "core",
+        "config_test"
+      ],
+      "core-config-data": [
+        "core",
+        "config_test",
+        "data_test"
+      ]
+    }
   }
 }
