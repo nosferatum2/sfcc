@@ -247,9 +247,6 @@ function getUploadOptions(isData) {
         }
     });
 
-    console.log('Upload Arguments');
-    console.log(uploadArguments);
-
     return uploadArguments;
 }
 
