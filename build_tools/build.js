@@ -247,6 +247,9 @@ function getUploadOptions(isData) {
         }
     });
 
+    console.log('Upload Arguments');
+    console.log(uploadArguments);
+
     return uploadArguments;
 }
 
@@ -453,7 +456,16 @@ if (options.watch) {
 if (options.deployData) {
     console.log('Deploying data...');
     const uploadArguments = getUploadOptions();
-    deployData(uploadArguments);
+
+    if (uploadArguments.hostname && uploadArguments.username && uploadArguments.password) {
+        deployData(uploadArguments);
+    } else if (!uploadArguments.hostname) {
+        console.error('Error: Please provide a hostname to deploy data');
+    } else if (!uploadArguments.username) {
+        console.error('Error: Please provide a username to deploy data');
+    } else if (!uploadArguments.password) {
+        console.error('Error: Please provide a password to deploy data');
+    }
 }
 
 if (options.generateObjectReport) {
