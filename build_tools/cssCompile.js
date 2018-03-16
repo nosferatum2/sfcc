@@ -9,11 +9,19 @@ const chalk = require('chalk');
 
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(pwd, './tmp');
-const TEMP_SCSS_LIBRARY_DIR = path.join(TEMP_DIR, 'scss', 'libraries');
-const TEMP_SCSS_SOURCE_DIR = path.join(TEMP_DIR, 'scss', 'source');
 
 const allPaths = new Set();
 let baseCartridgePath = '';
+
+/**
+ * @function
+ * @desc Removes the given temporary directory
+ * @param TEMP_DIR
+ * @returns
+ */
+function clearTmp(TEMP_DIR) {
+    shell.rm('-rf', TEMP_DIR);
+}
 
 /**
  * @function
@@ -73,58 +81,61 @@ function copyDependancies(basePath, destinationPath, items) {
  * @returns
  */
 module.exports = function compileCss(packageFile) {
-    const modules = packageFile.paths;
-    const currentCartridgeName = packageFile.packageName || packageFile.name;
-    const libraries = [];
-    let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/scss');
-    let filePattern = '';
+    const sites = packageFile.sites;
 
-    copyDependancies(sourceDir, TEMP_SCSS_SOURCE_DIR, modules);
+    for (var site in sites) {
+        const modules = sites[site].paths;
+        const currentCartridgeName = sites[site].packageName;
+        const TEMP_SCSS_SOURCE_DIR = path.join(TEMP_DIR, currentCartridgeName, 'scss', 'source');
+        const libraries = [];
+        let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/scss');
+        let filePattern = '';
 
-    libraries.push(path.join(pwd, '../node_modules'));
-    libraries.push(path.join(pwd, '../node_modules/flag-icon-css/sass'));
-    sourceDir = TEMP_SCSS_SOURCE_DIR;
-    filePattern = path.join(sourceDir, '**/*.scss');
+        copyDependancies(sourceDir, TEMP_SCSS_SOURCE_DIR, modules);
 
-    const sassRenderer = filePath =>
-        (resolve, reject) => {
-            sass.render({
-                file: filePath,
-                includePaths: libraries,
-                outputStyle: 'compressed',
-                importer: (url) => {
-                    let resultUrl = url;
-                    const pathParts = url.split(path.sep);
-                    let modulesCondition = false;
+        libraries.push(path.join(pwd, '../node_modules'));
+        libraries.push(path.join(pwd, '../node_modules/flag-icon-css/sass'));
+        sourceDir = TEMP_SCSS_SOURCE_DIR;
+        filePattern = path.join(sourceDir, '**/*.scss');
 
-                    if (modules) {
-                        modulesCondition = allPaths.has(pathParts[0]);
+        const sassRenderer = filePath =>
+            (resolve, reject) => {
+                sass.render({
+                    file: filePath,
+                    includePaths: libraries,
+                    outputStyle: 'expanded',
+                    importer: (url) => {
+                        let resultUrl = url;
+                        const pathParts = url.split(path.sep);
+                        let modulesCondition = false;
+
+                        if (modules) {
+                            modulesCondition = allPaths.has(pathParts[0]);
+                        }
+
+                        if (modulesCondition && pathParts.length > 1
+                            && !(/^[a-z]{2}_[A-Z]{2}$/gm.test(pathParts[1]))
+                        ) {
+                            pathParts.splice(1, 0, 'default');
+                            resultUrl = path.join.apply(null, pathParts);
+                        }
+
+                        return { file: resultUrl };
                     }
-
-                    if (modulesCondition && pathParts.length > 1
-                        && !(/^[a-z]{2}_[A-Z]{2}$/gm.test(pathParts[1]))
-                    ) {
-                        pathParts.splice(1, 0, 'default');
-                        resultUrl = path.join.apply(null, pathParts);
+                }, (error, result) => {
+                    if (error) {
+                        reject({ file: filePath, error });
+                    } else {
+                        resolve({ file: filePath, css: autoprefixer.process(result.css).css });
                     }
+                });
+            };
 
-                    return { file: resultUrl };
-                }
-            }, (error, result) => {
-                if (error) {
-                    reject({ file: filePath, error });
-                } else {
-                    resolve({ file: filePath, css: autoprefixer.process(result.css).css });
-                }
-            });
-        };
+        const compilationArray = shell.find(filePattern).filter(file => {
+            const lastDir = file.lastIndexOf('/');
+            return file[lastDir + 1] !== '_';
+        });
 
-    const compilationArray = shell.find(filePattern).filter(file => {
-        const lastDir = file.lastIndexOf('/');
-        return file[lastDir + 1] !== '_';
-    });
-
-    return new Promise((resolve, reject) => {
         Promise.all(compilationArray.map(filePath => new Promise(sassRenderer(filePath))))
             .then(values => {
                 const changedFiles = [];
@@ -169,10 +180,11 @@ module.exports = function compileCss(packageFile) {
                     console.log(offsetPathFile);
                 });
 
-                resolve(changedFiles);
+                clearTmp(path.join(TEMP_DIR, currentCartridgeName));
+                console.log(chalk.green(currentCartridgeName + ' SCSS files compiled.'));
             }).catch(error => {
-                console.error(chalk.red('Failed to compile scss files. ' + error));
-                reject(error);
+                clearTmp(path.join(TEMP_DIR, currentCartridgeName));
+                console.log(chalk.red('Failed to compile '+ currentCartridgeName +' scss files. ' + error));
             });
-    });
+    }
 };

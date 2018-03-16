@@ -10,14 +10,15 @@ const css = require('./cssCompile');
 const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const chalk = require('chalk');
+const util = require('util');
 
 const pwd = __dirname;
-const TEMP_DIR = path.resolve(pwd, './tmp');
 
 // Base Build Options
 const optionator = require('optionator')({
     options: [{
         option: 'help',
+        alias: 'h',
         type: 'Boolean',
         description: 'Generate help message'
     }, {
@@ -130,10 +131,6 @@ function checkForDwJson() {
     return fs.existsSync(path.join(pwd, 'dw.json'));
 }
 
-function clearTmp() {
-    shell.rm('-rf', TEMP_DIR);
-}
-
 function uploadFiles(files) {
     shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
 
@@ -156,6 +153,12 @@ function camelCase(str) {
     });
 }
 
+function getDirectories(path) {
+    return fs.readdirSync(path).filter(function (file) {
+      return fs.statSync(path+'/'+file).isDirectory();
+    });
+}
+
 const options = optionator.parse(process.argv);
 
 if (options.help) {
@@ -165,7 +168,7 @@ if (options.help) {
 
 // upload a file
 if (options.upload) {
-    if (!checkForDwJson) {
+    if (!checkForDwJson()) {
         console.error(chalk.red('Could not find dw.json file at the root of the project.'));
         process.exit(1);
     }
@@ -177,7 +180,7 @@ if (options.upload) {
 
 // upload cartridge
 if (options.uploadCartridge) {
-    if (checkForDwJson) {
+    if (checkForDwJson()) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
     } else {
         console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
@@ -197,21 +200,35 @@ if (options.uploadCartridge) {
             'passphrase',
             'self-signed'
         ],
-        uploadArguments = [];
+        uploadArguments = [],
+        cartridgesFound = false;
 
     uploadOptions.forEach(uploadOption => {
         if (options[camelCase(uploadOption)]) {
             uploadArguments.push('--' + uploadOption, options[camelCase(uploadOption)]);
+
+            if (uploadOption === 'cartridge') {
+                cartridgesFound = true;
+            }
         }
     });
+
+    if (!cartridgesFound) {
+        var cartridges = getDirectories('../cartridges').join(',');
+        uploadArguments.push('--cartridge', cartridges);
+    }
 
     const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
     const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
+    console.log('Upload Commands: '+ dwuploadScript);
 
     shell.exec(dwuploadScript);
 
-    shell.rm(path.join(pwd, '../cartridges/dw.json'));
+    if (checkForDwJson()) {
+        shell.rm(path.join(pwd, '../cartridges/dw.json'));
+    }
+
     process.exit(0);
 }
 
@@ -253,13 +270,7 @@ if (options.compile) {
         });
     }
     if (options.compile === 'css') {
-        css(packageFile).then(() => {
-            clearTmp();
-            console.log(chalk.green('SCSS files compiled.'));
-        }).catch(error => {
-            clearTmp();
-            console.error(chalk.red('Could not compile css files.'), error);
-        });
+        css(packageFile);
     }
 }
 
