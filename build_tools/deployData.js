@@ -213,11 +213,15 @@ async function deployData(options) {
         lastDeploymentTimestamp = fs.readFileSync(lastDeploymentFileName, 'utf8');
     }
 
+    console.log('Last Deployment Timestamp: ' + lastDeploymentTimestamp);
+
     let archiveFiles = null;
 
     try {
         // Zip the data bundle directories
+        console.log('Zipping data files...');
         archiveFiles = await zipDataFiles(options.dataBundle);
+        console.log('Data files zipped');
     } catch (e) {
         console.log(e);
         return;
@@ -229,6 +233,7 @@ async function deployData(options) {
 
         try {
             // Upload the zip files
+            console.log('Uploading ' + archiveFiles.length + ' archive files to ' + hostnames[i]);
             await uploadData(archiveFiles);
         } catch (e) {
             console.log(e);
