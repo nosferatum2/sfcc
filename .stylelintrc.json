@@ -11,6 +11,9 @@
         "scss/media-feature-value-dollar-variable": "always",
         "scss/selector-no-redundant-nesting-selector": true,
         "at-rule-empty-line-before": [ "always", { "ignoreAtRules": ["else"], "ignore": ["blockless-after-same-name-blockless", "blockless-after-blockless"] } ],
+        "at-rule-no-unknown": [ true, {
+            "ignoreAtRules": ["extend", "at-root", "debug", "warn", "error", "if", "else", "for", "each", "while", "mixin", "include", "content", "return", "function"]
+        }],
         "block-closing-brace-newline-after": [ "always", { "ignoreAtRules": ["if", "else"] } ]
     }
 }
