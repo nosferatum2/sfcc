@@ -14,7 +14,13 @@ function getSandboxUrl() {
     if (test('-f', path.join(process.cwd(), 'dw.json'))) {
         var config = cat(path.join(process.cwd(), 'dw.json'));
         var parsedConfig = JSON.parse(config);
-        return '' + parsedConfig.hostname;
+        let hostname = parsedConfig.hostname;
+
+        if (hostname.constructor === Array && hostname.length > 0) {
+            hostname = hostname[0];
+        }
+
+        return '' + hostname;
     }
     return '';
 }
