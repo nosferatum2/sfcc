@@ -6,9 +6,10 @@ coverage/
 npm-debug.log
 cartridges.zip
 .idea/
-dw.json
-build_tools/dw.json
 sitegenesisdata/
 .DS_Store
 test/appium/webdriver/config.json
+build_tools/artifacts
 build_tools/*.zip
+data_impex/*.zip
+lastbuild.properties
