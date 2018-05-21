@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Content">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="body">
+                <display-name xml:lang="x-default">Body</display-name>
+                <type>html</type>
+                <localizable-flag>true</localizable-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Content">
+                <display-name xml:lang="x-default">Content</display-name>
+                <attribute attribute-id="body"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
             <attribute-definition attribute-id="enableStickyHeader">
