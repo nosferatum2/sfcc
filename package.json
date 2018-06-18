@@ -119,7 +119,10 @@
         "core",
         "config_test",
         "data_test"
-      ]
+      ],
+	  "static": [
+		"data_test_static"
+	  ]
     }
   }
 }
