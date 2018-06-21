@@ -37,12 +37,24 @@ function proxyModel() {
         '*/cartridge/models/productLineItems': ProductLineItemsModel,
         '*/cartridge/scripts/checkout/shippingHelpers': {
             getShippingModels: function () {
-                return ['shipping model'];
+                return [{ shippingAddress: {
+                    firstName: 'someString',
+                    lastName: null
+                }
+                }];
             }
         },
         '*/cartridge/scripts/checkout/checkoutHelpers': {
             isPickUpInStore: function () {
                 return false;
+            },
+            ensureValidShipments: function () {
+                return true;
+            }
+        },
+        'dw/util/Locale': {
+            getLocale: function () {
+                return 'US';
             }
         }
     });

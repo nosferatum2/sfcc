@@ -31,17 +31,25 @@ function Handle(basket, paymentInformation) {
     var expirationMonth = paymentInformation.expirationMonth.value;
     var expirationYear = paymentInformation.expirationYear.value;
     var serverErrors = [];
+    var creditCardStatus;
 
     var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
 
     if (!paymentInformation.creditCardToken) {
-        var creditCardStatus = paymentCard.verify(
-            expirationMonth,
-            expirationYear,
-            cardNumber,
-            cardSecurityCode
-        );
+        if (paymentCard) {
+            creditCardStatus = paymentCard.verify(
+                expirationMonth,
+                expirationYear,
+                cardNumber,
+                cardSecurityCode
+            );
+        } else {
+            cardErrors[paymentInformation.cardNumber.htmlName] =
+                Resource.msg('error.invalid.card.number', 'creditCard', null);
+
+            return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
+        }
 
         if (creditCardStatus.error) {
             collections.forEach(creditCardStatus.items, function (item) {

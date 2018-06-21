@@ -29,7 +29,7 @@ describe('billingForm', function () {
             return request(myRequest)
                 .then(function (csrfResponse) {
                     var csrfJsonResponse = JSON.parse(csrfResponse.body);
-                    myRequest.url = config.baseUrl + '/Checkout-SubmitPayment?' +
+                    myRequest.url = config.baseUrl + '/CheckoutServices-SubmitPayment?' +
                         csrfJsonResponse.csrf.tokenName + '=' +
                         csrfJsonResponse.csrf.token;
                 });
@@ -69,28 +69,6 @@ describe('billingForm', function () {
                     countryCode: { value: 'us' }
                 },
                 paymentMethod: { value: 'CREDIT_CARD', htmlName: 'CREDIT_CARD' },
-                paymentInformation: {
-                    cardType: {
-                        value: 'Visa',
-                        htmlName: 'dwfrm_billing_creditCardFields_cardType'
-                    },
-                    cardNumber: {
-                        value: '4111111111111111',
-                        htmlName: 'dwfrm_billing_creditCardFields_cardNumber'
-                    },
-                    securityCode: {
-                        value: '342',
-                        htmlName: 'dwfrm_billing_creditCardFields_securityCode'
-                    },
-                    expirationMonth: {
-                        value: 2,
-                        htmlName: 'dwfrm_billing_creditCardFields_expirationMonth'
-                    },
-                    expirationYear: {
-                        value: 2020,
-                        htmlName: 'dwfrm_billing_creditCardFields_expirationYear'
-                    }
-                },
                 email: { value: 'blahblah@gmail.com' },
                 phone: { value: '9786543213' },
                 error: true,
@@ -98,14 +76,14 @@ describe('billingForm', function () {
                 fieldErrors: [],
                 serverErrors: [],
                 saveCard: false
-                /* ,redirectUrl: '/s/SiteGenesis/cart?lang=en_US' */
+                /* ,redirectUrl: '/s/MobileFirst/cart?lang=en_US' */
             };
 
             return request(myRequest)
                 .then(function (response) {
                     var bodyAsJson = JSON.parse(response.body);
                     var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
-                    assert.equal(response.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
+                    assert.equal(response.statusCode, 200, 'Expected CheckoutServices-SubmitPayment statusCode to be 200.');
                     assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
                     done();
                 });

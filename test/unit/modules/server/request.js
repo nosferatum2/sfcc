@@ -1,8 +1,49 @@
 'use strict';
 
-var Request = require('../../../../cartridges/modules/server/request');
 var assert = require('chai').assert;
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var sinon = require('sinon');
+
 var ArrayList = require('../../../mocks/dw.util.Collection');
+
+var Request = proxyquire('../../../../cartridges/modules/server/request', {
+    'dw/util/Locale': {
+        getLocale: function () {
+            return { ID: 'en_US', country: 'US' };
+        }
+    },
+    'dw/util/Currency': {
+        getCurrency: function () {
+            return 'currency';
+        }
+    },
+    '*/cartridge/config/countries': [
+        {
+            'id': 'en_US',
+            'currencyCode': 'USD'
+        }, {
+            'id': 'en_GB',
+            'currencyCode': 'GBP'
+        }, {
+            'id': 'ja_JP',
+            'currencyCode': 'JPY'
+        }, {
+            'id': 'zh_CN',
+            'currencyCode': 'CNY'
+        }, {
+            'id': 'fr_FR',
+            'currencyCode': 'EUR'
+        }, {
+            'id': 'it_IT',
+            'currencyCode': 'EUR'
+        }]
+});
+
+var session = {
+    setCurrency: function () { return; }
+};
+
+var setCurrencyStub = sinon.stub(session, 'setCurrency');
 
 function createFakeRequest(overrides) {
     overrides = overrides || {}; // eslint-disable-line no-param-reassign
@@ -16,6 +57,12 @@ function createFakeRequest(overrides) {
         },
         isHttpSecure: function () {
             return false;
+        },
+        getHttpReferer: function () {
+            return 'https://www.salesforce.com';
+        },
+        getHttpRemoteAddress: function () {
+            return '0.0.0.0';
         },
         geolocation: {
             countryCode: 'US',
@@ -101,7 +148,8 @@ function createFakeRequest(overrides) {
                     }
                 },
                 partial: false
-            }
+            },
+            setCurrency: setCurrencyStub
         }
     };
     Object.keys(overrides).forEach(function (key) {
@@ -111,12 +159,17 @@ function createFakeRequest(overrides) {
 }
 
 describe('request', function () {
+    afterEach(function () {
+        setCurrencyStub.reset();
+    });
+
     it('should parse empty query string', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.isObject(req.querystring);
         assert.equal(Object.keys(req.querystring).length, 0);
         assert.equal(req.querystring.toString(), '');
     });
+
     it('should parse simple query string', function () {
         var req = new Request(createFakeRequest({ httpQueryString: 'id=22&name=foo' }), createFakeRequest().customer, createFakeRequest().session);
         assert.isObject(req.querystring);
@@ -124,6 +177,7 @@ describe('request', function () {
         assert.equal(req.querystring.name, 'foo');
         assert.equal(req.querystring.toString(), 'id=22&name=foo');
     });
+
     it('should parse query string with variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_bar_size=32&dwvar_foo_color=1111'
@@ -136,6 +190,7 @@ describe('request', function () {
         assert.notProperty(req.querystring, 'dwvar_bar_size');
         assert.equal(req.querystring.toString(), 'dwvar_bar_size=32&dwvar_foo_color=1111');
     });
+
     it('should parse query string with incorrectly formatted variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_color=1111&dwvar_size=32'
@@ -145,12 +200,14 @@ describe('request', function () {
         assert.notProperty(req.querystring, 'variables');
         assert.equal(req.querystring.toString(), 'dwvar_color=1111&dwvar_size=32');
     });
+
     it('should contain correct geolocation object and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.geolocation.countryCode, 'US');
         assert.equal(req.geolocation.latitude, 42.4019);
         assert.equal(req.geolocation.longitude, -71.1193);
     });
+
     it('should contain correct current customer profile and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.currentCustomer.profile.firstName, 'John');
@@ -158,12 +215,14 @@ describe('request', function () {
         assert.equal(req.currentCustomer.profile.email, 'jsnow@starks.com');
         assert.equal(req.currentCustomer.profile.phone, '1234567890');
     });
+
     it('should contain correct customer credentials when customer unauthenticated', function () {
         var fakeRequest = createFakeRequest();
         fakeRequest.customer.authenticated = false;
         var req = new Request(fakeRequest, fakeRequest.customer, createFakeRequest().session);
         assert.equal(req.currentCustomer.credentials.username, 'jsnow@starks.com');
     });
+
     it('should contain correct current customer address book and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(
@@ -207,6 +266,7 @@ describe('request', function () {
             'MA'
         );
     });
+
     it('should contain correct current customer wallet and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = createFakeRequest();
@@ -215,14 +275,17 @@ describe('request', function () {
             expectedResult.customer.profile.wallet.paymentInstruments[0]
         );
     });
-    it('should not fail if customer doesn not exist', function () {
+
+    it('should not fail if customer does not exist', function () {
         var req = new Request(createFakeRequest({ customer: null }), null, createFakeRequest().session);
         assert.equal(req.host, 'localhost');
     });
+
     it('should not fail if customer does not have a profile', function () {
         var req = new Request(createFakeRequest({ customer: { profile: null } }), { profile: null }, createFakeRequest().session);
         assert.equal(req.currentCustomer.raw.profile, null);
     });
+
     it('should retrieve form properties', function () {
         var items = {
             one: { rawValue: 1 },
@@ -264,6 +327,7 @@ describe('request', function () {
         assert.isUndefined(req.form.submitted);
         assert.isUndefined(req.form.id);
     });
+
     it('should contain locale ID', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = createFakeRequest();
@@ -272,6 +336,7 @@ describe('request', function () {
             expectedResult.locale
         );
     });
+
     it('should contain session currency', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = createFakeRequest();
@@ -280,11 +345,13 @@ describe('request', function () {
             expectedResult.session.currency
         );
     });
+
     it('should contain session privacy', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = req.session.raw.privacyCache.get('key');
         assert.equal(expectedResult, 'value');
     });
+
     it('should contain session clickStream', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedClick = {
@@ -308,5 +375,48 @@ describe('request', function () {
         };
 
         assert.deepEqual(req.session.clickStream, expectedResult);
+    });
+
+    it('should call setCurrency once', function () {
+        new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.isTrue(setCurrencyStub.calledOnce);
+    });
+
+    it('should contain correct geolocation object and properties wehn co geolocation exists', function () {
+        var fakeRequest = createFakeRequest();
+        delete fakeRequest.geolocation;
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.geolocation.countryCode, 'US');
+        assert.equal(req.geolocation.latitude, 90.0000);
+        assert.equal(req.geolocation.longitude, 0.0000);
+    });
+
+    it('should contain the correct referer', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.referer, 'https://www.salesforce.com');
+    });
+
+    it('should contain the correct remote address', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.remoteAddress, '0.0.0.0');
+    });
+
+    it('should not get body as string for a GET request', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, null);
+    });
+
+    it('should get body as string for a POST request', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.httpMethod = 'POST';
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, '');
+    });
+
+    it('should get body as string for a PUT request', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.httpMethod = 'PUT';
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, '');
     });
 });

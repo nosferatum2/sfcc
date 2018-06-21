@@ -1,7 +1,6 @@
 'use strict';
 
-var countries = require('*/cartridge/models/countries');
-
+var countries = require('*/cartridge/config/countries');
 var ApiLocale = require('dw/util/Locale');
 
 /**
@@ -24,12 +23,24 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
                 localID: locale.id,
                 country: apiLocale.country,
                 displayCountry: apiLocale.displayCountry,
-                currencyCode: locale.currencyCode
+                currencyCode: locale.currencyCode,
+                displayName: apiLocale.displayName,
+                language: apiLocale.language,
+                displayLanguage: apiLocale.displayLanguage
             };
             localeOptions.push(localeOption);
         }
     });
     return localeOptions;
+}
+
+/**
+ * Performs a deeper check on a plain locale object
+ * @param {dw.util.Locale} currentLocale - current locale of the request
+ * @return {boolean} - returns true
+ */
+function isLocaleValid(currentLocale) {
+    return currentLocale && currentLocale.ID;
 }
 
 /**
@@ -40,7 +51,7 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
  * @constructor
  */
 function Locale(currentLocale, allowedLocales, siteId) {
-    var currentCountry = !currentLocale || currentLocale.country === '' ? countries[0]
+    var currentCountry = !isLocaleValid(currentLocale) ? countries[0]
         : countries.filter(function (country) {
             return country.id === currentLocale.ID;
         })[0];
@@ -49,7 +60,10 @@ function Locale(currentLocale, allowedLocales, siteId) {
         countryCode: currentLocale.country,
         name: currentLocale.displayCountry,
         localLinks: getLocaleLinks(allowedLocales, siteId, currentLocale.ID),
-        currencyCode: currentCountry.currencyCode
+        currencyCode: currentCountry.currencyCode,
+        displayName: currentLocale.displayName,
+        language: currentLocale.language,
+        displayLanguage: currentLocale.displayLanguage
     };
 }
 

@@ -12,6 +12,7 @@ describe('Content', function () {
             name: 'contentAssetName',
             template: 'templateName',
             UUID: 22,
+            ID: 'contentAssetID',
             online: true
         };
 
@@ -21,6 +22,7 @@ describe('Content', function () {
             body: 'Hello',
             name: 'contentAssetName',
             template: 'templateName',
+            ID: 'contentAssetID',
             UUID: 22 });
     });
 
@@ -61,7 +63,7 @@ describe('Content', function () {
 
         var content = new Content(contentValue);
 
-        assert.equal(content.template, 'components/content/contentassetinc');
+        assert.equal(content.template, 'components/content/contentAssetInc');
     });
 
     it('should return undefined for the body if online flag is false', function () {

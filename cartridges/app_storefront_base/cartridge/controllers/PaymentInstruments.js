@@ -4,6 +4,7 @@ var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Checks if a credit card is valid or not
@@ -20,17 +21,26 @@ function verifyCard(card, form) {
     var paymentCard = PaymentMgr.getPaymentCard(card.cardType);
     var error = false;
     var cardNumber = card.cardNumber;
-    var creditCardStatus = paymentCard.verify(
-        card.expirationMonth,
-        card.expirationYear,
-        cardNumber
-    );
+    var creditCardStatus;
+    var formCardNumber = form.cardNumber;
 
-    if (creditCardStatus.error) {
+    if (paymentCard) {
+        creditCardStatus = paymentCard.verify(
+            card.expirationMonth,
+            card.expirationYear,
+            cardNumber
+        );
+    } else {
+        formCardNumber.valid = false;
+        formCardNumber.error =
+            Resource.msg('error.message.creditnumber.invalid', 'forms', null);
+        error = true;
+    }
+
+    if (creditCardStatus && creditCardStatus.error) {
         collections.forEach(creditCardStatus.items, function (item) {
             switch (item.code) {
                 case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                    var formCardNumber = form.cardNumber;
                     formCardNumber.valid = false;
                     formCardNumber.error =
                         Resource.msg('error.message.creditnumber.invalid', 'forms', null);
@@ -85,7 +95,7 @@ function getExpirationYears() {
     return creditCardExpirationYears;
 }
 
-server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Resource = require('dw/web/Resource');
     var AccountModel = require('*/cartridge/models/account');
@@ -112,19 +122,20 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
 server.get(
     'AddPayment',
     csrfProtection.generateToken,
+    consentTracking.consent,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var URLUtils = require('dw/web/URLUtils');
         var Resource = require('dw/web/Resource');
 
         var creditCardExpirationYears = getExpirationYears();
-        var paymentForm = server.forms.getForm('creditcard');
+        var paymentForm = server.forms.getForm('creditCard');
         paymentForm.clear();
         var months = paymentForm.expirationMonth.options;
         for (var j = 0, k = months.length; j < k; j++) {
             months[j].selected = false;
         }
-        res.render('account/payment/editaddpayment', {
+        res.render('account/payment/editAddPayment', {
             paymentForm: paymentForm,
             expirationYears: creditCardExpirationYears,
             breadcrumbs: [
@@ -150,18 +161,13 @@ server.get(
 server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var formErrors = require('*/cartridge/scripts/formErrors');
     var HookMgr = require('dw/system/HookMgr');
+    var PaymentMgr = require('dw/order/PaymentMgr');
+    var dwOrderPaymentInstrument = require('dw/order/PaymentInstrument');
 
-    var data = res.getViewData();
-    if (data && data.csrfError) {
-        res.json();
-        return next();
-    }
-
-    var paymentForm = server.forms.getForm('creditcard');
+    var paymentForm = server.forms.getForm('creditCard');
     var result = getDetailsObject(paymentForm);
-    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
 
-    if (paymentForm.valid && !verifyCard(result, paymentForm, paymentInstruments)) {
+    if (paymentForm.valid && !verifyCard(result, paymentForm)) {
         res.setViewData(result);
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var URLUtils = require('dw/web/URLUtils');
@@ -175,15 +181,16 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
             var wallet = customer.getProfile().getWallet();
 
             Transaction.wrap(function () {
-                var paymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+                var paymentInstrument = wallet.createPaymentInstrument(dwOrderPaymentInstrument.METHOD_CREDIT_CARD);
                 paymentInstrument.setCreditCardHolder(formInfo.name);
                 paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
                 paymentInstrument.setCreditCardType(formInfo.cardType);
                 paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
                 paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
 
+                var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
                 var token = HookMgr.callHook(
-                    'app.payment.processor.basic_credit',
+                    'app.payment.processor.' + processor.ID.toLowerCase(),
                     'createMockToken'
                 );
 
@@ -197,7 +204,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     } else {
         res.json({
             success: false,
-            fields: formErrors(paymentForm)
+            fields: formErrors.getFormErrors(paymentForm)
         });
     }
     return next();
@@ -246,13 +253,6 @@ server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, re
 
 server.get('Header', server.middleware.include, function (req, res, next) {
     res.render('account/header', { name:
-        req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
-    });
-    next();
-});
-
-server.get('Menu', server.middleware.include, function (req, res, next) {
-    res.render('account/menu', { name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
     });
     next();
