@@ -1,7 +1,8 @@
 'use strict';
 
-var HashMap = require('dw/util/HashMap');
-var Template = require('dw/util/Template');
+var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+var StoreModel = require('*/cartridge/models/store');
 
 /**
  * Creates an array of objects containing store information
@@ -11,58 +12,27 @@ var Template = require('dw/util/Template');
 function createStoresObject(storesObject) {
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
-        var storeObj = {
-            ID: store.ID,
-            name: store.name,
-            address1: store.address1,
-            address2: store.address2,
-            city: store.city,
-            postalCode: store.postalCode,
-            latitude: store.latitude,
-            longitude: store.longitude
-        };
-
-        if (store.phone) {
-            storeObj.phone = store.phone;
-        }
-
-        if (store.stateCode) {
-            storeObj.stateCode = store.stateCode;
-        }
-
-        if (store.countryCode) {
-            storeObj.countryCode = store.countryCode.value;
-        }
-
-        if (store.stateCode) {
-            storeObj.stateCode = store.stateCode;
-        }
-
-        if (store.storeHours) {
-            storeObj.storeHours = store.storeHours.markup;
-        }
-
-        if (store.inventoryListID || (store.custom && store.custom.inventoryListId)) {
-            storeObj.inventoryListId = store.inventoryListID || store.custom.inventoryListId;
-        }
-
-        return storeObj;
+        var storeModel = new StoreModel(store);
+        return storeModel;
     });
 }
 
 /**
  * Creates an array of objects containing the coordinates of the store's returned by the search
  * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
- * @returns {Array} an array of coordinates  objects
+ * @returns {Array} an array of coordinates objects with store info
  */
 function createGeoLocationObject(storesObject) {
+    var context;
+    var template = 'storeLocator/storeInfoWindow';
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
-
+        context = { store: store };
         return {
             name: store.name,
             latitude: store.latitude,
-            longitude: store.longitude
+            longitude: store.longitude,
+            infoWindowHtml: renderTemplateHelper.getRenderedHtml(context, template)
         };
     });
 }
@@ -84,22 +54,6 @@ function getGoogleMapsApi(apiKey) {
 }
 
 /**
- * create the stores results html
- * @param {Array} storesInfo - an array of objects that contains store information
- * @returns {string} The rendered HTML
- */
-function createStoresResultsHtml(storesInfo) {
-    var context = new HashMap();
-    var object = { stores: storesInfo };
-    Object.keys(object).forEach(function (key) {
-        context.put(key, object[key]);
-    });
-
-    var template = new Template('storelocator/storelocatorresults');
-    return template.render(context).text;
-}
-
-/**
  * @constructor
  * @classdesc The stores model
  * @param {dw.util.Set} storesResultsObject - a set of <dw.catalog.Store> objects
@@ -116,7 +70,7 @@ function stores(storesResultsObject, searchKey, searchRadius, actionUrl, apiKey)
     this.actionUrl = actionUrl;
     this.googleMapsApi = getGoogleMapsApi(apiKey);
     this.radiusOptions = [15, 30, 50, 100, 300];
-    this.storesResultsHtml = this.stores ? createStoresResultsHtml(this.stores) : null;
+    this.storesResultsHtml = this.stores ? storeHelpers.createStoresResultsHtml(this.stores) : null;
 }
 
 module.exports = stores;

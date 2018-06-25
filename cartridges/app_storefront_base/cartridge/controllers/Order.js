@@ -6,60 +6,79 @@ var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
-    var OrderMgr = require('dw/order/OrderMgr');
-    var OrderModel = require('*/cartridge/models/order');
+server.get(
+    'Confirm',
+    consentTracking.consent,
+    server.middleware.https,
+    csrfProtection.generateToken,
+    function (req, res, next) {
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+        var OrderMgr = require('dw/order/OrderMgr');
+        var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
-    var order = OrderMgr.getOrder(req.querystring.ID);
-    var token = req.querystring.token ? req.querystring.token : null;
+        var order = OrderMgr.getOrder(req.querystring.ID);
+        var token = req.querystring.token ? req.querystring.token : null;
 
-    if (!order || !token || token !== order.orderToken) {
-        res.render('/error', {
-            message: Resource.msg('error.confirmation.error', 'confirmation', null)
-        });
+        if (!order
+            || !token
+            || token !== order.orderToken
+            || order.customer.ID !== req.currentCustomer.raw.ID
+        ) {
+            res.render('/error', {
+                message: Resource.msg('error.confirmation.error', 'confirmation', null)
+            });
+
+            return next();
+        }
+
+        var config = {
+            numberOfLineItems: '*'
+        };
+
+        var currentLocale = Locale.getLocale(req.locale.id);
+
+        var orderModel = new OrderModel(
+            order,
+            { config: config, countryCode: currentLocale.country, containerView: 'order' }
+        );
+        var passwordForm;
+
+        var reportingURLs = reportingUrlsHelper.getOrderReportingURLs(order);
+
+        if (!req.currentCustomer.profile) {
+            passwordForm = server.forms.getForm('newPasswords');
+            passwordForm.clear();
+            res.render('checkout/confirmation/confirmation', {
+                order: orderModel,
+                returningCustomer: false,
+                passwordForm: passwordForm,
+                reportingURLs: reportingURLs
+            });
+        } else {
+            res.render('checkout/confirmation/confirmation', {
+                order: orderModel,
+                returningCustomer: true,
+                reportingURLs: reportingURLs
+            });
+        }
 
         return next();
     }
+);
 
-    var config = {
-        numberOfLineItems: '*'
-    };
-
-    var orderModel = new OrderModel(order, { config: config });
-    var passwordForm;
-
-    var reportingURLs = reportingUrls.getOrderReportingURLs(order);
-
-    if (!req.currentCustomer.profile) {
-        passwordForm = server.forms.getForm('newpasswords');
-        passwordForm.clear();
-        res.render('checkout/confirmation/confirmation', {
-            order: orderModel,
-            returningCustomer: false,
-            passwordForm: passwordForm,
-            reportingURLs: reportingURLs
-        });
-    } else {
-        res.render('checkout/confirmation/confirmation', {
-            order: orderModel,
-            returningCustomer: true,
-            reportingURLs: reportingURLs
-        });
-    }
-
-    return next();
-});
-
-server.post(
+server.get(
     'Track',
+    consentTracking.consent,
     server.middleware.https,
     csrfProtection.validateRequest,
     csrfProtection.generateToken,
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
         var order;
         var validForm = true;
@@ -67,8 +86,10 @@ server.post(
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
 
-        if (req.form.trackOrderEmail && req.form.trackOrderPostal && req.form.trackOrderNumber) {
-            order = OrderMgr.getOrder(req.form.trackOrderNumber);
+        if (req.querystring.trackOrderEmail
+            && req.querystring.trackOrderPostal
+            && req.querystring.trackOrderNumber) {
+            order = OrderMgr.getOrder(req.querystring.trackOrderNumber);
         } else {
             validForm = false;
         }
@@ -85,14 +106,21 @@ server.post(
             var config = {
                 numberOfLineItems: '*'
             };
-            var orderModel = new OrderModel(order, { config: config });
+
+            var currentLocale = Locale.getLocale(req.locale.id);
+
+            var orderModel = new OrderModel(
+                order,
+                { config: config, countryCode: currentLocale.country, containerView: 'order' }
+            );
 
             // check the email and postal code of the form
-            if (req.form.trackOrderEmail !== orderModel.orderEmail) {
+            if (req.querystring.trackOrderEmail.toLowerCase()
+                    !== orderModel.orderEmail.toLowerCase()) {
                 validForm = false;
             }
 
-            if (req.form.trackOrderPostal
+            if (req.querystring.trackOrderPostal
                 !== orderModel.billing.billingAddress.address.postalCode) {
                 validForm = false;
             }
@@ -106,10 +134,10 @@ server.post(
                     : Resource.msg('link.orderdetails.myaccount', 'account', null);
 
                 exitLinkUrl = !req.currentCustomer.profile
-                    ? URLUtils.https('Home-Show')
+                    ? URLUtils.url('Home-Show')
                     : URLUtils.https('Account-Show');
 
-                res.render('account/orderdetails', {
+                res.render('account/orderDetails', {
                     order: orderModel,
                     exitLinkText: exitLinkText,
                     exitLinkUrl: exitLinkUrl
@@ -130,12 +158,17 @@ server.post(
 
 server.get(
     'History',
+    consentTracking.consent,
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
 
-        var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
+        var ordersResult = OrderHelpers.getOrders(
+            req.currentCustomer,
+            req.querystring,
+            req.locale.id
+        );
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
         var breadcrumbs = [
@@ -162,11 +195,13 @@ server.get(
 
 server.get(
     'Details',
+    consentTracking.consent,
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
@@ -191,11 +226,16 @@ server.get(
                 numberOfLineItems: '*'
             };
 
-            var orderModel = new OrderModel(order, { config: config });
+            var currentLocale = Locale.getLocale(req.locale.id);
+
+            var orderModel = new OrderModel(
+                order,
+                { config: config, countryCode: currentLocale.country, containerView: 'order' }
+            );
             var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
             var exitLinkUrl =
                 URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);
-            res.render('account/orderdetails', {
+            res.render('account/orderDetails', {
                 order: orderModel,
                 exitLinkText: exitLinkText,
                 exitLinkUrl: exitLinkUrl,
@@ -211,6 +251,7 @@ server.get(
 server.get(
     'Filtered',
     server.middleware.https,
+    consentTracking.consent,
     userLoggedIn.validateLoggedInAjax,
     function (req, res, next) {
         var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
@@ -221,11 +262,15 @@ server.get(
             return next();
         }
 
-        var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
+        var ordersResult = OrderHelpers.getOrders(
+            req.currentCustomer,
+            req.querystring,
+            req.locale.id
+        );
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
 
-        res.render('account/order/orderlist', {
+        res.render('account/order/orderList', {
             orders: orders,
             filterValues: filterValues,
             orderFilter: req.querystring.orderFilter,
@@ -242,15 +287,9 @@ server.post(
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var formErrors = require('*/cartridge/scripts/formErrors');
 
-        var passwordForm = server.forms.getForm('newpasswords');
+        var passwordForm = server.forms.getForm('newPasswords');
         var newPassword = passwordForm.newpassword.htmlValue;
         var confirmPassword = passwordForm.newpasswordconfirm.htmlValue;
         if (newPassword !== confirmPassword) {
@@ -287,6 +326,9 @@ server.post(
                 var newCustomerProfile;
                 var registeredUser;
 
+                delete registrationData.email;
+                delete registrationData.password;
+
                 // attempt to create a new user and log that user in.
                 try {
                     Transaction.wrap(function () {
@@ -299,7 +341,7 @@ server.post(
                             newCustomerProfile.firstName = registrationData.firstName;
                             newCustomerProfile.lastName = registrationData.lastName;
                             newCustomerProfile.phoneHome = registrationData.phone;
-                            newCustomerProfile.email = registrationData.email;
+                            newCustomerProfile.email = login;
                             order.setCustomer(newCustomer);
                             registeredUser = {
                                 email: login,
@@ -323,7 +365,7 @@ server.post(
             });
         } else {
             res.json({
-                fields: formErrors(passwordForm)
+                fields: formErrors.getFormErrors(passwordForm)
             });
         }
 

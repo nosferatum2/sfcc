@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var QueryString = require('../../../../cartridges/modules/server/querystring');
+var QueryString = require('../../../../cartridges/modules/server/queryString');
 
 describe('querystring', function () {
     describe('options parsing', function () {
@@ -45,6 +45,32 @@ describe('querystring', function () {
         it('should output preferences query params', function () {
             var paramsOutput = result.toString();
             assert.equal(paramsOutput, 'prefn1=pref1&prefn2=pref2&prefv1=pref1Value&prefv2=pref2Value');
+        });
+        it('should parse search refinement preference range query parameters', function () {
+            var rangeParams = 'prefn1=prefName&prefmin1=0&prefmax1=100';
+            var rangeResult = new QueryString(rangeParams);
+            assert.deepEqual(rangeResult.preferences, {
+                prefName: {
+                    min: '0',
+                    max: '100'
+                }
+            });
+        });
+    });
+
+    describe('handling special characters', function () {
+        var params = '?trackOrderNumber=01&trackOrderPostal=EC1A+1BB';
+        var result = new QueryString(params);
+
+        it('should handle the \'+\' with a \'%20\' which leads to a \' \'', function () {
+            assert.equal(result.trackOrderPostal, 'EC1A 1BB');
+        });
+    });
+    describe('handling url encoding of querystring', function () {
+        var params = '?dwvar_P12345_Maat=37%2B&pid=P12345';
+        var result = new QueryString(params);
+        it('should handle encoding properly', function () {
+            assert.equal(result.toString(), 'dwvar_P12345_Maat=37%2B&pid=P12345');
         });
     });
 });

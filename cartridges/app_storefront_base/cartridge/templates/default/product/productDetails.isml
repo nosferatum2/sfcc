@@ -9,19 +9,21 @@
     <isset name="product" value="${pdict.product}" scope="page" />
     <isset name="isQuickView" value="${false}" scope="page" />
     <isset name="isProductSet" value="${pdict.product.productType === 'set'}" scope="page" />
-    <isobject object="${product.raw}" view="detail">
-        <div class="container product-detail product-wrapper" data-pid="${product.id}">
+    <isobject object="${product.raw}" view="detail" />
+        <div class="container product-detail product-wrapper"
+            data-pid="${product.id}"
+            itemscope itemtype="http://schema.org/Product">
             <div class="row">
                 <div class="col-12">
                     <!---Breadcrumbs--->
-                    <div class="product-breadcrumb hidden-md-up">
-                        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                    <div class="product-breadcrumb d-md-none">
+                        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
                     </div>
 
                     <!-- Product Name -->
                     <div class="row">
-                        <div class="hidden-md-up col-sm-12">
-                            <h1 class="product-name">${product.productName}</h1>
+                        <div class="d-md-none col-sm-12">
+                            <h1 class="product-name" itemprop="name">${product.productName}</h1>
                         </div>
                     </div>
                 </div>
@@ -29,12 +31,12 @@
 
             <div class="row">
                 <!-- Product Images Carousel -->
-                <isinclude template="product/components/image_carousel" />
+                <isinclude template="product/components/imageCarousel" />
 
                 <div class="col-12 col-sm-6">
                     <!---Breadcrumbs--->
                     <div class="product-breadcrumb hidden-sm-down">
-                        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
                     </div>
 
                     <!-- Product Name -->
@@ -72,16 +74,14 @@
                         </isif>
 
                         <!-- Size Chart -->
-                        <isif condition="${product.variationAttributes}">
+                        <isif condition="${product.variationAttributes && product.sizeChartId}">
                             <div class="size-chart col-md-10 col-12">
                                 <isinclude template="product/components/sizeChart" />
                             </div>
                         </isif>
 
-                        <!-- Availability -->
-                        <div class="availability col-md-10 col-12 product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
-                            <isinclude template="product/components/availability" />
-                        </div>
+                        <!-- Product Availability -->
+                        <isinclude template="product/components/productAvailability" />
 
                         <!-- Applicable Promotions -->
                         <div class="col-md-10 col-12 promotions">
@@ -103,8 +103,8 @@
                             <isinclude template="product/components/addToCartProduct" />
                         </div>
 
-                        <!-- Add to Wishlist and Social Sharing Icons -->
-                        <isinclude template="product/components/wishlistSocial" />
+                        <!-- Social Sharing Icons -->
+                        <isinclude template="product/components/socialIcons" />
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             <isinclude template="product/components/descriptionAndDetails" />
 
             <div class="recommendations">
-                <isslot id="product-recommendations" description="Recommended products" context="global" />
+                <isslot id="product-recommendations-m" description="Recommended products" context="global" />
             </div>
         </div>
     </isobject>

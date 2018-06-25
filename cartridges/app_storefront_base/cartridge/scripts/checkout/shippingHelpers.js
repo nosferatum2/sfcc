@@ -6,6 +6,8 @@ var ShippingMgr = require('dw/order/ShippingMgr');
 
 var ShippingModel = require('*/cartridge/models/shipping');
 
+var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
+
 
 // Public (class) static model functions
 
@@ -13,15 +15,16 @@ var ShippingModel = require('*/cartridge/models/shipping');
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.Basket} currentBasket - the target Basket object
  * @param {Object} customer - the associated Customer Model object
+ * @param {string} containerView - view of the shipping models (order or basket)
  * @returns {dw.util.ArrayList} an array of ShippingModels
  */
-function getShippingModels(currentBasket, customer) {
+function getShippingModels(currentBasket, customer, containerView) {
     var shipments = currentBasket ? currentBasket.getShipments() : null;
 
     if (!shipments) return [];
 
     return collections.map(shipments, function (shipment) {
-        return new ShippingModel(shipment, null, customer);
+        return new ShippingModel(shipment, null, customer, containerView);
     });
 }
 
@@ -55,8 +58,7 @@ function getFirstApplicableShippingMethod(methods, filterPickupInStore) {
     var iterator = methods.iterator();
     while (iterator.hasNext()) {
         method = iterator.next();
-        // TODO: remove reference to '005' replace with constant
-        if (!filterPickupInStore || (filterPickupInStore && method.ID !== '005')) {
+        if (!filterPickupInStore || (filterPickupInStore && !method.custom.storePickupEnabled)) {
             break;
         }
     }
@@ -169,10 +171,40 @@ function getShipmentByUUID(basket, uuid) {
     });
 }
 
+/**
+ * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
+ * @param {dw.order.Shipment} shipment - the target Shipment
+ * @param {Object} [address] - optional address object
+ * @returns {dw.util.Collection} an array of ShippingModels
+ */
+function getApplicableShippingMethods(shipment, address) {
+    if (!shipment) return null;
+
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+
+    var shippingMethods;
+    if (address) {
+        shippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
+    } else {
+        shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
+    }
+
+    // Filter out whatever the method associated with in store pickup
+    var filteredMethods = [];
+    collections.forEach(shippingMethods, function (shippingMethod) {
+        if (!shippingMethod.custom.storePickupEnabled) {
+            filteredMethods.push(new ShippingMethodModel(shippingMethod, shipment));
+        }
+    });
+
+    return filteredMethods;
+}
+
 module.exports = {
     getShippingModels: getShippingModels,
     selectShippingMethod: selectShippingMethod,
     ensureShipmentHasMethod: ensureShipmentHasMethod,
     getShipmentByUUID: getShipmentByUUID,
-    getAddressFromRequest: getAddressFromRequest
+    getAddressFromRequest: getAddressFromRequest,
+    getApplicableShippingMethods: getApplicableShippingMethods
 };

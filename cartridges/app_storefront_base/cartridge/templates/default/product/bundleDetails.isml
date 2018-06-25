@@ -14,19 +14,20 @@
     </iscomment>
     <isset name="bundle" value="${pdict.product}" scope="page" />
     <isset name="product" value="${pdict.product}" scope="page" />
+    <isobject object="${product.raw}" view="detail" />
 
-    <div class="container product-detail" data-pid="${product.id}">
+    <div class="container product-detail" data-pid="${product.id}" itemscope itemtype="http://schema.org/Product">
         <div class="row">
             <div class="col-12">
                 <!---Breadcrumbs--->
                 <div class="product-breadcrumb">
-                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                    <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
                 </div>
 
                 <!-- Product Name -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="product-name">${product.productName}</h1>
+                        <h1 class="product-name" itemprop="name">${product.productName}</h1>
                     </div>
                 </div>
             </div>
@@ -34,7 +35,7 @@
 
         <div class="row product-bundle">
             <!-- Product Images Carousel -->
-            <isinclude template="product/components/image_carousel" />
+            <isinclude template="product/components/imageCarousel" />
 
             <div class="col-12 col-sm-6">
                 <div class="row">
@@ -79,14 +80,14 @@
                 <isinclude template="product/components/addToCartGlobal" />
             </div>
 
-            <!-- Add to Wishlist and Social Sharing Icons -->
-            <isinclude template="product/components/wishlistSocial" />
+            <!-- Social Sharing Icons -->
+            <isinclude template="product/components/socialIcons" />
         </div>
 
         <isinclude template="product/components/descriptionAndDetails" />
 
         <div class="recommendations">
-            <isslot id="product-recommendations" description="Recommended products" context="global" />
+            <isslot id="product-recommendations-m" description="Recommended products" context="global" />
         </div>
     </div>
 </isdecorate>

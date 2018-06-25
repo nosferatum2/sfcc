@@ -24,6 +24,8 @@ var formErrors = require('*/cartridge/scripts/formErrors');
 var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
+var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+
 // static functions needed for Checkout Controller logic
 
 /**
@@ -55,7 +57,7 @@ function prepareBillingForm() {
  * @returns {Object} the names of the invalid form fields
  */
 function validateFields(form) {
-    return formErrors(form);
+    return formErrors.getFormErrors(form);
 }
 
 /**
@@ -86,19 +88,6 @@ function isShippingAddressInitialized(shipment) {
     }
 
     return initialized;
-}
-
-/**
- * Returns true if Basket represents a pick up in store basket
- * @param {dw.order.Basket} basket - a ScriptAPI Basket object
- * @returns {boolean} - true, if pick up in store method is selected
- */
-function isPickUpInStore(basket) {
-    var isPickUpInStoreResult = false;
-    if (basket && basket.defaultShipment && basket.defaultShipment.shippingMethodID === '005') {
-        isPickUpInStoreResult = true;
-    }
-    return isPickUpInStoreResult;
 }
 
 /**
@@ -190,9 +179,9 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
 /**
  * Copies a raw address object to the baasket billing address
  * @param {Object} address - an address-similar Object (firstName, ...)
+ * @param {Object} currentBasket - the current shopping basket
  */
-function copyBillingAddressToBasket(address) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+function copyBillingAddressToBasket(address, currentBasket) {
     var billingAddress = currentBasket.billingAddress;
 
     Transaction.wrap(function () {
@@ -235,6 +224,24 @@ function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
 }
 
 /**
+ * Loop through all shipments and make sure all not null
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
+ * @returns {boolean} - allValid
+ */
+function ensureValidShipments(lineItemContainer) {
+    var shipments = lineItemContainer.shipments;
+    var allValid = collections.every(shipments, function (shipment) {
+        if (shipment) {
+            var address = shipment.shippingAddress;
+            return address && address.address1;
+        }
+        return false;
+    });
+    return allValid;
+}
+
+
+/**
  * Ensures that no shipment exists with 0 product line items
  * @param {Object} req - the request object needed to access session.privacyCache
  */
@@ -273,6 +280,11 @@ function ensureNoEmptyShipments(req) {
                         currentBasket.defaultShipment.createShippingAddress();
                     }
 
+                    if (altShipment.custom && altShipment.custom.fromStoreId && altShipment.custom.shipmentType) {
+                        currentBasket.defaultShipment.custom.fromStoreId = altShipment.custom.fromStoreId;
+                        currentBasket.defaultShipment.custom.shipmentType = altShipment.custom.shipmentType;
+                    }
+
                     currentBasket.defaultShipment.setShippingMethod(altShipment.shippingMethod);
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);
@@ -295,7 +307,7 @@ function ensureNoEmptyShipments(req) {
 function recalculateBasket(currentBasket) {
     // Calculate the basket
     Transaction.wrap(function () {
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 }
 
@@ -512,15 +524,18 @@ function handlePayments(order, orderNumber) {
 /**
  * Sends a confirmation to the current user
  * @param {dw.order.Order} order - The current user's order
+ * @param {string} locale - the current request's locale id
  * @returns {void}
  */
-function sendConfirmationEmail(order) {
+function sendConfirmationEmail(order, locale) {
     var OrderModel = require('*/cartridge/models/order');
+    var Locale = require('dw/util/Locale');
 
     var confirmationEmail = new Mail();
     var context = new HashMap();
+    var currentLocale = Locale.getLocale(locale);
 
-    var orderModel = new OrderModel(order);
+    var orderModel = new OrderModel(order, { countryCode: currentLocale.country });
 
     var orderObject = { order: orderModel };
 
@@ -542,9 +557,10 @@ function sendConfirmationEmail(order) {
 /**
  * Attempts to place the order
  * @param {dw.order.Order} order - The order object to be placed
+ * @param {Object} fraudDetectionStatus - an Object returned by the fraud detection hook
  * @returns {Object} an error object
  */
-function placeOrder(order) {
+function placeOrder(order, fraudDetectionStatus) {
     var result = { error: false };
 
     try {
@@ -553,7 +569,13 @@ function placeOrder(order) {
         if (placeOrderStatus === Status.ERROR) {
             throw new Error();
         }
-        order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+
+        if (fraudDetectionStatus.status === 'flag') {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_NOTCONFIRMED);
+        } else {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+        }
+
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {
@@ -575,7 +597,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     var wallet = customer.getProfile().getWallet();
 
     return Transaction.wrap(function () {
-        var storedPaymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+        var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
         storedPaymentInstrument.setCreditCardHolder(
             currentBasket.billingAddress.fullName
@@ -593,8 +615,9 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
             billingData.paymentInformation.expirationYear.value
         );
 
+        var processor = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         var token = HookMgr.callHook(
-            'app.payment.processor.basic_credit',
+            'app.payment.processor.' + processor.ID.toLowerCase(),
             'createMockToken'
         );
 
@@ -635,7 +658,6 @@ module.exports = {
     ensureNoEmptyShipments: ensureNoEmptyShipments,
     getProductLineItem: getProductLineItem,
     isShippingAddressInitialized: isShippingAddressInitialized,
-    isPickUpInStore: isPickUpInStore,
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
     copyCustomerAddressToShipment: copyCustomerAddressToShipment,
@@ -654,5 +676,6 @@ module.exports = {
     placeOrder: placeOrder,
     savePaymentInstrumentToWallet: savePaymentInstrumentToWallet,
     getRenderedPaymentInstruments: getRenderedPaymentInstruments,
-    sendConfirmationEmail: sendConfirmationEmail
+    sendConfirmationEmail: sendConfirmationEmail,
+    ensureValidShipments: ensureValidShipments
 };

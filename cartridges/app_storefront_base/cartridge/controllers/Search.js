@@ -4,6 +4,7 @@ var server = require('server');
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Set search configuration values
@@ -53,26 +54,58 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
-    res.render('/search/productgrid', {
+    res.render('/search/productGrid', {
         productSearch: productSearch
     });
 
     next();
 });
 
-server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
+server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+
+    var apiProductSearch = new ProductSearchModel();
+    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch.search();
+    var productSearch = new ProductSearch(
+        apiProductSearch,
+        req.querystring,
+        req.querystring.srule,
+        CatalogMgr.getSortingOptions(),
+        CatalogMgr.getSiteCatalog().getRoot()
+    );
+    res.render('/search/searchRefineBar', {
+        productSearch: productSearch,
+        querystring: req.querystring
+    });
+
+    next();
+});
+
+
+server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var ProductSearch = require('*/cartridge/models/search/productSearch');
+    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+    var URLUtils = require('dw/web/URLUtils');
 
     var categoryTemplate = '';
     var productSearch;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
         && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
-    var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
+    var resultsTemplate = isAjax ? 'search/searchResultsNoDecorator' : 'search/searchResults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
     var reportingURLs;
+    var searchRedirect = req.querystring.q
+        ? apiProductSearch.getSearchRedirect(req.querystring.q)
+        : null;
+
+    if (searchRedirect) {
+        res.redirect(searchRedirect.getLocation());
+        return next();
+    }
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -86,8 +119,24 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
+    var refineurl = URLUtils.url('Search-Refinebar');
+    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
+    Object.keys(req.querystring).forEach(function (element) {
+        if (whitelistedParams.indexOf(element) > -1) {
+            refineurl.append(element, req.querystring[element]);
+        }
+        if (element === 'preferences') {
+            var i = 1;
+            Object.keys(req.querystring[element]).forEach(function (preference) {
+                refineurl.append('prefn' + i, preference);
+                refineurl.append('prefv' + i, req.querystring[element][preference]);
+                i++;
+            });
+        }
+    });
+
     if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
-        reportingURLs = reportingUrls.getProductSearchReportingURLs(productSearch);
+        reportingURLs = reportingUrlsHelper.getProductSearchReportingURLs(productSearch);
     }
 
     if (
@@ -100,28 +149,31 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
             res.render(resultsTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                reportingURLs: reportingURLs
+                reportingURLs: reportingURLs,
+                refineurl: refineurl
             });
         } else {
             res.render(categoryTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
                 category: apiProductSearch.category,
-                reportingURLs: reportingURLs
+                reportingURLs: reportingURLs,
+                refineurl: refineurl
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
             maxSlots: maxSlots,
-            reportingURLs: reportingURLs
+            reportingURLs: reportingURLs,
+            refineurl: refineurl
         });
     }
 
-    next();
+    return next();
 });
 
-server.get('Content', cache.applyDefaultCache, function (req, res, next) {
+server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentSearchModel = require('dw/content/ContentSearchModel');
     var ContentSearch = require('*/cartridge/models/search/contentSearch');
     var apiContentSearchModel = new ContentSearchModel();
@@ -137,56 +189,9 @@ server.get('Content', cache.applyDefaultCache, function (req, res, next) {
     var count = Number(apiContentSearchModel.getCount());
     contentSearch = new ContentSearch(contentSearchResult, count, queryPhrase, startingPage, null);
 
-    res.render('/search/contentgrid', {
+    res.render('/search/contentGrid', {
         contentSearch: contentSearch
     });
-    next();
-});
-
-server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) {
-    var SuggestModel = require('dw/suggest/SuggestModel');
-    var CategorySuggestions = require('*/cartridge/models/search/suggestions/category');
-    var ContentSuggestions = require('*/cartridge/models/search/suggestions/content');
-    var ProductSuggestions = require('*/cartridge/models/search/suggestions/product');
-    var categorySuggestions;
-    var contentSuggestions;
-    var productSuggestions;
-    var searchTerms = req.querystring.q;
-    var suggestions;
-    // TODO: Move minChars and maxSuggestions to Site Preferences when ready for refactoring
-    var minChars = 3;
-    // Unfortunately, by default, max suggestions is set to 10 and is not configurable in Business
-    // Manager.
-    var maxSuggestions = 3;
-
-    if (searchTerms.length >= minChars) {
-        suggestions = new SuggestModel();
-        suggestions.setSearchPhrase(searchTerms);
-        suggestions.setMaxSuggestions(maxSuggestions);
-        categorySuggestions = new CategorySuggestions(suggestions.categorySuggestions,
-            maxSuggestions);
-        contentSuggestions = new ContentSuggestions(suggestions.contentSuggestions, maxSuggestions);
-        productSuggestions = new ProductSuggestions(suggestions.productSuggestions, maxSuggestions);
-
-        if (productSuggestions.available || contentSuggestions.available
-            || categorySuggestions.available) {
-            res.render('search/suggestions', {
-                suggestions: {
-                    product: productSuggestions,
-                    category: categorySuggestions,
-                    content: contentSuggestions
-                }
-            });
-        } else {
-            res.json({});
-        }
-    } else {
-        // Return an empty object that can be checked on the client.  By default, rendered
-        // templates automatically get a diagnostic string injected into it, making it difficult
-        // to check for a null or empty response on the client.
-        res.json({});
-    }
-
     next();
 });
 

@@ -5,36 +5,73 @@ var ProductFactory = require('*/cartridge/scripts/factories/product');
 
 /**
  * Creates an array of product line items
- * @param {dw.util.Collection <dw.order.ProductLineItem>} allLineItems - All product
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} allLineItems - All product
  * line items of the basket
+ * @param {string} view - the view of the line item (basket or order)
  * @returns {Array} an array of product line items.
  */
-function createProductLineItemsObject(allLineItems) {
-    var lineItems = collections.map(allLineItems, function (item) {
+function createProductLineItemsObject(allLineItems, view) {
+    var lineItems = [];
+
+    collections.forEach(allLineItems, function (item) {
+        if (!item.product) { return; }
         var options = collections.map(item.optionProductLineItems, function (optionItem) {
             return {
                 optionId: optionItem.optionID,
                 selectedValueId: optionItem.optionValueID
             };
         });
+
+        var bonusProducts = null;
+
+        if (!item.bonusProductLineItem
+                && item.custom.bonusProductLineItemUUID
+                && item.custom.preOrderUUID) {
+            bonusProducts = [];
+            collections.forEach(allLineItems, function (bonusItem) {
+                if (!!item.custom.preOrderUUID && bonusItem.custom.bonusProductLineItemUUID === item.custom.preOrderUUID) {
+                    var bpliOptions = collections.map(bonusItem.optionProductLineItems, function (boptionItem) {
+                        return {
+                            optionId: boptionItem.optionID,
+                            selectedValueId: boptionItem.optionValueID
+                        };
+                    });
+                    var params = {
+                        pid: bonusItem.product.ID,
+                        quantity: bonusItem.quantity.value,
+                        variables: null,
+                        pview: 'bonusProductLineItem',
+                        containerView: view,
+                        lineItem: bonusItem,
+                        options: bpliOptions
+                    };
+
+                    bonusProducts.push(ProductFactory.get(params));
+                }
+            });
+        }
+
         var params = {
             pid: item.product.ID,
             quantity: item.quantity.value,
             variables: null,
             pview: 'productLineItem',
+            containerView: view,
             lineItem: item,
             options: options
         };
-
-        return ProductFactory.get(params);
+        var newLineItem = ProductFactory.get(params);
+        newLineItem.bonusProducts = bonusProducts;
+        if (newLineItem.bonusProductLineItemUUID === 'bonus' || !newLineItem.bonusProductLineItemUUID) {
+            lineItems.push(newLineItem);
+        }
     });
-
     return lineItems;
 }
 
 /**
  * Loops through all of the product line items and adds the quantities together.
- * @param {dw.util.Collection <dw.order.ProductLineItem>} items - All product
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} items - All product
  * line items of the basket
  * @returns {number} a number representing all product line items in the lineItem container.
  */
@@ -55,10 +92,11 @@ function getTotalQuantity(items) {
  *
  * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - the product line items
  *                                                       of the current line item container
+ * @param {string} view - the view of the line item (basket or order)
  */
-function ProductLineItems(productLineItems) {
+function ProductLineItems(productLineItems, view) {
     if (productLineItems) {
-        this.items = createProductLineItemsObject(productLineItems);
+        this.items = createProductLineItemsObject(productLineItems, view);
         this.totalQuantity = getTotalQuantity(productLineItems);
     } else {
         this.items = [];

@@ -1,103 +1,78 @@
+'use strict';
 
 /**
  * Searches for stores and creates a plain object of the stores returned by the search
- * @param {Object} req - local instance of request object
+ * @param {string} radius - selected radius
+ * @param {string} postalCode - postal code for search
+ * @param {string} lat - latitude for search by latitude
+ * @param {string} long - longitude for search by longitude
+ * @param {Object} geolocation - geloaction object with latitude and longitude
+ * @param {boolean} showMap - boolean to show map
+ * @param {dw.web.URL} url - a relative url
  * @returns {Object} a plain object containing the results of the search
  */
-function getModel(req) {
+function getStores(radius, postalCode, lat, long, geolocation, showMap, url) {
     var StoresModel = require('*/cartridge/models/stores');
     var StoreMgr = require('dw/catalog/StoreMgr');
     var Site = require('dw/system/Site');
     var URLUtils = require('dw/web/URLUtils');
 
-    var countryCode = req.geolocation.countryCode;
+    var countryCode = geolocation.countryCode;
     var distanceUnit = countryCode === 'US' ? 'mi' : 'km';
-    var radius = req.querystring.radius ? parseInt(req.querystring.radius, 10) : 15;
+    var resolvedRadius = radius ? parseInt(radius, 10) : 15;
 
-    var lat;
-    var long;
-    var searchKey;
-    var storesMgrResult;
+    var searchKey = {};
+    var storeMgrResult = null;
+    var location = {};
 
-    if (req.querystring.postalCode && req.querystring.postalCode !== '') {
+    if (postalCode && postalCode !== '') {
         // find by postal code
-        searchKey = req.querystring.postalCode;
-        storesMgrResult = StoreMgr.searchStoresByPostalCode(
+        searchKey = postalCode;
+        storeMgrResult = StoreMgr.searchStoresByPostalCode(
             countryCode,
             searchKey,
             distanceUnit,
-            radius
+            resolvedRadius
         );
         searchKey = { postalCode: searchKey };
-    } else if (req.querystring.lat && req.querystring.long) {
-        // find by coordinates (detect location)
-        lat = parseFloat(req.querystring.lat);
-        long = parseFloat(req.querystring.long);
-
-        storesMgrResult = StoreMgr.searchStoresByCoordinates(lat, long, distanceUnit, radius);
-        searchKey = { lat: lat, long: long };
     } else {
-        // initial load dw geolocation
-        lat = req.geolocation.latitude;
-        long = req.geolocation.longitude;
+        // find by coordinates (detect location)
+        location.lat = lat && long ? parseFloat(lat) : geolocation.latitude;
+        location.long = long && lat ? parseFloat(long) : geolocation.longitude;
 
-        storesMgrResult = StoreMgr.searchStoresByCoordinates(lat, long, distanceUnit, radius);
-        searchKey = { lat: lat, long: long };
+        storeMgrResult = StoreMgr.searchStoresByCoordinates(location.lat, location.long, distanceUnit, resolvedRadius);
+        searchKey = { lat: location.lat, long: location.long };
     }
 
-    var actionUrl = URLUtils.url('Stores-FindStores').toString();
+    var actionUrl = url || URLUtils.url('Stores-FindStores', 'showMap', showMap).toString();
     var apiKey = Site.getCurrent().getCustomPreferenceValue('mapAPI');
 
-    return new StoresModel(storesMgrResult.keySet(), searchKey, radius, actionUrl, apiKey);
+    var stores = new StoresModel(storeMgrResult.keySet(), searchKey, resolvedRadius, actionUrl, apiKey);
+
+    return stores;
 }
 
 /**
- * Returns an array of storeModel objects which have inventory for one or more PLIs
- * @param {Object} storesModel - a StoresModel instance to filter from
- * @param {Array<Object>} pliQtys - an array of objects with productID and quantityValue pairs
- * @returns {Array} - an array of StoreModel instances
+ * create the stores results html
+ * @param {Array} storesInfo - an array of objects that contains store information
+ * @returns {string} The rendered HTML
  */
-function getFilteredStores(storesModel, pliQtys) {
-    var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
+function createStoresResultsHtml(storesInfo) {
+    var HashMap = require('dw/util/HashMap');
+    var Template = require('dw/util/Template');
 
-    var availableStores = [];
-    var store;
-    var inventoryList;
-    var inventoryListId;
-    var inventoryRecord;
-    var pli;
-    var productID;
-    var quantity;
-    var hasAvailableInventory;
+    var context = new HashMap();
+    var object = { stores: { stores: storesInfo } };
 
-    // Loop through available stores and make sure there is availability for all SKUs
-    for (var i = 0, ii = storesModel.stores.length; i < ii; i++) {
-        store = storesModel.stores[i];
-        inventoryListId = store.inventoryListId;
-        hasAvailableInventory = false;
-        if (inventoryListId) {
-            inventoryList = ProductInventoryMgr.getInventoryList(inventoryListId);
-            for (var j = 0, jj = pliQtys.length; j < jj; j++) {
-                pli = pliQtys[j];
-                productID = pli.productID;
-                quantity = pli.quantityValue;
-                inventoryRecord = inventoryList.getRecord(productID);
-                if (inventoryRecord && inventoryRecord.ATS.value >= quantity) {
-                    hasAvailableInventory = true;
-                } else {
-                    hasAvailableInventory = false;
-                    break;
-                }
-            }
-            if (hasAvailableInventory) {
-                availableStores.push(store);
-            }
-        }
-    }
-    return availableStores;
+    Object.keys(object).forEach(function (key) {
+        context.put(key, object[key]);
+    });
+
+    var template = new Template('storeLocator/storeLocatorResults');
+    return template.render(context).text;
 }
 
 module.exports = exports = {
-    getModel: getModel,
-    getFilteredStores: getFilteredStores
+    createStoresResultsHtml: createStoresResultsHtml,
+    getStores: getStores
 };

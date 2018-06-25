@@ -1,12 +1,27 @@
 'use strict';
 
 var server = require('server');
-
-var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+server.get('Find', server.middleware.https, cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
+    var radius = req.querystring.radius;
+    var postalCode = req.querystring.postalCode;
+    var lat = req.querystring.lat;
+    var long = req.querystring.long;
+    var showMap = req.querystring.showMap || false;
+    var horizontalView = req.querystring.horizontalView || false;
+    var isForm = req.querystring.isForm || false;
 
-server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
-    res.render('storelocator/storelocator', StoreHelpers.getModel(req));
+    var stores = storeHelpers.getStores(radius, postalCode, lat, long, req.geolocation, showMap);
+    var viewData = {
+        stores: stores,
+        horizontalView: horizontalView,
+        isForm: isForm,
+        showMap: showMap
+    };
+
+    res.render('storeLocator/storeLocator', viewData);
     next();
 });
 
@@ -20,51 +35,15 @@ server.get('Find', server.middleware.https, cache.applyDefaultCache, function (r
 // postalCode - The postal code that the user used to search.
 // radius - The radius that the user selected to refine the search
 server.get('FindStores', function (req, res, next) {
-    res.json(StoreHelpers.getModel(req));
-    next();
-});
+    var radius = req.querystring.radius;
+    var postalCode = req.querystring.postalCode;
+    var lat = req.querystring.lat;
+    var long = req.querystring.long;
+    var showMap = req.querystring.showMap || false;
 
-/**
- * Find stores within radius of location, which have all SKUs from Basket in stock
- */
-server.get('FindAvailableStores', server.middleware.https, function (req, res, next) {
-    var URLUtils = require('dw/web/URLUtils');
-    var BasketMgr = require('dw/order/BasketMgr');
+    var stores = storeHelpers.getStores(radius, postalCode, lat, long, req.geolocation, showMap);
 
-    var currentBasket = BasketMgr.getCurrentBasket();
-    if (!currentBasket) {
-        res.json({
-            error: true,
-            cartError: true,
-            fieldErrors: [],
-            serverErrors: [],
-            redirectUrl: URLUtils.url('Cart-Show').toString()
-        });
-        return;
-    }
-
-    var pliQtys;
-    if (req.querystring.pid) {
-        var pliQty = {
-            productID: req.querystring.pid
-        };
-        if (req.querystring.qty) {
-            pliQty.quantityValue = req.querystring.qty - 0;
-        } else {
-            pliQty.quantityValue = 1;
-        }
-        pliQtys = [pliQty];
-    } else {
-        pliQtys = currentBasket.productLineItems;
-    }
-
-    var storesModel = StoreHelpers.getModel(req);
-    var availableStores = StoreHelpers.getFilteredStores(storesModel, pliQtys);
-
-    res.json({
-        availableStores: availableStores
-    });
-
+    res.json(stores);
     next();
 });
 

@@ -1,6 +1,0 @@
-<isloop items="${pdict.stores}" var="store" status="loopstate">
-    <div class="card-block store">
-        <i class="fa fa-map-marker map-marker"></i>
-        <isinclude template="storelocator/storedetails" />
-    </div>
-</isloop>

@@ -1,7 +1,5 @@
 'use strict';
 
-var ShippingMgr = require('dw/order/ShippingMgr');
-
 var AddressModel = require('*/cartridge/models/address');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
@@ -10,47 +8,13 @@ var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.Shipment} shipment - the target Shipment
- * @param {Object} [address] - optional address object
- * @returns {dw.util.Collection} an array of ShippingModels
- */
-function getApplicableShippingMethods(shipment, address) {
-    if (!shipment) return null;
-
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-
-    var shippingMethods;
-    if (address) {
-        shippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
-    } else {
-        shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
-    }
-
-    // Filter out whatever the method associated with in store pickup
-    var filteredMethods = [];
-    var iterator = shippingMethods.iterator();
-    var method;
-    while (iterator.hasNext()) {
-        method = iterator.next();
-        // TODO: remove reference to '005' replace with constant
-        if (method.ID !== '005') {
-            filteredMethods.push(method);
-        }
-    }
-
-    return filteredMethods.map(function (shippingMethod) {
-        return new ShippingMethodModel(shippingMethod, shipment);
-    });
-}
-
-/**
- * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
- * @param {dw.order.Shipment} shipment - the target Shipment
+ * @param {string} containerView - the view of the product line items (order or basket)
  * @returns {ProductLineItemsModel} an array of ShippingModels
  */
-function getProductLineItemsModel(shipment) {
+function getProductLineItemsModel(shipment, containerView) {
     if (!shipment) return null;
 
-    return new ProductLineItemsModel(shipment.productLineItems);
+    return new ProductLineItemsModel(shipment.productLineItems, containerView);
 }
 
 /**
@@ -106,25 +70,42 @@ function getAssociatedAddress(shipment, customer) {
 }
 
 /**
+ * Returns a boolean indicating if the address is empty
+ * @param {dw.order.Shipment} shipment - A shipment from the current basket
+ * @returns {boolean} a boolean that indicates if the address is empty
+ */
+function emptyAddress(shipment) {
+    if (shipment && shipment.shippingAddress) {
+        return ['firstName', 'lastName', 'address1', 'address2', 'phone', 'city', 'postalCode', 'stateCode'].some(function (key) {
+            return shipment.shippingAddress[key];
+        });
+    }
+    return false;
+}
+
+/**
  * @constructor
  * @classdesc Model that represents shipping information
  *
  * @param {dw.order.Shipment} shipment - the default shipment of the current basket
  * @param {Object} address - the address to use to filter the shipping method list
  * @param {Object} customer - the current customer model
+ * @param {string} containerView - the view of the product line items (order or basket)
  */
-function ShippingModel(shipment, address, customer) {
-	// Simple properties
+function ShippingModel(shipment, address, customer, containerView) {
+    var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
+
+    // Simple properties
     this.UUID = getShipmentUUID(shipment);
 
-	// Derived properties
-    this.productLineItems = getProductLineItemsModel(shipment);
-    this.applicableShippingMethods = getApplicableShippingMethods(shipment, address);
+    // Derived properties
+    this.productLineItems = getProductLineItemsModel(shipment, containerView);
+    this.applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
     this.matchingAddressId = getAssociatedAddress(shipment, customer);
 
     // Optional properties
-    if (shipment && shipment.shippingAddress) {
+    if (emptyAddress(shipment)) {
         this.shippingAddress = new AddressModel(shipment.shippingAddress).address;
     } else {
         this.shippingAddress = address;

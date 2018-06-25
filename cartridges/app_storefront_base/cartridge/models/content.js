@@ -12,10 +12,11 @@ function content(contentValue, renderingTemplate) {
         return null;
     }
 
-    var usedRenderingTemplate = renderingTemplate || 'components/content/contentassetinc';
+    var usedRenderingTemplate = renderingTemplate || 'components/content/contentAssetInc';
 
     this.body = (contentValue && contentValue.custom && contentValue.custom.body) || null;
     this.UUID = contentValue.UUID;
+    this.ID = contentValue.ID;
     this.name = contentValue.name;
     this.template = contentValue.template || usedRenderingTemplate;
 

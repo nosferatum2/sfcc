@@ -52,11 +52,15 @@ var orderMgr = {
     },
     placeOrder: function () {
         return status.OK;
+    },
+    failOrder: function () {
+        return { order: 'failed order' };
     }
 };
 
 var order = {
-    CONFIRMATION_STATUS_CONFIRMED: 'order confirmation status confirmed',
+    CONFIRMATION_STATUS_NOTCONFIRMED: 'ONFIRMATION_STATUS_NOTCONFIRMED',
+    CONFIRMATION_STATUS_CONFIRMED: 'CONFIRMATION_STATUS_CONFIRMED',
     EXPORT_STATUS_READY: 'order export status is ready'
 };
 
@@ -64,6 +68,7 @@ function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/scripts/checkout/checkoutHelpers', {
         'server': server,
         '*/cartridge/scripts/util/collections': collections,
+        '*/cartridge/scripts/helpers/basketCalculationHelpers': { calculateTotals: function () {} },
 
         'dw/order/BasketMgr': basketMgr,
         'dw/util/HashMap': {},
