@@ -7,9 +7,9 @@ var BillingModel = require('*/cartridge/models/billing');
 var PaymentModel = require('*/cartridge/models/payment');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var TotalsModel = require('*/cartridge/models/totals');
+var COHelper = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
@@ -28,8 +28,6 @@ var RESOURCES = {
     shippingAddresses: Resource.msg('msg.shipping.addresses', 'checkout', null),
     accountAddresses: Resource.msg('msg.account.addresses', 'checkout', null),
     shippingTo: Resource.msg('msg.shipping.to', 'checkout', null),
-    pickupInStore: Resource.msg('msg.pickup.in.store', 'checkout', null),
-    storePickUp: Resource.msg('label.store.pick.up', 'checkout', null),
     shippingAddress: Resource.msg('label.order.shipping.address', 'confirmation', null),
     addressIncomplete: Resource.msg('heading.address.incomplete', 'checkout', null)
 };
@@ -40,11 +38,7 @@ var RESOURCES = {
  * @returns {Object} Creates an object that contains information about the checkout steps
  */
 function getCheckoutStepInformation(lineItemContainer) {
-    var shippingAddress;
-    if (lineItemContainer.defaultShipment) {
-        shippingAddress = lineItemContainer.defaultShipment.shippingAddress;
-    }
-
+    var shippingAddress = COHelper.ensureValidShipments(lineItemContainer);
     return {
         shipping: { iscompleted: !!shippingAddress },
         billing: { iscompleted: !!lineItemContainer.billingAddress }
@@ -57,7 +51,7 @@ function getCheckoutStepInformation(lineItemContainer) {
  * @return {Object} returns an object with image properties
 */
 function getFirstProductLineItem(productLineItemsModel) {
-    if (productLineItemsModel) {
+    if (productLineItemsModel && productLineItemsModel.items[0]) {
         var firstItemImage = productLineItemsModel.items[0].images.small[0];
         return {
             imageURL: firstItemImage.url,
@@ -112,6 +106,7 @@ function getAssociatedAddress(basket, customer) {
  * @param {Object} options - The current order's line items
  * @param {Object} options.config - Object to help configure the orderModel
  * @param {string} options.config.numberOfLineItems - helps determine the number of lineitems needed
+ * @param {string} options.countryCode - the current request country code
  * @constructor
  */
 function OrderModel(lineItemContainer, options) {
@@ -123,20 +118,18 @@ function OrderModel(lineItemContainer, options) {
         this.orderEmail = null;
         this.orderStatus = null;
         this.usingMultiShipping = null;
-        this.isPickUpInStore = null;
         this.shippable = null;
     } else {
         var safeOptions = options || {};
-
+        var countryCode = safeOptions.countryCode || null;
         var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
         var customer = safeOptions.customer || lineItemContainer.customer;
-        var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
         var usingMultiShipping = (safeOptions.usingMultiShipping
             || lineItemContainer.shipments.length > 1);
 
-        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer);
+        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer, options.containerView);
 
-        var paymentModel = new PaymentModel(lineItemContainer, customer, currencyCode);
+        var paymentModel = new PaymentModel(lineItemContainer, customer, countryCode);
 
         var billingAddressModel = new AddressModel(lineItemContainer.billingAddress);
 
@@ -144,7 +137,7 @@ function OrderModel(lineItemContainer, options) {
 
         var billingModel = new BillingModel(billingAddressModel, paymentModel, associatedAddress);
 
-        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems);
+        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems, options.containerView);
         var totalsModel = new TotalsModel(lineItemContainer);
 
         this.shippable = safeOptions.shippable || false;
@@ -163,7 +156,6 @@ function OrderModel(lineItemContainer, options) {
             : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
                 lineItemContainer.productQuantityTotal : null;
-        this.isPickUpInStore = COHelpers.isPickUpInStore(lineItemContainer);
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;
@@ -174,10 +166,11 @@ function OrderModel(lineItemContainer, options) {
             this.items = productLineItemsModel;
             this.billing = billingModel;
             this.shipping = shippingModels;
-        } else if (modelConfig.numberOfLineItems === 'single') {
+        } else if (modelConfig.numberOfLineItems === 'single'
+                && shippingModels[0].shippingAddress) {
             this.firstLineItem = getFirstProductLineItem(productLineItemsModel);
-            this.shippedToFirstName = shippingModels[0].shippingAddress.firstName;
-            this.shippedToLastName = shippingModels[0].shippingAddress.lastName;
+            this.shippedToFirstName = shippingModels[0].shippingAddress.firstName || '';
+            this.shippedToLastName = shippingModels[0].shippingAddress.lastName || '';
         }
     }
 }

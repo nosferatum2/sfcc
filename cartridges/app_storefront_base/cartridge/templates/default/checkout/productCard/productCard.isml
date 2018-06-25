@@ -13,10 +13,12 @@
         <isinclude template="cart/productCard/cartProductCardBundledItems" />
     <iselse/>
         <div class="product-line-item-details d-flex flex-row">
-            <img class="product-image"
-                 src="${lineItem.images.small[0].url}"
-                 alt="${lineItem.images.small[0].alt}"
-                 title="${lineItem.images.small[0].title}">
+            <div class="item-image">
+                <img class="product-image"
+                    src="${lineItem.images.small[0].url}"
+                    alt="${lineItem.images.small[0].alt}"
+                    title="${lineItem.images.small[0].title}">
+            </div>
             <div class="item-attributes">
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
@@ -42,6 +44,7 @@
     <div class="row align-items-start">
         <!--- item price --->
         <div class="col-4 line-item-unit-price">
+            <isif condition="${lineItem.price}">
             <p class="line-item-pricing-info">
                 <span class="line-item-total-text unit-price-label">
                     ${Resource.msg('label.each.item.price','cart',null)}
@@ -49,6 +52,7 @@
                 <isset name="price" value="${lineItem.price}" scope="page"/>
                 <isinclude template="/product/components/pricing/main.isml" />
             </p>
+            </isif>
         </div>
         <!--- quantity --->
         <div class="col-4 line-item-quantity justify-content-center flex">

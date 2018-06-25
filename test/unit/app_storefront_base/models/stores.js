@@ -4,7 +4,9 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('stores', function () {
+    var StoreModel = require('../../../mocks/models/store');
     var StoresModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/stores', {
+        '*/cartridge/models/store': StoreModel,
         'dw/util/HashMap': function () {
             return {
                 result: {},
@@ -20,9 +22,18 @@ describe('stores', function () {
                     return { text: 'someString' };
                 }
             };
+        },
+        '*/cartridge/scripts/renderTemplateHelper': {
+            getRenderedHtml: function () { return 'someString'; }
+        },
+
+        '*/cartridge/scripts/helpers/storeHelpers': {
+            createStoresResultsHtml: function () {
+                return 'someString';
+            }
         }
     });
-    var actionUrl = '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Stores-FindStores';
+    var actionUrl = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';
     var apiKey = 'YOUR_API_KEY';
     var searchKey = { lat: 42.4019, long: -71.1193 };
     var radius = 100;
@@ -66,7 +77,7 @@ describe('stores', function () {
                     storeHours: 'Mon - Sat: 10am - 9pm'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
@@ -106,7 +117,7 @@ describe('stores', function () {
                     countryCode: 'us'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
@@ -166,7 +177,7 @@ describe('stores', function () {
                     stateCode: 'MA'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,

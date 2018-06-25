@@ -14,7 +14,13 @@ function getSandboxUrl() {
     if (test('-f', path.join(process.cwd(), 'dw.json'))) {
         var config = cat(path.join(process.cwd(), 'dw.json'));
         var parsedConfig = JSON.parse(config);
-        return '' + parsedConfig.hostname;
+        let hostname = parsedConfig.hostname;
+
+        if (hostname.constructor === Array && hostname.length > 0) {
+            hostname = hostname[0];
+        }
+
+        return '' + hostname;
     }
     return '';
 }
@@ -71,7 +77,7 @@ target.compileFonts = function () {
 
 target.functional = function (args) {
     var defaults = {
-        baseUrl: 'http://' + getSandboxUrl() + '/s/SiteGenesis',
+        baseUrl: 'http://' + getSandboxUrl() + '/s/MobileFirst',
         client: 'chrome'
     };
 
@@ -80,7 +86,7 @@ target.functional = function (args) {
         args.splice(args.indexOf('appium'), 1);
         configFile = 'test/functional/webdriver/wdio.appium.js'
         defaults = {
-            baseUrl: 'http://' + getSandboxUrl() + '/s/SiteGenesis'
+            baseUrl: 'http://' + getSandboxUrl() + '/s/MobileFirst'
         }
     }
 
@@ -106,7 +112,7 @@ target.functional = function (args) {
 
 target.integration = function (args) {
     var defaults = {
-        baseUrl: 'https://' + getSandboxUrl() + '/on/demandware.store/Sites-SiteGenesis-Site/en_US'
+        baseUrl: 'https://' + getSandboxUrl() + '/on/demandware.store/Sites-MobileFirst-Site/en_US'
     };
 
     var options = getOptions(defaults, args);

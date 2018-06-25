@@ -9,6 +9,9 @@ const fs = require('fs');
 const css = require('./cssCompile');
 const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
+const deployData = require('./deployData');
+const generateSystemObjectReports = require('./systemObjectsReport');
+const Webdav = require('./util/webdav');
 const chalk = require('chalk');
 const util = require('util');
 
@@ -56,6 +59,11 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Watch and upload files'
     }, {
+        option: 'deploy-data',
+        type: 'Boolean',
+        description: 'Deploy data using the settings in package.json',
+        required: false
+    }, {
         option: 'cartridge',
         type: '[String]',
         description: 'List of cartridges to be uploaded',
@@ -72,14 +80,23 @@ const optionator = require('optionator')({
         required: false
     }, {
         option: 'hostname',
-        type: 'String',
-        description: 'Sandbox URL (without the "https://" prefix)',
+        type: '[String]',
+        description: 'Sandbox URL(s) (without the "https://" prefix)',
+        required: false
+    }, {
+        option: 'cert-hostname',
+        type: '[String]',
+        description: 'Certificate Sandbox URL(s) (without the "https://" prefix)',
+        required: false
+    }, {
+        option: 'activation-hostname',
+        type: '[String]',
+        description: 'Activation Sandbox URL(s) (without the "https://" prefix)',
         required: false
     }, {
         option: 'code-version',
         type: 'String',
         description: 'Code version folder name',
-        default: 'version1',
         required: false
     }, {
         option: 'verbose',
@@ -119,6 +136,17 @@ const optionator = require('optionator')({
         description: 'Stops the check for a signature on the SSL cert.',
         required: false,
         default: false
+    }, {
+        option: 'data-bundle',
+        type: 'String',
+        description: 'The data bundle that will be deployed. Data bundles are defined in package.json',
+        required: false,
+        default: 'core'
+    }, {
+        option: 'generate-object-report',
+        type: 'Boolean',
+        description: 'Generates a text file that contains HTML with a table of system objects',
+        required: false
     }]
 });
 
@@ -132,7 +160,9 @@ function checkForDwJson() {
 }
 
 function uploadFiles(files) {
-    shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
+    if (checkForDwJson()) {
+        shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
+    }
 
     const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
 
@@ -144,7 +174,9 @@ function uploadFiles(files) {
         console.log(`Uploading ${file}`);
     });
 
-    shell.rm('../cartridges/dw.json'); // remove dw.json file from cartridges directory
+    if (checkForDwJson()) {
+        shell.rm('../cartridges/dw.json'); // remove dw.json file from cartridges directory
+    }
 }
 
 function camelCase(str) {
@@ -157,6 +189,65 @@ function getDirectories(path) {
     return fs.readdirSync(path).filter(function (file) {
       return fs.statSync(path+'/'+file).isDirectory();
     });
+}
+
+/**
+ * @function
+ * @desc Builds the upload options based on the arguments passed in
+ * @param {Boolean} isData - Is this is a data upload
+ * @returns [String]
+ */
+function getUploadOptions(isData) {
+    let uploadOptions = [
+        'cartridge',
+        'username',
+        'password',
+        'hostname',
+        'cert-hostname',
+        'activation-hostname',
+        'code-version',
+        'verbose',
+        'skip-upload',
+        'root',
+        'exclude',
+        'p12',
+        'passphrase',
+        'self-signed',
+        'data-bundle'
+    ],
+    uploadArguments = {};
+
+    // Create the argument list/object based on the dw.json file if present
+    if (checkForDwJson()) {
+        const localSettings = require(path.join(pwd, './dw.json'));
+
+        Object.keys(localSettings).forEach(uploadOption => {
+            if (localSettings[uploadOption]) {
+                uploadArguments[uploadOption] = localSettings[uploadOption];
+            }
+        });
+    }
+
+    // Create the argument list/object based on the argv options if present and override any previous dw.json options
+    uploadOptions.forEach(uploadOption => {
+        if (options[camelCase(uploadOption)]) {
+            if (uploadOption === 'code-version') {
+                let versionName = 'version1';
+
+                if (options['codeVersion']) {
+                    versionName = options.codeVersion;
+                } else if (process.env.BUILD_TAG) {
+                    versionName = process.env.BUILD_TAG;
+                }
+
+                uploadArguments[camelCase(uploadOption)] = versionName;
+            } else {
+                uploadArguments[camelCase(uploadOption)] = options[camelCase(uploadOption)];
+            }
+        }
+    });
+
+    return uploadArguments;
 }
 
 const options = optionator.parse(process.argv);
@@ -186,26 +277,14 @@ if (options.uploadCartridge) {
         console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
     }
 
-    let uploadOptions = [
-            'cartridge', 
-            'username',
-            'password',
-            'hostname',
-            'code-version',
-            'verbose',
-            'skip-upload',
-            'root',
-            'exclude',
-            'p12',
-            'passphrase',
-            'self-signed'
-        ],
-        uploadArguments = [],
-        cartridgesFound = false;
+    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    const uploadArguments = getUploadOptions();
+    let cartridgesFound = false;
+    let commandLineArgs = [];
 
-    uploadOptions.forEach(uploadOption => {
-        if (options[camelCase(uploadOption)]) {
-            uploadArguments.push('--' + uploadOption, options[camelCase(uploadOption)]);
+    Object.keys(uploadArguments).forEach((uploadOption) => {
+        if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
+            commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
 
             if (uploadOption === 'cartridge') {
                 cartridgesFound = true;
@@ -213,23 +292,46 @@ if (options.uploadCartridge) {
         }
     });
 
+    // Get the cartridge list from the directory directly if no specific cartridges were provided
     if (!cartridgesFound) {
-        var cartridges = getDirectories('../cartridges').join(',');
-        uploadArguments.push('--cartridge', cartridges);
+        const cartridges = getDirectories('../cartridges').join(',');
+        commandLineArgs.push('--cartridge', cartridges);
     }
 
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    uploadArguments['hostname'].forEach((hostname) => {
+        let argsClone = commandLineArgs.slice(0);
+        argsClone.push('--hostname', hostname);
+        const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + argsClone.join(' ');
 
-    const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + uploadArguments.join(' ');
-    console.log('Upload Commands: '+ dwuploadScript);
+        console.log('Upload Commands: '+ dwuploadScript);
 
-    shell.exec(dwuploadScript);
+        shell.exec(dwuploadScript);
+    });
 
-    if (checkForDwJson()) {
-        shell.rm(path.join(pwd, '../cartridges/dw.json'));
+    if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
+        const activationHostnames = uploadArguments.activationHostname;
+        delete uploadArguments.activationHostname;
+
+        activationHostnames.forEach((activationHostname) => {
+            uploadArguments['activationHostname'] = activationHostname;
+            const webdav = new Webdav(uploadArguments);
+            webdav.formLogin().then(() => {
+                webdav.activateCode().then(() => {
+                    if (checkForDwJson()) {
+                        shell.rm(path.join(pwd, '../cartridges/dw.json'));
+                    }
+
+                    process.exit(0);
+                });
+            });
+        });
+    } else {
+        if (checkForDwJson()) {
+            shell.rm(path.join(pwd, '../cartridges/dw.json'));
+        }
+
+        process.exit(0);
     }
-
-    process.exit(0);
 }
 
 // run unit tests
@@ -346,4 +448,25 @@ if (options.watch) {
             }
         }
     });
+}
+
+if (options.deployData) {
+    console.log('Deploying data...');
+    const uploadArguments = getUploadOptions();
+
+    if (uploadArguments.hostname && uploadArguments.username && uploadArguments.password) {
+        deployData(uploadArguments);
+    } else if (!uploadArguments.hostname) {
+        console.error('Error: Please provide a hostname to deploy data');
+    } else if (!uploadArguments.username) {
+        console.error('Error: Please provide a username to deploy data');
+    } else if (!uploadArguments.password) {
+        console.error('Error: Please provide a password to deploy data');
+    }
+}
+
+if (options.generateObjectReport) {
+    console.log('Generating Object Report');
+    const uploadArguments = getUploadOptions();
+    generateSystemObjectReports(uploadArguments);
 }

@@ -1,15 +1,14 @@
-<div class="set-items">
+<div class="set-items" itemtype="http://schema.org/SomeProducts" itemid="#product">
     <isloop items="${productCopy.individualProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
 
-        <isobject object="${product.raw}" view="setproduct">
-            <div class="container product-detail set-item" data-pid="${product.id}">
+            <div class="container product-detail set-item" data-pid="${product.id}" itemscope itemtype="http://schema.org/Product">
                 <div class="row">
                     <div class="col-12">
                         <!-- Product Name -->
                         <div class="row">
-                            <div class="hidden-md-up col-sm-12">
-                                <h3 class="product-name">
+                            <div class="d-md-none col-sm-12">
+                                <h3 class="product-name" itemprop="name">
                                     <a href="${URLUtils.url('Product-Show', 'pid', product.id)}">
                                         ${product.productName}
                                     </a>
@@ -21,11 +20,11 @@
 
                 <div class="row">
                     <!-- Product Images Carousel -->
-                    <isinclude template="product/components/image_carousel" />
+                    <isinclude template="product/components/imageCarousel" />
 
                     <div class="col-12 col-sm-6">
                         <!-- Product Name -->
-                        <h3 class="product-name hidden-sm-down">
+                        <h3 class="product-name hidden-sm-down" itemprop="name">
                             <a href="${URLUtils.url('Product-Show', 'pid', product.id)}">
                                 ${product.productName}
                             </a>
@@ -63,16 +62,14 @@
                             </div>
 
                             <!-- Size Chart -->
-                            <isif condition="${product.variationAttributes}">
+                            <isif condition="${product.variationAttributes && product.sizeChartId}">
                                 <span class="col-12 col-md-10 size-chart">
                                     <isinclude template="product/components/sizeChart" />
                                 </span>
                             </isif>
 
-                            <!-- Availability -->
-                            <div class="col-12 col-md-10 availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
-                                <isinclude template="product/components/availability" />
-                            </div>
+                            <!-- Product Availability -->
+                            <isinclude template="product/components/productAvailability" />
 
                             <!-- Applicable Promotions -->
                             <div class="col-md-10 col-12 promotions">
@@ -94,8 +91,8 @@
                             <isinclude template="product/components/addToCartProduct" />
                         </div>
 
-                        <!-- Add to Wishlist and Social Sharing Icons -->
-                        <isinclude template="product/components/wishlistSocial" />
+                        <!-- Social Sharing Icons -->
+                        <isinclude template="product/components/socialIcons" />
 
                         </div>
                     </div>
@@ -103,15 +100,15 @@
             </div>
 
             <div class="description-and-detail">
-                <div class="row product-attributes collapsable-xs">
+                <div class="row product-attributes collapsible-xs">
                     <isinclude template="/product/components/attributes" />
                 </div>
 
                 <isif condition="${product.attributes && product.attributes.length}">
-                    <hr class="hidden-sm-up">
+                    <hr class="d-sm-none">
                 </isif>
 
-                <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
+                <div class="row description collapsible-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
                     <h2 class="col-sm-12 col-md-4 col-lg-3">
                     <a class="title" href="${'#'}">${Resource.msg('label.description', 'product', null)}</a>
                     </h2>
@@ -119,10 +116,10 @@
                 </div>
 
                 <isif condition="${product.longDescription}">
-                    <hr class="hidden-sm-up">
+                    <hr class="d-sm-none">
                 </isif>
 
-                <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
+                <div class="row details collapsible-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
                     <h2 class="col-sm-12 col-md-4 col-lg-3">
                     <a class="title" href="${'#'}">${Resource.msg('label.details', 'product', null)}</a>
                     </h2>

@@ -30,10 +30,15 @@ function createAddressObject(addressObject) {
             suite: addressObject.suite,
             title: addressObject.title
         };
+
+        if (result.stateCode === 'undefined') {
+            result.stateCode = '';
+        }
+
         if (Object.hasOwnProperty.call(addressObject, 'countryCode')) {
             result.countryCode = {
                 displayValue: addressObject.countryCode.displayValue,
-                value: addressObject.countryCode.value
+                value: addressObject.countryCode.value.toUpperCase()
             };
         }
     } else {

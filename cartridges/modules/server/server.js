@@ -14,13 +14,11 @@ var render = require('./render');
 
 /**
  * Validate that first item is a string and all of the following items are functions
- * @param {Array} args - Arguments that were passed into function
+ * @param {string} name - Arguments that were passed into function
+ * @param {Array} middlewareChain - middleware chain
  * @returns {void}
  */
-function checkParams(args) {
-    var middlewareChain = args.slice(1);
-    var name = args[0];
-
+function checkParams(name, middlewareChain) {
     if (typeof name !== 'string') {
         throw new Error('First argument should be a string');
     }
@@ -52,14 +50,13 @@ Server.prototype = {
     use: function use(name) {
         var args = Array.isArray(arguments) ? arguments : Array.prototype.slice.call(arguments);
         var middlewareChain = args.slice(1);
-        var rq =
-            new Request(typeof request !== 'undefined' ? request : {},
+        var rq = new Request(
+            typeof request !== 'undefined' ? request : {},
             typeof customer !== 'undefined' ? customer : {},
-            typeof session !== 'undefined' ? session : {}
-            );
-        var rs = new Response(typeof response !== 'undefined' ? response : {});
+            typeof session !== 'undefined' ? session : {});
+        checkParams(args[0], middlewareChain);
 
-        checkParams(args);
+        var rs = new Response(typeof response !== 'undefined' ? response : {});
 
         if (this.routes[name]) {
             throw new Error('Route with this name already exists');
@@ -91,13 +88,7 @@ Server.prototype = {
                 return;
             }
 
-            if (res.view && res.viewData) {
-                render.template(res.view, res.viewData, res);
-            } else if (res.isJson) {
-                render.json(res.viewData, res);
-            } else {
-                throw new Error('Cannot render template without name or data');
-            }
+            render.applyRenderings(res);
         });
 
         this.routes[name] = route;
@@ -162,16 +153,33 @@ Server.prototype = {
         this.routes = newRoutes;
     },
     /**
-     * Modify a given route by appending additional middleware to it
+     * Modify a given route by prepending additional middleware to it
      * @param {string} name - Name of the route to modify
      * @param {Function[]} arguments - List of functions to be appended
      * @returns {void}
      */
+    prepend: function prepend(name) {
+        var args = Array.prototype.slice.call(arguments);
+        var middlewareChain = Array.prototype.slice.call(arguments, 1);
+
+        checkParams(args[0], middlewareChain);
+
+        if (!this.routes[name]) {
+            throw new Error('Route with this name does not exist');
+        }
+
+        this.routes[name].chain = middlewareChain.concat(this.routes[name].chain);
+    }, /**
+    * Modify a given route by appending additional middleware to it
+    * @param {string} name - Name of the route to modify
+    * @param {Function[]} arguments - List of functions to be appended
+    * @returns {void}
+    */
     append: function append(name) {
         var args = Array.prototype.slice.call(arguments);
         var middlewareChain = Array.prototype.slice.call(arguments, 1);
 
-        checkParams(args);
+        checkParams(args[0], middlewareChain);
 
         if (!this.routes[name]) {
             throw new Error('Route with this name does not exist');
@@ -188,8 +196,8 @@ Server.prototype = {
      */
     replace: function replace(name) {
         var args = Array.prototype.slice.call(arguments);
-
-        checkParams(args);
+        var middlewareChain = Array.prototype.slice.call(arguments, 1);
+        checkParams(args[0], middlewareChain);
 
         if (!this.routes[name]) {
             throw new Error('Route with this name does not exist');

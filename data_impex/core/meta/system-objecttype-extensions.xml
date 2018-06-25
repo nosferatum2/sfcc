@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Content">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="body">
+                <display-name xml:lang="x-default">Body</display-name>
+                <type>html</type>
+                <localizable-flag>true</localizable-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Content">
+                <display-name xml:lang="x-default">Content</display-name>
+                <attribute attribute-id="body"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="enableStickyHeader">
+                <display-name xml:lang="x-default">Enable Sticky Header</display-name>
+                <description xml:lang="x-default">Enables the sticky header functionality</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="useMinifiedFiles">
+                <display-name xml:lang="x-default">Use Minified Files</display-name>
+                <description xml:lang="x-default">If enabled, the styles.min.css and app.min.js will be loaded in on the frontend. Otherwise, the non-minified files will be utilized.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="quantityMaxValue">
+                <display-name xml:lang="x-default">Maximum Quantity Value</display-name>
+                <description xml:lang="x-default">Maximum value that the quantity input/select can be set to..</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="quantityType">
+                <display-name xml:lang="x-default">Quantity Type</display-name>
+                <description xml:lang="x-default">Type of input to use for the quantity fields across the site. Possible values are "Text Field" and "Select Box".</description>
+                <type>enum-of-string</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Text Field</display>
+                        <value>input</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Select Box</display>
+                        <value>select</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="searchRefinementsLayout">
+                <display-name xml:lang="x-default">Search Refinements Layout</display-name>
+                <description xml:lang="x-default">Determines to layout to use on the search results and category browse pages</description>
+                <type>enum-of-string</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">Left Side Bar</display>
+                        <value>side-bar</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Top Menu</display>
+                        <value>top-menu</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <!--
+            If added, this grouping will remove all other default assignments to the Storefront Configs group.
+            This block should be populated accordingly, on a per-implementation basis.
+        -->
+        <!--
+            <group-definitions>
+                <attribute-group group-id="Storefront Configs">
+                    <attribute attribute-id="useMinifiedFiles"/>
+                    <attribute attribute-id="quantityType"/>
+                    <attribute attribute-id="quantityMaxValue"/>
+                    <attribute attribute-id="searchRefinementsLayout"/>
+                </attribute-group>
+            </group-definitions>
+        -->
+    </type-extension>
+</metadata>

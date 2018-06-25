@@ -42,18 +42,22 @@
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
             <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
+            <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
             <arg value='--upload-cartridge' />
-            <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
-            <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
-            <arg value='--username="${user}"' if:set="user" />
-            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
+            <arg value='--cartridge=${cartridge}' if:set="cartridge" />
+            <arg value='--username=${user}' if:set="user" />
+            <arg value='--password=${password}' if:set="password" />
             <arg value='--self-signed=${selfSigned}' if:set="selfSigned" />
-            <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
-            <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
-            <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg value='--p12=${twoFactorp12}' if:set="twoFactorp12" />
+            <arg value='--passphrase=${twoFactorPassword}' if:set="twoFactorPassword" />
+            <arg value='--hostname=${hostname}' if:set="hostname" />
+            <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
+            <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>
@@ -133,6 +137,56 @@
             <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --cover"/>
         </exec>
         <echo level="info">Test coverage complete!</echo>
+    </target>
+
+    <target name="deploy-data">
+        <echo level="info">Data deployment in progress...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg line='node build --deploy-data' />
+            <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
+            <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
+            <arg value='--username="${user}"' if:set="user" />
+            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
+            <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
+            <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
+            <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
+            <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
+            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+        </exec>
+        <exec executable="node" osfamily="unix" failonerror="true">
+            <arg value='build'/>
+            <arg value='--deploy-data' />
+            <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
+            <arg value='--cartridge=${cartridge}' if:set="cartridge" />
+            <arg value='--username=${user}' if:set="user" />
+            <arg value='--password=${password}' if:set="password" />
+            <arg value='--self-signed=${selfSigned}' if:set="selfSigned" />
+            <arg value='--p12=${twoFactorp12}' if:set="twoFactorp12" />
+            <arg value='--passphrase=${twoFactorPassword}' if:set="twoFactorPassword" />
+            <arg value='--hostname=${hostname}' if:set="hostname" />
+            <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
+            <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
+            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
+        </exec>
+        <echo level="info">Data deployment complete!</echo>
+    </target>
+
+    <target name="system-object-reports">
+        <echo level="info">Creating system object reports...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg line='node build --generate-object-report' />
+            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+        </exec>
+        <exec executable="node" osfamily="unix" failonerror="true">
+            <arg value='build'/>
+            <arg value='--generate-object-report' />
+            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+        </exec>
+        <echo level="info">System object reports created!</echo>
     </target>
 
 </project>

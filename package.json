@@ -17,6 +17,8 @@
     "compile:js": "node build_tools/build --compile js",
     "compile:fonts": "node bin/Makefile compileFonts",
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
+    "lint:css": "sgmf-scripts --lint css",
+    "lint:js": "sgmf-scripts --lint js",
     "upload": "node build_tools/build --upload",
     "uploadCartridge": "node build_tools/build --upload-cartridge --cartridge app_storefront_base && node build_tools/build --upload-cartridge --cartridge modules",
     "watch": "node build_tools/build --watch",
@@ -37,36 +39,43 @@
     "babel-core": "^6.23.1",
     "babel-loader": "^7.1.1",
     "babel-preset-es2015": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "chai": "^3.5.0",
     "chai-subset": "^1.5.0",
     "chalk": "^1.1.3",
     "cheerio": "0.22.0",
-    "cldr-data": "^29.0.1",
     "dwupload": "^3.8.0",
+    "cldr-data": "^31.0.2",
     "eslint": "^3.2.2",
     "eslint-config-airbnb-base": "^5.0.1",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-sitegenesis": "~1.0.0",
+    "folder-zip": "0.0.5",
     "globalize": "^1.1.1",
     "inquirer": "^3.0.6",
     "istanbul": "^0.4.4",
     "lodash": "^4.14.2",
     "minimist": "^1.2.0",
     "mocha": "^2.5.3",
-    "mocha-junit-reporter": "^1.12.0",
-    "moment-timezone": "^0.5.5",
-    "node-sass": "^4.5.0",
+    "mocha-junit-reporter": "^1.15.0",
+    "moment-timezone": "^0.5.14",
+    "node-sass": "^4.7.2",
     "onchange": "^3.2.1",
     "optionator": "^0.8.2",
+    "promise-retry": "^1.1.1",
     "properties-parser": "^0.3.0",
     "proxyquire": "1.7.4",
-    "request-promise": "^4.1.1",
+    "q": "^1.5.1",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
     "selenium-standalone": "^5.9.0",
+    "sgmf-scripts": "~1.1.2",
     "shelljs": "^0.7.0",
     "sinon": "^1.17.4",
-    "stylelint": "^7.1.0",
-    "stylelint-config-standard": "^16.0.0",
-    "stylelint-scss": "^1.3.4",
+    "stylelint": "^8.2.0",
+    "stylelint-config-standard": "^17.0.0",
+    "stylelint-scss": "^2.1.0",
     "url": "^0.11.0",
     "wdio-sauce-service": "~0.1",
     "webdriverio": "^3.3.0",
@@ -75,9 +84,10 @@
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
-    "flag-icon-css": "2.3.0",
-    "font-awesome": "4.6.3",
-    "jquery": "3.3.1",
+    "cleave.js": "^1.0.2",
+    "flag-icon-css": "^2.3.0",
+    "font-awesome": "^4.6.3",
+    "jquery": "^3.1.1",
     "slick-carousel": "1.7.1",
     "svg4everybody": "2.1.9"
   },
@@ -95,5 +105,30 @@
       },
       "packageName": "app_storefront_base"
     }
-  ]
+  ],
+  "deployment": {
+    "instanceRoot": ".evaluation.dw.demandware.net",
+    "dataOptions": {
+      "archivePath": "../data_impex",
+      "lastDeploymentFileName": "lastbuild.properties",
+      "uploadPath": "/on/demandware.servlet/webdav/Sites/Impex/src/instance/"
+    },
+    "dataBundles": {
+      "core": [
+        "core"
+      ],
+      "core-config": [
+        "core",
+        "config_test"
+      ],
+      "core-config-data": [
+        "core",
+        "config_test",
+        "data_test"
+      ],
+      "static": [
+        "data_test_static"
+      ]
+    }
+  }
 }

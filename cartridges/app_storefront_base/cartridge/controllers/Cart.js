@@ -3,6 +3,7 @@
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
@@ -17,20 +18,22 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
         quantityTotal = 0;
     }
 
-    res.render('/components/header/minicart', { quantityTotal: quantityTotal });
+    res.render('/components/header/miniCart', { quantityTotal: quantityTotal });
     next();
 });
 
 server.post('AddProduct', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var previousBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var productId = req.form.pid;
     var childProducts = Object.hasOwnProperty.call(req.form, 'childProducts')
         ? JSON.parse(req.form.childProducts)
@@ -77,7 +80,7 @@ server.post('AddProduct', function (req, res, next) {
             }
             if (!result.error) {
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             }
         });
     }
@@ -85,11 +88,39 @@ server.post('AddProduct', function (req, res, next) {
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
     var cartModel = new CartModel(currentBasket);
 
+    var urlObject = {
+        url: URLUtils.url('Cart-ChooseBonusProducts').toString(),
+        configureProductstUrl: URLUtils.url('Product-ShowBonusProducts').toString(),
+        addToCartUrl: URLUtils.url('Cart-AddBonusProducts').toString()
+    };
+
+    var newBonusDiscountLineItem =
+        cartHelper.getNewBonusDiscountLineItem(
+            currentBasket,
+            previousBonusDiscountLineItems,
+            urlObject,
+            result.uuid
+    );
+    if (newBonusDiscountLineItem) {
+        var allLineItems = currentBasket.allProductLineItems;
+        var collections = require('*/cartridge/scripts/util/collections');
+        collections.forEach(allLineItems, function (pli) {
+            if (pli.UUID === result.uuid) {
+                Transaction.wrap(function () {
+                    pli.custom.bonusProductLineItemUUID = 'bonus'; // eslint-disable-line no-param-reassign
+                    pli.custom.preOrderUUID = pli.UUID; // eslint-disable-line no-param-reassign
+                });
+            }
+        });
+    }
+
     res.json({
         quantityTotal: quantityTotal,
         message: result.message,
         cart: cartModel,
-        error: result.error
+        newBonusDiscountLineItem: newBonusDiscountLineItem || {},
+        error: result.error,
+        pliUUID: result.uuid
     });
 
     next();
@@ -98,14 +129,15 @@ server.post('AddProduct', function (req, res, next) {
 server.get(
     'Show',
     server.middleware.https,
+    consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
-        var HookMgr = require('dw/system/HookMgr');
         var Transaction = require('dw/system/Transaction');
         var CartModel = require('*/cartridge/models/cart');
         var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+        var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         var reportingURLs;
@@ -117,18 +149,17 @@ server.get(
                 }
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             });
         }
 
         if (currentBasket && currentBasket.allLineItems.length) {
-            reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+            reportingURLs = reportingUrlsHelper.getBasketOpenReportingURLs(currentBasket);
         }
 
         res.setViewData({ reportingURLs: reportingURLs });
 
         var basketModel = new CartModel(currentBasket);
-
         res.render('cart/cart', basketModel);
         next();
     }
@@ -136,10 +167,10 @@ server.get(
 
 server.get('Get', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -147,7 +178,7 @@ server.get('Get', function (req, res, next) {
         Transaction.wrap(function () {
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     }
 
@@ -159,11 +190,11 @@ server.get('Get', function (req, res, next) {
 
 server.get('RemoveProductLineItem', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -178,25 +209,47 @@ server.get('RemoveProductLineItem', function (req, res, next) {
     }
 
     var isProductLineItemFound = false;
+    var bonusProductsUUIDs = [];
 
     Transaction.wrap(function () {
         if (req.querystring.pid && req.querystring.uuid) {
             var productLineItems = currentBasket.getAllProductLineItems(req.querystring.pid);
+            var bonusProductLineItems = currentBasket.bonusLineItems;
+            var mainProdItem;
             for (var i = 0; i < productLineItems.length; i++) {
                 var item = productLineItems[i];
                 if ((item.UUID === req.querystring.uuid)) {
+                    if (bonusProductLineItems && bonusProductLineItems.length > 0) {
+                        for (var j = 0; j < bonusProductLineItems.length; j++) {
+                            var bonusItem = bonusProductLineItems[j];
+                            mainProdItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
+                            if (mainProdItem !== null
+                                && (mainProdItem.productID === item.productID)) {
+                                bonusProductsUUIDs.push(bonusItem.UUID);
+                            }
+                        }
+                    }
+
+                    var shipmentToRemove = item.shipment;
                     currentBasket.removeProductLineItem(item);
+                    if (shipmentToRemove.productLineItems.empty && !shipmentToRemove.default) {
+                        currentBasket.removeShipment(shipmentToRemove);
+                    }
                     isProductLineItemFound = true;
                     break;
                 }
             }
         }
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     if (isProductLineItemFound) {
         var basketModel = new CartModel(currentBasket);
-        res.json(basketModel);
+        var basketModelPlus = {
+            basket: basketModel,
+            toBeDeletedUUIDs: bonusProductsUUIDs
+        };
+        res.json(basketModelPlus);
     } else {
         res.setStatusCode(500);
         res.json({ errorMessage: Resource.msg('error.cannot.remove.product', 'cart', null) });
@@ -207,13 +260,13 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
 server.get('UpdateQuantity', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var collections = require('*/cartridge/scripts/util/collections');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -241,6 +294,7 @@ server.get('UpdateQuantity', function (req, res, next) {
     var minOrderQuantity = 0;
     var canBeUpdated = false;
     var bundleItems;
+    var bonusDiscountLineItemCount = currentBasket.bonusDiscountLineItems.length;
 
     if (matchingLineItem) {
         if (matchingLineItem.product.bundle) {
@@ -276,7 +330,23 @@ server.get('UpdateQuantity', function (req, res, next) {
     if (canBeUpdated) {
         Transaction.wrap(function () {
             matchingLineItem.setQuantityValue(updateQuantity);
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+
+            var previousBounsDiscountLineItems = collections.map(currentBasket.bonusDiscountLineItems, function (bonusDiscountLineItem) {
+                return bonusDiscountLineItem.UUID;
+            });
+
+            basketCalculationHelpers.calculateTotals(currentBasket);
+            if (currentBasket.bonusDiscountLineItems.length > bonusDiscountLineItemCount) {
+                var prevItems = JSON.stringify(previousBounsDiscountLineItems);
+
+                collections.forEach(currentBasket.bonusDiscountLineItems, function (bonusDiscountLineItem) {
+                    if (prevItems.indexOf(bonusDiscountLineItem.UUID) < 0) {
+                        bonusDiscountLineItem.custom.bonusProductLineItemUUID = matchingLineItem.UUID; // eslint-disable-line no-param-reassign
+                        matchingLineItem.custom.bonusProductLineItemUUID = 'bonus';
+                        matchingLineItem.custom.preOrderUUID = matchingLineItem.UUID;
+                    }
+                });
+            }
         });
     }
 
@@ -296,12 +366,12 @@ server.get('UpdateQuantity', function (req, res, next) {
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -333,7 +403,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             return;
         }
 
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     if (!error) {
@@ -351,11 +421,11 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
 server.get('MiniCartShow', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var reportingURLs;
@@ -366,12 +436,12 @@ server.get('MiniCartShow', function (req, res, next) {
                 currentBasket.updateCurrency();
             }
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     }
 
     if (currentBasket && currentBasket.allLineItems.length) {
-        reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+        reportingURLs = reportingUrlsHelper.getBasketOpenReportingURLs(currentBasket);
     }
 
     res.setViewData({ reportingURLs: reportingURLs });
@@ -389,17 +459,11 @@ server.get(
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
-        var HookMgr = require('dw/system/HookMgr');
         var Resource = require('dw/web/Resource');
         var Transaction = require('dw/system/Transaction');
         var URLUtils = require('dw/web/URLUtils');
         var CartModel = require('*/cartridge/models/cart');
-
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
+        var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -453,7 +517,7 @@ server.get(
         }
 
         Transaction.wrap(function () {
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
 
         var basketModel = new CartModel(currentBasket);
@@ -466,12 +530,12 @@ server.get(
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var collections = require('*/cartridge/scripts/util/collections');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -495,7 +559,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
         if (couponLineItem) {
             Transaction.wrap(function () {
                 currentBasket.removeCouponLineItem(couponLineItem);
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             });
 
             var basketModel = new CartModel(currentBasket);
@@ -507,6 +571,288 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
 
     res.setStatusCode(500);
     res.json({ errorMessage: Resource.msg('error.cannot.remove.coupon', 'cart', null) });
+    return next();
+});
+
+server.post('AddBonusProducts', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
+    var Transaction = require('dw/system/Transaction');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var Resource = require('dw/web/Resource');
+    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var data = JSON.parse(req.querystring.pids);
+    var pliUUID = req.querystring.pliuuid;
+    var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
+    var qtyAllowed = data.totalQty;
+    var totalQty = 0;
+
+    for (var i = 0; i < data.bonusProducts.length; i++) {
+        totalQty += data.bonusProducts[i].qty;
+    }
+    if (totalQty > qtyAllowed) {
+        res.json({
+            errorMessage: Resource.msgf(
+                'error.alert.choiceofbonus.max.quantity',
+                'product',
+                null,
+                qtyAllowed,
+                totalQty),
+            error: true,
+            success: false
+        });
+    } else {
+        var bonusDiscountLineItem = collections.find(newBonusDiscountLineItems, function (item) {
+            return item.UUID === req.querystring.uuid;
+        });
+
+        if (currentBasket) {
+            Transaction.wrap(function () {
+                collections.forEach(bonusDiscountLineItem.getBonusProductLineItems(), function (dli) {
+                    if (dli.product) {
+                        currentBasket.removeProductLineItem(dli);
+                    }
+                });
+
+                var pli;
+                data.bonusProducts.forEach(function (bonusProduct) {
+                    var product = ProductMgr.getProduct(bonusProduct.pid);
+                    var selectedOptions = bonusProduct.options;
+                    var optionModel = productHelper.getCurrentOptionModel(
+                            product.optionModel,
+                            selectedOptions);
+                    pli = currentBasket.createBonusProductLineItem(
+                            bonusDiscountLineItem,
+                            product,
+                            optionModel,
+                            null);
+                    pli.setQuantityValue(bonusProduct.qty);
+                    pli.custom.bonusProductLineItemUUID = pliUUID;
+                });
+
+                collections.forEach(currentBasket.getAllProductLineItems(), function (productLineItem) {
+                    if (productLineItem.UUID === pliUUID) {
+                        productLineItem.custom.bonusProductLineItemUUID = 'bonus';// eslint-disable-line no-param-reassign
+                        productLineItem.custom.preOrderUUID = productLineItem.UUID;// eslint-disable-line no-param-reassign
+                    }
+                });
+            });
+        }
+
+        res.json({
+            totalQty: currentBasket.productQuantityTotal,
+            msgSuccess: Resource.msg('text.alert.choiceofbonus.addedtobasket', 'product', null),
+            success: true,
+            error: false
+        });
+    }
+    next();
+});
+
+server.get('EditBonusProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var duuid = req.querystring.duuid;
+    var bonusDiscountLineItem = collections.find(currentBasket.getBonusDiscountLineItems(), function (item) {
+        return item.UUID === duuid;
+    });
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
+    var selectedBonusProducts = collections.map(bonusDiscountLineItem.bonusProductLineItems, function (bonusProductLineItem) {
+        return {
+            pid: bonusProductLineItem.productID,
+            name: bonusProductLineItem.productName,
+            submittedQty: bonusProductLineItem.quantityValue
+        };
+    });
+
+    var pids = collections.pluck(bonusDiscountLineItem.bonusProducts, 'ID').join();
+
+    res.json({
+        selectedBonusProducts: selectedBonusProducts,
+        addToCartUrl: URLUtils.url('Cart-AddBonusProducts').relative().toString(),
+        showProductsUrl: URLUtils.url('Product-ShowBonusProducts').toString(),
+        maxBonusItems: bonusDiscountLineItem.maxBonusItems,
+        pageSize: cartHelper.BONUS_PRODUCTS_PAGE_SIZE,
+        pliUUID: bonusDiscountLineItem.custom.bonusProductLineItemUUID,
+        uuid: bonusDiscountLineItem.UUID,
+        bonusChoiceRuleBased: bonusDiscountLineItem.bonusChoiceRuleBased,
+        selectprods: [],
+        labels: {
+            selectprods: Resource.msg('modal.header.selectproducts', 'product', null),
+            close: Resource.msg('link.choiceofbonus.close', 'product', null)
+        },
+        showProductsUrlRuleBased: URLUtils.url('Product-ShowBonusProducts', 'DUUID', bonusDiscountLineItem.UUID, 'pagesize', cartHelper.BONUS_PRODUCTS_PAGE_SIZE, 'pagestart', 0, 'maxpids', bonusDiscountLineItem.maxBonusItems).toString(),
+        showProductsUrlListBased: URLUtils.url('Product-ShowBonusProducts', 'DUUID', bonusDiscountLineItem.UUID, 'pids', pids, 'maxpids', bonusDiscountLineItem.maxBonusItems).toString()
+    });
+    next();
+});
+
+server.get('GetProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
+    var requestUuid = req.querystring.uuid;
+
+
+    var requestPLI = collections.find(BasketMgr.getCurrentBasket().allProductLineItems, function (item) {
+        return item.UUID === requestUuid;
+    });
+
+    var requestQuantity = requestPLI.quantityValue.toString();
+
+    var pliProduct = {
+        pid: requestPLI.productID,
+        quantity: requestQuantity
+    };
+
+    res.render('product/quickView.isml', {
+        product: ProductFactory.get(pliProduct),
+        selectedQuantity: requestQuantity,
+        uuid: requestUuid,
+        resources: Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability'),
+        updateCartUrl: URLUtils.url('Cart-EditProductLineItem')
+    });
+
+    next();
+});
+
+server.post('EditProductLineItem', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var Transaction = require('dw/system/Transaction');
+    var CartModel = require('*/cartridge/models/cart');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+
+    var uuid = req.form.uuid;
+    var productId = req.form.pid;
+    var updateQuantity = parseInt(req.form.quantity, 10);
+
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
+    var productLineItems = currentBasket.allProductLineItems;
+    var requestLineItem = collections.find(productLineItems, function (item) {
+        return item.UUID === uuid;
+    });
+
+    var uuidToBeDeleted = null;
+    var pliToBeDeleted;
+    var newPidAlreadyExist = collections.find(productLineItems, function (item) {
+        if (item.productID === productId && item.UUID !== uuid) {
+            uuidToBeDeleted = item.UUID;
+            pliToBeDeleted = item;
+            updateQuantity += parseInt(item.quantity, 10);
+            return true;
+        }
+        return false;
+    });
+
+    var availableToSell = 0;
+    var totalQtyRequested = 0;
+    var qtyAlreadyInCart = 0;
+    var minOrderQuantity = 0;
+    var canBeUpdated = false;
+    var bundleItems;
+
+    if (requestLineItem) {
+        if (requestLineItem.product.bundle) {
+            bundleItems = requestLineItem.bundledProductLineItems;
+            canBeUpdated = collections.every(bundleItems, function (item) {
+                var quantityToUpdate = updateQuantity *
+                    requestLineItem.product.getBundledProductQuantity(item.product).value;
+                qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                    item.productID,
+                    productLineItems,
+                    item.UUID
+                );
+                totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
+                availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
+                minOrderQuantity = item.product.minOrderQuantity.value;
+                return (totalQtyRequested <= availableToSell) &&
+                    (quantityToUpdate >= minOrderQuantity);
+            });
+        } else {
+            availableToSell = requestLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+            qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                productId,
+                productLineItems,
+                requestLineItem.UUID
+            );
+            totalQtyRequested = updateQuantity + qtyAlreadyInCart;
+            minOrderQuantity = requestLineItem.product.minOrderQuantity.value;
+            canBeUpdated = (totalQtyRequested <= availableToSell) &&
+                (updateQuantity >= minOrderQuantity);
+        }
+    }
+
+    var error = false;
+    if (canBeUpdated) {
+        var product = ProductMgr.getProduct(productId);
+
+        try {
+            Transaction.wrap(function () {
+                if (newPidAlreadyExist) {
+                    var shipmentToRemove = pliToBeDeleted.shipment;
+                    currentBasket.removeProductLineItem(pliToBeDeleted);
+                    if (shipmentToRemove.productLineItems.empty && !shipmentToRemove.default) {
+                        currentBasket.removeShipment(shipmentToRemove);
+                    }
+                }
+
+                if (!requestLineItem.product.bundle) {
+                    requestLineItem.replaceProduct(product);
+                }
+
+                requestLineItem.setQuantityValue(updateQuantity);
+
+                basketCalculationHelpers.calculateTotals(currentBasket);
+            });
+        } catch (e) {
+            error = true;
+        }
+    }
+
+    if (!error && requestLineItem && canBeUpdated) {
+        var cartModel = new CartModel(currentBasket);
+
+        var responseObject = {
+            cartModel: cartModel,
+            newProductId: productId
+        };
+
+        if (uuidToBeDeleted) {
+            responseObject.uuidToBeDeleted = uuidToBeDeleted;
+        }
+
+        res.json(responseObject);
+    } else {
+        res.setStatusCode(500);
+        res.json({
+            errorMessage: Resource.msg('error.cannot.update.product', 'cart', null)
+        });
+    }
+
     return next();
 });
 

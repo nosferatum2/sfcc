@@ -3,6 +3,7 @@
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get(
     'Include',
@@ -16,16 +17,18 @@ server.get(
         var apiContent = ContentMgr.getContent(req.querystring.cid);
 
         if (apiContent) {
-            var content = new ContentModel(apiContent, 'components/content/contentassetinc');
+            var content = new ContentModel(apiContent, 'components/content/contentAssetInc');
             if (content.template) {
                 res.render(content.template, { content: content });
             } else {
                 Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-                res.render('/components/content/offlinecontent');
+                res.render('/components/content/offlineContent');
             }
         } else {
             Logger.warn('Content asset with ID {0} was included but not found',
                     req.querystring.cid);
+
+            res.render('/components/content/offlineContent');
         }
         next();
     }
@@ -38,21 +41,12 @@ server.get(
     function (req, res, next) {
         var catalogMgr = require('dw/catalog/CatalogMgr');
         var Categories = require('*/cartridge/models/categories');
-        var ProductSearch = require('dw/catalog/ProductSearchModel');
-        var collections = require('*/cartridge/scripts/util/collections');
         var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
-        var ps = new ProductSearch();
-        var topLevelCategories = null;
-        var categories = null;
 
-        ps.setCategoryID(siteRootCategory.getID());
-        ps.search();
-        topLevelCategories =
-            ps.getRefinements().getNextLevelCategoryRefinementValues(siteRootCategory);
-        categories = collections.map(topLevelCategories, function (item) {
-            return catalogMgr.getCategory(item.value);
-        });
-        res.render('/components/header/menu', new Categories(categories));
+        var topLevelCategories = siteRootCategory.hasOnlineSubCategories() ?
+                siteRootCategory.getOnlineSubCategories() : null;
+
+        res.render('/components/header/menu', new Categories(topLevelCategories));
         next();
     }
 );
@@ -61,6 +55,10 @@ server.get('SetLocale', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Currency = require('dw/util/Currency');
     var Site = require('dw/system/Site');
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Transaction = require('dw/system/Transaction');
+
+    var currentBasket = BasketMgr.getCurrentBasket();
 
     var QueryString = server.querystring;
     var currency;
@@ -77,6 +75,12 @@ server.get('SetLocale', function (req, res, next) {
         if (allowedCurrencies.indexOf(req.querystring.CurrencyCode) > -1
             && (req.querystring.CurrencyCode !== req.session.currency.currencyCode)) {
             req.session.setCurrency(currency);
+
+            if (currentBasket && currency && currentBasket.currencyCode !== currency.currencyCode) {
+                Transaction.wrap(function () {
+                    currentBasket.updateCurrency();
+                });
+            }
         }
 
         var redirectUrl = URLUtils.url(req.querystring.action).toString();
@@ -107,14 +111,15 @@ server.get('Locale', function (req, res, next) {
     var currentLocale = Locale.getLocale(req.locale.id);
     var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
 
-    res.render('/components/header/countryselector', {
-        localeModel: localeModel,
-        showInMenu: req.querystring.showInMenu
-    });
+    var template = req.querystring.mobile
+        ? '/components/header/mobileCountrySelector'
+        : '/components/header/countrySelector';
+
+    res.render(template, { localeModel: localeModel });
     next();
 });
 
-server.get('Show', cache.applyDefaultCache, function (req, res, next) {
+server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var Logger = require('dw/system/Logger');
     var ContentModel = require('*/cartridge/models/content');
@@ -122,12 +127,12 @@ server.get('Show', cache.applyDefaultCache, function (req, res, next) {
     var apiContent = ContentMgr.getContent(req.querystring.cid);
 
     if (apiContent) {
-        var content = new ContentModel(apiContent, 'content/contentasset');
+        var content = new ContentModel(apiContent, 'content/contentAsset');
         if (content.template) {
             res.render(content.template, { content: content });
         } else {
             Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-            res.render('/components/content/offlinecontent');
+            res.render('/components/content/offlineContent');
         }
     } else {
         Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
