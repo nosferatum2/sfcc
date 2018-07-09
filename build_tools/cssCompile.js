@@ -90,7 +90,7 @@ module.exports = function compileCss(packageFile) {
         const currentCartridgeName = sites[site].packageName;
         const TEMP_SCSS_SOURCE_DIR = path.join(TEMP_DIR, currentCartridgeName, 'scss', 'source');
         const libraries = [];
-        //let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/default/scss');
+
         let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/');
         let filePattern = '';
         console.log("Building css into base cartridge " + chalk.black.bgWhite(sites[site].packageName));
