@@ -42,13 +42,15 @@ function getDirectories(srcpath) {
  * @returns
  */
 function copyOneProject(basePath, destinationPath) {
+    // basePath adjusted for the new locales folder structure
     const locales = getDirectories(basePath);
     locales.forEach(locale => {
         const resolvedDestination = path.join(destinationPath, locale);
-        const sassPath = path.join(basePath, locale, '*');
+        const sassPath = path.join(basePath, locale + "/scss/", '*');
         shell.mkdir('-p', resolvedDestination);
 
-        if (fs.existsSync(path.join(basePath, locale)) && shell.ls(path.join(basePath, locale)).length) {
+        if (fs.existsSync(path.join(basePath, locale )) && shell.ls(path.join(basePath, locale)).length) {
+            console.log(chalk.gray("performing shell copy from " + sassPath + " to " + resolvedDestination));
             shell.cp('-r', sassPath, resolvedDestination);
         }
     });
@@ -57,9 +59,9 @@ function copyOneProject(basePath, destinationPath) {
 /**
  * @function
  * @desc Decides if one or multiple cartridges need to have Sass files copied for compilation
- * @param basePath
+ * @param basePath - should be base cartridge up to client folder now
  * @param destinationPath
- * @param items
+ * @param items - all component cartridges that should be considered for building a site
  * @returns
  */
 function copyDependancies(basePath, destinationPath, items) {
@@ -70,7 +72,7 @@ function copyDependancies(basePath, destinationPath, items) {
             if (item === 'base') {
                 baseCartridgePath = items[item];
             }
-            copyOneProject(path.resolve(pwd, path.join(items[item], 'cartridge/client/scss')), destinationPath);
+            copyOneProject(path.resolve(pwd, path.join(items[item], 'cartridge/client/')), destinationPath);
         });
     }
 }
@@ -88,16 +90,18 @@ module.exports = function compileCss(packageFile) {
         const currentCartridgeName = sites[site].packageName;
         const TEMP_SCSS_SOURCE_DIR = path.join(TEMP_DIR, currentCartridgeName, 'scss', 'source');
         const libraries = [];
-        let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/scss');
+        //let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/default/scss');
+        let sourceDir = path.join(pwd, '../cartridges/' + currentCartridgeName + '/cartridge/client/');
         let filePattern = '';
-
+        console.log("Building css into base cartridge " + chalk.black.bgWhite(sites[site].packageName));
         copyDependancies(sourceDir, TEMP_SCSS_SOURCE_DIR, modules);
-
+        
         libraries.push(path.join(pwd, '../node_modules'));
         libraries.push(path.join(pwd, '../node_modules/flag-icon-css/sass'));
         sourceDir = TEMP_SCSS_SOURCE_DIR;
         filePattern = path.join(sourceDir, '**/*.scss');
 
+        
         const sassRenderer = filePath =>
             (resolve, reject) => {
                 sass.render({
@@ -185,6 +189,9 @@ module.exports = function compileCss(packageFile) {
             }).catch(error => {
                 clearTmp(path.join(TEMP_DIR, currentCartridgeName));
                 console.log(chalk.red('Failed to compile '+ currentCartridgeName +' scss files. ' + error));
+                for (var key in error) {
+                    console.log(key + ' is ' + chalk.red(error[key]));
+                }
             });
     }
 };

@@ -26,19 +26,20 @@ module.exports = (packageFile, pwd, callback) => {
         const TEMP_DIR = path.resolve(pwd, './tmp/' + currentCartridgeName + '/');
         const TEMP_JS_DIR = path.join(TEMP_DIR, 'js');
 
+        // @TODO: It seems like this would skip any locale specific js
         if (modules && currentCartridgeName) {
             // copy all nessessary js files from cartridges specified in package.json
             const currentJsDir = path.join(pwd, '../cartridges/' +
-                currentCartridgeName + '/cartridge/', 'client/js/default');
+                currentCartridgeName + '/cartridge/', 'client/default/js');
 
             shell.mkdir('-p', TEMP_DIR);
             shell.cp('-r', currentJsDir, TEMP_JS_DIR);
 
             Object.keys(modules).forEach(key => {
-                const currentPath = path.join(pwd, modules[key], 'cartridge/client/js/default/*');
+                const currentPath = path.join(pwd, modules[key], 'cartridge/client/default/js/*');
 
-                if (fs.existsSync(path.join(pwd, modules[key], 'cartridge/client/js/default')) && 
-                        shell.ls(path.join(pwd, modules[key], 'cartridge/client/js/default')).length) {
+                if (fs.existsSync(path.join(pwd, modules[key], 'cartridge/client/default/js')) && 
+                        shell.ls(path.join(pwd, modules[key], 'cartridge/client/default/js')).length) {
                     shell.cp('-r', currentPath, TEMP_JS_DIR);
                 }
             });
