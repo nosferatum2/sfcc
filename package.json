@@ -3,7 +3,7 @@
   "version": "0.0.22",
   "description": "LYONSCG Mobile First Reference Application",
   "engines": {
-    "node": ">=4.0"
+    "node": "8.9.0"
   },
   "scripts": {
     "test": "node build_tools/build --test ../test/unit/**/*.js",
@@ -30,7 +30,8 @@
   },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
-    "Ryan Walter <rwalter@lyonscg.com>"
+    "Ryan Walter <rwalter@lyonscg.com>",
+    "Dave Haas <dhaas@lyonscg.com>"
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
   "devDependencies": {
@@ -83,7 +84,7 @@
     "xml2js": "^0.4.17"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-alpha.6",
+    "bootstrap": "4.0.0",
     "cleave.js": "^1.0.2",
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",

@@ -380,7 +380,7 @@ if (options.lint) {
     if (options.lint === 'js') {
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/**/client/js/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
+            ' ../cartridges/client/**/js/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
