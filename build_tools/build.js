@@ -13,9 +13,13 @@ const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
+const chokidar = require('chokidar');
+const os = require('os');
 const util = require('util');
 
+const cwd = process.cwd();
 const pwd = __dirname;
+const TEMP_DIR = path.resolve(cwd,'./tmp');
 
 // Base Build Options
 const optionator = require('optionator')({
@@ -29,8 +33,8 @@ const optionator = require('optionator')({
         type: '[path::String]',
         description: 'Upload a file to a sandbox. Requires dw.json file in the build_tools directory.'
     }, {
-        option: 'upload-cartridge',
-        type: 'Boolean',
+        option: 'uploadCartridge',
+        type: '[String]',
         description: 'Upload a cartridge. Requires dw.json file in the build_tools directory.'
     }, {
         option: 'test',
@@ -51,13 +55,17 @@ const optionator = require('optionator')({
         description: 'Lint scss/js files.',
         enum: ['js', 'server-js', 'css']
     }, {
-        option: 'create-cartridge',
+        option: 'createCartridge',
         type: 'String',
         description: 'Create new cartridge structure'
     }, {
         option: 'watch',
         type: 'Boolean',
         description: 'Watch and upload files'
+    }, {
+        option: 'onlycompile',
+        type: 'Boolean',
+        description: 'Only compile during the watch option.'
     }, {
         option: 'deploy-data',
         type: 'Boolean',
@@ -100,6 +108,7 @@ const optionator = require('optionator')({
         required: false
     }, {
         option: 'verbose',
+        alias: 'v',
         type: 'Boolean',
         description: 'Activate verbose mode',
         required: false
@@ -120,6 +129,10 @@ const optionator = require('optionator')({
         type: '[path::String]',
         description: 'Exclude patterns. This works for both files and folders. To exclude a folder, use `**/foldername/**`. The `**` after is important, otherwise child directories of `foldername` will not be excluded.',
         required: false
+    }, {
+        option: 'include',
+        type: '[path::String]',
+        description: 'Include paths.'
     }, {
         option: 'p12',
         type: 'path::String',
@@ -151,32 +164,54 @@ const optionator = require('optionator')({
 });
 
 // Upload Cartridge Options
+/* Likely remove since this is handled above?
 const uploadCartridgeOptionator = require('optionator')({
     options: []
 });
+*/
 
 function checkForDwJson() {
-    return fs.existsSync(path.join(pwd, 'dw.json'));
+    return fs.existsSync(path.join(pwd, './build_tools/dw.json'));
+}
+
+function clearTmp() {
+    if (options.verbose) {
+        console.log(chalk.green('build.js:clearTmp()'));
+    }
+    shell.rm('-rf', TEMP_DIR);
+}
+
+function dwuploadModule() {
+
+    let dwupload = fs.existsSync(path.resolve(cwd, './node_modules/.bin/dwupload')) ?
+        path.resolve(cwd, './node_modules/.bin/dwupload') :
+        path.resolve(pwd, './node_modules/.bin/dwupload');
+
+    if (os.platform() === 'win32') {
+        dwupload += '.cmd';
+    }
+    return dwupload;	
+}
+
+function shellCommands(param, fileOrCartridge) {
+    const dwupload = dwuploadModule();
+
+    if (os.platform() === 'win32') {
+        return `cd ./cartridges && ${dwupload} ${param} ${fileOrCartridge} && cd..`;
+    }
+    return `cd ./cartridges && node ${dwupload} ${param} ${fileOrCartridge} && cd ..`;
 }
 
 function uploadFiles(files) {
-    if (checkForDwJson()) {
-        shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
-    }
-
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
+    
 
     files.forEach(file => {
-        const relativePath = path.relative(path.join(pwd, '../cartridges/'), file);
-        shell.exec('cd ../cartridges && node ' +
-            dwupload +
-            ' --file ' + relativePath);
+        const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
+        shell.exec(shellCommands('--file', relativePath));
         console.log(`Uploading ${file}`);
     });
-
-    if (checkForDwJson()) {
-        shell.rm('../cartridges/dw.json'); // remove dw.json file from cartridges directory
-    }
+    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
 }
 
 function camelCase(str) {
@@ -189,6 +224,24 @@ function getDirectories(path) {
     return fs.readdirSync(path).filter(function (file) {
       return fs.statSync(path+'/'+file).isDirectory();
     });
+}
+
+function deleteFiles(files) {
+    shell.cp("./build_tools/dw.json", './cartridges'); // copy dw.json file into cartridges directory temporarily
+
+    files.forEach(file => {
+            const realativePath = path.relative(path.join(cwd, './cartridges'), file);
+            shell.exec(shellCommands('delete --file', relativePath));
+    });
+    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+}
+
+function createIstanbulParameter(option, command) {
+    let commandLine = ' ';
+    if (option) {
+            commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
+    }
+    return commandLine;
 }
 
 /**
@@ -259,8 +312,8 @@ if (options.help) {
 
 // upload a file
 if (options.upload) {
-    if (!checkForDwJson()) {
-        console.error(chalk.red('Could not find dw.json file at the root of the project.'));
+    if (!checkForDwJson) {
+        console.error(chalk.red('Could not find dw.json file in build_tools folder.'));
         process.exit(1);
     }
 
@@ -282,6 +335,10 @@ if (options.uploadCartridge) {
     let cartridgesFound = false;
     let commandLineArgs = [];
 
+    for (var myArgument in uploadArguments) {
+        console.log(chalk.yellow(myArgument + " is " + uploadArguments[myArgument]));
+    }
+
     Object.keys(uploadArguments).forEach((uploadOption) => {
         if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
             commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
@@ -301,7 +358,7 @@ if (options.uploadCartridge) {
     uploadArguments['hostname'].forEach((hostname) => {
         let argsClone = commandLineArgs.slice(0);
         argsClone.push('--hostname', hostname);
-        const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + argsClone.join(' ');
+        const dwuploadScript = 'cd ./cartridges && ' + dwupload + ' ' + argsClone.join(' ');
 
         console.log('Upload Commands: '+ dwuploadScript);
 
@@ -336,11 +393,14 @@ if (options.uploadCartridge) {
 
 // run unit tests
 if (options.test) {
-    const mocha = path.resolve(pwd, '../node_modules/.bin/_mocha');
+    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
+        path.resolve(cwd, './node_modules/.bin/_mocha') :
+        path.resolve(pwd, './node_modules/.bin/_mocha');
+    
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
-        options.test.join(' '), { stdio: 'inherit', shell: true, cwd: pwd });
+        options.test.join(' '), { stdio: 'inherit', shell: true, cwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
@@ -349,14 +409,21 @@ if (options.test) {
 
 // run unit test coverage
 if (options.cover) {
-    const istanbul = path.resolve(pwd, '../node_modules/.bin/istanbul');
-    const mocha = '../node_modules/mocha/bin/_mocha';
+    const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
+        path.resolve(cwd, '../node_modules/.bin/istanbul') :
+        path.resolve(pwd, '../node_modules/.bin/istanbul');
+        
+    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
+        path.resolve(cwd, './node_modules/mocha/bin/_mocha') :
+        path.resolve(pwd, './node_modules/mocha/bin/_mocha');
 
     const subprocess = spawn(
         istanbul +
         ' cover ' +
+        createIstanbulParameter(options.exclude, 'x') +
+        createIstanbulParameter(options.include, 'i') +
         mocha +
-        ' -- -R spec ../test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
+        ' -- -R spec test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
@@ -365,22 +432,33 @@ if (options.cover) {
 
 // compile static assets
 if (options.compile) {
-    const packageFile = require(path.join(pwd, '../package.json'));
+    const packageFile = require(path.join(cwd, './package.json'));
     if (options.compile === 'js') {
         js(packageFile, pwd, code => {
             process.exit(code);
         });
     }
     if (options.compile === 'css') {
-        css(packageFile);
+        // Customized to loop through each site and provide single site config for build
+        // so this script should be the only "site aware" one
+        Object.keys(packageFile.sites).forEach(siteIndex => {
+            if (options.verbose) {
+                for (var key in packageFile.sites[siteIndex]){
+                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                }
+            }
+            css(packageFile.sites[siteIndex], pwd, code => {
+                process.exit(code);
+            });
+        });
     }
 }
 
 if (options.lint) {
     if (options.lint === 'js') {
         const subprocess = spawn(
-            path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/client/**/js/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
+            path.resolve(cwd, './node_modules/.bin/eslint') +
+            ' .', { stdio: 'inherit', shell: true, cwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -394,7 +472,7 @@ if (options.lint) {
             ' ../cartridges/**/models/**/*.js' +
             ' ../cartridges/**/scripts/**/*.js' +
             ' ../cartridges/modules/server/*.js' +
-            ' ../cartridges/modules/server.js' , { stdio: 'inherit', shell: true, cwd: pwd });
+            ' ../cartridges/modules/server.js' , { stdio: 'inherit', shell: true, cwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -415,39 +493,99 @@ if (options.lint) {
 if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
     console.log('Created folders and files for cartridge ' + cartridgeName);
-    createCartridge(cartridgeName, pwd);
+    createCartridge(cartridgeName, cwd);
 }
 
 if (options.watch) {
-    const packageFile = require(path.join(pwd, '../package.json'));
-    fs.watch(path.join(pwd, '../cartridges'), { recursive: true }, (event, filename) => {
-        if ([
-            '.scss',
-            '.js',
-            '.properties',
-            '.isml',
-            '.xml',
-            '.jpeg',
-            '.jpg',
-            '.svg',
-            '.gif',
-            '.png'
-        ].includes(path.extname(filename))) {
-            if (filename.includes('cartridge/client')) {
-                // recompile client-side js and scss and upload results
-                if (path.extname(filename) === '.scss') {
-                    css(packageFile).then(changedFiles => {
-                        uploadFiles(changedFiles.map(file => `cartridges/${file}`));
-                    });
+    const packageFile = require(path.join(cwd, './package.json'));
+
+    const cartridgesPath = path.join(cwd, 'cartridges');
+
+    const scssWatcher = chokidar.watch(
+        cartridgesPath + '/**/*.scss', {
+                persistent: true,
+                ignoreInitial: true,
+                followSymlinks: false,
+                awaitWriteFinish: {
+                    stabilityThreshold: 300,
+                    pollInterval: 100
                 }
-                if (path.extname(filename) === '.js') {
-                    js(packageFile, pwd, () => {});
-                }
-            } else {
-                uploadFiles([`cartridges/${filename}`]);
-            }
-        }
     });
+
+    const clientJSWatcher = chokidar.watch(
+        cartridgesPath + '/**/client/**/*.js', {
+            persistent: true,
+            ignoreInitial: true,
+            followSymlinks: flase,
+            awaitWriteFinish: {
+                    stabilityThreshold: 300,
+                    pollInterval: 100
+            }
+        });
+
+    if (!options.onlycompile) {
+
+        const watcher = chokidar.watch(cartridgesPath, {
+            ignored: [
+                '**/cartridge/js/**',
+                '**/cartridge/client/**',
+                '**/*.scss'
+            ],
+            persistent: true,
+            ignoreInitial: true,
+            followSymlinks: false,
+            awaitWriteFinish: {
+                stabilityThreshold: 300,
+                pollInterval: 100
+            }
+        });
+
+        watcher.on('change', filename => {
+            console.log('Detected change in file:', filename);
+            uploadFiles([filename]);
+        });
+
+        watcher.on('add', filename => {
+            console.log('Detected added file:', filename);
+            uploadFiles([filename]);
+        });
+
+        watcher.on('unlink', filename => {
+            console.log('Detected deleted file:', filename);
+            deleteFiles([filename]);
+        });
+    }
+
+    let jsCompilingInProgress = false;
+            clientJSWatcher.on('change', filename => {
+            console.log('Detected change in client JS file:', filename);
+    	     if (!jsCompilingInProgress) {
+    	            jsCompilingInProgress = true;
+    	            js(packageFile, pwd, () => { jsCompilingInProgress = false; });
+    	        } else {
+    	            console.log('Compiling already in progress.');
+    	        }
+    	    });
+    	
+    	    let cssCompilingInProgress = false;
+    	    scssWatcher.on('change', filename => {
+    	        console.log('Detected change in SCSS file:', filename);
+    	
+    	        if (!cssCompilingInProgress) {
+    	            cssCompilingInProgress = true;
+    	            css(packageFile, options).then(() => {
+    	                clearTmp();
+    	                console.log(chalk.green('SCSS files compiled.'));
+    	                cssCompilingInProgress = false;
+    	            }).catch(error => {
+    	                clearTmp();
+    	                console.error(chalk.red('Could not compile css files.'), error);
+    	                cssCompilingInProgress = false;
+    	            });
+    	        } else {
+    	            console.log('Compiling already in progress.');
+    	        }
+    	    });
 }
 
 if (options.deployData) {
