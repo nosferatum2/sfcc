@@ -433,15 +433,26 @@ if (options.cover) {
 // compile static assets
 if (options.compile) {
     const packageFile = require(path.join(cwd, './package.json'));
+
     if (options.compile === 'js') {
-        js(packageFile, pwd, code => {
-            process.exit(code);
+        Object.keys(packageFile.sites).forEach(siteIndex => {
+            console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
+            if (options.verbose) {
+                for (var key in packageFile.sites[siteIndex]){
+                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                }
+            }
+            js(packageFile.sites[siteIndex], pwd, code => {
+                process.exit(code);
+            });
         });
+        
     }
     if (options.compile === 'css') {
         // Customized to loop through each site and provide single site config for build
         // so this script should be the only "site aware" one
         Object.keys(packageFile.sites).forEach(siteIndex => {
+            console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
             if (options.verbose) {
                 for (var key in packageFile.sites[siteIndex]){
                     console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
