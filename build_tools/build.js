@@ -466,24 +466,10 @@ if (options.compile) {
 }
 
 if (options.lint) {
-    if (options.lint === 'js') {
-        const subprocess = spawn(
-            path.resolve(cwd, './node_modules/.bin/eslint') +
-            ' .', { stdio: 'inherit', shell: true, cwd });
-
-        subprocess.on('exit', code => {
-            process.exit(code);
-        });
-    }
-
-    if (options.lint === 'server-js') {
+    if (options.lint === 'js' || options.lint === 'server-js') {
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/**/controllers/**/*.js' +
-            ' ../cartridges/**/models/**/*.js' +
-            ' ../cartridges/**/scripts/**/*.js' +
-            ' ../cartridges/modules/server/*.js' +
-            ' ../cartridges/modules/server.js' , { stdio: 'inherit', shell: true, cwd });
+            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
@@ -527,7 +513,7 @@ if (options.watch) {
         cartridgesPath + '/**/client/**/*.js', {
             persistent: true,
             ignoreInitial: true,
-            followSymlinks: flase,
+            followSymlinks: false,
             awaitWriteFinish: {
                     stabilityThreshold: 300,
                     pollInterval: 100
