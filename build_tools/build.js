@@ -493,7 +493,7 @@ if (options.lint) {
     if (options.lint === 'css') {
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/stylelint') +
-            ' --syntax scss "../**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
+            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
             process.exit(code);
