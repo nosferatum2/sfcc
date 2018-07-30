@@ -5,9 +5,8 @@ require('shelljs/make');
 var path = require('path');
 var webpack = require('webpack');//require('sgmf-scripts').webpack;
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-//var ExtractTextPlugin = require('webpack')['extract-text-webpack-plugin'];
-//var jsFiles = require('./helpers').createJsPath();
-//var scssFiles = require('./helpers').createScssPath();
+const chalk = require('chalk');
+const verbose = true;
 
 var bootstrapPackages = {
     Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
@@ -25,19 +24,23 @@ var bootstrapPackages = {
 
 
 module.exports = function (packageName) { 
-    console.log('webpack config recieved ' + packageName);
+    console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
     var jsFiles = require('./helpers').createJsPath(packageName);
     var scssFiles = require('./helpers').createScssPath(packageName);
-    console.log('webpack got js files');
-    for (var key in jsFiles){
-        console.log('jsFiles ' + jsFiles[key]);
+    if (verbose) {
+        console.log(chalk.gray('Webpack(ing) js files'));
+        for (var key in jsFiles){
+            console.log('   ' + chalk.gray(jsFiles[key]));
+        }
+        console.log(chalk.gray('Webpack(ing) scss files'));
+        
+        for (var key in scssFiles){
+          console.log('    ' + chalk.gray(scssFiles[key]));
+        }
     }
-    console.log('webpack got scss files');
-    for (var key in scssFiles){
-        console.log('scssFiles ' + scssFiles[key]);
-    }
-var garbage;
-return garbage = 
+    
+var webpackConfig;
+return webpackConfig = 
  [{
     mode: 'production',
     name: 'js',
