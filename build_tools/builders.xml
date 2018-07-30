@@ -53,6 +53,7 @@
             <arg value='--hostname="${hostname}"' if:set="hostname" />
             <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
             <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
+            <arg value='--version-cartridge-name="${versionCartridgeName}"' if:set="versionCartridgeName" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
@@ -67,6 +68,7 @@
             <arg value='--hostname=${hostname}' if:set="hostname" />
             <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
             <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
+            <arg value='--version-cartridge-name=${versionCartridgeName}' if:set="versionCartridgeName" />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>

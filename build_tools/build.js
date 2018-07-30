@@ -15,6 +15,7 @@ const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
+const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
@@ -185,6 +186,11 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Activates code version',
         required: false
+    }, {
+        option: 'version-cartridge-name',
+        type: 'String',
+        description: 'cartridge name version.properties should be created within',
+        required: false
     }
     ]
 });
@@ -313,14 +319,15 @@ function getUploadOptions(isData) {
         'p12',
         'passphrase',
         'self-signed',
-        'data-bundle'
+        'data-bundle',
+        'version-cartridge-name'
     ],
     uploadArguments = {};
 
     // Create the argument list/object based on the dw.json file if present
     if (checkForDwJson()) {
         const localSettings = require(path.join(pwd, './dw.json'));
-        
+
         Object.keys(localSettings).forEach(uploadOption => {
             if (localSettings[uploadOption]) {
                 uploadArguments[camelCase(uploadOption)] = localSettings[uploadOption];
@@ -407,6 +414,21 @@ function getCartridges(packageFile) {
     }
     
     return cartridges;
+}
+
+/**
+ * creates version.properties file
+ * @param {array} uploadArguments - the current uploadArguments
+ */
+function createVersionProperties(uploadArguments) {
+    if (uploadArguments && uploadArguments.versionCartridgeName && uploadArguments.codeVersion) {
+        console.log(chalk.yellow('Creating version.properties in cartridge "' + uploadArguments.versionCartridgeName + '"'));
+        const cartridgeName = uploadArguments.versionCartridgeName;
+        const codeVersion = uploadArguments.codeVersion;
+        createVersionPropertiesFile(cartridgeName, codeVersion, cwd);
+    } else {
+        console.log(chalk.yellow('No versionCartridgeName defined. Skipping creation of version.properties file.'));
+    }
 }
 
 const options = optionator.parse(process.argv);
@@ -738,6 +760,9 @@ if (options.deployCartridges) {
         console.log(chalk.red('Error: Please provide a password to deploy cartridges!'));
         process.exit(0);
     }
+
+    // creates a version.properties file if "version-cartridge-name" was specified as a command line argument
+    createVersionProperties(uploadArguments);
 
     var commandLineArgs = [];
     Object.keys(uploadArguments).forEach((uploadOption) => {
