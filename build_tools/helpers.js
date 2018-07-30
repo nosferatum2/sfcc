@@ -3,8 +3,9 @@
 const shell = require('shelljs');
 const path = require('path');
 const fs = require('fs');
-
+const chalk = require('chalk');
 const cwd = process.cwd();
+const verbose = true;
 
 const createAliases = (packageFile, pwd) => {
     const aliases = {};
@@ -12,7 +13,7 @@ const createAliases = (packageFile, pwd) => {
         Object.keys(packageFile.paths).forEach(item => {
             if (!aliases[item]) {
                 const cartridge = path.resolve(pwd, packageFile.paths[item]);
-                console.log('createAliases cartridge ' + cartridge);
+                console.log('Creating aliases for cartridge ' + cartridge);
                 aliases[item] = path.join(cartridge, 'cartridge/client/default/js');
                 const clientFolder = path.join(cartridge, 'cartridge/client');
                 const locales = fs.readdirSync(clientFolder)
@@ -27,23 +28,35 @@ const createAliases = (packageFile, pwd) => {
                     }
                 });
 
-                console.log("after this run of create aliases, we have");
-                Object.keys(aliases).forEach(key => {
-                    console.log( key + ' is ' + aliases[key]);
-                });
+                if (verbose) {
+                    console.log("    Created aliases: ");
+                    Object.keys(aliases).forEach(key => {
+                        console.log( '    ' + key + ' is ' + aliases[key]);
+                    });
+                
+                    console.log(chalk.gray('Looking for inner packages...'));
+                }
 
-                console.log('creating inner packages. this sounds dangerous');
-                // I think this is for stitching together all of the paths for the plugin architecture. 
-                // Not sure if we should expect inner Packages to be "Site" aware with our custom package.json configuration
-                // I'm assuming they should not because the only time we'd consider using this crazy architecture is 
+                /** 
+                 * I think this is for stitching together all of the paths for the plugin architecture. 
+                 * Not sure if we should expect inner Packages to be "Site" aware with our custom package.json configuration
+                 */
                 const innerPackage = require(path.join(cartridge, '../..', 'package.json'));
                 if (innerPackage.paths) {
+                    if (verbose) {
+                        console.log(chalk.green('    Inner package found.'));
+                    }
                     const newAliases = createAliases(innerPackage, pwd);
                     Object.keys(newAliases).forEach(key => {
                         if (!aliases[key]) {
                             aliases[key] = newAliases[key];
                         }
                     });
+                }
+                else {
+                    if (verbose) {
+                        console.log(chalk.gray('    No inner package found.'));
+                    }
                 }
             }
            

@@ -21,6 +21,10 @@ const cwd = process.cwd();
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(cwd,'./tmp');
 
+// Identify script
+const packageFile = require(path.join(cwd, './package.json'));
+console.log(chalk.bgYellow.black.bold('Starting LyonsCG SFRA Build Script v' + packageFile.version));
+
 // Base Build Options
 const optionator = require('optionator')({
     options: [{
@@ -167,13 +171,16 @@ const optionator = require('optionator')({
 /* Likely remove since this is handled above?
 const uploadCartridgeOptionator = require('optionator')({
     options: []
-});
-*/
+});*/
+
 
 function checkForDwJson() {
     return fs.existsSync(path.join(cwd, './build_tools/dw.json'));
 }
 
+/**
+ * 
+ */
 function clearTmp() {
     if (options.verbose) {
         console.log(chalk.green('build.js:clearTmp()'));
@@ -221,7 +228,9 @@ function camelCase(str) {
 }
 
 function getDirectories(path) {
+    console.warn('getDirectories('+ path +')');
     return fs.readdirSync(path).filter(function (file) {
+       console.warn('considering ' + file);
       return fs.statSync(path+'/'+file).isDirectory();
     });
 }
@@ -325,13 +334,30 @@ if (options.upload) {
 // upload cartridge
 if (options.uploadCartridge) {
     if (checkForDwJson()) {
-        shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
+        console.log(chalk.red('pwd ' + pwd + ' join with build_tools/dw.json'));
+        shell.cp(path.join(pwd, '/dw.json'), path.join(pwd, '../cartridges/'));
+            console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
     } else {
-        console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
+        console.warn(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
     }
 
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    const cartridges = options.uploadCartridge;
+    cartridges.forEach(cartridge => {
+        console.log('running shell.exec ' + 'cd ./cartridges && node ' +
+        path.resolve(cwd, './node_modules/.bin/dwupload') +
+        ' -- cartridge ' + cartridge + ' && cd ..');
+        shell.exec('cd ./cartridges && node ' +
+            path.resolve(cwd, './node_modules/.bin/dwupload') +
+            ' --cartridge ' + cartridge + ' && cd ..');
+    });
+
+    
     const uploadArguments = getUploadOptions();
+/*
+    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    console.log('getting upload options');
+    const uploadArguments = getUploadOptions();
+    console.log('got options');
     let cartridgesFound = false;
     let commandLineArgs = [];
 
@@ -351,7 +377,12 @@ if (options.uploadCartridge) {
 
     // Get the cartridge list from the directory directly if no specific cartridges were provided
     if (!cartridgesFound) {
+        console.log('checking directories');
         const cartridges = getDirectories('../cartridges').join(',');
+        console.log(chalk.red('finding cartridges to upload'));
+        for (var i = 0; i < cartridges.length; i++){
+            console.log(cartridges[i]);
+        }
         commandLineArgs.push('--cartridge', cartridges);
     }
 
@@ -364,7 +395,8 @@ if (options.uploadCartridge) {
 
         shell.exec(dwuploadScript);
     });
-
+*/
+    // Here on down is the activation routine, leaving this as is for the second part
     if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
         const activationHostnames = uploadArguments.activationHostname;
         delete uploadArguments.activationHostname;

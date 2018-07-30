@@ -25,17 +25,16 @@ module.exports = (sitePackageConfig, pwd, callback) => {
         cssAliases[key] = jsAliases[key].replace(path.sep + 'js', path.sep + 'scss');
     });
     if (verbose) {
-        console.log(chalk.gray('about to load '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
+        console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
     // passing webpackConfig the name of the package we are compiling to
     const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(sitePackageConfig.packageName);
-    console.log(webpackConfig);
     if (verbose) {
-        console.log(chalk.gray('loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
+        console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
+        console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }
     const scssConfig = webpackConfig.find(item => item.name === 'scss');
 
-    console.log('test 03');
     if (scssConfig) {
         let newResolve = {
             alias: cssAliases,
