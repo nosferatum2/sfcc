@@ -313,6 +313,7 @@ function getUploadOptions(isData) {
 }
 
 const options = optionator.parse(process.argv);
+options.verbose = true;
 
 if (options.help) {
     console.log(optionator.generateHelp());
@@ -468,6 +469,10 @@ if (options.compile) {
     const packageFile = require(path.join(cwd, './package.json'));
 
     if (options.compile === 'js') {
+        /**
+         * Customized to loop through each site and provide "single site" config for build
+         * This build.js will likely be the only "site aware" scritp
+         */
         Object.keys(packageFile.sites).forEach(siteIndex => {
             console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
             if (options.verbose) {
@@ -482,8 +487,10 @@ if (options.compile) {
         
     }
     if (options.compile === 'css') {
-        // Customized to loop through each site and provide single site config for build
-        // so this script should be the only "site aware" one
+        /**
+         * Customized to loop through each site and provide "single site" config for build
+         * This build.js will likely be the only "site aware" scritp
+         */
         Object.keys(packageFile.sites).forEach(siteIndex => {
             console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
             if (options.verbose) {
@@ -544,6 +551,8 @@ if (options.watch) {
 
     const cartridgesPath = path.join(cwd, 'cartridges');
 
+    console.log('Watching for scss or client js changes...');
+
     const scssWatcher = chokidar.watch(
         cartridgesPath + '/**/*.scss', {
                 persistent: true,
@@ -600,35 +609,60 @@ if (options.watch) {
     }
 
     let jsCompilingInProgress = false;
-            clientJSWatcher.on('change', filename => {
-            console.log('Detected change in client JS file:', filename);
-    	     if (!jsCompilingInProgress) {
-    	            jsCompilingInProgress = true;
-    	            js(packageFile, pwd, () => { jsCompilingInProgress = false; });
-    	        } else {
-    	            console.log('Compiling already in progress.');
-    	        }
-    	    });
+    clientJSWatcher.on('change', filename => {
+    console.log('Detected change in client JS file:', filename);
+        if (!jsCompilingInProgress) {
+            jsCompilingInProgress = true;
+            /**
+             * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
+             */
+             Object.keys(packageFile.sites).forEach(siteIndex => {
+                console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
+                if (options.verbose) {
+                    for (var key in packageFile.sites[siteIndex]){
+                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                    }
+                }
+                js(packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
+            });
+
+
+        } else {
+            console.log('Compiling already in progress.');
+        }
+    });
     	
-    	    let cssCompilingInProgress = false;
-    	    scssWatcher.on('change', filename => {
-    	        console.log('Detected change in SCSS file:', filename);
-    	
-    	        if (!cssCompilingInProgress) {
-    	            cssCompilingInProgress = true;
-    	            css(packageFile, options).then(() => {
-    	                clearTmp();
-    	                console.log(chalk.green('SCSS files compiled.'));
-    	                cssCompilingInProgress = false;
-    	            }).catch(error => {
-    	                clearTmp();
-    	                console.error(chalk.red('Could not compile css files.'), error);
-    	                cssCompilingInProgress = false;
-    	            });
-    	        } else {
-    	            console.log('Compiling already in progress.');
-    	        }
-    	    });
+    let cssCompilingInProgress = false;
+    scssWatcher.on('change', filename => {
+        console.log('Detected change in SCSS file:', filename);
+
+        if (!cssCompilingInProgress) {
+            cssCompilingInProgress = true;
+
+            Object.keys(packageFile.sites).forEach(siteIndex => {
+                console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
+                if (options.verbose) {
+                    for (var key in packageFile.sites[siteIndex]){
+                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                    }
+                }
+                try{
+                    css(packageFile.sites[siteIndex], pwd, () => {
+                        clearTmp();
+                        console.log(chalk.green('SCSS files compiled.'));
+                        cssCompilingInProgress = false;
+                    });
+                }
+                catch(error) {
+                    clearTmp();
+                    console.error(chalk.red('Could not compile css files.'), error);
+                    cssCompilingInProgress = false;
+                };
+            });
+        } else {
+            console.log('Compiling already in progress.');
+        }
+    });
 }
 
 if (options.deployData) {
