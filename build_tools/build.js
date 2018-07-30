@@ -175,7 +175,7 @@ const uploadCartridgeOptionator = require('optionator')({
 
 
 function checkForDwJson() {
-    return fs.existsSync(path.join(pwd, '/dw.json'));
+    return fs.existsSync(path.join(cwd, './build_tools/dw.json'));
 }
 
 /**

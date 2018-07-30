@@ -1,6 +1,6 @@
 {
   "username": "",
   "password": "",
-  "hostname": "",
+  "hostname": ["dev01-na01-evaluation.demandware.net"],
   "dataBundle": "core"
 }
