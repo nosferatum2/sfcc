@@ -16,3 +16,4 @@ build_tools/*.zip
 data_impex/*.zip
 lastbuild.properties
 .vscode
+dw.json
