@@ -334,18 +334,18 @@ if (options.upload) {
 // upload cartridge
 if (options.uploadCartridge) {
     if (checkForDwJson()) {
-        console.log(chalk.red('pwd ' + pwd + ' join with build_tools/dw.json'));
-        shell.cp(path.join(pwd, '/dw.json'), path.join(pwd, '../cartridges/'));
+        shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
             console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
     } else {
-        console.warn(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
+        console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
     }
 
     const cartridges = options.uploadCartridge;
     cartridges.forEach(cartridge => {
-        console.log('running shell.exec ' + 'cd ./cartridges && node ' +
+        console.log('Uploading cartridge ' + chalk.black.bgBlue(cartridge));
+        console.log(chalk.gray('    ' + 'cd ./cartridges && node ' +
         path.resolve(cwd, './node_modules/.bin/dwupload') +
-        ' -- cartridge ' + cartridge + ' && cd ..');
+        ' -- cartridge ' + cartridge + ' && cd ..'));
         shell.exec('cd ./cartridges && node ' +
             path.resolve(cwd, './node_modules/.bin/dwupload') +
             ' --cartridge ' + cartridge + ' && cd ..');
@@ -415,6 +415,7 @@ if (options.uploadCartridge) {
             });
         });
     } else {
+        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
         if (checkForDwJson()) {
             shell.rm(path.join(pwd, '../cartridges/dw.json'));
         }
@@ -499,21 +500,34 @@ if (options.compile) {
 
 if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
+
+        console.log(chalk.bgMagenta.black('Running js linting...'));
+        if (options.verbose) {
+            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
+            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
+        }
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
 
         subprocess.on('exit', code => {
+            console.log(chalk.magenta('   Finished js linting.'));
             process.exit(code);
         });
     }
 
     if (options.lint === 'css') {
+        console.log(chalk.bgCyan.black('Running scss linting...'));
+        if (options.verbose) {
+            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
+            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
+        }
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
+            console.log(chalk.cyan('    Finished scss linting.'));
             process.exit(code);
         });
     }
