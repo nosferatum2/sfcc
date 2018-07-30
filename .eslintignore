@@ -1,4 +1,7 @@
-cartridges/app_storefront_base/cartridge/static/
+cartridges/*/cartridge/static/
+cartridges/modules/underscore/
 coverage/
 doc/
 bin/
+node_modules/
+build_tools/
