@@ -21,7 +21,14 @@ const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
 
-const cwd = process.cwd();
+// current working directory is meant to be the root of the project, not build_tools
+var cwd = process.cwd();
+var folderName = cwd.split(path.sep).pop();
+if (folderName == 'build_tools') {
+    process.chdir('../');
+    cwd = process.cwd();
+}
+
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(cwd,'./tmp');
 
@@ -168,7 +175,18 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Generates a text file that contains HTML with a table of system objects',
         required: false
-    }]
+    }, {
+        option: 'deployCartridges',
+        type: 'Boolean',
+        description: 'Deploys cartridges specified in the package.json file to the server',
+        required: false
+    }, {
+        option: 'activateCodeVersion',
+        type: 'Boolean',
+        description: 'Activates code version',
+        required: false
+    }
+    ]
 });
 
 /**
@@ -202,13 +220,13 @@ function dwuploadModule() {
     if (os.platform() === 'win32') {
         dwupload += '.cmd';
     }
-    return dwupload;	
+    return dwupload;
 }
 
 /**
  * Formats commandline string for dwupload
- * @param {string} param 
- * @param {string} fileOrCartridge 
+ * @param {string} param
+ * @param {string} fileOrCartridge
  */
 function shellCommands(param, fileOrCartridge) {
     const dwupload = dwuploadModule();
@@ -225,7 +243,7 @@ function shellCommands(param, fileOrCartridge) {
  */
 function uploadFiles(files) {
     shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
-    
+
 
     files.forEach(file => {
         const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
@@ -237,27 +255,12 @@ function uploadFiles(files) {
 
 /**
  * Filters a string to change it to camel case
- * @param {string} str - input string to process 
+ * @param {string} str - input string to process
  * @returns {string} - processed for camel case
  */
 function camelCase(str) {
     return str.replace(/^.|-./g, function(letter, index) {
         return index == 0 ? letter.toLowerCase() : letter.substr(1).toUpperCase();
-    });
-}
-
-/**
- * Given a filesystem path, return an array of directories
- * @param {string} path - filesystem path
- * @returns {array} - array of directories
- */
-function getDirectories(path) {
-    if (options.verbose) {
-        console.log('getDirectories('+ path +')');
-    }
-    return fs.readdirSync(path).filter(function (file) {
-       console.log(chalk.gray('    ' + file));
-      return fs.statSync(path+'/'+file).isDirectory();
     });
 }
 
@@ -277,8 +280,8 @@ function deleteFiles(files) {
 
 /**
  * Create parameter string for use with Istanbul testing
- * @param {*} option 
- * @param {*} command 
+ * @param {*} option
+ * @param {*} command
  */
 function createIstanbulParameter(option, command) {
     let commandLine = ' ';
@@ -347,6 +350,65 @@ function getUploadOptions(isData) {
     return uploadArguments;
 }
 
+/**
+ * activates specified code version for all activationHostnames
+ * @param {array} uploadArguments - the current uploadArguments
+ * @returns {array} - altered uploadArguments array
+ */
+function activateCodeVersion(uploadArguments) {
+    if (uploadArguments.activationHostname && uploadArguments.activationHostname.length > 0) {
+        const activationHostnames = uploadArguments.activationHostname;
+        delete uploadArguments.activationHostname;
+
+        activationHostnames.forEach((activationHostname) => {
+            uploadArguments['activationHostname'] = activationHostname;
+            const webdav = new Webdav(uploadArguments);
+            webdav.formLogin().then(() => {
+                webdav.activateCode().then(() => {
+                    process.exit(0);
+                });
+            });
+        });
+    } else {
+        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
+        process.exit(0);
+    }
+
+    return uploadArguments;
+}
+
+/**
+ * return an array of cartridges that are included in the package.json file
+ * @param {file} packageFile - the package.json file to use
+ * @returns {array} - array of cartridge names
+ */
+function getCartridges(packageFile) {
+    var cartridges = [];
+    Object.keys(packageFile.sites).forEach(siteIndex => {
+        if (packageFile.sites[siteIndex].paths != 'undefined') {
+            for (var key in packageFile.sites[siteIndex].paths) {
+                var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                var cartridgeName = cartridgePath.split(path.sep).pop();
+                if (cartridgeName && cartridges.indexOf(cartridgeName) == -1) {
+                    console.log(chalk.blue('passing in "' + cartridgeName + '"'));
+                    cartridges.push(cartridgeName);
+                } else {
+                    console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
+                }
+                
+            }
+        }
+    });
+
+    // always add in modules, assume this is a required cartridge
+    if (cartridges.indexOf('modules') == -1) {
+        console.log(chalk.blue('passing in "modules"'));
+        cartridges.push('modules');
+    }
+    
+    return cartridges;
+}
+
 const options = optionator.parse(process.argv);
 
 /** @todo - need to handle verbose flag better. Hardcoded to verbose mode for n */
@@ -373,7 +435,7 @@ if (options.upload) {
 if (options.uploadCartridge) {
     if (checkForDwJson()) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
-            console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
+        console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
     } else {
         console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
     }
@@ -388,43 +450,6 @@ if (options.uploadCartridge) {
             path.resolve(cwd, './node_modules/.bin/dwupload') +
             ' --cartridge ' + cartridge + ' && cd ..');
     });
-
-    
-    /**
-     * From here on down is the code activation routine. I think we should seperate these out
-     * as different build steps. The way it's written now it tries to activate code
-     * after uploading each cartridge.
-     * 
-     * @todo LRA-109 to rework cartridge upload and code activation. 
-     */
-
-    const uploadArguments = getUploadOptions();
-
-    if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
-        const activationHostnames = uploadArguments.activationHostname;
-        delete uploadArguments.activationHostname;
-
-        activationHostnames.forEach((activationHostname) => {
-            uploadArguments['activationHostname'] = activationHostname;
-            const webdav = new Webdav(uploadArguments);
-            webdav.formLogin().then(() => {
-                webdav.activateCode().then(() => {
-                    if (checkForDwJson()) {
-                        shell.rm(path.join(pwd, '../cartridges/dw.json'));
-                    }
-
-                    process.exit(0);
-                });
-            });
-        });
-    } else {
-        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
-        if (checkForDwJson()) {
-            shell.rm(path.join(pwd, '../cartridges/dw.json'));
-        }
-
-        process.exit(0);
-    }
 }
 
 // run unit tests
@@ -432,7 +457,7 @@ if (options.test) {
     const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
         path.resolve(cwd, './node_modules/.bin/_mocha') :
         path.resolve(pwd, './node_modules/.bin/_mocha');
-    
+
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
@@ -448,7 +473,7 @@ if (options.cover) {
     const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
         path.resolve(cwd, '../node_modules/.bin/istanbul') :
         path.resolve(pwd, '../node_modules/.bin/istanbul');
-        
+
     const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
         path.resolve(cwd, './node_modules/mocha/bin/_mocha') :
         path.resolve(pwd, './node_modules/mocha/bin/_mocha');
@@ -486,7 +511,7 @@ if (options.compile) {
                 process.exit(code);
             });
         });
-        
+
     }
     if (options.compile === 'css') {
         /**
@@ -633,7 +658,7 @@ if (options.watch) {
             console.log('Compiling already in progress.');
         }
     });
-    	
+
     let cssCompilingInProgress = false;
     scssWatcher.on('change', filename => {
         console.log('Detected change in SCSS file:', filename);
@@ -686,4 +711,51 @@ if (options.generateObjectReport) {
     console.log('Generating Object Report');
     const uploadArguments = getUploadOptions();
     generateSystemObjectReports(uploadArguments);
+}
+
+/**
+ * uploads all cartridges to the server and activates code version
+ */
+if (options.deployCartridges) {
+    console.log(chalk.green('Starting deployCartridges routine...'));
+
+    const dwupload = dwuploadModule();
+    var uploadArguments = getUploadOptions();
+
+    var commandLineArgs = [];
+    Object.keys(uploadArguments).forEach((uploadOption) => {
+        if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
+            commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
+        }
+    });
+
+    // include all the cartridges from the package.json file
+    var cartridges = getCartridges(packageFile);
+    if (cartridges.length > 0) {
+        commandLineArgs.push('--cartridge', cartridges.join(','));
+    }
+
+    // loop through each hostname provided and upload to the SFCC server
+    if (uploadArguments.hostname && uploadArguments.hostname.length > 0) {
+        uploadArguments['hostname'].forEach((hostname) => {
+            console.log(chalk.blue('Uploading code to host: ' + hostname));
+            let argsClone = commandLineArgs.slice(0);
+            argsClone.push('--hostname', hostname);
+            const dwuploadScript = 'cd ./cartridges && ' + dwupload + ' ' + argsClone.join(' ');
+            shell.exec(dwuploadScript);
+        });
+    } else {
+        console.log(chalk.red('No hostname defined. Skipping code upload!'));
+        process.exit(0);
+    }
+    
+    // activate code version
+    uploadArguments = activateCodeVersion(uploadArguments);
+}
+
+// activates code version
+if (options.activateCodeVersion) {
+    console.log(chalk.green('Starting activateCodeVersion routine...'));
+    const uploadArguments = getUploadOptions();
+    activateCodeVersion(uploadArguments);
 }

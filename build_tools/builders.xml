@@ -42,7 +42,7 @@
         <echo level="info">Upload in progress...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg line='node build --upload-cartridge' />
+            <arg line='node build --deployCartridges' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
             <arg value='--username="${user}"' if:set="user" />
@@ -56,7 +56,7 @@
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
-            <arg value='--upload-cartridge' />
+            <arg value='--deployCartridges' />
             <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
             <arg value='--cartridge=${cartridge}' if:set="cartridge" />
             <arg value='--username=${user}' if:set="user" />
@@ -143,7 +143,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --cover"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run cover"/>
         </exec>
         <echo level="info">Test coverage complete!</echo>
     </target>
