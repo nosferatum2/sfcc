@@ -188,12 +188,12 @@
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg line='node build --generate-object-report' />
-            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
             <arg value='--generate-object-report' />
-            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
         </exec>
         <echo level="info">System object reports created!</echo>
     </target>

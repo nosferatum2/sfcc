@@ -708,7 +708,7 @@ if (options.deployData) {
 }
 
 if (options.generateObjectReport) {
-    console.log('Generating Object Report');
+    console.log(chalk.green('Generating Object Report'));
     const uploadArguments = getUploadOptions();
     generateSystemObjectReports(uploadArguments);
 }
