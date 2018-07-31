@@ -2,6 +2,10 @@
 
 'use strict';
 
+/**
+ * build.js module adapted for LyonsCG use from SFCC's community suite sgmf-scripts
+ */
+
 const shell = require('shelljs');
 const spawn = require('child_process').spawn;
 const path = require('path');
@@ -13,11 +17,19 @@ const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
+const chokidar = require('chokidar');
+const os = require('os');
 const util = require('util');
 
+const cwd = process.cwd();
 const pwd = __dirname;
+const TEMP_DIR = path.resolve(cwd,'./tmp');
 
-// Base Build Options
+/** Identify the script as soon as it starts. */
+const packageFile = require(path.join(cwd, './package.json'));
+console.log(chalk.bgYellow.black.bold('Starting LyonsCG SFRA Build Script v' + packageFile.version));
+
+/** Base Build Options */
 const optionator = require('optionator')({
     options: [{
         option: 'help',
@@ -29,8 +41,8 @@ const optionator = require('optionator')({
         type: '[path::String]',
         description: 'Upload a file to a sandbox. Requires dw.json file in the build_tools directory.'
     }, {
-        option: 'upload-cartridge',
-        type: 'Boolean',
+        option: 'uploadCartridge',
+        type: '[String]',
         description: 'Upload a cartridge. Requires dw.json file in the build_tools directory.'
     }, {
         option: 'test',
@@ -51,13 +63,17 @@ const optionator = require('optionator')({
         description: 'Lint scss/js files.',
         enum: ['js', 'server-js', 'css']
     }, {
-        option: 'create-cartridge',
+        option: 'createCartridge',
         type: 'String',
         description: 'Create new cartridge structure'
     }, {
         option: 'watch',
         type: 'Boolean',
         description: 'Watch and upload files'
+    }, {
+        option: 'onlycompile',
+        type: 'Boolean',
+        description: 'Only compile during the watch option.'
     }, {
         option: 'deploy-data',
         type: 'Boolean',
@@ -100,6 +116,7 @@ const optionator = require('optionator')({
         required: false
     }, {
         option: 'verbose',
+        alias: 'v',
         type: 'Boolean',
         description: 'Activate verbose mode',
         required: false
@@ -120,6 +137,10 @@ const optionator = require('optionator')({
         type: '[path::String]',
         description: 'Exclude patterns. This works for both files and folders. To exclude a folder, use `**/foldername/**`. The `**` after is important, otherwise child directories of `foldername` will not be excluded.',
         required: false
+    }, {
+        option: 'include',
+        type: '[path::String]',
+        description: 'Include paths.'
     }, {
         option: 'p12',
         type: 'path::String',
@@ -150,52 +171,128 @@ const optionator = require('optionator')({
     }]
 });
 
-// Upload Cartridge Options
-const uploadCartridgeOptionator = require('optionator')({
-    options: []
-});
-
+/**
+ * Checks for the dw.json config file in the build_tools subfolder
+ * @returns {boolean}
+ */
 function checkForDwJson() {
-    return fs.existsSync(path.join(pwd, 'dw.json'));
+    return fs.existsSync(path.join(cwd, './build_tools/dw.json'));
 }
 
-function uploadFiles(files) {
-    if (checkForDwJson()) {
-        shell.cp('dw.json', '../cartridges/'); // copy dw.json file into cartridges directory temporarily
+/**
+ * Deletes all files in the tmp directory
+ */
+function clearTmp() {
+    if (options.verbose) {
+        console.log(chalk.green('build.js:clearTmp()'));
     }
+    shell.rm('-rf', TEMP_DIR);
+}
 
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+/**
+ * Returns full path to the dwupload binary utility on the workstation
+ * @returns {string} Path to dwupload binary
+ */
+function dwuploadModule() {
+
+    let dwupload = fs.existsSync(path.resolve(cwd, './node_modules/.bin/dwupload')) ?
+        path.resolve(cwd, './node_modules/.bin/dwupload') :
+        path.resolve(pwd, './node_modules/.bin/dwupload');
+
+    if (os.platform() === 'win32') {
+        dwupload += '.cmd';
+    }
+    return dwupload;	
+}
+
+/**
+ * Formats commandline string for dwupload
+ * @param {string} param 
+ * @param {string} fileOrCartridge 
+ */
+function shellCommands(param, fileOrCartridge) {
+    const dwupload = dwuploadModule();
+
+    if (os.platform() === 'win32') {
+        return `cd ./cartridges && ${dwupload} ${param} ${fileOrCartridge} && cd..`;
+    }
+    return `cd ./cartridges && node ${dwupload} ${param} ${fileOrCartridge} && cd ..`;
+}
+
+/**
+ * Uploads the list of files given config info found in build_tools/dw.json
+ * @param {array} files - list of files to upload
+ */
+function uploadFiles(files) {
+    shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
+    
 
     files.forEach(file => {
-        const relativePath = path.relative(path.join(pwd, '../cartridges/'), file);
-        shell.exec('cd ../cartridges && node ' +
-            dwupload +
-            ' --file ' + relativePath);
+        const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
+        shell.exec(shellCommands('--file', relativePath));
         console.log(`Uploading ${file}`);
     });
-
-    if (checkForDwJson()) {
-        shell.rm('../cartridges/dw.json'); // remove dw.json file from cartridges directory
-    }
+    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
 }
 
+/**
+ * Filters a string to change it to camel case
+ * @param {string} str - input string to process 
+ * @returns {string} - processed for camel case
+ */
 function camelCase(str) {
     return str.replace(/^.|-./g, function(letter, index) {
         return index == 0 ? letter.toLowerCase() : letter.substr(1).toUpperCase();
     });
 }
 
+/**
+ * Given a filesystem path, return an array of directories
+ * @param {string} path - filesystem path
+ * @returns {array} - array of directories
+ */
 function getDirectories(path) {
+    if (options.verbose) {
+        console.log('getDirectories('+ path +')');
+    }
     return fs.readdirSync(path).filter(function (file) {
+       console.log(chalk.gray('    ' + file));
       return fs.statSync(path+'/'+file).isDirectory();
     });
 }
 
 /**
+ * Use the dwupload binary to delete files off the server
+ * @param {array} files - files to be deleted from the server
+ */
+function deleteFiles(files) {
+    shell.cp("./build_tools/dw.json", './cartridges'); // copy dw.json file into cartridges directory temporarily
+
+    files.forEach(file => {
+            const realativePath = path.relative(path.join(cwd, './cartridges'), file);
+            shell.exec(shellCommands('delete --file', relativePath));
+    });
+    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+}
+
+/**
+ * Create parameter string for use with Istanbul testing
+ * @param {*} option 
+ * @param {*} command 
+ */
+function createIstanbulParameter(option, command) {
+    let commandLine = ' ';
+    if (option) {
+            commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
+    }
+    return commandLine;
+}
+
+/**
  * @function
  * @desc Builds the upload options based on the arguments passed in
- * @param {Boolean} isData - Is this is a data upload
- * @returns [String]
+ * @param {boolean} isData - Is this is a data upload
+ * @returns {string}
  */
 function getUploadOptions(isData) {
     let uploadOptions = [
@@ -252,6 +349,9 @@ function getUploadOptions(isData) {
 
 const options = optionator.parse(process.argv);
 
+/** @todo - need to handle verbose flag better. Hardcoded to verbose mode for n */
+options.verbose = true;
+
 if (options.help) {
     console.log(optionator.generateHelp());
     process.exit(0);
@@ -259,8 +359,8 @@ if (options.help) {
 
 // upload a file
 if (options.upload) {
-    if (!checkForDwJson()) {
-        console.error(chalk.red('Could not find dw.json file at the root of the project.'));
+    if (!checkForDwJson) {
+        console.error(chalk.red('Could not find dw.json file in build_tools folder.'));
         process.exit(1);
     }
 
@@ -273,40 +373,32 @@ if (options.upload) {
 if (options.uploadCartridge) {
     if (checkForDwJson()) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
+            console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
     } else {
-        console.warn(chalk.yellow('Could not find dw.json file at the root of the project. Continuing with command line arguments only.'));
+        console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
     }
 
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
+    const cartridges = options.uploadCartridge;
+    cartridges.forEach(cartridge => {
+        console.log('Uploading cartridge ' + chalk.black.bgBlue(cartridge));
+        console.log(chalk.gray('    ' + 'cd ./cartridges && node ' +
+        path.resolve(cwd, './node_modules/.bin/dwupload') +
+        ' -- cartridge ' + cartridge + ' && cd ..'));
+        shell.exec('cd ./cartridges && node ' +
+            path.resolve(cwd, './node_modules/.bin/dwupload') +
+            ' --cartridge ' + cartridge + ' && cd ..');
+    });
+
+    
+    /**
+     * From here on down is the code activation routine. I think we should seperate these out
+     * as different build steps. The way it's written now it tries to activate code
+     * after uploading each cartridge.
+     * 
+     * @todo LRA-109 to rework cartridge upload and code activation. 
+     */
+
     const uploadArguments = getUploadOptions();
-    let cartridgesFound = false;
-    let commandLineArgs = [];
-
-    Object.keys(uploadArguments).forEach((uploadOption) => {
-        if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
-            commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
-
-            if (uploadOption === 'cartridge') {
-                cartridgesFound = true;
-            }
-        }
-    });
-
-    // Get the cartridge list from the directory directly if no specific cartridges were provided
-    if (!cartridgesFound) {
-        const cartridges = getDirectories('../cartridges').join(',');
-        commandLineArgs.push('--cartridge', cartridges);
-    }
-
-    uploadArguments['hostname'].forEach((hostname) => {
-        let argsClone = commandLineArgs.slice(0);
-        argsClone.push('--hostname', hostname);
-        const dwuploadScript = 'cd ../cartridges && ' + dwupload + ' ' + argsClone.join(' ');
-
-        console.log('Upload Commands: '+ dwuploadScript);
-
-        shell.exec(dwuploadScript);
-    });
 
     if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
         const activationHostnames = uploadArguments.activationHostname;
@@ -326,6 +418,7 @@ if (options.uploadCartridge) {
             });
         });
     } else {
+        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
         if (checkForDwJson()) {
             shell.rm(path.join(pwd, '../cartridges/dw.json'));
         }
@@ -336,11 +429,14 @@ if (options.uploadCartridge) {
 
 // run unit tests
 if (options.test) {
-    const mocha = path.resolve(pwd, '../node_modules/.bin/_mocha');
+    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
+        path.resolve(cwd, './node_modules/.bin/_mocha') :
+        path.resolve(pwd, './node_modules/.bin/_mocha');
+    
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
-        options.test.join(' '), { stdio: 'inherit', shell: true, cwd: pwd });
+        options.test.join(' '), { stdio: 'inherit', shell: true, cwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
@@ -349,14 +445,21 @@ if (options.test) {
 
 // run unit test coverage
 if (options.cover) {
-    const istanbul = path.resolve(pwd, '../node_modules/.bin/istanbul');
-    const mocha = '../node_modules/mocha/bin/_mocha';
+    const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
+        path.resolve(cwd, '../node_modules/.bin/istanbul') :
+        path.resolve(pwd, '../node_modules/.bin/istanbul');
+        
+    const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
+        path.resolve(cwd, './node_modules/mocha/bin/_mocha') :
+        path.resolve(pwd, './node_modules/mocha/bin/_mocha');
 
     const subprocess = spawn(
         istanbul +
         ' cover ' +
+        createIstanbulParameter(options.exclude, 'x') +
+        createIstanbulParameter(options.include, 'i') +
         mocha +
-        ' -- -R spec ../test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
+        ' -- -R spec test/unit/**/*.js', { stdio: 'inherit', shell: true, cwd });
 
     subprocess.on('exit', code => {
         process.exit(code);
@@ -365,48 +468,75 @@ if (options.cover) {
 
 // compile static assets
 if (options.compile) {
-    const packageFile = require(path.join(pwd, '../package.json'));
+    const packageFile = require(path.join(cwd, './package.json'));
+
     if (options.compile === 'js') {
-        js(packageFile, pwd, code => {
-            process.exit(code);
+        /**
+         * Customized to loop through each site and provide "single site" config for build
+         * This build.js will likely be the only "site aware" scritp
+         */
+        Object.keys(packageFile.sites).forEach(siteIndex => {
+            console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
+            if (options.verbose) {
+                for (var key in packageFile.sites[siteIndex]){
+                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                }
+            }
+            js(packageFile.sites[siteIndex], pwd, code => {
+                process.exit(code);
+            });
         });
+        
     }
     if (options.compile === 'css') {
-        css(packageFile);
+        /**
+         * Customized to loop through each site and provide "single site" config for build
+         * This build.js will likely be the only "site aware" scritp
+         */
+        Object.keys(packageFile.sites).forEach(siteIndex => {
+            console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
+            if (options.verbose) {
+                for (var key in packageFile.sites[siteIndex]){
+                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                }
+            }
+            css(packageFile.sites[siteIndex], pwd, code => {
+                process.exit(code);
+            });
+        });
     }
 }
 
 if (options.lint) {
-    if (options.lint === 'js') {
+    if (options.lint === 'js' || options.lint === 'server-js') {
+
+        console.log(chalk.bgMagenta.black('Running js linting...'));
+        if (options.verbose) {
+            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
+            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
+        }
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/**/client/js/**/*.js', { stdio: 'inherit', shell: true, cwd: pwd });
+            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
 
         subprocess.on('exit', code => {
-            process.exit(code);
-        });
-    }
-
-    if (options.lint === 'server-js') {
-        const subprocess = spawn(
-            path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' ../cartridges/**/controllers/**/*.js' +
-            ' ../cartridges/**/models/**/*.js' +
-            ' ../cartridges/**/scripts/**/*.js' +
-            ' ../cartridges/modules/server/*.js' +
-            ' ../cartridges/modules/server.js' , { stdio: 'inherit', shell: true, cwd: pwd });
-
-        subprocess.on('exit', code => {
+            console.log(chalk.magenta('   Finished js linting.'));
             process.exit(code);
         });
     }
 
     if (options.lint === 'css') {
+        console.log(chalk.bgCyan.black('Running scss linting...'));
+        if (options.verbose) {
+            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
+            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
+        }
         const subprocess = spawn(
             path.resolve(pwd, '../node_modules/.bin/stylelint') +
-            ' --syntax scss "../**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
+            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
 
         subprocess.on('exit', code => {
+            console.log(chalk.cyan('    Finished scss linting.'));
             process.exit(code);
         });
     }
@@ -415,37 +545,124 @@ if (options.lint) {
 if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
     console.log('Created folders and files for cartridge ' + cartridgeName);
-    createCartridge(cartridgeName, pwd);
+    createCartridge(cartridgeName, cwd);
 }
 
 if (options.watch) {
-    const packageFile = require(path.join(pwd, '../package.json'));
-    fs.watch(path.join(pwd, '../cartridges'), { recursive: true }, (event, filename) => {
-        if ([
-            '.scss',
-            '.js',
-            '.properties',
-            '.isml',
-            '.xml',
-            '.jpeg',
-            '.jpg',
-            '.svg',
-            '.gif',
-            '.png'
-        ].includes(path.extname(filename))) {
-            if (filename.includes('cartridge/client')) {
-                // recompile client-side js and scss and upload results
-                if (path.extname(filename) === '.scss') {
-                    css(packageFile).then(changedFiles => {
-                        uploadFiles(changedFiles.map(file => `cartridges/${file}`));
+    const packageFile = require(path.join(cwd, './package.json'));
+
+    const cartridgesPath = path.join(cwd, 'cartridges');
+
+    console.log('Watching for scss or client js changes...');
+
+    const scssWatcher = chokidar.watch(
+        cartridgesPath + '/**/*.scss', {
+                persistent: true,
+                ignoreInitial: true,
+                followSymlinks: false,
+                awaitWriteFinish: {
+                    stabilityThreshold: 300,
+                    pollInterval: 100
+                }
+    });
+
+    const clientJSWatcher = chokidar.watch(
+        cartridgesPath + '/**/client/**/*.js', {
+            persistent: true,
+            ignoreInitial: true,
+            followSymlinks: false,
+            awaitWriteFinish: {
+                    stabilityThreshold: 300,
+                    pollInterval: 100
+            }
+        });
+
+    if (!options.onlycompile) {
+
+        const watcher = chokidar.watch(cartridgesPath, {
+            ignored: [
+                '**/cartridge/js/**',
+                '**/cartridge/client/**',
+                '**/*.scss'
+            ],
+            persistent: true,
+            ignoreInitial: true,
+            followSymlinks: false,
+            awaitWriteFinish: {
+                stabilityThreshold: 300,
+                pollInterval: 100
+            }
+        });
+
+        watcher.on('change', filename => {
+            console.log('Detected change in file:', filename);
+            uploadFiles([filename]);
+        });
+
+        watcher.on('add', filename => {
+            console.log('Detected added file:', filename);
+            uploadFiles([filename]);
+        });
+
+        watcher.on('unlink', filename => {
+            console.log('Detected deleted file:', filename);
+            deleteFiles([filename]);
+        });
+    }
+
+    let jsCompilingInProgress = false;
+    clientJSWatcher.on('change', filename => {
+    console.log('Detected change in client JS file:', filename);
+        if (!jsCompilingInProgress) {
+            jsCompilingInProgress = true;
+            /**
+             * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
+             */
+             Object.keys(packageFile.sites).forEach(siteIndex => {
+                console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
+                if (options.verbose) {
+                    for (var key in packageFile.sites[siteIndex]){
+                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                    }
+                }
+                js(packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
+            });
+
+
+        } else {
+            console.log('Compiling already in progress.');
+        }
+    });
+    	
+    let cssCompilingInProgress = false;
+    scssWatcher.on('change', filename => {
+        console.log('Detected change in SCSS file:', filename);
+
+        if (!cssCompilingInProgress) {
+            cssCompilingInProgress = true;
+
+            Object.keys(packageFile.sites).forEach(siteIndex => {
+                console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
+                if (options.verbose) {
+                    for (var key in packageFile.sites[siteIndex]){
+                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                    }
+                }
+                try{
+                    css(packageFile.sites[siteIndex], pwd, () => {
+                        clearTmp();
+                        console.log(chalk.green('SCSS files compiled.'));
+                        cssCompilingInProgress = false;
                     });
                 }
-                if (path.extname(filename) === '.js') {
-                    js(packageFile, pwd, () => {});
-                }
-            } else {
-                uploadFiles([`cartridges/${filename}`]);
-            }
+                catch(error) {
+                    clearTmp();
+                    console.error(chalk.red('Could not compile css files.'), error);
+                    cssCompilingInProgress = false;
+                };
+            });
+        } else {
+            console.log('Compiling already in progress.');
         }
     });
 }

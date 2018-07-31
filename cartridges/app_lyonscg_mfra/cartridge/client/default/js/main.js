@@ -7,9 +7,9 @@ $(document).ready(function () {
     processInclude(require('./components/footer'));
     processInclude(require('./components/backtotop'));
     processInclude(require('./components/minicart'));
-    processInclude(require('./components/collapsable-item'));
+    processInclude(require('./components/collapsibleItem'));
     processInclude(require('./components/search'));
-    processInclude(require('./components/client-side-validation'));
+    processInclude(require('./components/clientSideValidation'));
     processInclude(require('./components/countryselector'));
     processInclude(require('./components/carousels'));
 });

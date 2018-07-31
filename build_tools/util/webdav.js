@@ -39,9 +39,15 @@ function Webdav(options) {
 
     /**
      * Contains the code version to use on the webdav server
+     * Making an edit because the dwupload module and sgmf build scripts are out of sync 
+     * with regards to variable naming
      */
-    this.codeVersion = options.codeVersion;
-
+    if ('codeVersion' in options) {
+        this.codeVersion = options.codeVersion;
+    }
+    else if ('code-version' in options) {
+        this.codeVersion = options['code-version'];
+    }
     /**
      * Contains the p12 file location
      */

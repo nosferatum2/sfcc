@@ -101,7 +101,7 @@ async function zipDataFiles(dataBundle) {
     };
 
     for (var i in archiveFolders) {
-        const fileList = await buildFileList(path.join(dataOptions.archivePath, archiveFolders[i]));
+        const fileList = await buildFileList(path.join(pwd, dataOptions.archivePath, archiveFolders[i]));
         const filePath = path.resolve(pwd, path.join(dataOptions.archivePath, archiveFolders[i]) + '.zip');
         let files = [];
 
