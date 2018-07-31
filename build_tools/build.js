@@ -252,9 +252,11 @@ function camelCase(str) {
  * @returns {array} - array of directories
  */
 function getDirectories(path) {
-    console.warn('getDirectories('+ path +')');
+    if (options.verbose) {
+        console.log('getDirectories('+ path +')');
+    }
     return fs.readdirSync(path).filter(function (file) {
-       console.warn('considering ' + file);
+       console.log(chalk.gray('    ' + file));
       return fs.statSync(path+'/'+file).isDirectory();
     });
 }
