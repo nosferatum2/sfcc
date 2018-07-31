@@ -2,6 +2,10 @@
 
 'use strict';
 
+/**
+ * build.js module adapted for LyonsCG use from SFCC's community suite sgmf-scripts
+ */
+
 const shell = require('shelljs');
 const spawn = require('child_process').spawn;
 const path = require('path');
@@ -21,11 +25,11 @@ const cwd = process.cwd();
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(cwd,'./tmp');
 
-// Identify script
+/** Identify the script as soon as it starts. */
 const packageFile = require(path.join(cwd, './package.json'));
 console.log(chalk.bgYellow.black.bold('Starting LyonsCG SFRA Build Script v' + packageFile.version));
 
-// Base Build Options
+/** Base Build Options */
 const optionator = require('optionator')({
     options: [{
         option: 'help',
@@ -167,19 +171,16 @@ const optionator = require('optionator')({
     }]
 });
 
-// Upload Cartridge Options
-/* Likely remove since this is handled above?
-const uploadCartridgeOptionator = require('optionator')({
-    options: []
-});*/
-
-
+/**
+ * Checks for the dw.json config file in the build_tools subfolder
+ * @returns {boolean}
+ */
 function checkForDwJson() {
     return fs.existsSync(path.join(cwd, './build_tools/dw.json'));
 }
 
 /**
- * 
+ * Deletes all files in the tmp directory
  */
 function clearTmp() {
     if (options.verbose) {
@@ -188,6 +189,10 @@ function clearTmp() {
     shell.rm('-rf', TEMP_DIR);
 }
 
+/**
+ * Returns full path to the dwupload binary utility on the workstation
+ * @returns {string} Path to dwupload binary
+ */
 function dwuploadModule() {
 
     let dwupload = fs.existsSync(path.resolve(cwd, './node_modules/.bin/dwupload')) ?
@@ -200,6 +205,11 @@ function dwuploadModule() {
     return dwupload;	
 }
 
+/**
+ * Formats commandline string for dwupload
+ * @param {string} param 
+ * @param {string} fileOrCartridge 
+ */
 function shellCommands(param, fileOrCartridge) {
     const dwupload = dwuploadModule();
 
@@ -209,6 +219,10 @@ function shellCommands(param, fileOrCartridge) {
     return `cd ./cartridges && node ${dwupload} ${param} ${fileOrCartridge} && cd ..`;
 }
 
+/**
+ * Uploads the list of files given config info found in build_tools/dw.json
+ * @param {array} files - list of files to upload
+ */
 function uploadFiles(files) {
     shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
     
@@ -221,12 +235,22 @@ function uploadFiles(files) {
     shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
 }
 
+/**
+ * Filters a string to change it to camel case
+ * @param {string} str - input string to process 
+ * @returns {string} - processed for camel case
+ */
 function camelCase(str) {
     return str.replace(/^.|-./g, function(letter, index) {
         return index == 0 ? letter.toLowerCase() : letter.substr(1).toUpperCase();
     });
 }
 
+/**
+ * Given a filesystem path, return an array of directories
+ * @param {string} path - filesystem path
+ * @returns {array} - array of directories
+ */
 function getDirectories(path) {
     console.warn('getDirectories('+ path +')');
     return fs.readdirSync(path).filter(function (file) {
@@ -235,6 +259,10 @@ function getDirectories(path) {
     });
 }
 
+/**
+ * Use the dwupload binary to delete files off the server
+ * @param {array} files - files to be deleted from the server
+ */
 function deleteFiles(files) {
     shell.cp("./build_tools/dw.json", './cartridges'); // copy dw.json file into cartridges directory temporarily
 
@@ -245,6 +273,11 @@ function deleteFiles(files) {
     shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
 }
 
+/**
+ * Create parameter string for use with Istanbul testing
+ * @param {*} option 
+ * @param {*} command 
+ */
 function createIstanbulParameter(option, command) {
     let commandLine = ' ';
     if (option) {
@@ -256,8 +289,8 @@ function createIstanbulParameter(option, command) {
 /**
  * @function
  * @desc Builds the upload options based on the arguments passed in
- * @param {Boolean} isData - Is this is a data upload
- * @returns [String]
+ * @param {boolean} isData - Is this is a data upload
+ * @returns {string}
  */
 function getUploadOptions(isData) {
     let uploadOptions = [
@@ -313,6 +346,8 @@ function getUploadOptions(isData) {
 }
 
 const options = optionator.parse(process.argv);
+
+/** @todo - need to handle verbose flag better. Hardcoded to verbose mode for n */
 options.verbose = true;
 
 if (options.help) {
@@ -353,51 +388,14 @@ if (options.uploadCartridge) {
     });
 
     
+    /**
+     * From here on down is the code activation routine. I think we should seperate these out
+     * as different build steps. The way it's written now it tries to activate code
+     * after uploading each cartridge.
+     */
+
     const uploadArguments = getUploadOptions();
-/*
-    const dwupload = path.resolve(pwd, '../node_modules/.bin/dwupload');
-    console.log('getting upload options');
-    const uploadArguments = getUploadOptions();
-    console.log('got options');
-    let cartridgesFound = false;
-    let commandLineArgs = [];
 
-    for (var myArgument in uploadArguments) {
-        console.log(chalk.yellow(myArgument + " is " + uploadArguments[myArgument]));
-    }
-
-    Object.keys(uploadArguments).forEach((uploadOption) => {
-        if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
-            commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
-
-            if (uploadOption === 'cartridge') {
-                cartridgesFound = true;
-            }
-        }
-    });
-
-    // Get the cartridge list from the directory directly if no specific cartridges were provided
-    if (!cartridgesFound) {
-        console.log('checking directories');
-        const cartridges = getDirectories('../cartridges').join(',');
-        console.log(chalk.red('finding cartridges to upload'));
-        for (var i = 0; i < cartridges.length; i++){
-            console.log(cartridges[i]);
-        }
-        commandLineArgs.push('--cartridge', cartridges);
-    }
-
-    uploadArguments['hostname'].forEach((hostname) => {
-        let argsClone = commandLineArgs.slice(0);
-        argsClone.push('--hostname', hostname);
-        const dwuploadScript = 'cd ./cartridges && ' + dwupload + ' ' + argsClone.join(' ');
-
-        console.log('Upload Commands: '+ dwuploadScript);
-
-        shell.exec(dwuploadScript);
-    });
-*/
-    // Here on down is the activation routine, leaving this as is for the second part
     if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
         const activationHostnames = uploadArguments.activationHostname;
         delete uploadArguments.activationHostname;
