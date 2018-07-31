@@ -286,7 +286,7 @@ function deleteFiles(files) {
 function createIstanbulParameter(option, command) {
     let commandLine = ' ';
     if (option) {
-            commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
+        commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
     }
     return commandLine;
 }
@@ -471,8 +471,8 @@ if (options.test) {
 // run unit test coverage
 if (options.cover) {
     const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
-        path.resolve(cwd, '../node_modules/.bin/istanbul') :
-        path.resolve(pwd, '../node_modules/.bin/istanbul');
+        path.resolve(cwd, './node_modules/.bin/istanbul') :
+        path.resolve(pwd, './node_modules/.bin/istanbul');
 
     const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
         path.resolve(cwd, './node_modules/mocha/bin/_mocha') :
