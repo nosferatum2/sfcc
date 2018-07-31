@@ -1,10 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="builders" basedir="." default="deploy" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="builders" basedir="." default="deploy-audit-sonar" xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <!-- Importing sonar and npm audit tasks so they can also be run locally. Otherwise,
+         expectation is that npm audit would always be run locally and sonar run only
+         when run under Jenkins.
+    -->
+    
+    <import file="run sonar.xml"/>
+    <import file="run npm audit.xml"/>
+    <target name="deploy-audit-sonar" depends="deploy, npm-audit, sonar">
+    </target>
 
     <property name="workingCopy" value="deploy/working" />
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
 
-    <condition property="have-node" else="false">
+     <condition property="have-node" else="false">
         <and>
             <available file="${basedir}/../node_modules" type="dir"/>
         </and>
@@ -17,7 +26,7 @@
     <target name="check-node" unless="${have-node}">
         <echo level="info">The node_modules directory was not found.</echo>
         <echo level="info">Please ensure the node modules are installed in the following directory:</echo>
-        <echo level="info">- ${basedir}</echo>
+        <echo level="info">- ${baseDir}/../node_modules</echo>
         <echo level="info">Using the following command:</echo>
         <echo level="info">&gt; npm install</echo>
         <echo level="info">Users on Mac or Linux may need to use sudo:</echo>
@@ -190,4 +199,3 @@
     </target>
 
 </project>
-
