@@ -392,6 +392,8 @@ if (options.uploadCartridge) {
      * From here on down is the code activation routine. I think we should seperate these out
      * as different build steps. The way it's written now it tries to activate code
      * after uploading each cartridge.
+     * 
+     * @todo LRA-109 to rework cartridge upload and code activation. 
      */
 
     const uploadArguments = getUploadOptions();
