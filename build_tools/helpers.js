@@ -67,10 +67,8 @@ const createAliases = (packageFile, pwd) => {
 };
 
 module.exports = {
-    // updated packageName as a parameter so we can build multiple sites
+    /** updated packageName as a parameter so we can build multiple sites */
     createJsPath: (packageName) => {
-      //  const packageJson = require(path.join(cwd, './package.json'));
-      //  const packageName = packageJson.packageName || packageJson.name;
         const result = {};
 
         const jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/*.js`));
@@ -83,9 +81,8 @@ module.exports = {
 
         return result;
     },
+    /** updated packageName as a parameter so we can build multiple sites */
     createScssPath: (packageName) => {
-      //  const packageJson = require(path.join(cwd, './package.json'));
-      //  const packageName = packageJson.packageName || packageJson.name;
         const result = {};
 
         const cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
