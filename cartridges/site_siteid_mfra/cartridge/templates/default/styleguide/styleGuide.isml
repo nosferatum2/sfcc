@@ -1,0 +1,7 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+    </isscript>
+    
+    <h2>SFRA Style Guide</h2>
+</isdecorate>
