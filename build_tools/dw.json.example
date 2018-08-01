@@ -3,6 +3,6 @@
   "password": "mysup3rs3cretp4ss",
   "hostname": ["dev01-na01-evaluation.demandware.net", "dev02-na01-evaluation.demandware.net"],
   "activationHostname": ["dev01-na01-evaluation.demandware.net", "dev02-na01-evaluation.demandware.net"],
-  "codeVersion": "sfra",
+  "code-version": "sfra",
   "dataBundle": "core"
 }

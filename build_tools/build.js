@@ -320,10 +320,10 @@ function getUploadOptions(isData) {
     // Create the argument list/object based on the dw.json file if present
     if (checkForDwJson()) {
         const localSettings = require(path.join(pwd, './dw.json'));
-
+        
         Object.keys(localSettings).forEach(uploadOption => {
             if (localSettings[uploadOption]) {
-                uploadArguments[uploadOption] = localSettings[uploadOption];
+                uploadArguments[camelCase(uploadOption)] = localSettings[uploadOption];
             }
         });
     }
