@@ -569,7 +569,7 @@ if (options.lint) {
 
 if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
-    console.log('Created folders and files for cartridge ' + cartridgeName);
+    console.log(chalk.green('Creating folders and files for cartridge ' + cartridgeName));
     createCartridge(cartridgeName, cwd);
 }
 
