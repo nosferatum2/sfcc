@@ -23,7 +23,8 @@
     "upload": "node build_tools/build --upload",
     "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --activateCodeVersion",
     "watch": "node build_tools/build --watch",
-    "release": "node bin/Makefile release --"
+    "release": "node bin/Makefile release --",
+    "deployCartridges": "node build_tools/build --deployCartridges"
   },
   "repository": {
     "type": "git",

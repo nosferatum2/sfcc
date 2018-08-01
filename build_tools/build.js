@@ -699,11 +699,11 @@ if (options.deployData) {
     if (uploadArguments.hostname && uploadArguments.username && uploadArguments.password) {
         deployData(uploadArguments);
     } else if (!uploadArguments.hostname) {
-        console.error('Error: Please provide a hostname to deploy data');
+        console.log(chalk.red('Error: Please provide a hostname to deploy data'));
     } else if (!uploadArguments.username) {
-        console.error('Error: Please provide a username to deploy data');
+        console.log(chalk.red('Error: Please provide a username to deploy data'));
     } else if (!uploadArguments.password) {
-        console.error('Error: Please provide a password to deploy data');
+        console.log(chalk.red('Error: Please provide a password to deploy data'));
     }
 }
 
@@ -719,13 +719,34 @@ if (options.generateObjectReport) {
 if (options.deployCartridges) {
     console.log(chalk.green('Starting deployCartridges routine...'));
 
+    if (checkForDwJson()) {
+        console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
+    } else {
+        console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments.'));
+    }
+
     const dwupload = dwuploadModule();
     var uploadArguments = getUploadOptions();
+
+    if (!uploadArguments.hostname) {
+        console.log(chalk.red('Error: Please provide a hostname to deploy cartridges!'));
+        process.exit(0);
+    } else if (!uploadArguments.username) {
+        console.log(chalk.red('Error: Please provide a username to deploy cartridges!'));
+        process.exit(0);
+    } else if (!uploadArguments.password) {
+        console.log(chalk.red('Error: Please provide a password to deploy cartridges!'));
+        process.exit(0);
+    }
 
     var commandLineArgs = [];
     Object.keys(uploadArguments).forEach((uploadOption) => {
         if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
-            commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
+            if (uploadArguments[uploadOption]) {
+                commandLineArgs.push('--' + uploadOption, uploadArguments[camelCase(uploadOption)]);
+            } else if (options[uploadOption]) {
+                commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
+            }
         }
     });
 
@@ -744,9 +765,6 @@ if (options.deployCartridges) {
             const dwuploadScript = 'cd ./cartridges && ' + dwupload + ' ' + argsClone.join(' ');
             shell.exec(dwuploadScript);
         });
-    } else {
-        console.log(chalk.red('No hostname defined. Skipping code upload!'));
-        process.exit(0);
     }
     
     // activate code version
