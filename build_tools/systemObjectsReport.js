@@ -71,7 +71,7 @@ function generateSystemObjectReports (options) {
         parser = new xml2js.Parser(),
 
         // create output file
-        fileOut = "./artifacts/system-objecttype-extensions.txt",
+        fileOut = path.resolve(pwd,'./artifacts/system-objecttype-extensions.txt'),
         outputStream = fs.createWriteStream(fileOut),
         SYSTEM_OBJ_TABLE_HEADER = "<tr><th>ID</th><th>Name</th><th>Type</th>" +
                               "<th>Description</th><th>Mandatory</th>" +
@@ -93,69 +93,71 @@ function generateSystemObjectReports (options) {
 
                 // iterate over each system object type extension
                 var systemObjects = result.metadata['type-extension'];
+                if (systemObjects) {
+                    systemObjects.forEach(function (systemObject) {
 
-                systemObjects.forEach(function (systemObject) {
+                        // output system object ID
+                        var systemObjectTypeID = systemObject.$['type-id'];
+                        outputStream.write('<h2>' + systemObjectTypeID + '</h2>');
 
-                    // output system object ID
-                    var systemObjectTypeID = systemObject.$['type-id'];
-                    outputStream.write('<h2>' + systemObjectTypeID + '</h2>');
+                        // iterate over attribute groups and create mapping of attribute to group
+                        var attributeToGroupMap = {};
 
-                    // iterate over attribute groups and create mapping of attribute to group
-                    var attributeToGroupMap = {};
+                        if(systemObject['group-definitions']) {
+                            var groups = systemObject['group-definitions'][0]['attribute-group'];
 
-                    if(systemObject['group-definitions']) {
-                        var groups = systemObject['group-definitions'][0]['attribute-group'];
+                            groups.forEach(function (group) {
 
-                        groups.forEach(function (group) {
+                                //output group name
+                                var groupName = group.$['group-id'],
 
-                            //output group name
-                            var groupName = group.$['group-id'],
+                                    // iterate over attributes in group
+                                    groupAttributes = group.attribute;
 
-                                // iterate over attributes in group
-                                groupAttributes = group.attribute;
+                                if (groupAttributes) {
 
-                            if (groupAttributes) {
+                                    groupAttributes.forEach(function (groupAttribute) {
 
-                                groupAttributes.forEach(function (groupAttribute) {
+                                        if (groupAttribute) {
+                                            var attributeID = groupAttribute.$['attribute-id'];
+                                            attributeToGroupMap[attributeID] = groupName;
+                                        }
 
-                                    if (groupAttribute) {
-                                        var attributeID = groupAttribute.$['attribute-id'];
-                                        attributeToGroupMap[attributeID] = groupName;
-                                    }
+                                    });
 
-                                });
+                                }
 
-                            }
+                            });
 
-                        });
+                        }
 
-                    }
+                        // iterate over attribute definitions and output
+                        var customAttributes = null,
+                            systemAttributes = null;
 
-                    // iterate over attribute definitions and output
-                    var customAttributes = null,
-                        systemAttributes = null;
+                        // write table headers
+                        outputStream.write("<table>");
+                        outputStream.write(SYSTEM_OBJ_TABLE_HEADER);
 
-                    // write table headers
-                    outputStream.write("<table>");
-                    outputStream.write(SYSTEM_OBJ_TABLE_HEADER);
+                        if(systemObject['custom-attribute-definitions'] && systemObject['custom-attribute-definitions'][0]) {
+                            customAttributes = systemObject['custom-attribute-definitions'][0]['attribute-definition'];
+                            writeAttributesRow(outputStream, "Custom", customAttributes, attributeToGroupMap);
+                        }
 
-                    if(systemObject['custom-attribute-definitions'] && systemObject['custom-attribute-definitions'][0]) {
-                        customAttributes = systemObject['custom-attribute-definitions'][0]['attribute-definition'];
-                        writeAttributesRow(outputStream, "Custom", customAttributes, attributeToGroupMap);
-                    }
+                        if(systemObject['system-attribute-definitions'] && systemObject['system-attribute-definitions'][0]) {
+                            systemAttributes = systemObject['system-attribute-definitions'][0]['attribute-definition'];
+                            writeAttributesRow(outputStream, "System", systemAttributes, attributeToGroupMap);
+                        }
 
-                    if(systemObject['system-attribute-definitions'] && systemObject['system-attribute-definitions'][0]) {
-                        systemAttributes = systemObject['system-attribute-definitions'][0]['attribute-definition'];
-                        writeAttributesRow(outputStream, "System", systemAttributes, attributeToGroupMap);
-                    }
+                        outputStream.write("</table>");
 
-                    outputStream.write("</table>");
+                    });
 
-                });
+                    outputStream.end(function () {
+                        console.log("file written: " + fileOut);
+                    });
+                }
 
-                outputStream.end(function () {
-                    console.log("file written: " + fileOut);
-                });
 
             });
 

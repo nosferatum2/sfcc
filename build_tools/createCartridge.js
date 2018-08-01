@@ -9,8 +9,8 @@ const projectProperties = require('./cartridgeTemplates/projectProperties');
 
 module.exports = (cartridgeName, cwd) => {
     // create folder structure
-    shell.mkdir(path.join(cwd, '../cartridges', cartridgeName));
-    const cartridgePath = path.join(cwd, '../cartridges', cartridgeName, 'cartridge');
+    shell.mkdir(path.join(cwd, '/cartridges', cartridgeName));
+    const cartridgePath = path.join(cwd, '/cartridges', cartridgeName, 'cartridge');
     shell.mkdir(cartridgePath);
     shell.mkdir(path.join(cartridgePath, 'controllers'));
     shell.touch(path.join(cartridgePath, 'controllers', '.gitkeep'));
@@ -32,7 +32,7 @@ module.exports = (cartridgeName, cwd) => {
     // create .project file for cartridge
 
     shell.ShellString(dotProject(cartridgeName))
-        .to(path.join(cwd, '../cartridges', cartridgeName, '.project'));
+        .to(path.join(cwd, '/cartridges', cartridgeName, '.project'));
 
     // create .properties file for cartridge
 

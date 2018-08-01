@@ -11,6 +11,7 @@ instrumentation:
         "**/modules/*.js", # Those are just wrappers around modules
         "bin/*", # Those are task files
         "**/scripts/payment/processor/*", # Those are payment processor files, we don't test them
-        "webpack.config.js" # This is webpack config for javascript
+        "webpack.config.js", # This is webpack config for javascript
+        "**/build_tools/**" # These are javascript build tools that don't need to be tested
     ]
     include-all-sources: true
