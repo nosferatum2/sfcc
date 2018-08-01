@@ -33,7 +33,8 @@
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
     "Ryan Walter <rwalter@lyonscg.com>",
-    "Dave Haas <dhaas@lyonscg.com>"
+    "Dave Haas <dhaas@lyonscg.com>",
+    "Sandra Golden <sgolden@lyonscg.com>"
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
   "devDependencies": {

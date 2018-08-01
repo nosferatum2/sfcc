@@ -36,10 +36,14 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             bottom: 0;
             transition: $slide-out-animation;
             display: block;
-            $gutter: map-get($grid-gutter-widths, $size);
+
+            /*
+            removed - this is breaking compile routine
+            $gutter: map-get($grid-gutter-width, $size);
 
             padding-left: $gutter / 2;
             padding-right: $gutter / 2;
+            */
 
             &.in {
                 min-width: 50%;
