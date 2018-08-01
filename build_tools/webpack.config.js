@@ -6,7 +6,6 @@ var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 const chalk = require('chalk');
-const verbose = true;
 
 var bootstrapPackages = {
     Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
@@ -23,7 +22,7 @@ var bootstrapPackages = {
 };
 
 
-module.exports = function (packageName) { 
+module.exports = function (packageName, verbose) { 
     console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
     var jsFiles = require('./helpers').createJsPath(packageName);
     var scssFiles = require('./helpers').createScssPath(packageName);
