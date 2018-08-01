@@ -39,3 +39,22 @@ In order for all commands to work, this script makes a few assumptions:
 * ESLint and Stylelint are dev-dependancies of your cartridge. You have all required plugins and configs installed as well.
 * There's a webpack.config.js in build_tools that specifies how to compile client-side JavaScript files.
 * Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
+
+##Examples
+
+Uploading individual cartridges to your sandbox/instance
+
+1. Configure dw.json file with your username, password, activation instance (sandbox URL) and currently active code version
+2. Configure the package.json file at the root directory level for the cartridges you want to upload (see "uploadCartridge")
+3. Navigate to the command line tool (CMD for Windows, Terminal for OSX)
+4. OSX/MAC
+		"cd <path to your build tools>"   Sample -> cd /Users/testuser/git/reference-application-sfra
+		"npm run uploadCartridge"  
+		
+##Notes
+
+Verbose Logging -> handled via the "verboseLogging" option in the dw.json file
+	Example: "verboseLogging": "true"
+
+
+

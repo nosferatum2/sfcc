@@ -7,11 +7,10 @@ const util = require('./util');
 const chalk = require('chalk');
 
 const cwd = process.cwd();
-const verbose = true;
 
-module.exports = (sitePackageConfig, pwd, callback) => {
+module.exports = (verbose, sitePackageConfig, pwd, callback) => {
     // adjusted to pwd for LyonsCG folder structure
-    const jsAliases = helpers.createAliases(sitePackageConfig, pwd);
+    const jsAliases = helpers.createAliases(sitePackageConfig, pwd, verbose);
     if (verbose) {
         console.log(chalk.black.bgGreen('Recieved jsAliases object from helpers.js'));
         for(var name in jsAliases ){
@@ -28,7 +27,7 @@ module.exports = (sitePackageConfig, pwd, callback) => {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
     // passing webpackConfig the name of the package we are compiling to
-    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(sitePackageConfig.packageName);
+    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(sitePackageConfig.packageName, verbose);
     if (verbose) {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');

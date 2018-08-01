@@ -5,9 +5,8 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
-const verbose = true;
 
-const createAliases = (packageFile, pwd) => {
+const createAliases = (packageFile, pwd, verbose) => {
     const aliases = {};
     if (packageFile.paths) {
         Object.keys(packageFile.paths).forEach(item => {
@@ -46,7 +45,7 @@ const createAliases = (packageFile, pwd) => {
                     if (verbose) {
                         console.log(chalk.green('    Inner package found.'));
                     }
-                    const newAliases = createAliases(innerPackage, pwd);
+                    const newAliases = createAliases(innerPackage, pwd, verbose);
                     Object.keys(newAliases).forEach(key => {
                         if (!aliases[key]) {
                             aliases[key] = newAliases[key];

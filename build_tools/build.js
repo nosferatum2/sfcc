@@ -349,8 +349,18 @@ function getUploadOptions(isData) {
 
 const options = optionator.parse(process.argv);
 
-/** @todo - need to handle verbose flag better. Hardcoded to verbose mode for n */
-options.verbose = true;
+//verbose flag is handled via the dw.json file
+const uploadArguments = getUploadOptions();
+
+options.verbose = false;
+
+if (typeof uploadArguments.verboseLogging != 'undefined' && uploadArguments.verboseLogging.length > 0) {
+	if(uploadArguments.verboseLogging == "true") {
+		options.verbose = true;
+	}
+} 
+
+const verbose = options.verbose;
 
 if (options.help) {
     console.log(optionator.generateHelp());
@@ -388,7 +398,6 @@ if (options.uploadCartridge) {
             path.resolve(cwd, './node_modules/.bin/dwupload') +
             ' --cartridge ' + cartridge + ' && cd ..');
     });
-
     
     /**
      * From here on down is the code activation routine. I think we should seperate these out
@@ -397,8 +406,6 @@ if (options.uploadCartridge) {
      * 
      * @todo LRA-109 to rework cartridge upload and code activation. 
      */
-
-    const uploadArguments = getUploadOptions();
 
     if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
         const activationHostnames = uploadArguments.activationHostname;
@@ -482,7 +489,7 @@ if (options.compile) {
                     console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                 }
             }
-            js(packageFile.sites[siteIndex], pwd, code => {
+            js(verbose, packageFile.sites[siteIndex], pwd, code => {
                 process.exit(code);
             });
         });
@@ -491,7 +498,7 @@ if (options.compile) {
     if (options.compile === 'css') {
         /**
          * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" scritp
+         * This build.js will likely be the only "site aware" script
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
             console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
@@ -500,7 +507,7 @@ if (options.compile) {
                     console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                 }
             }
-            css(packageFile.sites[siteIndex], pwd, code => {
+            css(verbose, packageFile.sites[siteIndex], pwd, code => {
                 process.exit(code);
             });
         });
@@ -625,7 +632,7 @@ if (options.watch) {
                         console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                     }
                 }
-                js(packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
+                js(verbose, packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
             });
 
 
@@ -649,7 +656,7 @@ if (options.watch) {
                     }
                 }
                 try{
-                    css(packageFile.sites[siteIndex], pwd, () => {
+                    css(verbose, packageFile.sites[siteIndex], pwd, () => {
                         clearTmp();
                         console.log(chalk.green('SCSS files compiled.'));
                         cssCompilingInProgress = false;
