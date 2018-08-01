@@ -4,23 +4,50 @@ This repository contains a collection of scrips that are useful for creating a n
 
 ## Available commands
 
-`--help` - Generate help message
+Please notes all of these commands should be run from the project root directory.
+
+`node build_tools/build --help` - Generate help message
 
 `--upload [path::String]` - Upload a file to a sandbox. Requires dw.json file at the root directory.
 
-`--upload-cartridge` - Upload a cartridge. Requires dw.json file in build_tools or command line arguments.
+For example:
+`node build_tools/build --upload cartridges/app_lyonscg_mfra/cartridge/templates/resources/version.properties`
 
-`--test [path::String]` - Run unittests on specified files/directories.
+`node build_tools/build --uploadCartridge String` - Upload a cartridge.
 
-`--cover` - Run all unittests with coverage report.
+For example:
+`node build_tools/build --uploadCartridge app_lyonscg_mfra`
 
-`--compile String` - Compile css/js files. - either: css or js
+`node build_tools/build --test [path::String]` - Run unittests on specified files/directories.
 
-`--lint String` - Lint scss/js files. - either: js or css
+`node build_tools/build --cover` - Run all unittests with coverage report.
 
-`--create-cartridge String` - Create new cartridge structure
+`node build_tools/build --compile --compile String` - Compile css/js files. - either: css or js
 
-`--watch` - Watch and upload files
+For example:
+`node build_tools/build --compile css`
+
+`node build_tools/build --lint String` - Lint scss/js files. - either: js or css
+
+For example:
+`node build_tools/build --lint css`
+
+`node build_tools/build --createCartridge String` - Create new cartridge structure
+
+For example:
+`node build_tools/build --createCartridge plugin_myplugin`
+
+`node build_tools/build --watch` - Watch and upload files
+
+`node build_tools/build --deployCartridges` - Uploads all cartridges defined in package.json to the SFCC server. Requires dw.json file in build_tools or command line arguments.
+
+For example:
+`node build_tools/build --deployCartridges --code-version=version1 --activation-hostname=dev01-na01-hostname.demandware.net --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword`
+
+`node build_tools/build --deploy-data`- Deploys data_impex metadata to SFCC server. Requires dw.json file in build_tools or command line arguments.
+
+For example:
+`node build_tools/build --deploy-data --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword --data-bundle=core`
 
 ## Installation and Usage
 
