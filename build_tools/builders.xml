@@ -42,7 +42,7 @@
         <echo level="info">Upload in progress...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg line='node build --upload-cartridge' />
+            <arg line='node build --deployCartridges' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
             <arg value='--username="${user}"' if:set="user" />
@@ -53,10 +53,11 @@
             <arg value='--hostname="${hostname}"' if:set="hostname" />
             <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
             <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
+            <arg value='--version-cartridge-name="${versionCartridgeName}"' if:set="versionCartridgeName" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
-            <arg value='--upload-cartridge' />
+            <arg value='--deployCartridges' />
             <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
             <arg value='--cartridge=${cartridge}' if:set="cartridge" />
             <arg value='--username=${user}' if:set="user" />
@@ -67,6 +68,7 @@
             <arg value='--hostname=${hostname}' if:set="hostname" />
             <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
             <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
+            <arg value='--version-cartridge-name=${versionCartridgeName}' if:set="versionCartridgeName" />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>
@@ -143,7 +145,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; node build --cover"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run cover"/>
         </exec>
         <echo level="info">Test coverage complete!</echo>
     </target>
@@ -188,12 +190,12 @@
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
             <arg line='node build --generate-object-report' />
-            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
             <arg value='--generate-object-report' />
-            <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
+            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
         </exec>
         <echo level="info">System object reports created!</echo>
     </target>
