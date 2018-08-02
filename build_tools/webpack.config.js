@@ -5,6 +5,7 @@ require('shelljs/make');
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const chalk = require('chalk');
 const verbose = true;
 
@@ -111,7 +112,8 @@ module.exports = function (packageName) {
                 }]
             },
             plugins: [
-                new ExtractTextPlugin({ filename: '[name].css' })
+                new ExtractTextPlugin({ filename: '[name].css' }),
+                new OptimizeCssAssetsPlugin()
             ]
         });
     }
