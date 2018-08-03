@@ -3,5 +3,21 @@
         var assets = require('*/cartridge/scripts/assets.js');
     </isscript>
     
-    <h2>SFRA Style Guide</h2>
+    <h1>SFRA Style Guide</h1>
+    
+    <h2 class="sg-section">Color Palette</h2>
+    
+    <div class="sg-container">
+        <div class="item">
+        	<div class="color-block"></div>
+        	<div class="color-var"></div>
+        	<div class="color-spec"></div>
+        </div>
+        <div class="item">
+        	<div class="color-block"></div>
+        	<div class="color-var"></div>
+        	<div class="color-spec"></div>
+        </div>
+        
+    </div>
 </isdecorate>
