@@ -6,7 +6,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
 
-const createAliases = (packageFile, pwd, verbose) => {
+const createAliases = (packageFile, pwd) => {
     const aliases = {};
     if (packageFile.paths) {
         Object.keys(packageFile.paths).forEach(item => {
@@ -27,6 +27,8 @@ const createAliases = (packageFile, pwd, verbose) => {
                     }
                 });
 
+                const verbose = process.env.verbose;
+                
                 if (verbose) {
                     console.log("    Created aliases: ");
                     Object.keys(aliases).forEach(key => {

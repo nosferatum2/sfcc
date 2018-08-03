@@ -22,10 +22,11 @@ var bootstrapPackages = {
 };
 
 
-module.exports = function (packageName, verbose) { 
+module.exports = function (packageName) { 
     console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
     var jsFiles = require('./helpers').createJsPath(packageName);
     var scssFiles = require('./helpers').createScssPath(packageName);
+    const verbose = process.env.verbose;
     if (verbose) {
         console.log(chalk.gray('Webpack(ing) js files'));
         for (var key in jsFiles){

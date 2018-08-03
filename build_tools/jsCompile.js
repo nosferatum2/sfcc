@@ -8,7 +8,8 @@ const chalk = require('chalk');
 
 const cwd = process.cwd();
 
-module.exports = (verbose, sitePackageConfig, pwd, callback) => {
+module.exports = (sitePackageConfig, pwd, callback) => {
+	const verbose = process.env.verbose;
     const jsAliases = helpers.createAliases(sitePackageConfig, pwd, verbose);
     if (verbose) {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);

@@ -15,13 +15,21 @@ const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
+const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
 const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
 
-const cwd = process.cwd();
+// current working directory is meant to be the root of the project, not build_tools
+var cwd = process.cwd();
+var folderName = cwd.split(path.sep).pop();
+if (folderName == 'build_tools') {
+    process.chdir('../');
+    cwd = process.cwd();
+}
+
 const pwd = __dirname;
 const TEMP_DIR = path.resolve(cwd,'./tmp');
 
@@ -168,7 +176,23 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Generates a text file that contains HTML with a table of system objects',
         required: false
-    }]
+    }, {
+        option: 'deployCartridges',
+        type: 'Boolean',
+        description: 'Deploys cartridges specified in the package.json file to the server',
+        required: false
+    }, {
+        option: 'activateCodeVersion',
+        type: 'Boolean',
+        description: 'Activates code version',
+        required: false
+    }, {
+        option: 'version-cartridge-name',
+        type: 'String',
+        description: 'cartridge name version.properties should be created within',
+        required: false
+    }
+    ]
 });
 
 /**
@@ -202,13 +226,13 @@ function dwuploadModule() {
     if (os.platform() === 'win32') {
         dwupload += '.cmd';
     }
-    return dwupload;	
+    return dwupload;
 }
 
 /**
  * Formats commandline string for dwupload
- * @param {string} param 
- * @param {string} fileOrCartridge 
+ * @param {string} param
+ * @param {string} fileOrCartridge
  */
 function shellCommands(param, fileOrCartridge) {
     const dwupload = dwuploadModule();
@@ -225,7 +249,7 @@ function shellCommands(param, fileOrCartridge) {
  */
 function uploadFiles(files) {
     shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
-    
+
 
     files.forEach(file => {
         const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
@@ -237,27 +261,12 @@ function uploadFiles(files) {
 
 /**
  * Filters a string to change it to camel case
- * @param {string} str - input string to process 
+ * @param {string} str - input string to process
  * @returns {string} - processed for camel case
  */
 function camelCase(str) {
     return str.replace(/^.|-./g, function(letter, index) {
         return index == 0 ? letter.toLowerCase() : letter.substr(1).toUpperCase();
-    });
-}
-
-/**
- * Given a filesystem path, return an array of directories
- * @param {string} path - filesystem path
- * @returns {array} - array of directories
- */
-function getDirectories(path) {
-    if (options.verbose) {
-        console.log('getDirectories('+ path +')');
-    }
-    return fs.readdirSync(path).filter(function (file) {
-       console.log(chalk.gray('    ' + file));
-      return fs.statSync(path+'/'+file).isDirectory();
     });
 }
 
@@ -277,13 +286,13 @@ function deleteFiles(files) {
 
 /**
  * Create parameter string for use with Istanbul testing
- * @param {*} option 
- * @param {*} command 
+ * @param {*} option
+ * @param {*} command
  */
 function createIstanbulParameter(option, command) {
     let commandLine = ' ';
     if (option) {
-            commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
+        commandLine = option.split(',').map(commandPath => ' -' + command + ' ' + commandPath.join(' ') | ' ');
     }
     return commandLine;
 }
@@ -310,7 +319,8 @@ function getUploadOptions(isData) {
         'p12',
         'passphrase',
         'self-signed',
-        'data-bundle'
+        'data-bundle',
+        'version-cartridge-name'
     ],
     uploadArguments = {};
 
@@ -320,7 +330,7 @@ function getUploadOptions(isData) {
 
         Object.keys(localSettings).forEach(uploadOption => {
             if (localSettings[uploadOption]) {
-                uploadArguments[uploadOption] = localSettings[uploadOption];
+                uploadArguments[camelCase(uploadOption)] = localSettings[uploadOption];
             }
         });
     }
@@ -347,6 +357,80 @@ function getUploadOptions(isData) {
     return uploadArguments;
 }
 
+/**
+ * activates specified code version for all activationHostnames
+ * @param {array} uploadArguments - the current uploadArguments
+ * @returns {array} - altered uploadArguments array
+ */
+function activateCodeVersion(uploadArguments) {
+    if (uploadArguments.activationHostname && uploadArguments.activationHostname.length > 0) {
+        const activationHostnames = uploadArguments.activationHostname;
+        delete uploadArguments.activationHostname;
+
+        activationHostnames.forEach((activationHostname) => {
+            uploadArguments['activationHostname'] = activationHostname;
+            const webdav = new Webdav(uploadArguments);
+            webdav.formLogin().then(() => {
+                webdav.activateCode().then(() => {
+                    process.exit(0);
+                });
+            });
+        });
+    } else {
+        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
+        process.exit(0);
+    }
+
+    return uploadArguments;
+}
+
+/**
+ * return an array of cartridges that are included in the package.json file
+ * @param {file} packageFile - the package.json file to use
+ * @returns {array} - array of cartridge names
+ */
+function getCartridges(packageFile) {
+    var cartridges = [];
+    Object.keys(packageFile.sites).forEach(siteIndex => {
+        if (packageFile.sites[siteIndex].paths != 'undefined') {
+            for (var key in packageFile.sites[siteIndex].paths) {
+                var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                var cartridgeName = cartridgePath.split(path.sep).pop();
+                if (cartridgeName && cartridges.indexOf(cartridgeName) == -1) {
+                    console.log(chalk.blue('passing in "' + cartridgeName + '"'));
+                    cartridges.push(cartridgeName);
+                } else {
+                    console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
+                }
+                
+            }
+        }
+    });
+
+    // always add in modules, assume this is a required cartridge
+    if (cartridges.indexOf('modules') == -1) {
+        console.log(chalk.blue('passing in "modules"'));
+        cartridges.push('modules');
+    }
+    
+    return cartridges;
+}
+
+/**
+ * creates version.properties file
+ * @param {array} uploadArguments - the current uploadArguments
+ */
+function createVersionProperties(uploadArguments) {
+    if (uploadArguments && uploadArguments.versionCartridgeName && uploadArguments.codeVersion) {
+        console.log(chalk.yellow('Creating version.properties in cartridge "' + uploadArguments.versionCartridgeName + '"'));
+        const cartridgeName = uploadArguments.versionCartridgeName;
+        const codeVersion = uploadArguments.codeVersion;
+        createVersionPropertiesFile(cartridgeName, codeVersion, cwd);
+    } else {
+        console.log(chalk.yellow('No versionCartridgeName defined. Skipping creation of version.properties file.'));
+    }
+}
+
 const options = optionator.parse(process.argv);
 
 //verbose flag is handled via the dw.json file
@@ -360,6 +444,7 @@ if (typeof uploadArguments.verboseLogging != 'undefined' && uploadArguments.verb
 	}
 } 
 
+process.env.verbose = options.verbose;
 const verbose = options.verbose;
 
 if (options.help) {
@@ -383,7 +468,7 @@ if (options.upload) {
 if (options.uploadCartridge) {
     if (checkForDwJson()) {
         shell.cp(path.join(pwd, 'dw.json'), path.join(pwd, '../cartridges/'));
-            console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
+        console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
     } else {
         console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments only.'));
     }
@@ -398,40 +483,6 @@ if (options.uploadCartridge) {
             path.resolve(cwd, './node_modules/.bin/dwupload') +
             ' --cartridge ' + cartridge + ' && cd ..');
     });
-    
-    /**
-     * From here on down is the code activation routine. I think we should seperate these out
-     * as different build steps. The way it's written now it tries to activate code
-     * after uploading each cartridge.
-     * 
-     * @todo LRA-109 to rework cartridge upload and code activation. 
-     */
-
-    if (typeof uploadArguments.activationHostname != 'undefined' && uploadArguments.activationHostname.length > 0) {
-        const activationHostnames = uploadArguments.activationHostname;
-        delete uploadArguments.activationHostname;
-
-        activationHostnames.forEach((activationHostname) => {
-            uploadArguments['activationHostname'] = activationHostname;
-            const webdav = new Webdav(uploadArguments);
-            webdav.formLogin().then(() => {
-                webdav.activateCode().then(() => {
-                    if (checkForDwJson()) {
-                        shell.rm(path.join(pwd, '../cartridges/dw.json'));
-                    }
-
-                    process.exit(0);
-                });
-            });
-        });
-    } else {
-        console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
-        if (checkForDwJson()) {
-            shell.rm(path.join(pwd, '../cartridges/dw.json'));
-        }
-
-        process.exit(0);
-    }
 }
 
 // run unit tests
@@ -439,7 +490,7 @@ if (options.test) {
     const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
         path.resolve(cwd, './node_modules/.bin/_mocha') :
         path.resolve(pwd, './node_modules/.bin/_mocha');
-    
+
     const subprocess = spawn(
         mocha +
         ' --reporter spec ' +
@@ -453,9 +504,9 @@ if (options.test) {
 // run unit test coverage
 if (options.cover) {
     const istanbul = fs.existsSync(path.resolve(cwd, './node_modules/.bin/istanbul')) ?
-        path.resolve(cwd, '../node_modules/.bin/istanbul') :
-        path.resolve(pwd, '../node_modules/.bin/istanbul');
-        
+        path.resolve(cwd, './node_modules/.bin/istanbul') :
+        path.resolve(pwd, './node_modules/.bin/istanbul');
+
     const mocha = fs.existsSync(path.resolve(cwd, './node_modules/.bin/_mocha')) ?
         path.resolve(cwd, './node_modules/mocha/bin/_mocha') :
         path.resolve(pwd, './node_modules/mocha/bin/_mocha');
@@ -489,16 +540,16 @@ if (options.compile) {
                     console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                 }
             }
-            js(verbose, packageFile.sites[siteIndex], pwd, code => {
+            js(packageFile.sites[siteIndex], pwd, code => {
                 process.exit(code);
             });
         });
-        
+
     }
     if (options.compile === 'css') {
         /**
          * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" script
+         * This build.js will likely be the only "site aware" scritp
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
             console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
@@ -507,7 +558,7 @@ if (options.compile) {
                     console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                 }
             }
-            css(verbose, packageFile.sites[siteIndex], pwd, code => {
+            css(packageFile.sites[siteIndex], pwd, code => {
                 process.exit(code);
             });
         });
@@ -551,7 +602,7 @@ if (options.lint) {
 
 if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
-    console.log('Created folders and files for cartridge ' + cartridgeName);
+    console.log(chalk.green('Creating folders and files for cartridge ' + cartridgeName));
     createCartridge(cartridgeName, cwd);
 }
 
@@ -632,7 +683,7 @@ if (options.watch) {
                         console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
                     }
                 }
-                js(verbose, packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
+                js(packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
             });
 
 
@@ -640,7 +691,7 @@ if (options.watch) {
             console.log('Compiling already in progress.');
         }
     });
-    	
+
     let cssCompilingInProgress = false;
     scssWatcher.on('change', filename => {
         console.log('Detected change in SCSS file:', filename);
@@ -656,7 +707,7 @@ if (options.watch) {
                     }
                 }
                 try{
-                    css(verbose, packageFile.sites[siteIndex], pwd, () => {
+                    css(packageFile.sites[siteIndex], pwd, () => {
                         clearTmp();
                         console.log(chalk.green('SCSS files compiled.'));
                         cssCompilingInProgress = false;
@@ -681,16 +732,84 @@ if (options.deployData) {
     if (uploadArguments.hostname && uploadArguments.username && uploadArguments.password) {
         deployData(uploadArguments);
     } else if (!uploadArguments.hostname) {
-        console.error('Error: Please provide a hostname to deploy data');
+        console.log(chalk.red('Error: Please provide a hostname to deploy data'));
     } else if (!uploadArguments.username) {
-        console.error('Error: Please provide a username to deploy data');
+        console.log(chalk.red('Error: Please provide a username to deploy data'));
     } else if (!uploadArguments.password) {
-        console.error('Error: Please provide a password to deploy data');
+        console.log(chalk.red('Error: Please provide a password to deploy data'));
     }
 }
 
 if (options.generateObjectReport) {
-    console.log('Generating Object Report');
+    console.log(chalk.green('Generating Object Report'));
     const uploadArguments = getUploadOptions();
     generateSystemObjectReports(uploadArguments);
+}
+
+/**
+ * uploads all cartridges to the server and activates code version
+ */
+if (options.deployCartridges) {
+    console.log(chalk.green('Starting deployCartridges routine...'));
+
+    if (checkForDwJson()) {
+        console.log(chalk.green('Loading SFCC instance credentials from build_tools/dw.json'));
+    } else {
+        console.log(chalk.yellow('Could not find build_tools/dw.json file. Continuing with command line arguments.'));
+    }
+
+    const dwupload = dwuploadModule();
+    const uploadArguments = getUploadOptions();
+
+    if (!uploadArguments.hostname) {
+        console.log(chalk.red('Error: Please provide a hostname to deploy cartridges!'));
+        process.exit(0);
+    } else if (!uploadArguments.username) {
+        console.log(chalk.red('Error: Please provide a username to deploy cartridges!'));
+        process.exit(0);
+    } else if (!uploadArguments.password) {
+        console.log(chalk.red('Error: Please provide a password to deploy cartridges!'));
+        process.exit(0);
+    }
+
+    // creates a version.properties file if "version-cartridge-name" was specified as a command line argument
+    createVersionProperties(uploadArguments);
+
+    var commandLineArgs = [];
+    Object.keys(uploadArguments).forEach((uploadOption) => {
+        if (uploadOption !== 'hostname' && uploadOption !== 'activationHostname') {
+            if (uploadArguments[uploadOption]) {
+                commandLineArgs.push('--' + uploadOption, uploadArguments[camelCase(uploadOption)]);
+            } else if (options[uploadOption]) {
+                commandLineArgs.push('--' + uploadOption, options[camelCase(uploadOption)]);
+            }
+        }
+    });
+
+    // include all the cartridges from the package.json file
+    var cartridges = getCartridges(packageFile);
+    if (cartridges.length > 0) {
+        commandLineArgs.push('--cartridge', cartridges.join(','));
+    }
+
+    // loop through each hostname provided and upload to the SFCC server
+    if (uploadArguments.hostname && uploadArguments.hostname.length > 0) {
+        uploadArguments['hostname'].forEach((hostname) => {
+            console.log(chalk.blue('Uploading code to host: ' + hostname));
+            let argsClone = commandLineArgs.slice(0);
+            argsClone.push('--hostname', hostname);
+            const dwuploadScript = 'cd ./cartridges && ' + dwupload + ' ' + argsClone.join(' ');
+            shell.exec(dwuploadScript);
+        });
+    }
+    
+    // activate code version
+    uploadArguments = activateCodeVersion(uploadArguments);
+}
+
+// activates code version
+if (options.activateCodeVersion) {
+    console.log(chalk.green('Starting activateCodeVersion routine...'));
+    const uploadArguments = getUploadOptions();
+    activateCodeVersion(uploadArguments);
 }

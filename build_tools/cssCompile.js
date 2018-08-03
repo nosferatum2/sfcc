@@ -8,7 +8,8 @@ const chalk = require('chalk');
 
 const cwd = process.cwd();
 
-module.exports = (verbose, sitePackageConfig, pwd, callback) => {
+module.exports = (sitePackageConfig, pwd, callback) => {
+	const verbose = process.env.verbose;
     // adjusted to pwd for LyonsCG folder structure
     const jsAliases = helpers.createAliases(sitePackageConfig, pwd, verbose);
     if (verbose) {

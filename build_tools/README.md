@@ -4,23 +4,50 @@ This repository contains a collection of scrips that are useful for creating a n
 
 ## Available commands
 
-`--help` - Generate help message
+Please notes all of these commands should be run from the project root directory.
+
+`node build_tools/build --help` - Generate help message
 
 `--upload [path::String]` - Upload a file to a sandbox. Requires dw.json file at the root directory.
 
-`--upload-cartridge` - Upload a cartridge. Requires dw.json file in build_tools or command line arguments.
+For example:
+`node build_tools/build --upload cartridges/app_lyonscg_mfra/cartridge/templates/resources/version.properties`
 
-`--test [path::String]` - Run unittests on specified files/directories.
+`node build_tools/build --uploadCartridge String` - Upload a cartridge.
 
-`--cover` - Run all unittests with coverage report.
+For example:
+`node build_tools/build --uploadCartridge app_lyonscg_mfra`
 
-`--compile String` - Compile css/js files. - either: css or js
+`node build_tools/build --test [path::String]` - Run unittests on specified files/directories.
 
-`--lint String` - Lint scss/js files. - either: js or css
+`node build_tools/build --cover` - Run all unittests with coverage report.
 
-`--create-cartridge String` - Create new cartridge structure
+`node build_tools/build --compile --compile String` - Compile css/js files. - either: css or js
 
-`--watch` - Watch and upload files
+For example:
+`node build_tools/build --compile css`
+
+`node build_tools/build --lint String` - Lint scss/js files. - either: js or css
+
+For example:
+`node build_tools/build --lint css`
+
+`node build_tools/build --createCartridge String` - Create new cartridge structure
+
+For example:
+`node build_tools/build --createCartridge plugin_myplugin`
+
+`node build_tools/build --watch` - Watch and upload files
+
+`node build_tools/build --deployCartridges` - Uploads all cartridges defined in package.json to the SFCC server. Requires dw.json file in build_tools or command line arguments.
+
+For example:
+`node build_tools/build --deployCartridges --code-version=version1 --activation-hostname=dev01-na01-hostname.demandware.net --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword`
+
+`node build_tools/build --deploy-data`- Deploys data_impex metadata to SFCC server. Requires dw.json file in build_tools or command line arguments.
+
+For example:
+`node build_tools/build --deploy-data --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword --data-bundle=core`
 
 ## Installation and Usage
 
@@ -40,6 +67,84 @@ In order for all commands to work, this script makes a few assumptions:
 * There's a webpack.config.js in build_tools that specifies how to compile client-side JavaScript files.
 * Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
 
+
+# Setting up the deployment project in Jenkins
+
+## Note: This guide assumes that the Jenkins server has already been set up by the OSC team
+
+### Add the new project to the Jenkins server
+
+  On the Jenkins server, you will start at the dash board and it should look something like this:
+
+  ![Jenkins Dashboard][jenkins-dashboard]
+
+  [jenkins-dashboard]: images/jenkins-dashboard.png
+
+  Please choose the "New Item" link in the top left to continue
+
+  On the "New Item" page you will have several options to choose from. You should see a screen similar to the one below:
+
+  ![Jenkins New Item][jenkins-new-item]
+
+  [jenkins-new-item]: images/jenkins-new-item.png
+
+  If this is a new server with no projects on it, please use the "Freestyle Project" option. Otherwise, if this server already has several projects setup it may be faster to use the "Copy existing Item" option to reduce setup time. This option will copy over all of the settings from the chosen project into your new project. After choosing one of these options make sure to enter a name for your project in the "Item name" field, preferably using dashes instead of spaces between words. After this click the "OK" button at the bottom of the form.
+
+  On the next page you should see a screen similar to the one below:
+
+  ![Jenkins Project Configuration][jenkins-project-config]
+
+  [jenkins-project-config]: images/jenkins-project-config.png
+
+  To continue the setup please choose either the "Multiple SCMs" option for Git repositories or the "Subversion" option for SVN repositories.
+
+  If you are setting up Git repositories please read the following instructions. If not please skip below to the section on Subversion.
+
+### Git Repository Setup
+
+  To setup a Git repositories in Jenkins for use with our build script please choose the "Git" option under "Source Code Management"
+
+  When the option has been chosen you should see a screen similar to the one below:
+
+  ![Git Options][git-options]
+
+  [git-options]: images/git-options.png
+
+  Add the SSH Git url (e.g. git@bitbucket.org:lyonsconsultinggroup/reference-application-sfra.git) to the "Repository URL" field
+
+  Then click the "Add" button next to the "Credentials" drop down to add a set of credentials to log into the Git server
+
+  In the field "Branch Specifier (blank for 'any')" specify the branch name if you decide to use one other than master (e.g. */develop, */release, etc.)
+
+### Build Options Setup
+
+  To setup the build options to allow for deployment to the servers scroll to the bottom of the Jenkin's project settings. There is a section called "Build" where the final part of the setup will occur.
+
+  In the Build section click th "Add build step" button and select "Invoke Ant"
+
+  ![Invoke Ant][invoke-ant]
+
+  [invoke-ant]: images/jenkins-invoke-ant.png
+
+  Enter build options:
+
+  ![Build Options][build-options]
+
+  [build-options]: images/build-options.png
+
+  This section will allow you to enter the build file and the properties for the build.
+
+  In the "Targets" field, enter all Ant targets you wish to use (e.g. deploy, deploy-data, system-object-reports)
+
+  In the "Build File" field enter the path relative to the Jenkins workspace to your deployment script. This should be similar to what is in the path in the image above.
+
+  In the "Properties" field enter all of the properties needed for this project. For an explanation of all of the properties please refer to the [Deploy Properties](DeployProperties.md) document.
+
+  After all of the properties have been entered click the "Apply" button at the bottom of the screen. This will save your project options.
+
+  To test out the build, scroll to the top of the configuration and click the "Build Now" option in the upper left. If everything was setup correctly the build should complete successfully.
+  
+  
 ##Examples
 
 Uploading individual cartridges to your sandbox/instance
@@ -55,6 +160,3 @@ Uploading individual cartridges to your sandbox/instance
 
 Verbose Logging -> handled via the "verboseLogging" option in the dw.json file
 	Example: "verboseLogging": "true"
-
-
-
