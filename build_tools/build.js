@@ -672,7 +672,7 @@ if (options.watch) {
 
     let jsCompilingInProgress = false;
     clientJSWatcher.on('change', filename => {
-    console.log('Detected change in client JS file:', filename);
+        console.log('Detected change in client JS file:', filename);
         if (!jsCompilingInProgress) {
             jsCompilingInProgress = true;
             /**
@@ -705,7 +705,6 @@ if (options.watch) {
     let cssCompilingInProgress = false;
     scssWatcher.on('change', filename => {
         console.log('Detected change in SCSS file:', filename);
-
         if (!cssCompilingInProgress) {
             cssCompilingInProgress = true;
 

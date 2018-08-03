@@ -69,8 +69,8 @@ const createAliases = (packageFile, pwd) => {
 module.exports = {
     /** updated packageName as a parameter so we can build multiple sites */
     createJsPath: (packageName) => {
-        var result = null;
-        var jsFiles;
+        let result = null;
+        let jsFiles;
 
         try {
             jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/**/*.js`));
@@ -93,8 +93,8 @@ module.exports = {
     },
     /** updated packageName as a parameter so we can build multiple sites */
     createScssPath: (packageName) => {
-        var result = null;
-        var cssFiles;
+        let result = null;
+        let cssFiles;
 
         try {
             cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
