@@ -1,9 +1,0 @@
-<div class="primary-images col-12 col-sm-6">
-    <div id="pdpCarousel-${product.id}" class="product-carousel" role="listbox">
-        <isloop items="${product.images['large']}" var="image" status="loopStatus">
-            <div class="slide">
-                <img src="${image.url}" class="" alt="${image.alt}">
-            </div>
-        </isloop>
-    </div>
-</div>

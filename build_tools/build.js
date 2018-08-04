@@ -248,15 +248,16 @@ function shellCommands(param, fileOrCartridge) {
  * @param {array} files - list of files to upload
  */
 function uploadFiles(files) {
-    shell.cp('./build_tools/dw.json', './cartridges/'); // copy dw.json file into cartridges directory temporarily
+    if (checkForDwJson()) {
+        shell.cp(path.join(cwd, './build_tools/dw.json'), './cartridges/'); // copy dw.json file into cartridges directory temporarily
 
-
-    files.forEach(file => {
-        const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
-        shell.exec(shellCommands('--file', relativePath));
-        console.log(`Uploading ${file}`);
-    });
-    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+        files.forEach(file => {
+            const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
+            shell.exec(shellCommands('--file', relativePath));
+            console.log(`Uploading ${file}`);
+        });
+        shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+    }
 }
 
 /**
@@ -275,13 +276,15 @@ function camelCase(str) {
  * @param {array} files - files to be deleted from the server
  */
 function deleteFiles(files) {
-    shell.cp("./build_tools/dw.json", './cartridges'); // copy dw.json file into cartridges directory temporarily
+    if (checkForDwJson()) {
+        shell.cp(path.join(cwd, './build_tools/dw.json'), './cartridges/'); // copy dw.json file into cartridges directory temporarily
 
-    files.forEach(file => {
-            const realativePath = path.relative(path.join(cwd, './cartridges'), file);
-            shell.exec(shellCommands('delete --file', relativePath));
-    });
-    shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+        files.forEach(file => {
+                const relativePath = path.relative(path.join(cwd, './cartridges'), file);
+                shell.exec(shellCommands('delete --file', relativePath));
+        });
+        shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
+    }
 }
 
 /**
@@ -392,7 +395,7 @@ function activateCodeVersion(uploadArguments) {
 function getCartridges(packageFile) {
     var cartridges = [];
     Object.keys(packageFile.sites).forEach(siteIndex => {
-        if (packageFile.sites[siteIndex].paths != 'undefined') {
+        if (packageFile.sites[siteIndex].paths) {
             for (var key in packageFile.sites[siteIndex].paths) {
                 var cartridgePath = packageFile.sites[siteIndex].paths[key];
                 var cartridgeName = cartridgePath.split(path.sep).pop();
@@ -520,36 +523,46 @@ if (options.compile) {
     if (options.compile === 'js') {
         /**
          * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" scritp
+         * This build.js will likely be the only "site aware" script
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
-            console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
-            if (options.verbose) {
-                for (var key in packageFile.sites[siteIndex]){
-                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+            if (packageFile.sites[siteIndex].paths) {
+                for (var key in packageFile.sites[siteIndex].paths) {
+                    var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                    var cartridgeName = cartridgePath.split(path.sep).pop();
+                    if (cartridgeName) {
+                        console.log(chalk.blue('Building client js for Site ' + cartridgeName));
+                        js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                            if (code == 1) {
+                              process.exit(code);  
+                            }
+                        });
+                    }
                 }
             }
-            js(packageFile.sites[siteIndex], pwd, code => {
-                process.exit(code);
-            });
         });
 
     }
     if (options.compile === 'css') {
         /**
          * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" scritp
+         * This build.js will likely be the only "site aware" script
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
-            console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
-            if (options.verbose) {
-                for (var key in packageFile.sites[siteIndex]){
-                    console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+            if (packageFile.sites[siteIndex].paths) {
+                for (var key in packageFile.sites[siteIndex].paths) {
+                    var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                    var cartridgeName = cartridgePath.split(path.sep).pop();
+                    if (cartridgeName) {
+                        console.log(chalk.blue('Building css for Site ' + cartridgeName));
+                        css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                            if (code == 1) {
+                              process.exit(code);  
+                            }
+                        });
+                    }
                 }
             }
-            css(packageFile.sites[siteIndex], pwd, code => {
-                process.exit(code);
-            });
         });
     }
 }
@@ -659,20 +672,28 @@ if (options.watch) {
 
     let jsCompilingInProgress = false;
     clientJSWatcher.on('change', filename => {
-    console.log('Detected change in client JS file:', filename);
+        console.log('Detected change in client JS file:', filename);
         if (!jsCompilingInProgress) {
             jsCompilingInProgress = true;
             /**
              * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
              */
-             Object.keys(packageFile.sites).forEach(siteIndex => {
-                console.log(chalk.blue('Building client js for Site ' + packageFile.sites[siteIndex].packageName));
-                if (options.verbose) {
-                    for (var key in packageFile.sites[siteIndex]){
-                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+            Object.keys(packageFile.sites).forEach(siteIndex => {
+                if (packageFile.sites[siteIndex].paths) {
+                    for (var key in packageFile.sites[siteIndex].paths) {
+                        var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                        var cartridgeName = cartridgePath.split(path.sep).pop();
+                        if (cartridgeName) {
+                            console.log(chalk.blue('Building client js for Site ' + cartridgeName));
+                            js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                                if (code == 1) {
+                                  process.exit(code);  
+                                }
+                                jsCompilingInProgress = false;
+                            });
+                        }
                     }
                 }
-                js(packageFile.sites[siteIndex], pwd, () => { jsCompilingInProgress = false; })
             });
 
 
@@ -684,30 +705,36 @@ if (options.watch) {
     let cssCompilingInProgress = false;
     scssWatcher.on('change', filename => {
         console.log('Detected change in SCSS file:', filename);
-
         if (!cssCompilingInProgress) {
             cssCompilingInProgress = true;
 
             Object.keys(packageFile.sites).forEach(siteIndex => {
-                console.log(chalk.blue('Building css for Site ' + packageFile.sites[siteIndex].packageName));
-                if (options.verbose) {
-                    for (var key in packageFile.sites[siteIndex]){
-                        console.log(chalk.green('passing in ' + key + ' ' + packageFile.sites[siteIndex][key]));
+                if (packageFile.sites[siteIndex].paths) {
+                    for (var key in packageFile.sites[siteIndex].paths) {
+                        var cartridgePath = packageFile.sites[siteIndex].paths[key];
+                        var cartridgeName = cartridgePath.split(path.sep).pop();
+                        if (cartridgeName) {
+                            console.log(chalk.blue('Building css for Site ' + cartridgeName));
+                            try {
+                                css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                                    if (code == 1) {
+                                      process.exit(code);  
+                                    }
+                                    clearTmp();
+                                    console.log(chalk.green('SCSS files compiled.'));
+                                    cssCompilingInProgress = false;
+                                });
+                            } catch(error) {
+                                clearTmp();
+                                console.error(chalk.red('Could not compile css files.'), error);
+                                cssCompilingInProgress = false;
+                            };
+                        }
                     }
                 }
-                try{
-                    css(packageFile.sites[siteIndex], pwd, () => {
-                        clearTmp();
-                        console.log(chalk.green('SCSS files compiled.'));
-                        cssCompilingInProgress = false;
-                    });
-                }
-                catch(error) {
-                    clearTmp();
-                    console.error(chalk.red('Could not compile css files.'), error);
-                    cssCompilingInProgress = false;
-                };
             });
+
+
         } else {
             console.log('Compiling already in progress.');
         }

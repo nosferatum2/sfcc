@@ -1,7 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "components/categoryTiles";
+@import "~base/components/categoryTiles";
 
 .page {
     .hero {
@@ -141,15 +141,9 @@
         }
 
         a {
-            color: $brand-color;
+            color: $primary;
             text-decoration: none;
         }
-    }
-}
-
-.home-product-caro {
-    .card-title {
-        color: $brand-color;
     }
 }
 

@@ -34,8 +34,8 @@
 }
 
 .filter-header {
-    margin-left: map-get($grid-gutter-widths, "sm") / 2 * -1;
-    margin-right: map-get($grid-gutter-widths, "sm") / 2 * -1;
+    margin-left: $grid-gutter-width / 2 * -1;
+    margin-right: $grid-gutter-width / 2 * -1;
 }
 
 .header-bar {

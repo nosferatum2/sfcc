@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const cwd = process.cwd();
 const verbose = true;
 
-module.exports = (sitePackageConfig, pwd, callback) => {
+module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
     // adjusted to pwd for LyonsCG folder structure
     const jsAliases = helpers.createAliases(sitePackageConfig, pwd);
     if (verbose) {
@@ -28,7 +28,7 @@ module.exports = (sitePackageConfig, pwd, callback) => {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
     // passing webpackConfig the name of the package we are compiling to
-    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(sitePackageConfig.packageName);
+    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
     if (verbose) {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
@@ -44,18 +44,22 @@ module.exports = (sitePackageConfig, pwd, callback) => {
             newResolve = util.mergeDeep(scssConfig.resolve, newResolve);
         }
         scssConfig.resolve = newResolve;
-    }
 
-    webpack(scssConfig, (err, stats) => {
-        if (err) {
-            console.error(err);
-            callback(1);
+        webpack(scssConfig, (err, stats) => {
+            if (err) {
+                console.error(err);
+                callback(1);
+                return;
+            }
+            console.log(stats.toString({
+                chunks: false,
+                colors: true
+            }));
+            callback(0);
             return;
-        }
-        console.log(stats.toString({
-            chunks: false,
-            colors: true
-        }));
+        });
+    } else {
         callback(0);
-    });
+        return;
+    }
 };
