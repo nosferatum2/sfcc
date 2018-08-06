@@ -17,7 +17,7 @@ function getModalHtmlElement() {
         + '<div class="modal-header">'
         + '    <a class="full-pdp-link" href="">View Full Details</a>'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        <span>Close</span>&times;'
+        + '        &times;'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -94,6 +94,11 @@ module.exports = {
     },
     colorAttribute: base.colorAttribute,
     selectAttribute: base.selectAttribute,
+    removeBonusProduct: base.removeBonusProduct,
+    selectBonusProduct: base.selectBonusProduct,
+    enableBonusProductSelection: base.enableBonusProductSelection,
+    showMoreBonusProducts: base.showMoreBonusProducts,
+    addBonusProductsToCart: base.addBonusProductsToCart,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {

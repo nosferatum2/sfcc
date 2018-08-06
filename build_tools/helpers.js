@@ -69,32 +69,52 @@ const createAliases = (packageFile, pwd) => {
 module.exports = {
     /** updated packageName as a parameter so we can build multiple sites */
     createJsPath: (packageName) => {
-        const result = {};
+        let result = null;
+        let jsFiles;
 
-        const jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/*.js`));
-
-        jsFiles.forEach(filePath => {
-            let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
-            location = location.substr(0, location.length - 3);
-            result[location] = filePath;
-        });
+        try {
+            jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/**/*.js`));
+        } catch(e) {
+            result = null;
+        }
+        
+        if (jsFiles) {
+            result = {};
+            jsFiles.forEach(filePath => {
+                let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
+                if (location) {
+                    location = location.substr(0, location.length - 3);
+                    result[location] = filePath;
+                }
+            });
+        }
 
         return result;
     },
     /** updated packageName as a parameter so we can build multiple sites */
     createScssPath: (packageName) => {
-        const result = {};
+        let result = null;
+        let cssFiles;
 
-        const cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
+        try {
+            cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
+        } catch(e) {
+            result = null;
+        }
 
-        cssFiles.forEach(filePath => {
-            const name = path.basename(filePath, '.scss');
-            if (name.indexOf('_') !== 0) {
-                let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
-                location = location.substr(0, location.length - 5).replace('scss', 'css');
-                result[location] = filePath;
-            }
-        });
+        if (cssFiles) {
+            result = {};
+            cssFiles.forEach(filePath => {
+                const name = path.basename(filePath, '.scss');
+                if (name.indexOf('_') !== 0) {
+                    let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
+                    if (location) {
+                        location = location.substr(0, location.length - 5).replace('scss', 'css');
+                        result[location] = filePath;
+                    }
+                }
+            });
+        }
 
         return result;
     },

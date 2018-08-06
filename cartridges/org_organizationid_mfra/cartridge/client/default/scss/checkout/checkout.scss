@@ -1,8 +1,9 @@
 @import "../variables";
-@import "checkoutComponents";
 @import "bootstrap/scss/variables";
+@import "~base/checkout/checkoutComponents";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
+@import "~base/components/creditCardField";
 
 $checkout-font-weight: 600;
 
@@ -52,9 +53,11 @@ $checkout-font-weight: 600;
     padding-left: 0;
 
     @include media-breakpoint-down(xs) {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
         div {
             padding: $spacer;
-            background-color: $white;
         }
     }
 
@@ -88,14 +91,6 @@ $checkout-font-weight: 600;
 }
 
 // multiship related
-
-.multi-ship .single-shipping {
-    display: none;
-}
-
-.pickup-tab.not-available {
-    display: none;
-}
 
 .multi-shipping {
     display: none;
@@ -357,78 +352,5 @@ span.ship-to-city-st-zip {
 }
 
 [data-customer-type=guest] .single-shipping .shipment-selector-block {
-    display: none;
-}
-
-.credit-card-selection {
-    display: none;
-
-    &[data-card-type] {
-        display: inline-block;
-    }
-
-    &[data-card-type="Visa"] {
-        background-position: -162px -110px;
-    }
-
-    &[data-card-type="MasterCard"] {
-        background-position: -295px -110px;
-    }
-
-    &[data-card-type="Amex"] {
-        background-position: -230px -15px;
-    }
-
-    &[data-card-type="Discover"] {
-        background-position: -95px -110px;
-    }
-
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    background-repeat: no-repeat;
-    width: 48px;
-    height: 33px;
-}
-
-#pick-up-in-store {
-    form {
-        margin-top: 1rem;
-    }
-
-    .btn-storelocator-search {
-        margin-bottom: 0.625rem;
-
-        @include media-breakpoint-up(sm) {
-            margin-top: 2rem;
-            margin-bottom: 0;
-        }
-    }
-
-    .separated {
-        border-bottom: 0.063em dashed #ccc;
-    }
-
-    .results {
-        margin: 0 -1rem;
-
-        .form-check {
-            margin: 0;
-        }
-
-        .form-check-label {
-            margin-top: 1rem;
-            margin-bottom: 0;
-        }
-    }
-
-    .striped {
-        > div:nth-of-type(odd) {
-            background-color: $table-bg-accent;
-        }
-    }
-}
-
-.no-store-selected {
     display: none;
 }
