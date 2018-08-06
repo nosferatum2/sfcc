@@ -6,9 +6,29 @@ $fa-font-path: "../fonts";
 // flag icons location in relation to target location of the css file.
 $flag-icon-css-path: "../fonts/flags/";
 
+//--------------------------------
+//  COLORS
+//--------------------------------
+
+// Color Palette
+
+/* Main Colors */
 $white: #fff;
 $black: #000;
 $blue: #0070d2;
+$denim: #1976d3;
+$anakiwa: #88c4ff;
+$blumine: #1d568e;
+$orangepeel: #ff9f00;
+$creambrulee: #ffdb9d;
+
+// Theme Colors
+$primary: $denim;
+$primary-light: $anakiwa;
+$primary-dark: $blumine;
+$secondary: $orangepeel;
+$secondary-light: $creambrulee;
+
 $brand-success: #008827;
 $brand-danger: #c00;
 $brand-primary: #00a1e0;

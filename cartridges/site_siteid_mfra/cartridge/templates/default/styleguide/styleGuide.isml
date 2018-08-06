@@ -1,23 +1,44 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/styleGuide.css');
     </isscript>
-    
-    <h1>SFRA Style Guide</h1>
-    
-    <h2 class="sg-section">Color Palette</h2>
-    
-    <div class="sg-container">
-        <div class="item">
-        	<div class="color-block"></div>
-        	<div class="color-var"></div>
-        	<div class="color-spec"></div>
-        </div>
-        <div class="item">
-        	<div class="color-block"></div>
-        	<div class="color-var"></div>
-        	<div class="color-spec"></div>
-        </div>
-        
+    <div class="wrapper">
+	    <h1>SFRA Style Guide</h1>
+	    
+	    <h2 class="section">Color Palette</h2>
+	    <h3 class="sub-section">Main Colors</h3>
+	    
+	    <div class="flex-container main-colors">
+	        <div class="item">
+	        	<div class="color-block"></div>
+	        	<div class="color-var"></div>
+	        	<div class="color-spec"></div>
+	        </div>
+	        <div class="item">
+	        	<div class="color-block"></div>
+	        	<div class="color-var"></div>
+	        	<div class="color-spec"></div>
+	        </div>
+	        <div class="item">
+                <div class="color-block"></div>
+                <div class="color-var"></div>
+                <div class="color-spec"></div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <div class="color-var"></div>
+                <div class="color-spec"></div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <div class="color-var"></div>
+                <div class="color-spec"></div>
+            </div>
+	    </div>
+	    <h3 class="sub-section">Accent Colors</h3>
+        <h3 class="sub-section">Greys</h3>
+        <h3 class="sub-section">Messages & Alerts</h3>
+        <h3 class="sub-section">Gradients</h3>
     </div>
 </isdecorate>

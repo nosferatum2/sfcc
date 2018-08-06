@@ -1,0 +1,124 @@
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.pt_styleguide {
+    .wrapper {
+        margin: 1em;
+    }
+
+    .section {
+        margin: 1em;
+        padding: 0.2em 0 0.2em 1em;
+        color: $grey6;
+        border-left: 3px solid $grey4;
+        background: none;
+    }
+
+    h3 {
+        &.sub-section {
+            padding: 0.5em 0 0.5em 1em;
+            margin-bottom: 1em;
+            background: $grey2;
+        }
+    }
+
+    .flex-container {
+        display: flex;
+    }
+}
+
+// Colors
+//TODO - the colors mixin needs to be extracted and called in to each of the sections
+.main-colors {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $primary,
+        $primary-light,
+        $primary-dark,
+        $secondary,
+        $secondary-light
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 20%;
+                transform: translate(-20%, -50%);
+                left: 50%;
+                @if lightness($c) > 75 {
+                    color: $grey3;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $black;
+            }
+        }
+    }
+}
+
+.accent-colors {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $blue,
+        $black
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 20%;
+                transform: translate(-20%, -50%);
+                left: 50%;
+                @if lightness($c) > 75 {
+                    color: $gray333;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $black;
+            }
+        }
+    }
+}
+
+.item {
+    .color-block {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 5px;
+        color: $grey6;
+    }
+
+    .color-var {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .color-spec {
+        text-align: center;
+        line-height: 150%;
+        margin-bottom: 10px;
+    }
+}
