@@ -33,7 +33,8 @@
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
     "Ryan Walter <rwalter@lyonscg.com>",
-    "Dave Haas <dhaas@lyonscg.com>"
+    "Dave Haas <dhaas@lyonscg.com>",
+    "Sandra Golden <sgolden@lyonscg.com>"
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
   "devDependencies": {
@@ -66,6 +67,7 @@
     "moment-timezone": "^0.5.21",
     "node-sass": "^4.9.2",
     "onchange": "^3.2.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
     "optionator": "^0.8.2",
     "postcss-loader": "^2.1.6",
     "promise-retry": "^1.1.1",
@@ -97,7 +99,8 @@
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
     "slick-carousel": "1.7.1",
-    "svg4everybody": "2.1.9"
+    "svg4everybody": "2.1.9",
+    "uninstall-all-modules": "^1.0.5"
   },
   "browserslist": [
     "last 2 versions",

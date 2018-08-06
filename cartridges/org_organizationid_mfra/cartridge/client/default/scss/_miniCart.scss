@@ -3,7 +3,7 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "productCard";
 
-.mini-cart {
+.minicart {
     position: relative;
 
     h4 {
@@ -34,7 +34,7 @@
         padding-right: 0.938em;
     }
 
-    .card-block {
+    .card-body {
         padding: 0.625em;
     }
 
@@ -70,7 +70,7 @@
         }
     }
 
-    .mini-cart-footer {
+    .minicart-footer {
         border-top: 1px solid $grey3;
     }
 
@@ -94,5 +94,23 @@
 
     .line-item-name {
         width: 90%;
+    }
+}
+
+.hide-link-med {
+
+    @include media-breakpoint-only(sm) {
+        display: none;
+    }
+}
+
+.hide-no-link {
+
+    @include media-breakpoint-up(md) {
+        display: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+        display: none;
     }
 }
