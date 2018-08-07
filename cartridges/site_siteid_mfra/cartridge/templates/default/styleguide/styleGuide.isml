@@ -4,41 +4,148 @@
         assets.addCss('/css/styleGuide.css');
     </isscript>
     <div class="wrapper">
-	    <h1>SFRA Style Guide</h1>
-	    
-	    <h2 class="section">Color Palette</h2>
-	    <h3 class="sub-section">Main Colors</h3>
-	    
-	    <div class="flex-container main-colors">
-	        <div class="item">
-	        	<div class="color-block"></div>
-	        	<div class="color-var"></div>
-	        	<div class="color-spec"></div>
-	        </div>
-	        <div class="item">
-	        	<div class="color-block"></div>
-	        	<div class="color-var"></div>
-	        	<div class="color-spec"></div>
-	        </div>
-	        <div class="item">
-                <div class="color-block"></div>
-                <div class="color-var"></div>
-                <div class="color-spec"></div>
+        <h1>SFRA Style Guide</h1>
+        
+        <h2 class="section">Color Palette</h2>
+        <h3 class="sub-section">Main Colors</h3>
+        <div class="flex-container color main-colors">
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$primary:</span> $denim</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$primary-light:</span> $anakiwa</code>
+               <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <div class="color-var"></div>
-                <div class="color-spec"></div>
+                <code class="color-var"><span>$primary-dark:</span> $blumine</code>
+                <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <div class="color-var"></div>
-                <div class="color-spec"></div>
+                <code class="color-var"><span>$secondary:</span> $orangepeel</code>
+                <div class="spec">Spec:</div>
             </div>
-	    </div>
-	    <h3 class="sub-section">Accent Colors</h3>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>$secondary-light:</span> $creambrulee</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h3 class="sub-section">Accent Colors</h3>
+        <div class="flex-container color accent-colors">
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$accent-1:</span> $sapphire</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$accent-2:</span> $cinnabar</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>$accent-3:</span> $orangepeel</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>$accent-4:</span> $pinegreen</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+        
         <h3 class="sub-section">Greys</h3>
+        <div class="flex-container color grey-colors">
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var">$black</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var">$grey1</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var">$grey2</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var">$grey3</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var">$grey4</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var">$grey5</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var">$white</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+        
         <h3 class="sub-section">Messages & Alerts</h3>
-        <h3 class="sub-section">Gradients</h3>
+        <div class="flex-container color alert-colors">
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$success:</span> $japanese-laurel</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$info:</span> $calypso</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>$warning:</span> $mustard</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>$error:</span> $tamarillo</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h2 class="section">Backgrounds</h2>
+        <h3 class="sub-section">Background Gradients</h3>
+            <div class="flex-container gradient">
+	            <div class="item">
+	                <div class="gradient-block gradient-lin1"></div>
+	                <code>.gradient-lin1 / @include gradient-lin1</code>
+	                <div class="spec">Spec:</div>
+	            </div>
+	            <div class="item">
+	                <div class="gradient-block gradient-lin2"></div>
+	                <code>.gradient-lin2 / @include gradient-lin2</code>
+	                <div class="spec">Spec:</div>
+	            </div>
+	            <div class="item">
+	                <div class="gradient-block gradient-radial"></div>
+	                <code>.gradient-radial / @include gradient-radial</code>
+	                <div class="spec">Spec:</div>
+	            </div>
+	            <div class="item">
+	                <div class="gradient-block gradient-lin3"></div>
+	                <code>.gradient-lin3 / @include gradient-lin3</code>
+	                <div class="spec">Spec:</div>
+	            </div>
+	        </div>
     </div>
 </isdecorate>

@@ -10,9 +10,12 @@ $flag-icon-css-path: "../fonts/flags/";
 //  COLORS
 //--------------------------------
 
+// Theme colors documentation: https://getbootstrap.com/docs/4.1/getting-started/theming/#theme-colors
+
 // Color Palette
 
-/* Main Colors */
+/* Variable names from http://chir.ag/projects/name-that-color */
+
 $white: #fff;
 $black: #000;
 $blue: #0070d2;
@@ -21,33 +24,72 @@ $anakiwa: #88c4ff;
 $blumine: #1d568e;
 $orangepeel: #ff9f00;
 $creambrulee: #ffdb9d;
+$sapphire: #303e9f;
+$cinnabar: #e64a19;
+$pinegreen: #00796a;
+$japanese-laurel: #046808;
+$calypso: #31708f;
+$mustard: #ffe353;
+$tamarillo: #92110e;
+$california: #fe9803;
+$pomegranate: #e85118;
+$valencia: #d73731;
+$picton-blue: #44a7f2;
+$indigo: #3b76ca;
+$cornflower-blue: #4c93eb;
+$daisy-bush: #502ea8;
+$cerulean-blue: #2553b5;
 
-// Theme Colors
+// Theme - Main Colors
 $primary: $denim;
 $primary-light: $anakiwa;
 $primary-dark: $blumine;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
 
-$brand-success: #008827;
-$brand-danger: #c00;
-$brand-primary: #00a1e0;
+// Accent Colors
+$accent-1: $sapphire;
+$accent-2: $cinnabar;
+$accent-3: $orangepeel;
+$accent-4: $pinegreen;
 
-// Consolidated values
-$grey1: #f9f9f9;
-$grey2: #eee;
-$grey3: #ccc;
-$grey4: #999;
-$grey5: #666;
-$grey6: #444;
-$grey7: #222;
-$grey8: #333;
+// Grey Colors
+$grey1: #22252a;
+$grey2: #495056;
+$grey3: #cfd4da;
+$grey4: #e8ecef;
+$grey5: #f8f9fb;
+$grey6: #f8f9fb;
+$grey7: #f8f9fb;
+$grey8: #f8f9fb;
 $grey-transparent-1: rgba(0, 0, 0, 0.65);
 $grey-transparent-2: rgba(0, 0, 0, 0.25);
 
-$light-gray: $grey1;
+// Messages & Alerts
+$success: $japanese-laurel;
+$info: $calypso;
+$warning: $mustard;
+$error: $tamarillo;
+
+//--------------------------------
+//  BACKGROUNDS
+//--------------------------------
+
+// BG documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-color
+
+// Gradients
+// Gradients documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-gradient
+
+$enable-gradients: true; // bootstrap override -> must be set to true for gradients to be visible on the site
+
+/* Gradient backgrounds are mixins found in custom gradient mixins file - TODO */
+
+$brand-success: #008827;
+$brand-danger: #c00;
+$brand-primary: #00a1e0;
+$light-gray: $grey4;
 $slightly-darker-gray: $grey4;
-$dark-gray: $grey6;
+$dark-gray: $grey5;
 $darker-gray: $grey7;
 $brand-color: $brand-primary;
 $horizontal-rule-grey: $grey3;

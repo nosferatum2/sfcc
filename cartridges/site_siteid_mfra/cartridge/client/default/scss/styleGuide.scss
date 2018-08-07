@@ -1,6 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "bootstrap/scss/mixins/gradients";
 
 .pt_styleguide {
     .wrapper {
@@ -10,101 +11,52 @@
     .section {
         margin: 1em;
         padding: 0.2em 0 0.2em 1em;
-        color: $grey6;
-        border-left: 3px solid $grey4;
+        color: $grey1;
+        border-left: 3px solid $grey3;
         background: none;
     }
 
     h3 {
         &.sub-section {
             padding: 0.5em 0 0.5em 1em;
-            margin-bottom: 1em;
-            background: $grey2;
+            margin: 1em 0;
+            background: $grey4;
         }
+    }
+
+    code {
+        display: inline-block;
+        margin: 0.5em 0;
+        padding: 0.3em;
+        background: rgba($grey4, 0.6);
+        clear: both;
+
+        span {
+            font-weight: bold;
+        }
+    }
+
+    .spec {
+        color: $grey2;
     }
 
     .flex-container {
         display: flex;
+
+        &.color,
+        &.gradient {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            text-align: center;
+        }
     }
 }
 
 // Colors
-//TODO - the colors mixin needs to be extracted and called in to each of the sections
-.main-colors {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    // Set the list of color blocks in order of how they should appear in the style guide.
-    $colorlist: (
-        $primary,
-        $primary-light,
-        $primary-dark,
-        $secondary,
-        $secondary-light
-    );
-
-    @for $i from 1 through length($colorlist) {
-        $c: nth($colorlist, $i);
-
-        .item:nth-child(#{$i}) .color-block {
-            background-color: $c;
-            border-radius: $border-radius;
-
-            &::before {
-                content: "#{$c}";
-                color: $white;
-                position: absolute;
-                top: 20%;
-                transform: translate(-20%, -50%);
-                left: 50%;
-                @if lightness($c) > 75 {
-                    color: $grey3;
-                }
-            }
-
-            @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $black;
-            }
-        }
-    }
-}
-
-.accent-colors {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    // Set the list of color blocks in order of how they should appear in the style guide.
-    $colorlist: (
-        $blue,
-        $black
-    );
-
-    @for $i from 1 through length($colorlist) {
-        $c: nth($colorlist, $i);
-
-        .item:nth-child(#{$i}) .color-block {
-            background-color: $c;
-            border-radius: $border-radius;
-
-            &::before {
-                content: "#{$c}";
-                color: $white;
-                position: absolute;
-                top: 20%;
-                transform: translate(-20%, -50%);
-                left: 50%;
-                @if lightness($c) > 75 {
-                    color: $gray333;
-                }
-            }
-
-            @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $black;
-            }
-        }
-    }
-}
 
 .item {
     .color-block {
+        position: relative;
         width: 200px;
         height: 200px;
         margin-bottom: 5px;
@@ -121,4 +73,172 @@
         line-height: 150%;
         margin-bottom: 10px;
     }
+
+    .gradient-block {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 5px;
+
+        &.gradient-lin1 {
+            @include gradient-directional($start-color: $california, $end-color: $pomegranate, $deg: 62deg);
+        }
+
+        &.gradient-lin2 {
+            @include gradient-directional($start-color: $mustard, $end-color: $pomegranate, $deg: 90deg);
+        }
+
+        &.gradient-radial {
+            @include gradient-radial($inner-color: $picton-blue, $outer-color: $indigo);
+        }
+
+        &.gradient-lin3 {
+            @include gradient-x-three-colors($start-color: $cornflower-blue, $mid-color: $daisy-bush, $color-stop: 50%, $end-color: $cerulean-blue);
+        }
+    }
 }
+
+//TODO - optimize this
+.main-colors {
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $primary,
+        $primary-light,
+        $white,
+        $secondary,
+        $secondary-light
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @if lightness($c) > 75 {
+                    color: $grey1;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $grey1;
+            }
+        }
+    }
+}
+
+.accent-colors {
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $accent-1,
+        $accent-2,
+        $accent-3,
+        $accent-4
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @if lightness($c) > 75 {
+                    color: $grey1;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $grey1;
+            }
+        }
+    }
+}
+
+.grey-colors {
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $black,
+        $grey1,
+        $grey2,
+        $grey3,
+        $grey4,
+        $grey5,
+        $white
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @if lightness($c) > 75 {
+                    color: $grey1;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $grey1;
+            }
+        }
+    }
+}
+
+.alert-colors {
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: (
+        $success,
+        $info,
+        $warning,
+        $error
+    );
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @if lightness($c) > 75 {
+                    color: $grey1;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $grey1;
+            }
+        }
+    }
+}
+
