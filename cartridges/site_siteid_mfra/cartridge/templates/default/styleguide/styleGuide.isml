@@ -125,27 +125,79 @@
 
         <h2 class="section">Backgrounds</h2>
         <h3 class="sub-section">Background Gradients</h3>
-            <div class="flex-container gradient">
-	            <div class="item">
-	                <div class="gradient-block gradient-lin1"></div>
-	                <code>.gradient-lin1 / @include gradient-lin1</code>
-	                <div class="spec">Spec:</div>
-	            </div>
-	            <div class="item">
-	                <div class="gradient-block gradient-lin2"></div>
-	                <code>.gradient-lin2 / @include gradient-lin2</code>
-	                <div class="spec">Spec:</div>
-	            </div>
-	            <div class="item">
-	                <div class="gradient-block gradient-radial"></div>
-	                <code>.gradient-radial / @include gradient-radial</code>
-	                <div class="spec">Spec:</div>
-	            </div>
-	            <div class="item">
-	                <div class="gradient-block gradient-lin3"></div>
-	                <code>.gradient-lin3 / @include gradient-lin3</code>
-	                <div class="spec">Spec:</div>
-	            </div>
-	        </div>
+        <div class="flex-container gradient">
+            <div class="item">
+                <div class="gradient-block gradient-lin1"></div>
+                <code>.gradient-lin1 / @include gradient-lin1</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="gradient-block gradient-lin2"></div>
+                <code>.gradient-lin2 / @include gradient-lin2</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="gradient-block gradient-radial"></div>
+                <code>.gradient-radial / @include gradient-radial</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="gradient-block gradient-lin3"></div>
+                <code>.gradient-lin3 / @include gradient-lin3</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h2 class="section">Styles</h2>
+        <h3 class="sub-section">Borders & Dividers</h3>
+        <div class="flex-container sg-borders">
+            <div class="item">
+                <div class="border-block"></div>
+                <code>$border</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="border-block"></div>
+                <code>$border-thick</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="border-block"></div>
+                <code>$border-2</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="border-block"></div>
+                <code>$border-3</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="border-block"></div>
+                <code>$border-4</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h3 class="sub-section">Shadows</h3>
+        <div class="flex-container sg-shadows">
+            <div class="item">
+                <div class="shadow-block"></div>
+                <code>$shadow</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="shadow-block"></div>
+                <code>$shadow2</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="shadow-block"></div>
+                <code>$shadow3</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+        
+        <h3 class="sub-section">Patterns</h3>
+        <p class="alert alert-warning">I do not see any patterns in Bootstrap</p>
     </div>
 </isdecorate>

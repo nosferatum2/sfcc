@@ -10,6 +10,8 @@ $flag-icon-css-path: "../fonts/flags/";
 //  COLORS
 //--------------------------------
 
+// TODO - Do we need provide the map merges seen in the base bootstrap color vars?
+
 // Theme colors documentation: https://getbootstrap.com/docs/4.1/getting-started/theming/#theme-colors
 
 // Color Palette
@@ -75,15 +77,18 @@ $error: $tamarillo;
 //  BACKGROUNDS
 //--------------------------------
 
-// BG documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-color
+// TODO - Do we need to provide classes in a separate file for backgrounds as seen in the documentation?
+
+// BG utility class documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-color
 
 // Gradients
-// Gradients documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-gradient
+// Gradients utility class documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-gradient
 
 $enable-gradients: true; // bootstrap override -> must be set to true for gradients to be visible on the site
 
 /* Gradient backgrounds are mixins found in custom gradient mixins file - TODO */
 
+/* TODO - Organize these vars later - not sure which we actually need */
 $brand-success: #008827;
 $brand-danger: #c00;
 $brand-primary: #00a1e0;
@@ -99,6 +104,44 @@ $menu-link: $grey6;
 $close-menu-bg: $grey2;
 $link-color: $dark-gray;
 $hr-border-color: $grey3;
+
+/* End TODO */
+
+//--------------------------------
+//  BORDERS / DIVIDERS
+//--------------------------------
+
+// TODO - Since each individual bootstrap feature has border properties not sure if we need these variable groupings anymore?
+
+// TODO - Do we want to map these borders to our theme colors as seen in documentation?
+
+// Borders utility class documentation: https://getbootstrap.com/docs/4.1/utilities/borders/
+
+$border-width: 1px; // could be bootstrap override
+$border-color: $grey4; // default color - could be bootstrap override
+$border: 1px solid $border-color;
+$border-thick: 4px solid $border-color;
+$border2-color: $pinegreen;
+$border2: 1px solid $border2-color;
+$border3-color: $mustard;
+$border3: 1px solid $border3-color;
+$border4-color: $blumine;
+$border4: 1px solid $border4-color;
+
+//--------------------------------
+//  BOX SHADOWS
+//--------------------------------
+
+// TODO - Do we continue to use the aggregate vars, or just update them in the bootstrap sections, and why would we use the mixin?
+
+$enable-shadows: true; // bootstrap override
+$shadow: 0 8px 14px 0 rgba(224, 229, 238, 0.5);
+$shadow2: 0 8px 14px 0 rgba(0, 20px, 31px, 0.05);
+$shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
+
+//--------------------------------
+//  BREAKPOINTS
+//--------------------------------
 
 $grid-breakpoints: (
     xs: 0,

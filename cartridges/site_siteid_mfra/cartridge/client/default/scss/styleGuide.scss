@@ -26,7 +26,7 @@
 
     code {
         display: inline-block;
-        margin: 0.5em 0;
+        margin: 1em 0 0.5em;
         padding: 0.3em;
         background: rgba($grey4, 0.6);
         clear: both;
@@ -38,16 +38,44 @@
 
     .spec {
         color: $grey2;
+        margin-top: 0.5em;
     }
 
     .flex-container {
         display: flex;
 
         &.color,
-        &.gradient {
+        &.gradient,
+        &.sg-shadows {
             flex-wrap: wrap;
             justify-content: space-between;
             text-align: center;
+
+            .item {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                flex: 1 1 200px;
+                margin: 0 1em 1em;
+
+                > *:not(:first-child) {
+                    flex: 1 1 100%;
+                }
+            }
+        }
+
+        &.sg-borders {
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .item {
+                flex: 1 1 45%;
+                margin: 0 5% 2em 0;
+
+                &:last-child {
+                    flex: 0 0 45%;
+                }
+            }
         }
     }
 }
@@ -79,6 +107,8 @@
         height: 200px;
         margin-bottom: 5px;
 
+        // TODO - How do we want to organize these gradients?
+
         &.gradient-lin1 {
             @include gradient-directional($start-color: $california, $end-color: $pomegranate, $deg: 62deg);
         }
@@ -94,6 +124,15 @@
         &.gradient-lin3 {
             @include gradient-x-three-colors($start-color: $cornflower-blue, $mid-color: $daisy-bush, $color-stop: 50%, $end-color: $cerulean-blue);
         }
+    }
+
+    .border-block {
+        height: 30px;
+    }
+
+    .shadow-block {
+        height: 200px;
+        width: 200px;
     }
 }
 
@@ -238,6 +277,50 @@
             @if lightness($c) > lightness($light-gray) {
                 border: 1px solid $grey1;
             }
+        }
+    }
+}
+
+.sg-borders {
+    // Set the list of border blocks in order of how they should appear in the style guide.
+    $bordercolorlist: (
+        $border-color,
+        $border-color,
+        $border2-color,
+        $border3-color,
+        $border4-color
+    );
+
+    @for $i from 1 through length($bordercolorlist) {
+        $c: nth($bordercolorlist, $i);
+
+        .item:nth-child(#{$i}) .border-block {
+            border-color: $c;
+            border-bottom: 1px solid $c;
+            border-left: 1px solid $c;
+        }
+
+        .item:nth-child(2) .border-block {
+            border-width: 4px;
+        }
+    }
+}
+
+.sg-shadows {
+    // Set the list of shadow blocks in order of how they should appear in the style guide.
+    $shadowlist: (
+        $shadow,
+        $shadow2,
+        $shadow3
+    );
+
+    @for $i from 1 through length($shadowlist) {
+        $c: nth($shadowlist, $i);
+
+        .item:nth-child(#{$i}) .shadow-block {
+            box-shadow: $c;
+            border: $border;
+            background: $white;
         }
     }
 }
