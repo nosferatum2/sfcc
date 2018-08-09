@@ -77,12 +77,12 @@ $error: $tamarillo;
 //  BACKGROUNDS
 //--------------------------------
 
-// TODO - Do we need to provide classes in a separate file for backgrounds as seen in the documentation?
+// TODO - Do we want to upgrade to 4.1 to include background utilities?
 
-// BG utility class documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-color
+// BG utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-color
 
 // Gradients
-// Gradients utility class documentation: https://getbootstrap.com/docs/4.1/utilities/colors/#background-gradient
+// Gradients utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-gradient
 
 $enable-gradients: true; // bootstrap override -> must be set to true for gradients to be visible on the site
 
@@ -108,14 +108,29 @@ $hr-border-color: $grey3;
 /* End TODO */
 
 //--------------------------------
+//  TYPOGRAPHY
+//--------------------------------
+
+// Fonts
+
+// Displays
+$display1-size: 6rem; //bootstrap override
+$display2-size: 5rem; //bootstrap override
+
+// Headings
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 3; //bootstrap override
+$h2-font-size: $font-size-base * 2.5; //bootstrap override
+$h3-font-size: $font-size-base * 2.25; //bootstrap override
+$h4-font-size: $font-size-base * 1.75; //bootstrap override
+
+//--------------------------------
 //  BORDERS / DIVIDERS
 //--------------------------------
 
-// TODO - Since each individual bootstrap feature has border properties not sure if we need these variable groupings anymore?
-
 // TODO - Do we want to map these borders to our theme colors as seen in documentation?
 
-// Borders utility class documentation: https://getbootstrap.com/docs/4.1/utilities/borders/
+// Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
 
 $border-width: 1px; // could be bootstrap override
 $border-color: $grey4; // default color - could be bootstrap override
@@ -132,7 +147,7 @@ $border4: 1px solid $border4-color;
 //  BOX SHADOWS
 //--------------------------------
 
-// TODO - Do we continue to use the aggregate vars, or just update them in the bootstrap sections, and why would we use the mixin?
+// TODO - Should we update to 4.1 so we can include the shadow utility?
 
 $enable-shadows: true; // bootstrap override
 $shadow: 0 8px 14px 0 rgba(224, 229, 238, 0.5);

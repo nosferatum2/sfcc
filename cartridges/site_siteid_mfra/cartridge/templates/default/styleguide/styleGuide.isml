@@ -199,5 +199,47 @@
         
         <h3 class="sub-section">Patterns</h3>
         <p class="alert alert-warning">I do not see any patterns in Bootstrap</p>
+
+        <h2 class="section">Typography</h2>
+        <h3 class="sub-section">Fonts</h3>
+
+        <h3 class="sub-section">Displays</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="display-1">Display XL</div>
+                <code>.display-1</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="display-2">Display SM</div>
+                <code>.display-2</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h3 class="sub-section">Headings</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h1">H1: Page Title XL</div>
+                <code>.h1 </code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h2">H2: Page Title SM</div>
+                <code>.h2</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h3">H3: Section Title SM</div>
+                <code>.h3</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h4">H4: Subsection Title</div>
+                <code>.h4</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+        
     </div>
 </isdecorate>
