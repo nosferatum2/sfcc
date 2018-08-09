@@ -254,7 +254,6 @@ function uploadFiles(files) {
         files.forEach(file => {
             const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
             shell.exec(shellCommands('--file', relativePath));
-            console.log(`Uploading ${file}`);
         });
         shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
     }
@@ -367,6 +366,7 @@ function getUploadOptions(isData) {
  */
 function activateCodeVersion(uploadArguments) {
     if (uploadArguments.activationHostname && uploadArguments.activationHostname.length > 0) {
+        console.log(chalk.green('Starting activateCodeVersion routine...'));
         const activationHostnames = uploadArguments.activationHostname;
         delete uploadArguments.activationHostname;
 
@@ -610,10 +610,9 @@ if (options.createCartridge) {
 
 if (options.watch) {
     const packageFile = require(path.join(cwd, './package.json'));
-
     const cartridgesPath = path.join(cwd, 'cartridges');
 
-    console.log('Watching for scss or client js changes...');
+    console.log('Watching for file changes...');
 
     const scssWatcher = chokidar.watch(
         cartridgesPath + '/**/*.scss', {
@@ -638,7 +637,6 @@ if (options.watch) {
         });
 
     if (!options.onlycompile) {
-
         const watcher = chokidar.watch(cartridgesPath, {
             ignored: [
                 '**/cartridge/js/**',
@@ -818,14 +816,13 @@ if (options.deployCartridges) {
             shell.exec(dwuploadScript);
         });
     }
-    
+
     // activate code version
     uploadArguments = activateCodeVersion(uploadArguments);
 }
 
 // activates code version
 if (options.activateCodeVersion) {
-    console.log(chalk.green('Starting activateCodeVersion routine...'));
     const uploadArguments = getUploadOptions();
     activateCodeVersion(uploadArguments);
 }
