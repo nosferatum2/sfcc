@@ -35,7 +35,7 @@
         <fail message="The directory 'node_modules' is missing."/>
     </target>
 
-    <target name="deploy" depends="cover,css,js,upload">
+    <target name="deploy" depends="cover,css,js,fonts,upload">
         <property name="buildMode" value="${buildMode}" />
         <echo level="info">deploy build mode: ${buildMode}</echo>
         <echo level="info">Deployment complete!</echo>
@@ -123,6 +123,19 @@
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
             <arg value="export PATH=/usr/local/bin:$PATH; export BUILD_MODE=${buildMode}; npm run compile:js"/>
+        </exec>
+        <echo level="info">Client JavaScript build done!</echo>
+    </target>
+
+    <target name="fonts" depends="check-node" if="${have-node}">
+        <echo level="info">Fonts build running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='npm run compile:fonts'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run compile:fonts"/>
         </exec>
         <echo level="info">Client JavaScript build done!</echo>
     </target>
