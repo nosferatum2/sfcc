@@ -362,29 +362,26 @@ function getUploadOptions(isData) {
 /**
  * activates specified code version for all activationHostnames
  * @param {array} uploadArguments - the current uploadArguments
- * @returns {array} - altered uploadArguments array
  */
 function activateCodeVersion(uploadArguments) {
     if (uploadArguments.activationHostname && uploadArguments.activationHostname.length > 0) {
         console.log(chalk.green('Starting activateCodeVersion routine...'));
         const activationHostnames = uploadArguments.activationHostname;
         delete uploadArguments.activationHostname;
-
+        delete uploadArguments.hostname;
         activationHostnames.forEach((activationHostname) => {
+            console.log(chalk.blue('activating code on host: ' + activationHostname));
             uploadArguments['activationHostname'] = activationHostname;
+            uploadArguments['hostname'] = activationHostname;
             const webdav = new Webdav(uploadArguments);
             webdav.formLogin().then(() => {
-                webdav.activateCode().then(() => {
-                    process.exit(0);
-                });
+                webdav.activateCode();
             });
         });
     } else {
         console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
         process.exit(0);
     }
-
-    return uploadArguments;
 }
 
 /**
@@ -405,7 +402,7 @@ function getCartridges(packageFile) {
                 } else {
                     console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
                 }
-                
+
             }
         }
     });
@@ -415,7 +412,7 @@ function getCartridges(packageFile) {
         console.log(chalk.blue('passing in "modules"'));
         cartridges.push('modules');
     }
-    
+
     return cartridges;
 }
 
@@ -534,7 +531,7 @@ if (options.compile) {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
                         js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                             if (code == 1) {
-                              process.exit(code);  
+                              process.exit(code);
                             }
                         });
                     }
@@ -557,7 +554,7 @@ if (options.compile) {
                         console.log(chalk.blue('Building css for Site ' + cartridgeName));
                         css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                             if (code == 1) {
-                              process.exit(code);  
+                              process.exit(code);
                             }
                         });
                     }
@@ -685,7 +682,7 @@ if (options.watch) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
                             js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                                 if (code == 1) {
-                                  process.exit(code);  
+                                  process.exit(code);
                                 }
                                 jsCompilingInProgress = false;
                             });
@@ -716,7 +713,7 @@ if (options.watch) {
                             try {
                                 css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                                     if (code == 1) {
-                                      process.exit(code);  
+                                      process.exit(code);
                                     }
                                     clearTmp();
                                     console.log(chalk.green('SCSS files compiled.'));
