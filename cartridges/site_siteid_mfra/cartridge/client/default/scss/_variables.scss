@@ -111,6 +111,9 @@ $hr-border-color: $grey3;
 //  TYPOGRAPHY
 //--------------------------------
 
+$font-size-base: 1rem;
+$font-size-xs: $font-size-base * 0.75;
+
 // Fonts
 
 // Displays
@@ -118,11 +121,16 @@ $display1-size: 6rem; //bootstrap override
 $display2-size: 5rem; //bootstrap override
 
 // Headings
-$font-size-base: 1rem;
+
 $h1-font-size: $font-size-base * 3; //bootstrap override
 $h2-font-size: $font-size-base * 2.5; //bootstrap override
 $h3-font-size: $font-size-base * 2.25; //bootstrap override
 $h4-font-size: $font-size-base * 1.75; //bootstrap override
+
+// Labels
+$label-xl: $font-size-base * 1.25;
+$label-sm: $font-size-base;
+$label-xs: $font-size-base * 0.75;
 
 //--------------------------------
 //  BORDERS / DIVIDERS

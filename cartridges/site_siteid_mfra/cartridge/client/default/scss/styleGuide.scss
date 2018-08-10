@@ -77,14 +77,18 @@
                 }
             }
         }
+    }
 
-        &.sg-type {
-            .item {
-                margin-bottom: 2em;
+    .sg-type {
+        .item {
+            margin-bottom: 2em;
 
-                > * {
-                    flex: 1 1 30%;
-                    margin-right: 1%;
+            > * {
+                flex: 1 1 30%;
+                margin-right: 1%;
+
+                &:nth-child(2) {
+                    align-self: start;
                 }
             }
         }
@@ -336,3 +340,19 @@
     }
 }
 
+// Type
+
+.label-xl {
+    font-size: $font-size-lg;
+}
+
+.label-sm {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+}
+
+.label-xs {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+}

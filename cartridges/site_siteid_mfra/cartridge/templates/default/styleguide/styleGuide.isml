@@ -208,12 +208,12 @@
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="display-1">Display XL</div>
                 <code>.display-1</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 6rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="display-2">Display SM</div>
                 <code>.display-2</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 5rem</div>
             </div>
         </div>
 
@@ -222,22 +222,55 @@
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h1">H1: Page Title XL</div>
                 <code>.h1 </code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 3rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h2">H2: Page Title SM</div>
                 <code>.h2</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 2.5rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h3">H3: Section Title SM</div>
                 <code>.h3</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 2.25rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h4">H4: Subsection Title</div>
                 <code>.h4</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Spec: 1.75rem</div>
+            </div>
+        </div>
+        
+        <h3 class="sub-section">Labels</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <label class="label-xl">Label XL</label>
+                <code>.label-xl / $label-xl </code>
+                <div class="spec">Spec: 1.25rem</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <label class="label-xl">Label SM</label>
+                <code>.label-sm / $label-sm </code>
+                <div class="spec">Spec: 1rem</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <label class="label-xs">Label XS</label>
+                <code>.label-xs / $label-xs </code>
+                <div class="spec">Spec: .75rem</div>
+            </div>
+        </div>
+        
+        <h3 class="sub-section">Body</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <p>Paragraph</p>
+                <code>p </code>
+                <div class="spec">Spec: .875rem</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <p class="font-weight-bold">Paragraph Bold</p>
+                <code>p.font-weight-bold </code>
+                <div class="spec">Spec: .875rem</div>
             </div>
         </div>
         
