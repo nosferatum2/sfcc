@@ -16,29 +16,30 @@ const createAliases = (packageFile, pwd) => {
                 console.log('Creating aliases for cartridge ' + cartridge);
                 aliases[item] = path.join(cartridge, 'cartridge/client/default/js');
                 const clientFolder = path.join(cartridge, 'cartridge/client');
-                const locales = fs.readdirSync(clientFolder)
-                    .filter(folder => folder.charAt(0) != '.') // added a filter to block hidden folders, like .DS_Store
-                    .map(name => path.join(clientFolder, name))
-                    .filter(folder => { fs.lstatSync(folder).isDirectory
+                if (fs.existsSync(clientFolder)) {
+                    const locales = fs.readdirSync(clientFolder)
+                        .filter(folder => folder.charAt(0) != '.') // added a filter to block hidden folders, like .DS_Store
+                        .map(name => path.join(clientFolder, name))
+                        .filter(folder => { fs.lstatSync(folder).isDirectory
+                        });
+                    locales.forEach(locale => {
+                        const name = path.basename(locale);
+                        if (name !== 'default') {
+                            aliases[`${item}/${name}`] = path.join(locale, 'js');
+                        }
                     });
-                locales.forEach(locale => {
-                    const name = path.basename(locale);
-                    if (name !== 'default') {
-                        aliases[`${item}/${name}`] = path.join(locale, 'js');
-                    }
-                });
+                }
 
                 if (verbose) {
-                    console.log("    Created aliases: ");
+                    console.log('Created aliases: ');
                     Object.keys(aliases).forEach(key => {
                         console.log( '    ' + key + ' is ' + aliases[key]);
                     });
-                
                     console.log(chalk.gray('Looking for inner packages...'));
                 }
 
-                /** 
-                 * I think this is for stitching together all of the paths for the plugin architecture. 
+                /**
+                 * I think this is for stitching together all of the paths for the plugin architecture.
                  * Not sure if we should expect inner Packages to be "Site" aware with our custom package.json configuration
                  */
                 const innerPackage = require(path.join(cartridge, '../..', 'package.json'));
@@ -59,7 +60,7 @@ const createAliases = (packageFile, pwd) => {
                     }
                 }
             }
-           
+
         });
     }
 
@@ -77,7 +78,7 @@ module.exports = {
         } catch(e) {
             result = null;
         }
-        
+
         if (jsFiles) {
             result = {};
             jsFiles.forEach(filePath => {
