@@ -1,5 +1,6 @@
-@import "variables";
+@import "~org/variables";
 @import "bootstrap/scss/bootstrap";
+@import "~org/bootstrapOverrides/buttons";
 
 .pt_styleguide {
     .wrapper {
@@ -14,7 +15,8 @@
         background: none;
     }
 
-    h3 {
+    h3,
+    h4 {
         &.sub-section {
             padding: 0.5em 0 0.5em 1em;
             margin: 1em 0;
@@ -88,6 +90,16 @@
                 &:nth-child(2) {
                     align-self: start;
                 }
+            }
+        }
+    }
+
+    .sg-buttons {
+        .item {
+            margin-bottom: 2em;
+
+            .btn {
+                margin-right: 2em;
             }
         }
     }
@@ -231,41 +243,6 @@
         $gray-400,
         $gray-500,
         $white
-    );
-
-    @for $i from 1 through length($colorlist) {
-        $c: nth($colorlist, $i);
-
-        .item:nth-child(#{$i}) .color-block {
-            background-color: $c;
-            border-radius: $border-radius;
-
-            &::before {
-                content: "#{$c}";
-                color: $white;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                @if lightness($c) > 75 {
-                    color: $gray-100;
-                }
-            }
-
-            @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $gray-100;
-            }
-        }
-    }
-}
-
-.alert-colors {
-    // Set the list of color blocks in order of how they should appear in the style guide.
-    $colorlist: (
-        $success,
-        $info,
-        $warning,
-        $error
     );
 
     @for $i from 1 through length($colorlist) {

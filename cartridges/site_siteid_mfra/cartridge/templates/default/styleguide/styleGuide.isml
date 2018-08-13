@@ -6,8 +6,8 @@
     <div class="wrapper">
         <h1>SFRA Style Guide</h1>
         
-        <h2 class="section">Color Palette</h2>
-        <h3 class="sub-section">Main Colors</h3>
+        <h3 class="section">Color Palette</h3>
+        <h4 class="sub-section">Main Colors</h4>
         <div class="flex-container color main-colors">
             <div class="item">
                <div class="color-block"></div>
@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Accent Colors</h3>
+        <h4 class="sub-section">Accent Colors</h4>
         <div class="flex-container color accent-colors">
             <div class="item">
                <div class="color-block"></div>
@@ -60,8 +60,8 @@
             </div>
         </div>
         
-        <h3 class="sub-section">Greys</h3>
-        <div class="flex-container color grey-colors">
+        <h4 class="sub-section">Grays</h4>
+        <div class="flex-container color gray-colors">
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var">$black</code>
@@ -69,27 +69,27 @@
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var">$grey1</code>
+               <code class="color-var">$gray-100</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$grey2</code>
+                <code class="color-var">$gray-200</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$grey3</code>
+                <code class="color-var">$gray-300</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$grey4</code>
+                <code class="color-var">$gray-400</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$grey5</code>
+                <code class="color-var">$gray-500</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
@@ -99,32 +99,32 @@
             </div>
         </div>
         
-        <h3 class="sub-section">Messages & Alerts</h3>
+        <h4 class="sub-section">Messages & Alerts</h4>
         <div class="flex-container color alert-colors">
             <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var"><span>$success:</span> $japanese-laurel</code>
+               <div class="color-block alert alert-success"></div>
+               <code class="color-var"><span>.alert-success:</span> $japanese-laurel</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var"><span>$info:</span> $calypso</code>
+               <div class="color-block alert alert-info"></div>
+               <code class="color-var"><span>.alert-info:</span> $calypso</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="color-block"></div>
-                <code class="color-var"><span>$warning:</span> $mustard</code>
+                <div class="color-block alert alert-warning"></div>
+                <code class="color-var"><span>.alert-warning:</span> $mustard</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="color-block"></div>
-                <code class="color-var"><span>$error:</span> $tamarillo</code>
+                <div class="color-block alert alert-error"></div>
+                <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
                 <div class="spec">Spec:</div>
             </div>
         </div>
 
-        <h2 class="section">Backgrounds</h2>
-        <h3 class="sub-section">Background Gradients</h3>
+        <h3 class="section">Backgrounds</h3>
+        <h4 class="sub-section">Background Gradients</h4>
         <div class="flex-container gradient">
             <div class="item">
                 <div class="gradient-block gradient-lin1"></div>
@@ -148,8 +148,8 @@
             </div>
         </div>
 
-        <h2 class="section">Styles</h2>
-        <h3 class="sub-section">Borders & Dividers</h3>
+        <h3 class="section">Styles</h3>
+        <h4 class="sub-section">Borders & Dividers</h4>
         <div class="flex-container sg-borders">
             <div class="item">
                 <div class="border-block"></div>
@@ -178,7 +178,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Shadows</h3>
+        <h4 class="sub-section">Shadows</h4>
         <div class="flex-container sg-shadows">
             <div class="item">
                 <div class="shadow-block"></div>
@@ -197,11 +197,11 @@
             </div>
         </div>
         
-        <h3 class="sub-section">Patterns</h3>
+        <h4 class="sub-section">Patterns</h4>
         <p class="alert alert-warning">I do not see any patterns in Bootstrap</p>
 
-        <h2 class="section">Typography</h2>
-        <h3 class="sub-section">Fonts</h3>
+        <h3 class="section">Typography</h3>
+        <h4 class="sub-section">Fonts</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 1</div>
@@ -215,7 +215,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Displays</h3>
+        <h4 class="sub-section">Displays</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="display-1">Display XL</div>
@@ -229,7 +229,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Headings</h3>
+        <h4 class="sub-section">Headings</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h1">H1: Page Title XL</div>
@@ -253,7 +253,7 @@
             </div>
         </div>
         
-        <h3 class="sub-section">Labels</h3>
+        <h4 class="sub-section">Labels</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <label class="label-xl">Label XL</label>
@@ -272,7 +272,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Body</h3>
+        <h4 class="sub-section">Body</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <p>Paragraph</p>
@@ -286,7 +286,7 @@
             </div>
         </div>
 
-        <h3 class="sub-section">Links</h3>
+        <h4 class="sub-section">Links</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <a href="" class="main-nav">Main Navigation</a>
@@ -305,10 +305,28 @@
             </div>
         </div>
         
-        <h2 class="section">Buttons</h2>
-        <button class="btn btn-primary">Button Primary</button>
-        <button class="btn btn-secondary">Button Secondary</button>
-        <button class="btn btn-tertiary">Button Tertiary</button>
+        <h3 class="section">Buttons</h3>
+        <div class="sg-buttons">
+            <div class="item">
+                <button class="btn btn-primary">Button Primary</button>
+                <button class="btn btn-primary" disabled>Button Primary Disabled</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-secondary">Button Secondary</button>
+                <button class="btn btn-secondary" disabled>Button Secondary Disabled</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-tertiary">Button Tertiary</button>
+                <button class="btn btn-tertiary" disabled>Button Tertiary Disabled</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-primary">Button Icon &#9654;</button>
+                <button class="btn btn-primary" disabled>Button Icon Disabled &#9654;</button>
+            </div>
+            <div class="item">
+                <button class="btn btn-link">Button Link</button>
+            </div>
+        </div>
         
     </div>
 </isdecorate>
