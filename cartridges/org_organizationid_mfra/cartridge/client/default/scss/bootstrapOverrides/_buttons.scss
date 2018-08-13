@@ -1,3 +1,36 @@
+// Custom disabled states for buttons
+.btn-button-primary {
+    // bootstrap override for disabled style
+    &.disabled,
+    &:disabled {
+        opacity: $btn-disabled-opacity;
+        background: $btn-disabled-main-bg;
+        border-color: $btn-disabled-main-border-color;
+        color: $btn-disabled-main-color;
+    }
+}
+
+.btn-outline-button-secondary {
+    // bootstrap override for disabled style
+    &.disabled,
+    &:disabled {
+        opacity: $btn-disabled-opacity;
+        border-color: $btn-disabled-main-border-color;
+        color: $btn-disabled-main-color;
+    }
+}
+
+.btn-button-tertiary {
+    // bootstrap override for disabled style
+    &.disabled,
+    &:disabled {
+        opacity: $btn-disabled-opacity;
+        background: $btn-disabled-alt-bg;
+        border-color: $btn-disabled-alt-border-color;
+        color: $btn-disabled-alt-color;
+    }
+}
+
 // Button text link
 .btn-link {
     font-weight: $font-weight-normal;

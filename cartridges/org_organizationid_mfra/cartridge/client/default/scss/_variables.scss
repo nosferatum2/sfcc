@@ -95,7 +95,9 @@ $primary: $denim;
 $primary-light: $anakiwa;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
-$tertiary: $gray-100;
+$button-primary: $denim;
+$button-secondary: $denim;
+$button-tertiary: $gray-100;
 $success: $japanese-laurel;
 $info: $calypso;
 $warning: $mustard;
@@ -112,7 +114,9 @@ $theme-colors: () !default;
 $theme-colors: map-merge((
     "primary": $primary,
     "secondary": $secondary,
-    "tertiary": $tertiary,
+    "button-primary": $button-primary,
+    "button-secondary": $button-secondary,
+    "button-tertiary": $button-tertiary,
     "success": $success,
     "info": $info,
     "warning": $warning,
@@ -176,7 +180,7 @@ $primary-dark: $primary;
 
 $font-size-base: 1rem;
 $font-size-xs: $font-size-base * 0.75;
-$body-color: $gray-100;
+$body-color: $gray-100; //bootstrap override
 
 // Fonts
 
@@ -230,8 +234,8 @@ $shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
 //  LINKS
 //--------------------------------
 
-$link-color: $gray-100;
-$link-hover-color: $denim;
+$link-color: $gray-100; //bootstrap override
+$link-hover-color: $denim; //bootstrap override
 $link-decoration-alt: underline;
 
 //--------------------------------
@@ -247,7 +251,14 @@ $btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
 //  BUTTONS
 //--------------------------------
 
-$btn-link-color: $primary;
+$btn-link-color: $primary; //bootstrap override
+$btn-disabled-opacity: 1;
+$btn-disabled-main-color: $gray-200;
+$btn-disabled-main-bg: $gray-400;
+$btn-disabled-main-border-color: $gray-400;
+$btn-disabled-alt-color: $gray-100;
+$btn-disabled-alt-bg: $gray-300;
+$btn-disabled-alt-border-color: $gray-300;
 
 //--------------------------------
 //  BREAKPOINTS

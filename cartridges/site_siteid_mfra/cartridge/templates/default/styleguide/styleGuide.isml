@@ -100,24 +100,24 @@
         </div>
         
         <h4 class="sub-section">Messages & Alerts</h4>
-        <div class="flex-container color alert-colors">
+        <div class="alert-colors">
             <div class="item">
-               <div class="color-block alert alert-success"></div>
+               <div class="alert alert-success">Success alert</div>
                <code class="color-var"><span>.alert-success:</span> $japanese-laurel</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-               <div class="color-block alert alert-info"></div>
+               <div class="alert alert-info">Info alert</div>
                <code class="color-var"><span>.alert-info:</span> $calypso</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="color-block alert alert-warning"></div>
+                <div class="alert alert-warning">Warning alert</div>
                 <code class="color-var"><span>.alert-warning:</span> $mustard</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="color-block alert alert-error"></div>
+                <div class="alert alert-error">Error alert</div>
                 <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
                 <div class="spec">Spec:</div>
             </div>
@@ -308,20 +308,24 @@
         <h3 class="section">Buttons</h3>
         <div class="sg-buttons">
             <div class="item">
-                <button class="btn btn-primary">Button Primary</button>
-                <button class="btn btn-primary" disabled>Button Primary Disabled</button>
+                <button class="btn btn-button-primary">Button Primary</button>
+                <button class="btn btn-button-primary" disabled>Button Primary Disabled</button>
+                <code>.btn-button-primary</code>
             </div>
             <div class="item">
-                <button class="btn btn-secondary">Button Secondary</button>
-                <button class="btn btn-secondary" disabled>Button Secondary Disabled</button>
+                <button class="btn btn-outline-button-secondary">Button Secondary</button>
+                <button class="btn btn-outline-button-secondary" disabled>Button Secondary Disabled</button>
+                <code>.btn-outline-button-secondary</code>
             </div>
             <div class="item">
-                <button class="btn btn-tertiary">Button Tertiary</button>
-                <button class="btn btn-tertiary" disabled>Button Tertiary Disabled</button>
+                <button class="btn btn-button-tertiary">Button Tertiary</button>
+                <button class="btn btn-button-tertiary" disabled>Button Tertiary Disabled</button>
+                <code>.btn-button-tertiary</code>
             </div>
             <div class="item">
-                <button class="btn btn-primary">Button Icon &#9654;</button>
-                <button class="btn btn-primary" disabled>Button Icon Disabled &#9654;</button>
+                <button class="btn btn-button-primary">Button Icon &#9654;</button>
+                <button class="btn btn-button-primary" disabled>Button Icon Disabled &#9654;</button>
+                <code>.btn-button-primary</code>
             </div>
             <div class="item">
                 <button class="btn btn-link">Button Link</button>
