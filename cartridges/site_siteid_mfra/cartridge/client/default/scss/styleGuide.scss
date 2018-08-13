@@ -1,7 +1,5 @@
 @import "variables";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
-@import "bootstrap/scss/mixins/gradients";
+@import "bootstrap/scss/bootstrap";
 
 .pt_styleguide {
     .wrapper {
@@ -11,8 +9,8 @@
     .section {
         margin: 1em;
         padding: 0.2em 0 0.2em 1em;
-        color: $grey1;
-        border-left: 3px solid $grey3;
+        color: $gray-100;
+        border-left: 3px solid $gray-300;
         background: none;
     }
 
@@ -20,7 +18,7 @@
         &.sub-section {
             padding: 0.5em 0 0.5em 1em;
             margin: 1em 0;
-            background: $grey4;
+            background: $gray-400;
         }
     }
 
@@ -28,7 +26,7 @@
         display: inline-block;
         margin: 1em 0 0.5em;
         padding: 0.3em;
-        background: rgba($grey4, 0.6);
+        background: rgba($gray-400, 0.6);
         clear: both;
 
         span {
@@ -37,7 +35,7 @@
     }
 
     .spec {
-        color: $grey2;
+        color: $gray-200;
         margin-top: 0.5em;
     }
 
@@ -103,7 +101,7 @@
         width: 200px;
         height: 200px;
         margin-bottom: 5px;
-        color: $grey6;
+        color: $gray-600;
     }
 
     .color-var {
@@ -177,12 +175,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $grey1;
+                    color: $gray-100;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $grey1;
+                border: 1px solid $gray-100;
             }
         }
     }
@@ -212,26 +210,26 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $grey1;
+                    color: $gray-100;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $grey1;
+                border: 1px solid $gray-100;
             }
         }
     }
 }
 
-.grey-colors {
+.gray-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
     $colorlist: (
         $black,
-        $grey1,
-        $grey2,
-        $grey3,
-        $grey4,
-        $grey5,
+        $gray-100,
+        $gray-200,
+        $gray-300,
+        $gray-400,
+        $gray-500,
         $white
     );
 
@@ -250,12 +248,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $grey1;
+                    color: $gray-100;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $grey1;
+                border: 1px solid $gray-100;
             }
         }
     }
@@ -285,12 +283,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $grey1;
+                    color: $gray-100;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $grey1;
+                border: 1px solid $gray-100;
             }
         }
     }
@@ -355,4 +353,25 @@
     font-size: $font-size-xs;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
+}
+
+// Links
+
+a:hover {
+    color: $primary;
+}
+
+.main-nav {
+    font-size: $font-size-sm;
+}
+
+.link-primary {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-bold;
+}
+
+.link-secondary {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-decoration: $link-decoration-alt;
 }

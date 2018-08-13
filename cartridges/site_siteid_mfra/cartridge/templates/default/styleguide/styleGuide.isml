@@ -202,6 +202,18 @@
 
         <h2 class="section">Typography</h2>
         <h3 class="sub-section">Fonts</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h3">Font Family 1</div>
+                <code>$font-family-base</code>
+                <div class="spec">Spec: </div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <div class="h3">Font Family 2</div>
+                <code>$font-family-second</code>
+                <div class="spec">Spec: </div>
+            </div>
+        </div>
 
         <h3 class="sub-section">Displays</h3>
         <div class="sg-type">
@@ -259,7 +271,7 @@
                 <div class="spec">Spec: .75rem</div>
             </div>
         </div>
-        
+
         <h3 class="sub-section">Body</h3>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
@@ -273,6 +285,30 @@
                 <div class="spec">Spec: .875rem</div>
             </div>
         </div>
+
+        <h3 class="sub-section">Links</h3>
+        <div class="sg-type">
+            <div class="item d-flex justify-content-start flex-wrap">
+                <a href="" class="main-nav">Main Navigation</a>
+                <code>.main-nav </code>
+                <div class="spec">Spec: .875rem</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <a href="" class="link-primary">Primary Link</a>
+                <code>.link-primary </code>
+                <div class="spec">Spec: .875rem</div>
+            </div>
+            <div class="item d-flex justify-content-start flex-wrap">
+                <a href="" class="link-secondary">Primary Link</a>
+                <code>.link-primary </code> 
+                <div class="spec">Spec: .75rem</div>
+            </div>
+        </div>
+        
+        <h2 class="section">Buttons</h2>
+        <button class="btn btn-primary">Button Primary</button>
+        <button class="btn btn-secondary">Button Secondary</button>
+        <button class="btn btn-tertiary">Button Tertiary</button>
         
     </div>
 </isdecorate>

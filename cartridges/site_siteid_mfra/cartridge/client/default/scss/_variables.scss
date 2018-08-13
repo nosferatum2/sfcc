@@ -20,7 +20,6 @@ $flag-icon-css-path: "../fonts/flags/";
 
 $white: #fff;
 $black: #000;
-$blue: #0070d2;
 $denim: #1976d3;
 $anakiwa: #88c4ff;
 $blumine: #1d568e;
@@ -42,36 +41,91 @@ $cornflower-blue: #4c93eb;
 $daisy-bush: #502ea8;
 $cerulean-blue: #2553b5;
 
-// Theme - Main Colors
+// Gray Colors - Bootstrap overrides
+$gray-100: #22252a;
+$gray-200: #495056;
+$gray-300: #cfd4da;
+$gray-400: #e8ecef;
+$gray-500: #f8f9fb;
+$gray-600: #f8f9fb;
+$gray-700: #f8f9fb;
+$gray-800: #f8f9fb;
+$gray-900: #f8f9fb;
+
+//Bogus grey colors in the rest of site - these need to be updated
+$grey1: $gray-100;
+$grey3: $gray-300;
+$grey4: $gray-400;
+$grey5: $gray-500;
+$grey6: $gray-600;
+
+// Theme Mappings - Bootstrap overrides
+// stylelint-disable
+$colors: () !default;
+$colors: map-merge((
+        "denim": $denim,
+        "anakiwa": $anakiwa,
+        "blumine": $blumine,
+        "orangepeel": $orangepeel,
+        "creambrulee": $creambrulee,
+        "sapphire": $sapphire,
+        "cinnabar": $cinnabar,
+        "pinegreen": $pinegreen,
+        "japanese-laurel": $japanese-laurel,
+        "calypso": $calypso,
+        "mustard": $mustard,
+        "tamarillo": $tamarillo,
+        "california": $california,
+        "pomegranate": $pomegranate,
+        "valencia": $valencia,
+        "picton-blue": $picton-blue,
+        "indigo": $indigo,
+        "cornflower-blue": $cornflower-blue,
+        "daisy-bush": $daisy-bush,
+        "cerulean-blue": $cerulean-blue,
+        "white": $white,
+        "gray": $gray-600,
+        "gray-dark": $gray-800
+    ), $colors);
+// stylelint-enable
+
 $primary: $denim;
 $primary-light: $anakiwa;
-$primary-dark: $blumine;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
-
-// Accent Colors
+$tertiary: $gray-100;
+$success: $japanese-laurel;
+$info: $calypso;
+$warning: $mustard;
+$error: $tamarillo;
+$light: $gray-800;
+$dark: $gray-100;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
 $accent-4: $pinegreen;
 
-// Grey Colors
-$grey1: #22252a;
-$grey2: #495056;
-$grey3: #cfd4da;
-$grey4: #e8ecef;
-$grey5: #f8f9fb;
-$grey6: #f8f9fb;
-$grey7: #f8f9fb;
-$grey8: #f8f9fb;
-$grey-transparent-1: rgba(0, 0, 0, 0.65);
-$grey-transparent-2: rgba(0, 0, 0, 0.25);
+// stylelint-disable
+$theme-colors: () !default;
+$theme-colors: map-merge((
+        "primary": $primary,
+        "secondary": $secondary,
+        "tertiary": $tertiary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "error": $error,
+        "light": $light,
+        "dark": $dark,
+        "accent-1": $accent-1,
+        "accent-2": $accent-2,
+        "accent-3": $accent-3,
+        "accent-4": $accent-4
+    ), $theme-colors);
+// stylelint-enable
 
-// Messages & Alerts
-$success: $japanese-laurel;
-$info: $calypso;
-$warning: $mustard;
-$error: $tamarillo;
+$grey-transparent-1: rgba(0, 0, 0, 0.65); /* What are these? */
+$grey-transparent-2: rgba(0, 0, 0, 0.25); /* What are these? */
 
 //--------------------------------
 //  BACKGROUNDS
@@ -92,18 +146,19 @@ $enable-gradients: true; // bootstrap override -> must be set to true for gradie
 $brand-success: #008827;
 $brand-danger: #c00;
 $brand-primary: #00a1e0;
-$light-gray: $grey4;
-$slightly-darker-gray: $grey4;
-$dark-gray: $grey5;
-$darker-gray: $grey7;
-$brand-color: $brand-primary;
-$horizontal-rule-grey: $grey3;
-$product-number-grey: $grey3;
-$horizontal-border-grey: $grey4;
-$menu-link: $grey6;
-$close-menu-bg: $grey2;
-$link-color: $dark-gray;
-$hr-border-color: $grey3;
+$light-gray: $gray-400;
+$slightly-darker-gray: $gray-400;
+$dark-gray: $gray-400;
+$darker-gray: $gray-400;
+$brand-color: $primary;
+$horizontal-rule-grey: $gray-400;
+$product-number-grey: $gray-400;
+$horizontal-border-grey: $gray-400;
+$menu-link: $gray-400;
+$close-menu-bg: $gray-400;
+$link-color: $gray-400;
+$hr-border-color: $gray-400;
+$primary-dark: $primary;
 
 /* End TODO */
 
@@ -136,12 +191,12 @@ $label-xs: $font-size-base * 0.75;
 //  BORDERS / DIVIDERS
 //--------------------------------
 
-// TODO - Do we want to map these borders to our theme colors as seen in documentation?
+// TODO - Should we use the border utility classes instead?
 
 // Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
 
 $border-width: 1px; // could be bootstrap override
-$border-color: $grey4; // default color - could be bootstrap override
+$border-color: $gray-400; // default color - could be bootstrap override
 $border: 1px solid $border-color;
 $border-thick: 4px solid $border-color;
 $border2-color: $pinegreen;
@@ -161,6 +216,18 @@ $enable-shadows: true; // bootstrap override
 $shadow: 0 8px 14px 0 rgba(224, 229, 238, 0.5);
 $shadow2: 0 8px 14px 0 rgba(0, 20px, 31px, 0.05);
 $shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
+
+//--------------------------------
+//  LINKS
+//--------------------------------
+
+$link-color: $gray-100;
+$link-hover-color: $primary;
+$link-decoration-alt: underline;
+
+//--------------------------------
+//  BUTTONS
+//--------------------------------
 
 //--------------------------------
 //  BREAKPOINTS
@@ -190,7 +257,6 @@ $state-danger-text: #fff;
 $alert-success-text: #fff;
 
 // Bootstrap overrides
-$body-bg: $grey1;
 $card-cap-bg: $white;
 
 // Tabs
@@ -202,7 +268,7 @@ $nav-tabs-active-link-hover-bg: transparent;
 $breadcrumb-bg: transparent;
 
 // table border
-$table-border-color: $grey3;
+$table-border-color: $gray-400;
 
 $svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
 
