@@ -30,55 +30,33 @@ function isDeployed(stat) {
 
 /**
  * Explores recursively a directory and returns all the filepaths and folderpaths in the callback.
- * 
+ *
  * @see http://stackoverflow.com/a/5827895/4241030
  * @param {String} dir - Directory to start traversing from
  * @returns [String]
  */
-async function buildFileList(dir) {
-    const deferred = Q.defer();
-    let results = [];
+function buildFileList(dir, fileList) {
+    var list = fs.readdirSync(dir);
+    fileList = fileList || [];
+    list.forEach(function(file) {
+        file = path.resolve(dir, file);
 
-    function traverseFiles (dir) {
-        fs.readdir(dir, (err, list) => {
-            if (err) {
-                deferred.reject(new Error(err));
+        // If directory, execute a recursive call
+        let stat = fs.statSync(file);
+        if (stat && stat.isDirectory()) {
+            fileList = buildFileList(file, fileList);
+        } else {
+            if (!isDeployed(stat)) {
+                fileList.push(file);
             }
+        }
+    });
 
-            var pending = list.length;
-
-            if (!pending) {
-                return deferred.resolve(results);
-            }
-
-            list.forEach(function(file) {
-                file = path.resolve(dir, file);
-
-                fs.stat(file, function(err, stat) {
-                    // If directory, execute a recursive call
-                    if (stat && stat.isDirectory()) {
-                        traverseFiles(file);
-                    } else {
-                        if (!isDeployed(stat)) {
-                            results.push(file);
-                        }
-
-                        if (!--pending) {
-                            return deferred.resolve(results);
-                        }
-                    }
-                });
-            });
-        });
-    }
-
-    traverseFiles(dir);
-
-    return deferred.promise;
+    return fileList;
 };
 
 /**
- * 
+ *
  * @returns
  */
 async function zipDataFiles(dataBundle) {
@@ -101,7 +79,7 @@ async function zipDataFiles(dataBundle) {
     };
 
     for (var i in archiveFolders) {
-        const fileList = await buildFileList(path.join(pwd, dataOptions.archivePath, archiveFolders[i]));
+        const fileList = buildFileList(path.join(pwd, dataOptions.archivePath, archiveFolders[i]));
         const filePath = path.resolve(pwd, path.join(dataOptions.archivePath, archiveFolders[i]) + '.zip');
         let files = [];
 
