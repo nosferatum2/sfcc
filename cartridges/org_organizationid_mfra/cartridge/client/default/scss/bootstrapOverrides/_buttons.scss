@@ -1,5 +1,5 @@
 // Custom disabled states for buttons
-.btn-button-primary {
+.btn-primary {
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {
@@ -10,7 +10,7 @@
     }
 }
 
-.btn-outline-button-secondary {
+.btn-outline-primary {
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {
@@ -20,7 +20,7 @@
     }
 }
 
-.btn-button-tertiary {
+.btn-tertiary {
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {

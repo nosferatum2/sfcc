@@ -95,9 +95,7 @@ $primary: $denim;
 $primary-light: $anakiwa;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
-$button-primary: $denim;
-$button-secondary: $denim;
-$button-tertiary: $gray-100;
+$tertiary: $gray-100;
 $success: $japanese-laurel;
 $info: $calypso;
 $warning: $mustard;
@@ -114,9 +112,7 @@ $theme-colors: () !default;
 $theme-colors: map-merge((
     "primary": $primary,
     "secondary": $secondary,
-    "button-primary": $button-primary,
-    "button-secondary": $button-secondary,
-    "button-tertiary": $button-tertiary,
+    "tertiary": $tertiary,
     "success": $success,
     "info": $info,
     "warning": $warning,

@@ -308,27 +308,28 @@
         <h3 class="section">Buttons</h3>
         <div class="sg-buttons">
             <div class="item">
-                <button class="btn btn-button-primary">Button Primary</button>
-                <button class="btn btn-button-primary" disabled>Button Primary Disabled</button>
-                <code>.btn-button-primary</code>
+                <button class="btn btn-primary">Button Primary</button>
+                <button class="btn btn-primary" disabled>Button Primary Disabled</button>
+                <code>.btn-primary</code>
             </div>
             <div class="item">
-                <button class="btn btn-outline-button-secondary">Button Secondary</button>
-                <button class="btn btn-outline-button-secondary" disabled>Button Secondary Disabled</button>
-                <code>.btn-outline-button-secondary</code>
+                <button class="btn btn-outline-primary">Button Outline Primary</button>
+                <button class="btn btn-outline-primary" disabled>Button Outline Primary Disabled</button>
+                <code>.btn-outline-primary</code>
             </div>
             <div class="item">
-                <button class="btn btn-button-tertiary">Button Tertiary</button>
-                <button class="btn btn-button-tertiary" disabled>Button Tertiary Disabled</button>
-                <code>.btn-button-tertiary</code>
+                <button class="btn btn-tertiary">Button Tertiary</button>
+                <button class="btn btn-tertiary" disabled>Button Tertiary Disabled</button>
+                <code>.btn-tertiary</code>
             </div>
             <div class="item">
-                <button class="btn btn-button-primary">Button Icon &#9654;</button>
-                <button class="btn btn-button-primary" disabled>Button Icon Disabled &#9654;</button>
-                <code>.btn-button-primary</code>
+                <button class="btn btn-primary">Button Icon &#9654;</button>
+                <button class="btn btn-primary" disabled>Button Icon Disabled &#9654;</button>
+                <code>.btn-primary</code>
             </div>
             <div class="item">
                 <button class="btn btn-link">Button Link</button>
+                <code>.btn-link</code>
             </div>
         </div>
         
