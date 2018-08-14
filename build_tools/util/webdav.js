@@ -99,10 +99,17 @@ Webdav.prototype.formLogin = async function () {
     const method = 'POST',
         deferred = Q.defer();
 
+    // Login form should not include cert.staging
+    var hostname = this.hostname;
+    if (this.hostname.indexOf('cert.') > -1) {
+        hostname = hostname.replace('cert.', '');
+    }
+
     // Build the options for the upload
     let options = this.buildHttpOptions({
         method: method,
-        uploadPath: this.loginPath
+        uploadPath: this.loginPath,
+        hostname: hostname
     });
     options.form = {
         LoginForm_Login: this.username,
@@ -450,7 +457,7 @@ Webdav.prototype.buildHttpOptions = function (options) {
         };
 
     // Add some extra attributes if the server is using two factor authentication
-    if (typeof this.p12 !== 'undefined') {
+    if (typeof this.p12 !== 'undefined' && destUrl.indexOf('https://cert') === 0) {
         console.log("Two Factor Enabled Using File: " + this.p12);
         httpOptions.pfx = fs.readFileSync(this.p12);
         httpOptions.passphrase = this.passphrase;

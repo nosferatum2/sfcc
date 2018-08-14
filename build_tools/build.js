@@ -254,7 +254,6 @@ function uploadFiles(files) {
         files.forEach(file => {
             const relativePath = path.relative(path.join(cwd, './cartridges/'), file);
             shell.exec(shellCommands('--file', relativePath));
-            console.log(`Uploading ${file}`);
         });
         shell.rm('./cartridges/dw.json'); // remove dw.json file from cartridges directory
     }
@@ -363,28 +362,26 @@ function getUploadOptions(isData) {
 /**
  * activates specified code version for all activationHostnames
  * @param {array} uploadArguments - the current uploadArguments
- * @returns {array} - altered uploadArguments array
  */
 function activateCodeVersion(uploadArguments) {
     if (uploadArguments.activationHostname && uploadArguments.activationHostname.length > 0) {
+        console.log(chalk.green('Starting activateCodeVersion routine...'));
         const activationHostnames = uploadArguments.activationHostname;
         delete uploadArguments.activationHostname;
-
+        delete uploadArguments.hostname;
         activationHostnames.forEach((activationHostname) => {
+            console.log(chalk.blue('activating code on host: ' + activationHostname));
             uploadArguments['activationHostname'] = activationHostname;
+            uploadArguments['hostname'] = activationHostname;
             const webdav = new Webdav(uploadArguments);
             webdav.formLogin().then(() => {
-                webdav.activateCode().then(() => {
-                    process.exit(0);
-                });
+                webdav.activateCode();
             });
         });
     } else {
         console.log(chalk.yellow('No activationHostname defined. Skipping code version activiation.'));
         process.exit(0);
     }
-
-    return uploadArguments;
 }
 
 /**
@@ -405,7 +402,7 @@ function getCartridges(packageFile) {
                 } else {
                     console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
                 }
-                
+
             }
         }
     });
@@ -415,7 +412,7 @@ function getCartridges(packageFile) {
         console.log(chalk.blue('passing in "modules"'));
         cartridges.push('modules');
     }
-    
+
     return cartridges;
 }
 
@@ -534,7 +531,7 @@ if (options.compile) {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
                         js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                             if (code == 1) {
-                              process.exit(code);  
+                              process.exit(code);
                             }
                         });
                     }
@@ -557,7 +554,7 @@ if (options.compile) {
                         console.log(chalk.blue('Building css for Site ' + cartridgeName));
                         css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                             if (code == 1) {
-                              process.exit(code);  
+                              process.exit(code);
                             }
                         });
                     }
@@ -610,10 +607,9 @@ if (options.createCartridge) {
 
 if (options.watch) {
     const packageFile = require(path.join(cwd, './package.json'));
-
     const cartridgesPath = path.join(cwd, 'cartridges');
 
-    console.log('Watching for scss or client js changes...');
+    console.log('Watching for file changes...');
 
     const scssWatcher = chokidar.watch(
         cartridgesPath + '/**/*.scss', {
@@ -638,7 +634,6 @@ if (options.watch) {
         });
 
     if (!options.onlycompile) {
-
         const watcher = chokidar.watch(cartridgesPath, {
             ignored: [
                 '**/cartridge/js/**',
@@ -687,7 +682,7 @@ if (options.watch) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
                             js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                                 if (code == 1) {
-                                  process.exit(code);  
+                                  process.exit(code);
                                 }
                                 jsCompilingInProgress = false;
                             });
@@ -718,7 +713,7 @@ if (options.watch) {
                             try {
                                 css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                                     if (code == 1) {
-                                      process.exit(code);  
+                                      process.exit(code);
                                     }
                                     clearTmp();
                                     console.log(chalk.green('SCSS files compiled.'));
@@ -818,14 +813,13 @@ if (options.deployCartridges) {
             shell.exec(dwuploadScript);
         });
     }
-    
+
     // activate code version
     uploadArguments = activateCodeVersion(uploadArguments);
 }
 
 // activates code version
 if (options.activateCodeVersion) {
-    console.log(chalk.green('Starting activateCodeVersion routine...'));
     const uploadArguments = getUploadOptions();
     activateCodeVersion(uploadArguments);
 }
