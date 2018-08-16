@@ -206,7 +206,7 @@ $label-xs: $font-size-base * 0.75;
 // Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
 
 $border-width: 1px; // could be bootstrap override
-$border-color: $gray-400; // default color - could be bootstrap override
+$border-color: $gray-300; // default color - could be bootstrap override
 $border: 1px solid $border-color;
 $border-thick: 4px solid $border-color;
 $border2-color: $pinegreen;
@@ -239,7 +239,7 @@ $link-decoration-alt: underline;
 //  BUTTONS & FORMS
 //--------------------------------
 
-$input-btn-padding-y: 0.5rem; //bootstrap override
+$input-btn-padding-y: 0.75rem; //bootstrap override
 $input-btn-padding-x: 4rem; //bootstrap override
 $btn-box-shadow: 0 0 0 transparent; //bootstrap override
 $btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
@@ -256,6 +256,33 @@ $btn-disabled-main-border-color: $gray-400;
 $btn-disabled-alt-color: $gray-100;
 $btn-disabled-alt-bg: $gray-300;
 $btn-disabled-alt-border-color: $gray-300;
+$btn-font-size: $font-size-body; //bootstrap override
+$font-size-lg: $font-size-body; //bootstrap override
+$btn-padding-y-lg: 0.9rem; //bootstrap override
+
+//--------------------------------
+//  FORMS
+//--------------------------------
+// all bootstrap overrides
+$form-group-margin-bottom: 1.5rem;
+$input-border-color: $gray-300;
+$input-color: $gray-200;
+$input-border-radius: 0;
+$input-box-shadow: none;
+$input-bg: $gray-400;
+$input-placeholder-color: $gray-200;
+$custom-select-bg: $gray-400;
+$custom-select-border-radius: 0;
+$custom-select-focus-box-shadow: none;
+$custom-select-indicator: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDIwIDE4Ij4gICAgPHBhdGggZmlsbD0iIzRBNEE0QSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNC42MDUgNkw0IDYuNTUgMTAgMTJsNi01LjQ1LS42MDUtLjU1LTUuMzk4IDQuOTA1eiIvPjwvc3ZnPg==);
+$input-padding-x: 0.75rem;
+$input-padding-y: 0.75rem;
+$custom-select-padding-y: 0.75rem;
+$custom-select-bg-size: 22px 22px;
+$custom-checkbox-indicator-border-radius: 0;
+$custom-control-indicator-box-shadow: none;
+$custom-control-indicator-bg: $white;
+$text-muted: $gray-200;
 
 //--------------------------------
 //  BREAKPOINTS

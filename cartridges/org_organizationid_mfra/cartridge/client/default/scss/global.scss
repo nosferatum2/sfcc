@@ -3,7 +3,8 @@
 @import "variables";
 @import "bootstrap/scss/bootstrap";
 @import "bootstrapOverrides/buttons";
-@import "bootstrapOverrides";
+@import "bootstrapOverrides/forms";
+@import "bootstrapOverrides/reboot";
 @import "slick";
 @import "slick_theme";
 @import "utilities/responsiveUtils";
