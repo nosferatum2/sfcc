@@ -396,14 +396,18 @@
         </div>
         <h4 class="sub-section">Spacing</h4>
         <div class="sg-spacers">
-            <div class="spacer _8">8px</div>
+            <div class="spacer _8 mb-1">8px</div>
+            <code>.mb-1</code>
             <small>Use this margin when a close association between elements is needed</small>
-            <div class="spacer _24">24px</div>
+            <div class="spacer _24 mb-3">24px</div>
             <small>Use this margin when a close association between elements is needed, but the contetn needs more padding for better readability </small>
-            <div class="spacer _40">40px</div>
+            <code>.mb-3</code>
+            <div class="spacer _40 mb-5">40px</div>
             <small>Use this margin when elements need separation but are still connected with each other</small>
-            <div class="spacer _72">72px</div>
+            <code>.mb-5</code>
+            <div class="spacer _72 mb-9">72px</div>
             <small>Use this margin when starting a new piece of content or new section/element</small>
+            <code>.mb-9</code>
         </div>
     </div>
 </isdecorate>

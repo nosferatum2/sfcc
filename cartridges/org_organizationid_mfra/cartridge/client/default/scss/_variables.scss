@@ -285,6 +285,28 @@ $custom-control-indicator-bg: $white;
 $text-muted: $gray-200;
 
 //--------------------------------
+//  SPACING
+//--------------------------------
+
+// Units of 8px are used per styleguide spacing section
+
+// stylelint-disable
+$spacer: 1rem; // 16px
+$spacers: ();
+$spacers: map-merge((
+  0: 0,
+  1: ($spacer * .5), // 8px
+  2: $spacer, // 16px
+  3: ($spacer * 1.5), // 24px
+  4: ($spacer * 2), // 32px
+  5: ($spacer * 2.5), // 40px
+  6: ($spacer * 3), // 48px
+  7: ($spacer * 3.5), // 56px
+  8: ($spacer * 4), // 64px
+  9: ($spacer * 4.5) // 72px
+), $spacers);
+
+//--------------------------------
 //  BREAKPOINTS
 //--------------------------------
 
