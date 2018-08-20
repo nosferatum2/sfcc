@@ -372,6 +372,39 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+        
+        <h3 class="section">Grids & Spacing</h3>
+        <h4 class="sub-section">Grids</h4>
+        <p class="sub-section">Desktop 1280px / 12 Columns</p>
+        <p class="sub-section">Tablet 768px / 6 Columns</p>
+        <p class="sub-section">Mobile 320px / 4 Columns</p>
+        <div class="container sg-grid">
+            <div class="row">
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+                <div class="col col-sm-3 col-md-2 col-lg-1"></div>
+            </div>
+        </div>
+        <h4 class="sub-section">Spacing</h4>
+        <div class="sg-spacers">
+            <div class="spacer _8">8px</div>
+            <small>Use this margin when a close association between elements is needed</small>
+            <div class="spacer _24">24px</div>
+            <small>Use this margin when a close association between elements is needed, but the contetn needs more padding for better readability </small>
+            <div class="spacer _40">40px</div>
+            <small>Use this margin when elements need separation but are still connected with each other</small>
+            <div class="spacer _72">72px</div>
+            <small>Use this margin when starting a new piece of content or new section/element</small>
+        </div>
     </div>
 </isdecorate>
 

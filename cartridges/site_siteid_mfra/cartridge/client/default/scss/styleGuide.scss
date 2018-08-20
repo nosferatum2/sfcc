@@ -18,7 +18,8 @@
     }
 
     h3,
-    h4 {
+    h4,
+    p {
         &.sub-section {
             padding: 0.5em 0 0.5em 1em;
             margin: 1em 0;
@@ -109,6 +110,53 @@
     .sg-forms {
         @include media-breakpoint-up(md) {
             width: 25%;
+        }
+    }
+
+    .sg-grid {
+        .col {
+            min-height: 400px;
+            background: mistyrose;
+            padding-right: 4px;
+            padding-left: 4px;
+            border-right: $border;
+
+            &:last-child {
+                border-right: none;
+            }
+            @include media-breakpoint-up(md) {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+        }
+    }
+
+    .sg-spacers {
+        .spacer {
+            background: mistyrose;
+            font-size: 10px;
+            text-align: center;
+
+            &._8 {
+                height: 8px;
+            }
+
+            &._24 {
+                height: 24px;
+            }
+
+            &._40 {
+                height: 40px;
+            }
+
+            &._72 {
+                height: 72px;
+            }
+        }
+
+        small {
+            margin: 0.3em 0 2em;
+            display: block;
         }
     }
 }
