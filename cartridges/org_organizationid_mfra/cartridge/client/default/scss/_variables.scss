@@ -191,6 +191,7 @@ $h1-font-size: $font-size-base * 3; //bootstrap override
 $h2-font-size: $font-size-base * 2.5; //bootstrap override
 $h3-font-size: $font-size-base * 2.25; //bootstrap override
 $h4-font-size: $font-size-base * 1.75; //bootstrap override
+$h5-font-size: $font-size-base * 1.25; //bootstrap override
 
 // Labels
 $label-xl: $font-size-base * 1.25;
@@ -306,6 +307,18 @@ $spacers: map-merge((
   9: ($spacer * 4.5) // 72px
 ), $spacers);
 
+// This variable affects the `.h-*` and `.w-*` classes.
+$sizes: ();
+$sizes: map-merge((
+  25: 25%,
+  33: 33.3333%,
+  50: 50%,
+  66: 66.6666%,
+  75: 75%,
+  100: 100%
+), $sizes);
+// stylelint-enable
+
 //--------------------------------
 //  BREAKPOINTS
 //--------------------------------
@@ -334,7 +347,20 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns: 12;
-$grid-gutter-width: 24px;
+$grid-gutter-width: 24px; // How do we want to update this to be reflective of the 8px spacing for mobile?
+
+//--------------------------------
+//  CARDS & ACCORDIONS
+//--------------------------------
+
+$accordion-spacer-y: 0.1rem;
+$accordion-spacer-x: 1rem;
+$accordion-btn-y: 0.5rem;
+$accordion-btn-x: 1.5rem;
+
+//--------------------------------
+//  CUSTOM VARS
+//--------------------------------
 
 $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;
@@ -359,6 +385,11 @@ $breadcrumb-bg: transparent;
 // table border
 $table-border-color: $gray-400;
 
+//--------------------------------
+//  UNIVERSAL SVGs
+//--------------------------------
+
+$svg-arrow-right: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4gICAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNS4zOTVsNC45MDUtNS4zOTJMOCA0LjYwNSA4LjU1IDQgMTQgMTBsLTUuNDUgNnoiLz48L3N2Zz4=);
 $svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
 
 // Slick Carousel Overrides
