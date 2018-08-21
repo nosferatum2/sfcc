@@ -103,11 +103,13 @@ try {
                                 loader: 'css-loader',
                                 options: {
                                     url: false,
+                                    sourceMap: true,
                                     minimize: true
                                 }
                             }, {
                                 loader: 'postcss-loader',
                                 options: {
+                                    sourceMap: true,
                                     plugins: [
                                         require('autoprefixer')()
                                     ]
@@ -115,6 +117,7 @@ try {
                             }, {
                                 loader: 'sass-loader',
                                 options: {
+                                    sourceMap: true,
                                     includePaths: [
                                         path.resolve('node_modules'),
                                         path.resolve('node_modules/flag-icon-css/sass')
@@ -124,6 +127,7 @@ try {
                         })
                     }]
                 },
+                devtool: 'source-map',
                 plugins: plugins
             });
         }
