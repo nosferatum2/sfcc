@@ -4,6 +4,8 @@
 @import "~org/bootstrapOverrides/forms";
 @import "~org/bootstrapOverrides/reboot";
 @import "~org/bootstrapOverrides/card";
+@import "~org/bootstrapOverrides/modal";
+@import "~org/bootstrapOverrides/tables";
 
 .pt_styleguide {
     .wrapper {
@@ -217,7 +219,8 @@
     }
 }
 
-//TODO - optimize this
+// TODO - Using this mixin instead of the utilities - do we want to use utilities?
+
 .main-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
     $colorlist: (
@@ -378,7 +381,7 @@
 }
 
 .label-sm {
-    font-size: $font-size-lg;
+    font-size: $font-size-base;
     font-weight: $font-weight-bold;
 }
 

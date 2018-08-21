@@ -10,8 +10,6 @@ $flag-icon-css-path: "../fonts/flags/";
 //  COLORS
 //--------------------------------
 
-// TODO - Do we need provide the map merges seen in the base bootstrap color vars?
-
 // Theme colors documentation: https://getbootstrap.com/docs/4.1/getting-started/theming/#theme-colors
 
 // Color Palette
@@ -52,7 +50,7 @@ $gray-700: #f8f9fb;
 $gray-800: #f8f9fb;
 $gray-900: #f8f9fb;
 
-//Bogus grey colors in the rest of site - these need to be updated
+// TODO - Bogus grey colors in the rest of site - these need to be replaced throuhout the site to fix global styling
 $grey1: $gray-100;
 $grey2: $gray-100;
 $grey3: $gray-300;
@@ -61,7 +59,7 @@ $grey5: $gray-500;
 $grey7: $gray-500;
 $grey6: $gray-600;
 
-// Theme Mappings - Bootstrap overrides
+// Theme Mappings
 // stylelint-disable
 $colors: () !default;
 $colors: map-merge((
@@ -100,7 +98,7 @@ $success: $japanese-laurel;
 $info: $calypso;
 $warning: $mustard;
 $error: $tamarillo;
-$light: $gray-800;
+$light: $gray-500;
 $dark: $gray-100;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
@@ -126,9 +124,6 @@ $theme-colors: map-merge((
 ), $theme-colors);
 // stylelint-enable
 
-$grey-transparent-1: rgba(0, 0, 0, 0.65); /* What are these? */
-$grey-transparent-2: rgba(0, 0, 0, 0.25); /* What are these? */
-
 //--------------------------------
 //  ALERTS
 //--------------------------------
@@ -139,36 +134,12 @@ $alert-bg-level: 0; // bootstrap override
 //  BACKGROUNDS
 //--------------------------------
 
-// TODO - Do we want to upgrade to 4.1 to include background utilities?
-
 // BG utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-color
 
 // Gradients
 // Gradients utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-gradient
 
 $enable-gradients: false; // bootstrap override -> must be set to true for gradients to be visible on the site
-
-/* Gradient backgrounds are mixins found in custom gradient mixins file - TODO */
-
-/* TODO - Organize these vars later - not sure which we actually need */
-$brand-success: #008827;
-$brand-danger: #c00;
-$brand-primary: #00a1e0;
-$light-gray: $gray-400;
-$slightly-darker-gray: $gray-400;
-$dark-gray: $gray-400;
-$darker-gray: $gray-400;
-$brand-color: $primary;
-$horizontal-rule-grey: $gray-400;
-$product-number-grey: $gray-400;
-$horizontal-border-grey: $gray-400;
-$menu-link: $gray-400;
-$close-menu-bg: $gray-400;
-$link-color: $gray-400;
-$hr-border-color: $gray-400;
-$primary-dark: $primary;
-
-/* End TODO */
 
 //--------------------------------
 //  TYPOGRAPHY
@@ -192,8 +163,10 @@ $h2-font-size: $font-size-base * 2.5; //bootstrap override
 $h3-font-size: $font-size-base * 2.25; //bootstrap override
 $h4-font-size: $font-size-base * 1.75; //bootstrap override
 $h5-font-size: $font-size-base * 1.25; //bootstrap override
+$h6-font-size: $font-size-xs; //bootstrap override
 
 // Labels
+
 $label-xl: $font-size-base * 1.25;
 $label-sm: $font-size-base;
 $label-xs: $font-size-base * 0.75;
@@ -258,7 +231,7 @@ $btn-disabled-alt-color: $gray-100;
 $btn-disabled-alt-bg: $gray-300;
 $btn-disabled-alt-border-color: $gray-300;
 $btn-font-size: $font-size-body; //bootstrap override
-$font-size-lg: $font-size-body; //bootstrap override
+$font-size-lg: $font-size-base * 1.25; //bootstrap override
 $btn-padding-y-lg: 0.9rem; //bootstrap override
 
 //--------------------------------
@@ -275,7 +248,6 @@ $input-placeholder-color: $gray-200;
 $custom-select-bg: $gray-400;
 $custom-select-border-radius: 0;
 $custom-select-focus-box-shadow: none;
-$custom-select-indicator: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDIwIDE4Ij4gICAgPHBhdGggZmlsbD0iIzRBNEE0QSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNC42MDUgNkw0IDYuNTUgMTAgMTJsNi01LjQ1LS42MDUtLjU1LTUuMzk4IDQuOTA1eiIvPjwvc3ZnPg==);
 $input-padding-x: 0.75rem;
 $input-padding-y: 0.75rem;
 $custom-select-padding-y: 0.75rem;
@@ -289,7 +261,7 @@ $text-muted: $gray-200;
 //  SPACING
 //--------------------------------
 
-// Units of 8px are used per styleguide spacing section
+// TODO - Units of 8px are used per styleguide spacing section
 
 // stylelint-disable
 $spacer: 1rem; // 16px
@@ -359,8 +331,64 @@ $accordion-btn-y: 0.5rem;
 $accordion-btn-x: 1.5rem;
 
 //--------------------------------
-//  CUSTOM VARS
+//  MODALS
 //--------------------------------
+
+$modal-border-top: 5px solid $primary;
+$modal-header-border-width: 0;
+$modal-header-border-color: transparent;
+
+//--------------------------------
+//  CARDS & ACCORDIONS
+//--------------------------------
+
+$tooltip-bg: $dark;
+
+//--------------------------------
+//  TABLES
+//--------------------------------
+
+$table-th-border-color: $primary;
+$table-border-color: $gray-300;
+
+//--------------------------------
+//  ICONOGRAPHY
+//--------------------------------
+
+// TODO - Is this how we want to do SVGs (it's the bootstrap way)? Or some other approach...
+
+$custom-select-indicator: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDIwIDE4Ij4gICAgPHBhdGggZmlsbD0iIzRBNEE0QSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNC42MDUgNkw0IDYuNTUgMTAgMTJsNi01LjQ1LS42MDUtLjU1LTUuMzk4IDQuOTA1eiIvPjwvc3ZnPg==);
+$svg-arrow-right: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4gICAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNS4zOTVsNC45MDUtNS4zOTJMOCA0LjYwNSA4LjU1IDQgMTQgMTBsLTUuNDUgNnoiLz48L3N2Zz4=);
+$svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+
+//--------------------------------
+//  SLICK CAROUSEL
+//--------------------------------
+
+$slick-arrow-bg-color: transparent; // bootstrap override
+$slick-arrow-bg-color-hover: transparent; // bootstrap override
+
+//--------------------------------------
+//  OTHER VARS - Not sure what these are
+//--------------------------------------
+
+// TODO - These need to be mapped or discarded
+
+$brand-success: #008827;
+$brand-danger: #c00;
+$brand-primary: #00a1e0;
+$light-gray: $gray-400;
+$slightly-darker-gray: $gray-400;
+$dark-gray: $gray-400;
+$darker-gray: $gray-400;
+$brand-color: $primary;
+$horizontal-rule-grey: $gray-400;
+$product-number-grey: $gray-400;
+$horizontal-border-grey: $gray-400;
+$menu-link: $gray-400;
+$close-menu-bg: $gray-400;
+$hr-border-color: $gray-400;
+$primary-dark: $primary;
 
 $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;
@@ -382,16 +410,6 @@ $nav-tabs-active-link-hover-bg: transparent;
 // breadcrumb
 $breadcrumb-bg: transparent;
 
-// table border
-$table-border-color: $gray-400;
+$grey-transparent-1: rgba(0, 0, 0, 0.65); /* What are these? */
+$grey-transparent-2: rgba(0, 0, 0, 0.25); /* What are these? */
 
-//--------------------------------
-//  UNIVERSAL SVGs
-//--------------------------------
-
-$svg-arrow-right: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4gICAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNOCAxNS4zOTVsNC45MDUtNS4zOTJMOCA0LjYwNSA4LjU1IDQgMTQgMTBsLTUuNDUgNnoiLz48L3N2Zz4=);
-$svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23ff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
-
-// Slick Carousel Overrides
-$slick-arrow-bg-color: transparent;
-$slick-arrow-bg-color-hover: transparent;

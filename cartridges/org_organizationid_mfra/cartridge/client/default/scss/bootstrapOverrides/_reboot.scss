@@ -11,7 +11,7 @@ html {
 body {
     margin: 0; // 1
     font-family: $font-family-base;
-    font-size: $font-size-base; // bootstrap override
+    font-size: $font-size-body; // bootstrap override
     font-weight: $font-weight-base;
     line-height: $line-height-base;
     color: $body-color;
@@ -28,4 +28,18 @@ label {
     display: inline-block;
     margin-bottom: 0.25rem;
     font-weight: $font-weight-bold; //bootstrap override
+}
+
+ul,
+ol {
+    ul,
+    ol {
+        list-style-type: none;
+
+        li::before {
+            content: '\2014';
+            position: absolute;
+            margin-left: -20px;
+        }
+    }
 }

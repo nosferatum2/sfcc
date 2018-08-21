@@ -5,8 +5,10 @@
     </isscript>
     <div class="wrapper">
         <h1>SFRA Style Guide</h1>
-        
-        <h3 class="section">Color Palette</h3>
+
+        <h3 class="section">Color Theme & Palette</h3>
+        <p><span class="text-primary">Note:</span> Bolded values indicate the theme name</p>
+
         <h4 class="sub-section">Main Colors</h4>
         <div class="flex-container color main-colors">
             <div class="item">
@@ -59,7 +61,7 @@
                 <div class="spec">Spec:</div>
             </div>
         </div>
-        
+
         <h4 class="sub-section">Grays</h4>
         <div class="flex-container color gray-colors">
             <div class="item">
@@ -69,7 +71,7 @@
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var">$gray-100</code>
+               <code class="color-var"><span>$dark:</span> $gray-100</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
@@ -89,7 +91,7 @@
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$gray-500</code>
+                <code class="color-var"><span>$light:</span> $gray-500</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
@@ -98,27 +100,27 @@
                 <div class="spec">Spec:</div>
             </div>
         </div>
-        
+
         <h4 class="sub-section">Messages & Alerts</h4>
-        <div class="alert-colors">
+        <div class="flex-container color">
             <div class="item">
-               <div class="alert alert-success">Success alert</div>
-               <code class="color-var"><span>.alert-success:</span> $japanese-laurel</code>
+               <div class="color-block bg-success"></div>
+               <code class="color-var"><span>$success:</span> $japanese-laurel</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-               <div class="alert alert-info">Info alert</div>
-               <code class="color-var"><span>.alert-info:</span> $calypso</code>
+               <div class="color-block bg-info"></div>
+               <code class="color-var"><span>$info:</span> $calypso</code>
                <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="alert alert-warning">Warning alert</div>
-                <code class="color-var"><span>.alert-warning:</span> $mustard</code>
+                <div class="color-block bg-warning"></div>
+                <code class="color-var"><span>$warning:</span> $mustard</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
-                <div class="alert alert-error">Error alert</div>
-                <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
+                <div class="color-block bg-error"></div>
+                <code class="color-var"><span>$error:</span> $tamarillo</code>
                 <div class="spec">Spec:</div>
             </div>
         </div>
@@ -150,10 +152,12 @@
 
         <h3 class="section">Styles</h3>
         <h4 class="sub-section">Borders & Dividers</h4>
+        <p><span class="text-primary">TODO Note:</span> 1. Discuss with XD - these borders are not well mapped with the theme. 2. Do we want to be able to use the border utilities?</p>
+
         <div class="flex-container sg-borders">
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border</code>
+                <code>$border / $border-light</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
@@ -163,17 +167,17 @@
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-2</code>
+                <code>$border-2 / $border-accent4</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-3</code>
+                <code>$border-3 / $border-info</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-4</code>
+                <code>$border-4 / no theme associated with this $blumine color</code>
                 <div class="spec">Spec:</div>
             </div>
         </div>
@@ -196,12 +200,15 @@
                 <div class="spec">Spec:</div>
             </div>
         </div>
-        
-        <h4 class="sub-section">Patterns</h4>
-        <p class="alert alert-warning">I do not see any patterns in Bootstrap</p>
 
+        <h4 class="sub-section">Patterns</h4>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - I do not see any patterns in bootstrap or on the SFRA site</p>
+
+        <!-- TODO Note: In the below sections I am using the bootstrap flex utility classes instead of applying in the SASS -->
         <h3 class="section">Typography</h3>
         <h4 class="sub-section">Fonts</h4>
+        <p><span class="text-primary">TODO Note:</span> Discuss how we want to handle the loading of more than 2 fonts</p>
+
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 1</div>
@@ -252,7 +259,7 @@
                 <div class="spec">Spec: 1.75rem</div>
             </div>
         </div>
-        
+
         <h4 class="sub-section">Labels</h4>
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
@@ -261,7 +268,7 @@
                 <div class="spec">Spec: 1.25rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
-                <label class="label-xl">Label SM</label>
+                <label class="label-sm">Label SM</label>
                 <code>.label-sm / $label-sm </code>
                 <div class="spec">Spec: 1rem</div>
             </div>
@@ -299,13 +306,15 @@
                 <div class="spec">Spec: .875rem</div>
             </div>
             <div class="item d-flex justify-content-start flex-wrap">
-                <a href="" class="link-secondary">Primary Link</a>
+                <a href="" class="link-secondary">Secondary Link</a>
                 <code>.link-primary </code> 
                 <div class="spec">Spec: .75rem</div>
             </div>
         </div>
-        
+
         <h3 class="section">Buttons</h3>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - 1. doesn't follow theme, 2. has too many disabled variants</p>
+
         <div class="sg-buttons">
             <div class="item">
                 <button class="btn btn-primary">Button Primary</button>
@@ -336,7 +345,7 @@
                 <code>.btn-primary .btn-lg</code>
             </div>
         </div>
-        
+
         <h3 class="section">Forms</h3>
         <div class="sg-forms">
             <form class="needs-validation" novalidate>
@@ -372,11 +381,83 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+
+        <h3 class="section">Messages</h3>
+        <h4 class="sub-section">Alerts</h4>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - the alerts mixins use lighten and darken values off of the theme colors to adjust the background and text shades - mixin would need to be rewritten per the design styleguide</p>
+
+        <div class="alert-colors">
+            <div class="item">
+               <div class="alert alert-success">Success alert</div>
+               <code class="color-var"><span>.alert-success:</span> $japanese-laurel</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="alert alert-info">Info alert</div>
+               <code class="color-var"><span>.alert-info:</span> $calypso</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="alert alert-warning">Warning alert</div>
+                <code class="color-var"><span>.alert-warning:</span> $mustard</code>
+                <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+                <div class="alert alert-error">Error alert</div>
+                <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
+                <div class="spec">Spec:</div>
+            </div>
+        </div>
+
+        <h4 class="sub-section">Modals</h4>
+        <a
+            id="example-modal"
+            class="hidden-xs-down"
+            title="Example Modal"
+            data-toggle="modal"
+            data-target="#exampleModal">
+            Example Modal
+        </a>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div><!-- Required to disable flex properties on headers -->
+                            <h6>Modal Super Header</h6>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                        <button class="btn btn-outline-primary">Cancel</button>
+                        <button class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="sub-section">Tooltips</h4>
+        <p><span class="text-primary">TODO Note:</span> OOB bootstrap tooltips are not being used, it's some customization of it - my recommendation is that we update these across the site to use bootstrap</p>
         
+        <span>Bogus tooltip (notice how it doesn't have arrow and doesn't position properly)</span>
+        <span class="info-icon">
+            <span class="icon">i</span>
+            <div class="tooltip">
+                This tooltip is not an OOB bootstrap tooltip
+            </div>
+        </span>
+
+        <h3 class="section">Iconography</h3>
+        <p><span class="text-primary">TODO Note:</span> TBD - Discuss how we want to handle SVGs</p>
+
         <h3 class="section">Grids & Spacing</h3>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - the 'grid' shown in the design styleguide doesn't really match up with the bootstrap concept, and all viewports need to be equally divisible (not 8 for tablet)</p>
+
         <h4 class="sub-section">Grids</h4>
         <p class="sub-section">Desktop 1280px / 12 Columns</p>
-        <p class="sub-section">Tablet 768px / 6 Columns</p>
+        <p class="sub-section">Tablet 768px / 6 Columns (changed from 8)</p>
         <p class="sub-section">Mobile 320px / 4 Columns</p>
         <div class="container sg-grid">
             <div class="row">
@@ -412,7 +493,7 @@
 
         <h3 class="section">Components</h3>
         <h4 class="sub-section">Cards</h4>
-        <p><span class="text-primary">Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
+        <p><span class="text-primary">TODO Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
         <div class="sg-cards">
             <div class="card-deck mb-3">
                 <div class="card">
@@ -455,7 +536,7 @@
                 </div>
             </div>
         </div>
-        
+
         <h4 class="sub-section">Accordions</h4>
         <div id="accordion">
             <div class="card">
@@ -500,26 +581,78 @@
                     </div>
                 </div>
           </div>
-          
+
           <h4 class="sub-section">Tabs</h4>
-          <p><span class="text-primary">Note:</span> SFRA does not use tabs on PDP - do we still need these?</p>
-          
+          <p><span class="text-primary">TODO Note:</span> SFRA does not use tabs on PDP - do we still need these?</p>
+
           <h4 class="sub-section">Progress Indicator</h4>
-          <p><span class="text-primary">Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
-          
+          <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
+
           <h4 class="sub-section">Tables</h4>
-          <p>TBD</p>
-          
+          <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Column A</th>
+                    <th scope="col">Column B</th>
+                    <th scope="col">Column C</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Row</td>
+                    <td>Row</td>
+                    <td>Row</td>
+                </tr>
+                <tr>
+                    <td>Row</td>
+                    <td>Row</td>
+                    <td>Row</td>
+                </tr>
+                <tr>
+                    <td>Row</td>
+                    <td>Row</td>
+                    <td>Row</td>
+                </tr>
+            </tbody>
+          </table>
+
           <h4 class="sub-section">Breadcrumbs</h4>
-          <p>TBD</p>
-          
+          <p><span class="text-primary">TODO Note:</span> Do we need this as a component on the styleguide?</p>
+
           <h4 class="sub-section">Content Switcher</h4>
-          <p><span class="text-primary">Note:</span> What is this??</p>
+          <p><span class="text-primary">TODO Note:</span> What is this??</p>
+
+          <h4 class="sub-section">Lists</h4>
+          <ul>
+            <li>Unordered list level 1</li>
+                <ul>
+                    <li>Unordered list level 2</li>
+                    <li>Unordered list level 2</li>
+                </ul>
+            <li>Unordered list level 1</li>
+            <li>Unordered list level 1</li>
+          </ul>
+
+          <ol>
+            <li>Ordered list level 1</li>
+                <ol>
+                    <li>Ordered list level 2</li>
+                    <li>Ordered list level 2</li>
+                </ol>
+            <li>Ordered list level 1</li>
+            <li>Ordered list level 1</li>
+          </ol>
+
+          <h4 class="sub-section">Loader</h4>
+          <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy</p>
+
+          <h3 class="section">Motion</h3>
+          <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear</p>
     </div>
 </isdecorate>
 
 <script>
-// Placeholder script for form validation example
+// TODO - Placeholder script for form validation example
 (function() {
   'use strict';
   window.addEventListener('load', function() {

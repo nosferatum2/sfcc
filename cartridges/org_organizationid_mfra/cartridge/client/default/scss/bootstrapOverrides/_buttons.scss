@@ -5,7 +5,6 @@
     white-space: nowrap;
     vertical-align: middle;
     user-select: none;
-    border: $btn-border-width solid transparent;
     @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius); // bootstrap override on button font size
     @include transition($btn-transition);
 
