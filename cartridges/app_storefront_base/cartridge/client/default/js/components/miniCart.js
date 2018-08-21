@@ -1,6 +1,6 @@
 'use strict';
 
-var cart = require('../cart/cart');
+var cart = require('lyonscg/cart/cart');
 
 module.exports = function () {
     cart();
