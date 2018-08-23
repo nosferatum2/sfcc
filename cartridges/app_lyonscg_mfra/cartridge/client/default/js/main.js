@@ -1,20 +1,21 @@
 window.jQuery = window.$ = require('jquery');
-
-var processInclude = require('./util');
+var processInclude = require('base/util');
 
 $(document).ready(function () {
-    processInclude(require('./components/menu'));
+    processInclude(require('base/components/menu'));
+    processInclude(require('base/components/cookie'));
+    processInclude(require('base/components/consentTracking'));
     processInclude(require('./components/footer'));
     processInclude(require('./components/backtotop'));
-    processInclude(require('./components/minicart'));
-    processInclude(require('./components/collapsibleItem'));
-    processInclude(require('./components/search'));
-    processInclude(require('./components/clientSideValidation'));
-    processInclude(require('./components/countryselector'));
+    processInclude(require('base/components/miniCart'));
+    processInclude(require('base/components/collapsibleItem'));
+    processInclude(require('base/components/search'));
+    processInclude(require('base/components/clientSideValidation'));
+    processInclude(require('base/components/countrySelector'));
     processInclude(require('./components/carousels'));
 });
 
-require('./thirdparty/bootstrap');
-require('./components/spinner');
+require('base/thirdParty/bootstrap');
+require('base/components/spinner');
 require('svg4everybody');
 require('slick-carousel');

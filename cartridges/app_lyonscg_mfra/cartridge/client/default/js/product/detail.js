@@ -1,55 +1,12 @@
 'use strict';
+
 var base = require('./base');
+var detail = require('base/product/detail');
 
-module.exports = {
-    selectAttributes: base.selectAttribute,
-
-    colorAttribute: base.colorAttribute,
-
-    availability: base.availability,
-
-    addToCart: base.addToCart,
-
-    carousel: base.carouselInit,
-
-    updateAttributesAndDetails: function () {
-        $('body').on('product:statusUpdate', function (e, data) {
-            var $productContainer = $('.product-detail[data-pid="' + data.id + '"]');
-
-            $productContainer.find('.description-and-detail .product-attributes')
-                .empty()
-                .html(data.attributesHtml);
-
-            if (data.shortDescription) {
-                $productContainer.find('.description-and-detail .description')
-                    .removeClass('hidden-xl-down');
-                $productContainer.find('.description-and-detail .description .content')
-                    .empty()
-                    .html(data.shortDescription);
-            } else {
-                $productContainer.find('.description-and-detail .description')
-                    .addClass('hidden-xl-down');
-            }
-
-            if (data.longDescription) {
-                $productContainer.find('.description-and-detail .details')
-                    .removeClass('hidden-xl-down');
-                $productContainer.find('.description-and-detail .details .content')
-                    .empty()
-                    .html(data.longDescription);
-            } else {
-                $productContainer.find('.description-and-detail .details')
-                    .addClass('hidden-xl-down');
-            }
-        });
-    },
-
-    showSpinner: function () {
-        $('body').on('product:beforeAddToCart product:beforeAttributeSelect', function () {
-            $.spinner().start();
-        });
-    },
+var exportDetail = $.extend({}, detail, {
     updateAttribute: function () {
+        base.carouselInit();
+
         $('body').on('product:afterAttributeSelect', function (e, response) {
             if ($('.product-detail>.bundle-items').length) {
                 response.container.data('pid', response.data.product.id);
@@ -61,44 +18,8 @@ module.exports = {
                 $('.product-id').text(response.data.product.id);
                 $('.product-detail:not(".bundle-item")').data('pid', response.data.product.id);
             }
-            base.carouselInit();
-        });
-    },
-    updateAddToCart: function () {
-        $('body').on('product:updateAddToCart', function (e, response) {
-            // update local add to cart (for sets)
-            $('button.add-to-cart', response.$productContainer).attr('disabled',
-                (!response.product.readyToOrder || !response.product.available));
-
-            var enable = $('.product-availability').toArray().every(function (item) {
-                return $(item).data('available') && $(item).data('ready-to-order');
-            });
-            $('button.add-to-cart-global').attr('disabled', !enable);
-        });
-    },
-    updateAvailability: function () {
-        $('body').on('product:updateAvailability', function (e, response) {
-            $('div.availability', response.$productContainer)
-                .data('ready-to-order', response.product.readyToOrder)
-                .data('available', response.product.available);
-
-            $('.availability-msg', response.$productContainer)
-                .empty().html(response.message);
-
-            if ($('.global-availability').length) {
-                var allAvailable = $('.product-availability').toArray()
-                    .every(function (item) { return $(item).data('available'); });
-
-                var allReady = $('.product-availability').toArray()
-                    .every(function (item) { return $(item).data('ready-to-order'); });
-
-                $('.global-availability')
-                    .data('ready-to-order', allReady)
-                    .data('available', allAvailable);
-
-                $('.global-availability .availability-msg').empty()
-                    .html(allReady ? response.message : response.resources.info_selectforstock);
-            }
         });
     }
-};
+});
+
+module.exports = exportDetail;

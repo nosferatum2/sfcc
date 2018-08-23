@@ -67,6 +67,33 @@ In order for all commands to work, this script makes a few assumptions:
 * There's a webpack.config.js in build_tools that specifies how to compile client-side JavaScript files.
 * Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
 
+# Overriding Client-side SCSS and JS Files
+
+## JS Include Path Example
+The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've pulled main.js into your org_organizationid_mfra cartridge and main.js includes the `util.js` module and the `util.js` module still lives in app_storefront_base, your path would look like this where `base` is the alias defined for app_storefront_base in package.json (see example below):
+
+`var processInclude = require('base/util');` 
+
+## SCSS Include Path Example
+SCSS paths will work similar to the JavaScript paths above. If you are importing a file that does not live in the same cartridge as the file you are working on, you will need to set the alias for the cartridge where the file exists. For example, if homePage.scss needs to include the categoryTiles.scss from app_storefront_base, it would look like this where `base` is the alias defined for app_storefront_base in package.json (see example below):
+
+`@import "~base/components/categoryTiles";`
+
+### Aliases from package.json:
+
+```
+"sites": [
+  {
+    "paths": {
+      "base": "../cartridges/app_storefront_base",
+      "lyonscg": "../cartridges/app_lyonscg_mfra",
+      "org": "../cartridges/org_organizationid_mfra",
+      "site": "../cartridges/site_siteid_mfra"
+    },
+    "packageName": "app_storefront_base"
+  }
+]
+```
 
 # Setting up the deployment project in Jenkins
 

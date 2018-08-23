@@ -12,6 +12,7 @@
 
     <property name="workingCopy" value="deploy/working" />
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
+    <property name="buildMode" value="development" />
 
      <condition property="have-node" else="false">
         <and>
@@ -34,7 +35,9 @@
         <fail message="The directory 'node_modules' is missing."/>
     </target>
 
-    <target name="deploy" depends="cover,css,js,upload">
+    <target name="deploy" depends="cover,css,js,fonts,upload">
+        <property name="buildMode" value="${buildMode}" />
+        <echo level="info">deploy build mode: ${buildMode}</echo>
         <echo level="info">Deployment complete!</echo>
     </target>
 
@@ -82,11 +85,11 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run lint:css"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:css"/>
         </exec>
         <echo level="info">Sass Linter Successful</echo>
-        <echo level="info">
-        </echo>
+        <echo level="info"></echo>
+
         <echo level="info">Sass build running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
@@ -94,7 +97,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run compile:scss"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; export BUILD_MODE=${buildMode}; npm run compile:scss"/>
         </exec>
         <echo level="info">Styles build done!</echo>
     </target>
@@ -107,7 +110,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run lint:js"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:js"/>
         </exec>
         <echo level="info">Client JavaScript Linter Successful</echo>
         <echo level="info">
@@ -119,7 +122,20 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run compile:js"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; export BUILD_MODE=${buildMode}; npm run compile:js"/>
+        </exec>
+        <echo level="info">Client JavaScript build done!</echo>
+    </target>
+
+    <target name="fonts" depends="check-node" if="${have-node}">
+        <echo level="info">Fonts build running...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='npm run compile:fonts'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run compile:fonts"/>
         </exec>
         <echo level="info">Client JavaScript build done!</echo>
     </target>
@@ -132,7 +148,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run lint:serverjs"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:serverjs"/>
         </exec>
         <echo level="info">Server JavaScript Linter Successful</echo>
     </target>
@@ -145,7 +161,7 @@
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run cover"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run cover"/>
         </exec>
         <echo level="info">Test coverage complete!</echo>
     </target>

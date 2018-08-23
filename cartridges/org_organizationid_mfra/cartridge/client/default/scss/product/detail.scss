@@ -1,6 +1,6 @@
+@import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "../variables";
 @import "../utilities/shapes";
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
@@ -15,8 +15,13 @@
     cursor: not-allowed;
 
     &.color-value.selected::after {
-        background-color: $gray-light;
+        background-color: $gray-700;
     }
+}
+
+label.color ~ a:hover {
+    // Removes weird dash after the swatch circle on hover.
+    text-decoration: none;
 }
 
 .description-and-detail {
@@ -127,5 +132,19 @@ label.availability {
         padding-right: 0.938em;
         position: absolute;
         right: 0;
+    }
+}
+
+.size-chart {
+    .size-chart-collapsible {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        transition-timing-function: cubic-bezier(0, 1, 0, 1);
+
+        &.active {
+            max-height: 100%;
+            transition-timing-function: ease-in-out;
+        }
     }
 }

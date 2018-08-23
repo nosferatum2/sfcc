@@ -8,13 +8,13 @@ const chalk = require('chalk');
 
 const cwd = process.cwd();
 
-module.exports = (sitePackageConfig, pwd, callback) => {
-	const verbose = process.env.verbose;
-    const jsAliases = helpers.createAliases(sitePackageConfig, pwd, verbose);
+module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
+    const verbose = process.env.verbose;
+    const jsAliases = helpers.createAliases(sitePackageConfig, pwd);
     if (verbose) {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
-    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(sitePackageConfig.packageName, verbose);
+    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
     if (verbose) {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
@@ -30,18 +30,22 @@ module.exports = (sitePackageConfig, pwd, callback) => {
             newResolve = util.mergeDeep(jsConfig.resolve, newResolve);
         }
         jsConfig.resolve = newResolve;
-    }
 
-    webpack(jsConfig, (err, stats) => {
-        if (err) {
-            console.error(err);
-            callback(1);
+        webpack(jsConfig, (err, stats) => {
+            if (err) {
+                console.error(err);
+                callback(1);
+                return;
+            }
+            console.log(stats.toString({
+                chunks: false,
+                colors: true
+            }));
+            callback(0);
             return;
-        }
-        console.log(stats.toString({
-            chunks: false,
-            colors: true
-        }));
+        });
+    } else {
         callback(0);
-    });
+        return;
+    }
 };

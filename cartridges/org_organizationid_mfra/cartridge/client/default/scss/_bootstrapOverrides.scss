@@ -40,7 +40,7 @@
 
     .nav-link {
         font-size: 1.1rem;
-        color: $nav-tabs-active-link-hover-color;
+        color: $nav-tabs-link-hover-border-color;
 
         &.active {
             border-bottom: 0.188em solid $brand-primary;
@@ -52,11 +52,36 @@
     margin-bottom: 1em;
 }
 
+.card-header h4 {
+    margin-bottom: 0;
+}
+
 .modal .modal-body {
     flex: 0 0 auto;
 }
 
 dt {
-    color: $gray-light;
+    color: $gray-700;
     font-weight: normal;
+}
+
+.custom-checkbox .custom-control-label::before {
+    border: 1px solid black;
+    background: $grey1; /* For browsers that do not support gradients */
+    background: linear-gradient($grey1, $grey3); /* Standard syntax */
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: $svg-check;
+}
+
+.custom-radio .custom-control-label::before {
+    border: 1px solid black;
+    background: $grey3; /* For browsers that do not support gradients */
+    background: linear-gradient($grey3, $grey5); /* Standard syntax */
+}
+
+.modal-open {
+    position: fixed;
+    width: 100%;
 }
