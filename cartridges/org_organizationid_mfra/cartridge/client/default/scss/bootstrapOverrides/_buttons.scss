@@ -1,49 +1,7 @@
-.btn {
-    display: inline-block;
-    font-weight: $btn-font-weight;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius); // bootstrap override on button font size
-    @include transition($btn-transition);
-
-    // Share hover and focus styles
-    @include hover-focus {
-        text-decoration: none;
-    }
-
-    &:focus,
-    &.focus {
-        outline: 0;
-        box-shadow: $btn-focus-box-shadow;
-    }
-
-    // Disabled comes first so active can properly restyle
-    &.disabled,
-    &:disabled {
-        opacity: $btn-disabled-opacity;
-        @include box-shadow(none);
-    }
-
-    // Opinionated: add "hand" cursor to non-disabled .btn elements
-    &:not(:disabled):not(.disabled) {
-        cursor: pointer;
-    }
-
-    &:not(:disabled):not(.disabled):active,
-    &:not(:disabled):not(.disabled).active {
-        background-image: none;
-        @include box-shadow($btn-active-box-shadow);
-
-        &:focus {
-            @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
-        }
-    }
-}
-
 // Custom disabled states for buttons
 .btn-primary {
+    border-color: $primary;
+
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {
@@ -55,6 +13,8 @@
 }
 
 .btn-outline-primary {
+    border-color: $primary;
+
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {
@@ -65,6 +25,8 @@
 }
 
 .btn-tertiary {
+    border-color: $tertiary;
+
     // bootstrap override for disabled style
     &.disabled,
     &:disabled {
@@ -77,26 +39,5 @@
 
 // Button text link
 .btn-link {
-    font-weight: $font-weight-normal;
     color: $btn-link-color;
-    background-color: transparent;
-
-    @include hover {
-        color: $link-hover-color;
-        text-decoration: $link-hover-decoration;
-        background-color: transparent;
-        border-color: transparent;
-    }
-
-    &:focus,
-    &.focus {
-        text-decoration: $link-hover-decoration;
-        border-color: transparent;
-        box-shadow: none;
-    }
-
-    &:disabled,
-    &.disabled {
-        color: $btn-link-disabled-color;
-    }
 }
