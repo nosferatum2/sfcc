@@ -46,6 +46,9 @@
             </isloop>
         </div>
     </div>
+    <div class="minicart-content">
+    	<isslot id="minicart-banner" description="The minicart banner" context="global" />
+	</div>
     <div class="minicart-footer">
         <div class="row estimated-total">
             <div class="col-8">
