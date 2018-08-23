@@ -60,34 +60,35 @@ $grey7: $gray-500;
 $grey6: $gray-600;
 
 // Theme Mappings
-// stylelint-disable
 $colors: () !default;
-$colors: map-merge((
-    "denim": $denim,
-    "anakiwa": $anakiwa,
-    "blumine": $blumine,
-    "orangepeel": $orangepeel,
-    "creambrulee": $creambrulee,
-    "sapphire": $sapphire,
-    "cinnabar": $cinnabar,
-    "pinegreen": $pinegreen,
-    "japanese-laurel": $japanese-laurel,
-    "calypso": $calypso,
-    "mustard": $mustard,
-    "tamarillo": $tamarillo,
-    "california": $california,
-    "pomegranate": $pomegranate,
-    "valencia": $valencia,
-    "picton-blue": $picton-blue,
-    "indigo": $indigo,
-    "cornflower-blue": $cornflower-blue,
-    "daisy-bush": $daisy-bush,
-    "cerulean-blue": $cerulean-blue,
-    "white": $white,
-    "gray": $gray-600,
-    "gray-dark": $gray-800
-), $colors);
-// stylelint-enable
+$colors: map-merge(
+    (
+        "denim": $denim,
+        "anakiwa": $anakiwa,
+        "blumine": $blumine,
+        "orangepeel": $orangepeel,
+        "creambrulee": $creambrulee,
+        "sapphire": $sapphire,
+        "cinnabar": $cinnabar,
+        "pinegreen": $pinegreen,
+        "japanese-laurel": $japanese-laurel,
+        "calypso": $calypso,
+        "mustard": $mustard,
+        "tamarillo": $tamarillo,
+        "california": $california,
+        "pomegranate": $pomegranate,
+        "valencia": $valencia,
+        "picton-blue": $picton-blue,
+        "indigo": $indigo,
+        "cornflower-blue": $cornflower-blue,
+        "daisy-bush": $daisy-bush,
+        "cerulean-blue": $cerulean-blue,
+        "white": $white,
+        "gray": $gray-600,
+        "gray-dark": $gray-800
+    ),
+    $colors
+);
 
 $primary: $denim;
 $primary-light: $anakiwa;
@@ -105,24 +106,25 @@ $accent-2: $cinnabar;
 $accent-3: $orangepeel;
 $accent-4: $pinegreen;
 
-// stylelint-disable
 $theme-colors: () !default;
-$theme-colors: map-merge((
-    "primary": $primary,
-    "secondary": $secondary,
-    "tertiary": $tertiary,
-    "success": $success,
-    "info": $info,
-    "warning": $warning,
-    "error": $error,
-    "light": $light,
-    "dark": $dark,
-    "accent-1": $accent-1,
-    "accent-2": $accent-2,
-    "accent-3": $accent-3,
-    "accent-4": $accent-4
-), $theme-colors);
-// stylelint-enable
+$theme-colors: map-merge(
+    (
+        "primary": $primary,
+        "secondary": $secondary,
+        "tertiary": $tertiary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "error": $error,
+        "light": $light,
+        "dark": $dark,
+        "accent-1": $accent-1,
+        "accent-2": $accent-2,
+        "accent-3": $accent-3,
+        "accent-4": $accent-4
+    ),
+    $theme-colors
+);
 
 //--------------------------------
 //  ALERTS
@@ -263,33 +265,44 @@ $text-muted: $gray-200;
 
 // TODO - Units of 8px are used per styleguide spacing section
 
-// stylelint-disable
 $spacer: 1rem; // 16px
 $spacers: ();
-$spacers: map-merge((
-  0: 0,
-  1: ($spacer * .5), // 8px
-  2: $spacer, // 16px
-  3: ($spacer * 1.5), // 24px
-  4: ($spacer * 2), // 32px
-  5: ($spacer * 2.5), // 40px
-  6: ($spacer * 3), // 48px
-  7: ($spacer * 3.5), // 56px
-  8: ($spacer * 4), // 64px
-  9: ($spacer * 4.5) // 72px
-), $spacers);
+$spacers: map-merge(
+    (
+        0: 0,
+        1: ($spacer * 0.5), // 8px
+        2: $spacer,
+        // 16px
+        3: ($spacer * 1.5),
+        // 24px
+        4: ($spacer * 2),
+        // 32px
+        5: ($spacer * 2.5),
+        // 40px
+        6: ($spacer * 3),
+        // 48px
+        7: ($spacer * 3.5),
+        // 56px
+        8: ($spacer * 4),
+        // 64px
+        9: ($spacer * 4.5) // 72px
+    ),
+    $spacers
+);
 
-// This variable affects the `.h-*` and `.w-*` classes.
+//This variable affects the `.h-*` and `.w-*` classes.
 $sizes: ();
-$sizes: map-merge((
-  25: 25%,
-  33: 33.3333%,
-  50: 50%,
-  66: 66.6666%,
-  75: 75%,
-  100: 100%
-), $sizes);
-// stylelint-enable
+$sizes: map-merge(
+    (
+        25: 25%,
+        33: 33.3333%,
+        50: 50%,
+        66: 66.6666%,
+        75: 75%,
+        100: 100%
+    ),
+    $sizes
+);
 
 //--------------------------------
 //  BREAKPOINTS
