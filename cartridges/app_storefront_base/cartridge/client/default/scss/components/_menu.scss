@@ -158,6 +158,24 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     }
 }
 
+// Mobile version fix so that nav height fits to screen
+.main-menu.menu-toggleable-left {
+    @include media-breakpoint-down($breakpoint-name) {
+        .container {
+            position: relative;
+            height: 100%;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        .menu-group {
+            height: 100%;
+        }
+    }
+}
+
 .multilevel-dropdown {
     .dropdown-menu {
         top: 90%;
