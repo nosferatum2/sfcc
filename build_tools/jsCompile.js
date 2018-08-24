@@ -9,13 +9,12 @@ const chalk = require('chalk');
 const cwd = process.cwd();
 
 module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
-    const verbose = process.env.verbose;
     const jsAliases = helpers.createAliases(sitePackageConfig, pwd);
-    if (verbose) {
+    if (process.env.verbose === 'true') {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
     const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
-    if (verbose) {
+    if (process.env.verbose === 'true') {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }

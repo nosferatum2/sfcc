@@ -28,10 +28,8 @@ const createAliases = (packageFile, pwd) => {
                         }
                     });
                 }
-
-                const verbose = process.env.verbose;
                 
-                if (verbose) {
+                if (process.env.verbose === 'true') {
                     console.log('Created aliases: ');
                     Object.keys(aliases).forEach(key => {
                         console.log( '    ' + key + ' is ' + aliases[key]);
@@ -45,10 +43,10 @@ const createAliases = (packageFile, pwd) => {
                  */
                 const innerPackage = require(path.join(cartridge, '../..', 'package.json'));
                 if (innerPackage.paths) {
-                    if (verbose) {
+                    if (process.env.verbose === 'true') {
                         console.log(chalk.green('    Inner package found.'));
                     }
-                    const newAliases = createAliases(innerPackage, pwd, verbose);
+                    const newAliases = createAliases(innerPackage, pwd);
                     Object.keys(newAliases).forEach(key => {
                         if (!aliases[key]) {
                             aliases[key] = newAliases[key];
@@ -56,7 +54,7 @@ const createAliases = (packageFile, pwd) => {
                     });
                 }
                 else {
-                    if (verbose) {
+                    if (process.env.verbose === 'true') {
                         console.log(chalk.gray('    No inner package found.'));
                     }
                 }

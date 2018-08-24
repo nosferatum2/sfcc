@@ -207,7 +207,7 @@ function checkForDwJson() {
  * Deletes all files in the tmp directory
  */
 function clearTmp() {
-    if (options.verbose) {
+    if (process.env.verbose === 'true') {
         console.log(chalk.green('build.js:clearTmp()'));
     }
     shell.rm('-rf', TEMP_DIR);
@@ -436,16 +436,7 @@ const options = optionator.parse(process.argv);
 //verbose flag is handled via the dw.json file
 const uploadArguments = getUploadOptions();
 
-options.verbose = false;
-
-if (typeof uploadArguments.verboseLogging != 'undefined' && uploadArguments.verboseLogging.length > 0) {
-	if(uploadArguments.verboseLogging == "true") {
-		options.verbose = true;
-	}
-} 
-
-process.env.verbose = options.verbose;
-const verbose = options.verbose;
+process.env.verbose = (uploadArguments.verboseLogging === 'true');
 
 if (options.help) {
     console.log(optionator.generateHelp());
@@ -579,7 +570,7 @@ if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
         console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (options.verbose) {
+        if (process.env.verbose === 'true') {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
         }
@@ -595,7 +586,7 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (options.verbose) {
+        if (process.env.verbose === 'true') {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
         }

@@ -10,10 +10,9 @@ const cwd = process.cwd();
 
 
 module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
-    const verbose = process.env.verbose;
     // adjusted to pwd for LyonsCG folder structure
-    const jsAliases = helpers.createAliases(sitePackageConfig, pwd, verbose);
-    if (verbose) {
+    const jsAliases = helpers.createAliases(sitePackageConfig, pwd);
+    if (process.env.verbose === 'true') {
         console.log(chalk.black.bgGreen('Recieved jsAliases object from helpers.js'));
         for(var name in jsAliases ){
             console.log(chalk.blue(name) + ' is ' + chalk.gray(jsAliases[name]));
@@ -25,12 +24,12 @@ module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
     Object.keys(jsAliases).forEach(key => {
         cssAliases[key] = jsAliases[key].replace(path.sep + 'js', path.sep + 'scss');
     });
-    if (verbose) {
+    if (process.env.verbose === 'true') {
         console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
     }
     // passing webpackConfig the name of the package we are compiling to
-    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName, verbose);
-    if (verbose) {
+    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
+    if (process.env.verbose === 'true') {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }

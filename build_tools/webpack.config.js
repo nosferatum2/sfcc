@@ -8,8 +8,6 @@ try {
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     const chalk = require('chalk');
 
-    const verbose = true;
-
     const bootstrapPackages = {
         Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
         // Button: 'exports-loader?Button!bootstrap/js/src/button',
@@ -26,7 +24,6 @@ try {
 
     module.exports = function (packageName) {
         console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
-        const verbose = process.env.verbose;
 
         let mode = 'development';
         if (process.env.BUILD_MODE === 'production') {
@@ -37,7 +34,7 @@ try {
         const jsFiles = require('./helpers').createJsPath(packageName);
         const scssFiles = require('./helpers').createScssPath(packageName);
 
-        if (verbose) {
+        if (process.env.verbose === 'true') {
             console.log(chalk.gray('Webpack(ing) js files'));
             if (jsFiles) {
                 for (let key in jsFiles) {
