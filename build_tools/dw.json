@@ -1,9 +1,0 @@
-{
-  "username": "",
-  "password": "",
-  "hostname": ["dev01-na01-evaluation.demandware.net"],
-  "activationHostname": [],
-  "code-version": "sfra",
-  "dataBundle": "core",
-  "verboseLogging": "true"
-}
