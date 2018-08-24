@@ -617,8 +617,27 @@
           </table>
 
           <h4 class="sub-section">Breadcrumbs</h4>
-          <p><span class="text-primary">TODO Note:</span> Do we need this as a component on the styleguide?</p>
-
+          <div class="breadcrumbs">
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			    <li class="breadcrumb-item active" aria-current="page">Home</li>
+			  </ol>
+			</nav>
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="#">Home</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">Library</li>
+			  </ol>
+			</nav>
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a href="#">Home</a></li>
+			    <li class="breadcrumb-item"><a href="#">Library</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">Data</li>
+			  </ol>
+			</nav>
+		  </div>
+	
           <h4 class="sub-section">Content Switcher</h4>
           <p><span class="text-primary">TODO Note:</span> What is this??</p>
 
