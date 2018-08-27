@@ -141,8 +141,7 @@
       ]
     }
   },
-  "buildConfigs": {
-    "mode"    : "development",
+  "buildEnvironment": {
     "verbose" : "true"
   }
 }

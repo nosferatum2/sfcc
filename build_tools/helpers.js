@@ -6,6 +6,11 @@ const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
 
+function isBuildEnvironment(opt) {
+    const packageFile = require(path.join(cwd, './package.json'));
+    return  (packageFile.buildEnvironment[opt] && packageFile.buildEnvironment[opt] === 'true');
+}
+
 const createAliases = (packageFile, pwd) => {
     const aliases = {};
     if (packageFile.paths) {
@@ -29,7 +34,7 @@ const createAliases = (packageFile, pwd) => {
                     });
                 }
                 
-                if (process.env.verbose === 'true') {
+                if (isBuildEnvironment('verbose')) {
                     console.log('Created aliases: ');
                     Object.keys(aliases).forEach(key => {
                         console.log( '    ' + key + ' is ' + aliases[key]);
@@ -43,7 +48,7 @@ const createAliases = (packageFile, pwd) => {
                  */
                 const innerPackage = require(path.join(cartridge, '../..', 'package.json'));
                 if (innerPackage.paths) {
-                    if (process.env.verbose === 'true') {
+                    if (isBuildEnvironment('verbose')) {
                         console.log(chalk.green('    Inner package found.'));
                     }
                     const newAliases = createAliases(innerPackage, pwd);
@@ -54,7 +59,7 @@ const createAliases = (packageFile, pwd) => {
                     });
                 }
                 else {
-                    if (process.env.verbose === 'true') {
+                    if (isBuildEnvironment('verbose')) {
                         console.log(chalk.gray('    No inner package found.'));
                     }
                 }
