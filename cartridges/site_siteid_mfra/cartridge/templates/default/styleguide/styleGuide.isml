@@ -313,7 +313,7 @@
         </div>
 
         <h3 class="section">Buttons</h3>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - 1. doesn't follow theme, 2. has too many disabled variants</p>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - 1. doesn't follow theme, 2. has too many disabled variants, used FA icons (discuss?)</p>
 
         <div class="sg-buttons">
             <div class="item">
@@ -332,8 +332,8 @@
                 <code>.btn-tertiary</code>
             </div>
             <div class="item">
-                <button class="btn btn-primary">Button Icon &#9654;</button>
-                <button class="btn btn-primary" disabled>Button Icon Disabled &#9654;</button>
+                <button class="btn btn-primary">Button Icon <i class="fa fa-play" aria-hidden="true"></i></button>
+                <button class="btn btn-primary" disabled>Button Icon Disabled <i class="fa fa-play" aria-hidden="true"></i></button>
                 <code>.btn-primary</code>
             </div>
             <div class="item">
@@ -495,7 +495,7 @@
         <h4 class="sub-section">Cards</h4>
         <p><span class="text-primary">TODO Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
         <div class="sg-cards">
-            <div class="card-deck mb-3">
+            <div class="card-deck">
                 <div class="card">
                     <img class="card-img-top" src="https://via.placeholder.com/318x180"" alt="">
                     <div class="card-body">
@@ -536,7 +536,7 @@
                 </div>
             </div>
         </div>
-
+        
         <h4 class="sub-section">Accordions</h4>
         <div id="accordion">
             <div class="card">
@@ -583,7 +583,60 @@
           </div>
 
           <h4 class="sub-section">Tabs</h4>
-          <p><span class="text-primary">TODO Note:</span> SFRA does not use tabs on PDP - do we still need these?</p>
+
+		  <!-- Nav pills -->
+		  <ul class="nav nav-pills">
+		    <li class="nav-item">
+		      <a class="nav-link active" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active Link</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Link Label</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#secondlink" role="tab" aria-controls="secondlink" aria-selected="false">Link Label</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link disabled" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled Link</a>
+		    </li>
+		  </ul>
+		  <!-- Tab panes -->
+		<div class="tab-content">
+		  	<p>
+		    	<div class="tab-pane active" id="active" role="tabpanel" aria-labelledby="active-tab">Content from tab 1</div>
+		    	<div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab">Content from tab 2</div>
+		    	<div class="tab-pane" id="secondlink" role="tabpanel" aria-labelledby="link-tab">Content from tab 3</div>
+		    	<div class="tab-pane" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">Content from tab 4</div>
+		  	</p>
+		</div>
+		  
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs">
+		  	<li class="nav-item">
+		  		<a class="nav-link" data-toggle="tab" href="#tab1">Tab name 1</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link active" data-toggle="tab" href="#tab2">Tab name 2</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link" data-toggle="tab" href="#tab3">Tab name 3</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link" data-toggle="tab" href="#tab4">Tab name 4</a>
+		  	</li>
+		  	<li class="nav-item">
+		  		<a class="nav-link" data-toggle="tab" href="#tab5">Tab name 5</a>
+		  	</li>
+		  </ul>
+		  <!-- Tab panes -->
+		<div class="tab-content">
+			<p> 
+		    	<div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="home-tab">Content from tab 1</div>
+		    	<div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="profile-tab">Content from tab 2</div>
+		    	<div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="messages-tab">Content from tab 3</div>
+		    	<div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="settings-tab">Content from tab 4</div>
+		    	<div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="settings-tab">Content from tab 5</div>
+			</p>
+		</div>
 
           <h4 class="sub-section">Progress Indicator</h4>
           <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>

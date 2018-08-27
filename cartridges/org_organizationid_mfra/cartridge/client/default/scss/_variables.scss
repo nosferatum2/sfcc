@@ -232,6 +232,8 @@ $breadcrumb-divider-color: $gray-200; //bootstrap override
 //  BUTTONS
 //--------------------------------
 
+$btn-icon-size: 12px;
+$btn-icon-spacing: 8px;
 $btn-link-color: $primary; //bootstrap override
 $btn-disabled-opacity: 1;
 $btn-disabled-main-color: $gray-200;
@@ -350,6 +352,7 @@ $accordion-spacer-y: 0.1rem;
 $accordion-spacer-x: 1rem;
 $accordion-btn-y: 0.5rem;
 $accordion-btn-x: 1.5rem;
+$accordion-paragraph-margin: 50px;
 
 //--------------------------------
 //  MODALS
@@ -358,6 +361,19 @@ $accordion-btn-x: 1.5rem;
 $modal-border-top: 5px solid $primary;
 $modal-header-border-width: 0;
 $modal-header-border-color: transparent;
+
+//--------------------------------
+//  TABS
+//--------------------------------
+
+$nav-pills-link-color: $denim;
+$nav-pills-link-active-color: $white;
+$nav-pills-link-active-bg: $denim;
+$nav-tabs-link-color: $gray-100;
+$nav-tabs-link-active-color: $denim;
+$nav-link-disabled-color: $gray-200;
+$nav-tabs-border-color: $denim;
+$nav-tabs-border-bottom-width: 2px;
 
 //--------------------------------
 //  CARDS & ACCORDIONS
