@@ -185,5 +185,4 @@ Uploading individual cartridges to your sandbox/instance
 		
 ##Notes
 
-Verbose Logging -> handled via the "verboseLogging" option in the dw.json file
-	Example: "verboseLogging": "true"
+Build environment flags (i.e Verbose Logging) are controlled via the "buildEnvironment" object in the package.json file
