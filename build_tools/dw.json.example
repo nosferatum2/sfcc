@@ -5,5 +5,4 @@
   "activationHostname": ["dev01-na01-evaluation.demandware.net", "dev02-na01-evaluation.demandware.net"],
   "code-version": "sfra",
   "dataBundle": "core",
-  "verboseLogging": "true"
 }
