@@ -140,5 +140,9 @@
         "data_test_static"
       ]
     }
+  },
+  "buildConfigs": {
+    "mode"    : "development",
+    "verbose" : "true"
   }
 }
