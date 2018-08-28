@@ -17,6 +17,7 @@
             padding: $accordion-spacer-y $accordion-spacer-x;
             border-bottom: $card-border-width solid $card-border-color;
             border-top: none;
+            background-color: $white;
 
             &:first-child {
                 border-radius: 0;

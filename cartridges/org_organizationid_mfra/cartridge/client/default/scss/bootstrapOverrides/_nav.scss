@@ -7,6 +7,8 @@
 //
 
 .nav-tabs {
+    border: none;
+
     .nav-link {
         padding: $nav-link-padding-y 0;
         color: $nav-tabs-link-color;
@@ -15,6 +17,7 @@
     .nav-link.active,
     .nav-item.show .nav-link {
         color: $nav-tabs-link-active-color;
+        border: none;
         border-bottom: $nav-tabs-border-bottom-width solid $nav-tabs-border-color;
     }
 }
@@ -29,8 +32,8 @@
 
         &.disabled {
             color: $nav-link-disabled-color;
-            background-color: transparent;
-            border-color: transparent;
+            background-color: $trans;
+            border-color: $trans;
         }
     }
 }

@@ -690,11 +690,11 @@
                 </nav>
             </div>
 
-          <h4 class="sub-section">Content Switcher</h4>
-          <p><span class="text-primary">TODO Note:</span> What is this??</p>
+        <h4 class="sub-section">Content Switcher</h4>
+        <p><span class="text-primary">TODO Note:</span> What is this??</p>
 
-          <h4 class="sub-section">Lists</h4>
-          <ul>
+        <h4 class="sub-section">Lists</h4>
+        <ul>
             <li>Unordered list level 1</li>
                 <ul>
                     <li>Unordered list level 2</li>
@@ -702,9 +702,9 @@
                 </ul>
             <li>Unordered list level 1</li>
             <li>Unordered list level 1</li>
-          </ul>
+        </ul>
 
-          <ol>
+        <ol>
             <li>Ordered list level 1</li>
                 <ol>
                     <li>Ordered list level 2</li>
@@ -712,13 +712,13 @@
                 </ol>
             <li>Ordered list level 1</li>
             <li>Ordered list level 1</li>
-          </ol>
+        </ol>
 
-          <h4 class="sub-section">Loader</h4>
-          <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy</p>
+        <h4 class="sub-section">Loader</h4>
+        <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy</p>
 
-          <h3 class="section">Motion</h3>
-          <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear</p>
+        <h3 class="section">Motion</h3>
+        <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear</p>
     </div>
 </isdecorate>
 

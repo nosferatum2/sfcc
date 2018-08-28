@@ -38,6 +38,7 @@ $indigo: #3b76ca;
 $cornflower-blue: #4c93eb;
 $daisy-bush: #502ea8;
 $cerulean-blue: #2553b5;
+$trans: transparent;
 
 // Gray Colors - Bootstrap overrides
 $gray-100: #22252a;
@@ -216,6 +217,7 @@ $btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
 // BREADCRUMBS
 //--------------------------------
 
+$breadcrumb-bg: $white;
 $breadcrumb-before-color: $denim;
 $breadcrumb-active-color: $gray-200; //bootstrap override
 $breadcrumb-divider-color: $gray-200; //bootstrap override
