@@ -57,8 +57,8 @@
             </div>
         </div>
         <div class="minicart-banner">
-    		<isslot id="minicart-banner" description="The minicart banner" context="global" />
-		</div>
+        <isslot id="minicart-banner" description="The minicart banner" context="global" />
+    </div>
         <div class="row">
             <div class="col-12 checkout-continue">
                 <isinclude template="cart/checkoutButtons" />
