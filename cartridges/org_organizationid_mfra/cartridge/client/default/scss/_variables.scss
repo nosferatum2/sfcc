@@ -50,15 +50,6 @@ $gray-700: #f8f9fb;
 $gray-800: #f8f9fb;
 $gray-900: #f8f9fb;
 
-// TODO - Bogus grey colors in the rest of site - these need to be replaced throuhout the site to fix global styling
-$grey1: $gray-100;
-$grey2: $gray-100;
-$grey3: $gray-300;
-$grey4: $gray-400;
-$grey5: $gray-500;
-$grey7: $gray-500;
-$grey6: $gray-600;
-
 // Theme Mappings
 $colors: () !default;
 $colors: map-merge(
@@ -92,6 +83,7 @@ $colors: map-merge(
 
 $primary: $denim;
 $primary-light: $anakiwa;
+$primary-dark: $blumine;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
 $tertiary: $gray-100;
@@ -425,28 +417,6 @@ $horizontal-border-grey: $gray-400;
 $menu-link: $gray-400;
 $close-menu-bg: $gray-400;
 $hr-border-color: $gray-400;
-$primary-dark: $primary;
-
-$border-radius: 0.1875rem;
-$border-radius-lg: $border-radius;
-$border-radius-sm: $border-radius;
 
 $alert-danger-bg: $brand-danger;
 $alert-success-bg: $brand-success;
-$state-danger-text: #fff;
-$alert-success-text: #fff;
-
-// Bootstrap overrides
-$card-cap-bg: $white;
-
-// Tabs
-$nav-tabs-border-width: 0;
-$nav-tabs-border-radius: 0;
-$nav-tabs-active-link-hover-bg: transparent;
-
-// breadcrumb
-$breadcrumb-bg: transparent;
-
-$grey-transparent-1: rgba(0, 0, 0, 0.65); /* What are these? */
-$grey-transparent-2: rgba(0, 0, 0, 0.25); /* What are these? */
-

@@ -582,115 +582,114 @@
                 </div>
           </div>
 
-          <h4 class="sub-section">Tabs</h4>
+        <h4 class="sub-section">Tabs</h4>
+            <!-- Nav pills -->
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Link Label</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#secondlink" role="tab" aria-controls="secondlink" aria-selected="false">Link Label</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled Link</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <p>
+                    <div class="tab-pane active" id="active" role="tabpanel" aria-labelledby="active-tab">Content from tab 1</div>
+                    <div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab">Content from tab 2</div>
+                    <div class="tab-pane" id="secondlink" role="tabpanel" aria-labelledby="link-tab">Content from tab 3</div>
+                    <div class="tab-pane" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">Content from tab 4</div>
+                </p>
+            </div>
 
-		  <!-- Nav pills -->
-		  <ul class="nav nav-pills">
-		    <li class="nav-item">
-		      <a class="nav-link active" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active Link</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Link Label</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link" data-toggle="tab" href="#secondlink" role="tab" aria-controls="secondlink" aria-selected="false">Link Label</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link disabled" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled Link</a>
-		    </li>
-		  </ul>
-		  <!-- Tab panes -->
-		<div class="tab-content">
-		  	<p>
-		    	<div class="tab-pane active" id="active" role="tabpanel" aria-labelledby="active-tab">Content from tab 1</div>
-		    	<div class="tab-pane" id="link" role="tabpanel" aria-labelledby="link-tab">Content from tab 2</div>
-		    	<div class="tab-pane" id="secondlink" role="tabpanel" aria-labelledby="link-tab">Content from tab 3</div>
-		    	<div class="tab-pane" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">Content from tab 4</div>
-		  	</p>
-		</div>
-		  
-		  <!-- Nav tabs -->
-		  <ul class="nav nav-tabs">
-		  	<li class="nav-item">
-		  		<a class="nav-link" data-toggle="tab" href="#tab1">Tab name 1</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link active" data-toggle="tab" href="#tab2">Tab name 2</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link" data-toggle="tab" href="#tab3">Tab name 3</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link" data-toggle="tab" href="#tab4">Tab name 4</a>
-		  	</li>
-		  	<li class="nav-item">
-		  		<a class="nav-link" data-toggle="tab" href="#tab5">Tab name 5</a>
-		  	</li>
-		  </ul>
-		  <!-- Tab panes -->
-		<div class="tab-content">
-			<p> 
-		    	<div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="home-tab">Content from tab 1</div>
-		    	<div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="profile-tab">Content from tab 2</div>
-		    	<div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="messages-tab">Content from tab 3</div>
-		    	<div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="settings-tab">Content from tab 4</div>
-		    	<div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="settings-tab">Content from tab 5</div>
-			</p>
-		</div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab1">Tab name 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tab2">Tab name 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab3">Tab name 3</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab4">Tab name 4</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab5">Tab name 5</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <p> 
+                    <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="home-tab">Content from tab 1</div>
+                    <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="profile-tab">Content from tab 2</div>
+                    <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="messages-tab">Content from tab 3</div>
+                    <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="settings-tab">Content from tab 4</div>
+                    <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="settings-tab">Content from tab 5</div>
+                </p>
+            </div>
 
-          <h4 class="sub-section">Progress Indicator</h4>
-          <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
+        <h4 class="sub-section">Progress Indicator</h4>
+        <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
 
-          <h4 class="sub-section">Tables</h4>
-          <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Column A</th>
-                    <th scope="col">Column B</th>
-                    <th scope="col">Column C</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Row</td>
-                    <td>Row</td>
-                    <td>Row</td>
-                </tr>
-                <tr>
-                    <td>Row</td>
-                    <td>Row</td>
-                    <td>Row</td>
-                </tr>
-                <tr>
-                    <td>Row</td>
-                    <td>Row</td>
-                    <td>Row</td>
-                </tr>
-            </tbody>
-          </table>
+        <h4 class="sub-section">Tables</h4>
+        <table class="table">
+          <thead>
+              <tr>
+                  <th scope="col">Column A</th>
+                  <th scope="col">Column B</th>
+                  <th scope="col">Column C</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Row</td>
+                  <td>Row</td>
+                  <td>Row</td>
+              </tr>
+              <tr>
+                  <td>Row</td>
+                  <td>Row</td>
+                  <td>Row</td>
+              </tr>
+              <tr>
+                  <td>Row</td>
+                  <td>Row</td>
+                  <td>Row</td>
+              </tr>
+          </tbody>
+        </table>
 
-          <h4 class="sub-section">Breadcrumbs</h4>
-          <div class="breadcrumbs">
-			<nav aria-label="breadcrumb">
-			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item active" aria-current="page">Home</li>
-			  </ol>
-			</nav>
-			<nav aria-label="breadcrumb">
-			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item"><a href="#">Home</a></li>
-			    <li class="breadcrumb-item active" aria-current="page">Library</li>
-			  </ol>
-			</nav>
-			<nav aria-label="breadcrumb">
-			  <ol class="breadcrumb">
-			    <li class="breadcrumb-item"><a href="#">Home</a></li>
-			    <li class="breadcrumb-item"><a href="#">Library</a></li>
-			    <li class="breadcrumb-item active" aria-current="page">Data</li>
-			  </ol>
-			</nav>
-		  </div>
-	
+        <h4 class="sub-section">Breadcrumbs</h4>
+            <div class="breadcrumbs">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </nav>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Library</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                </nav>
+            </div>
+
           <h4 class="sub-section">Content Switcher</h4>
           <p><span class="text-primary">TODO Note:</span> What is this??</p>
 
