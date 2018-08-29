@@ -691,7 +691,12 @@
             </div>
 
         <h4 class="sub-section">Content Switcher</h4>
-        <p><span class="text-primary">TODO Note:</span> What is this??</p>
+        <div class="content-switcher">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-primary">First section</button>
+                <button type="button" class="btn btn-outline-primary">Second section</button>
+            </div>   
+        </div>
 
         <h4 class="sub-section">Lists</h4>
         <ul>

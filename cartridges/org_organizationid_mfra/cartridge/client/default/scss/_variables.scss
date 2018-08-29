@@ -241,6 +241,13 @@ $font-size-lg: $font-size-base * 1.25; //bootstrap override
 $btn-padding-y-lg: 0.9rem; //bootstrap override
 
 //--------------------------------
+// CONTENT SWITCHER
+//--------------------------------
+
+$contentswitcher-active-color: $white;
+$contentswitcher-active-bg: $denim;
+
+//--------------------------------
 //  FORMS
 //--------------------------------
 // all bootstrap overrides
@@ -365,6 +372,7 @@ $nav-pills-link-active-color: $white;
 $nav-pills-link-active-bg: $denim;
 $nav-tabs-link-color: $gray-100;
 $nav-tabs-link-active-color: $denim;
+$nav-tabs-link-hover-border-color: $white;
 $nav-link-disabled-color: $gray-200;
 $nav-tabs-border-color: $denim;
 $nav-tabs-border-bottom-width: 2px;
@@ -419,6 +427,7 @@ $horizontal-border-grey: $gray-400;
 $menu-link: $gray-400;
 $close-menu-bg: $gray-400;
 $hr-border-color: $gray-400;
+$state-danger-text: #fff;
 
 $alert-danger-bg: $brand-danger;
 $alert-success-bg: $brand-success;
