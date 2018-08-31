@@ -492,6 +492,117 @@
         </div>
 
         <h3 class="section">Components</h3>
+        <h4 class="sub-section">Product Tiles</h4>
+        <div class="container-fluid">
+            <div class="row">
+            
+                <div class="col-sm-6 col-md-3">
+                    <div class="grid-tile">
+                        <div class="product-tile">
+                            <div class="image-container">
+                                <a><img class="tile-image" src="https://via.placeholder.com/300x330"" alt=""></a>
+                                <a class="quickview hidden-sm-down">QUICKVIEW
+                                    <i class="fa fa-plus-circle"></i>
+                                </a>
+                                <div class="product-status">
+                                    Sale
+                                </div>
+                            </div>
+                            <div class="tile-body">
+                                <div class="pdp-link">Product Name 1 line</div>
+                                <div class="pdp-link">Product Name 2 lines</div>
+                                <div class="price">$00.00</div>
+                                <div class="row tile-body-footer">
+                                    <div class="ratings col-xs-12 col-sm-6">
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="pc-promotion-message">
+                                    Promotional Message Buy One Get One
+                                </div>
+                                <div class="color-swatches">
+                                    <div class="swatch-circle"></div>
+                                    <div class="swatch-circle"></div>
+                                    <div class="swatch-circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                <div class="col-sm-6 col-md-3">
+                    <div class="grid-tile">
+                        <div class="product-tile">
+                            <div class="image-container">
+                                <a><img class="tile-image" src="https://via.placeholder.com/300x330" alt=""></a>
+                                <div class="product-status">
+                                    New
+                                </div>
+                            </div>
+                            <div class="tile-body">
+                                <div class="pdp-link">Product Name 1 line</div>
+                                <div class="pdp-link">Pro duct Name 2 lines</div>
+                                <div class="price">$00.00</div>
+                                <div class="row tile-body-footer">
+                                    <div class="ratings col-xs-12 col-sm-6">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="pc-promotion-message">
+                                    Promotional Message Buy One Get One
+                                </div>
+                                <div class="color-swatches">
+                                    <div class="swatch-circle"></div>
+                                    <div class="swatch-circle"></div>
+                                    <div class="swatch-circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <div class="grid-tile">
+                        <div class="product-tile">
+                            <div class="image-container">
+                                <a><img class="tile-image" src="https://via.placeholder.com/300x330" alt=""></a>
+                            </div>
+                            <div class="tile-body">
+                                <div class="pdp-link">Product Name 1 line</div>
+                                <div class="pdp-link">Product Name 2 lines</div>
+                                <div class="price">$00.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <div class="grid-tile">
+                        <div class="product-tile">
+                            <div class="image-container">
+                                <a><img class="tile-image" src="https://via.placeholder.com/300x330" alt=""></a>
+                            </div>
+                            <div class="tile-body">
+                                <div class="pdp-link">Product Name 1 line</div>
+                                <div class="pdp-link">Product Name 2 lines</div>
+                                <div class="price">$00.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        
         <h4 class="sub-section">Cards</h4>
         <p><span class="text-primary">TODO Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
         <div class="sg-cards">
