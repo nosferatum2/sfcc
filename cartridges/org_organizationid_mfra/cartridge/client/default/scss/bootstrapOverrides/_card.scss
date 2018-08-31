@@ -73,19 +73,21 @@
 // Card deck
 
 .card-deck {
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
+        display: flex;
         flex-flow: row wrap;
-        margin-right: -$card-deck-margin;
-        margin-left: -$card-deck-margin;
 
         .card {
-            display: flex;
-            // Flexbugs #4: https://github.com/philipwalton/flexbugs#4-flex-shorthand-declarations-with-unitless-flex-basis-values-are-ignored
-            flex: 1 0 0%;
-            flex-direction: column;
-            margin-right: $card-deck-margin;
-            margin-bottom: 0; // Override the default
-            margin-left: $card-deck-margin;
+            margin-bottom: $card-deck-margin;
+            flex: 1 1 auto;
+
+            @include media-breakpoint-up(md) {
+                flex: 1 0 40%;
+            }
+
+            @include media-breakpoint-up(lg) {
+                flex: 1 0 20%;
+            }
         }
     }
 }
