@@ -18,6 +18,7 @@ $flag-icon-css-path: "../fonts/flags/";
 
 $white: #fff;
 $black: #000;
+$red: #c00;
 $denim: #1976d3;
 $anakiwa: #88c4ff;
 $blumine: #1d568e;
@@ -92,8 +93,17 @@ $success: $japanese-laurel;
 $info: $calypso;
 $warning: $mustard;
 $error: $tamarillo;
+$brand-success: #008827;
+$brand-danger: $red;
+$brand-primary: #00a1e0;
+$brand-color: $primary;
+$state-danger-text: $white;
 $light: $gray-500;
 $dark: $gray-100;
+$light-gray: $gray-400;
+$slightly-darker-gray: $gray-400;
+$dark-gray: $gray-400;
+$darker-gray: $gray-400;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
@@ -124,6 +134,8 @@ $theme-colors: map-merge(
 //--------------------------------
 
 $alert-bg-level: 0; // bootstrap override
+$alert-danger-bg: $brand-danger;
+$alert-success-bg: $brand-success;
 
 //--------------------------------
 //  BACKGROUNDS
@@ -184,6 +196,9 @@ $border3-color: $mustard;
 $border3: 1px solid $border3-color;
 $border4-color: $blumine;
 $border4: 1px solid $border4-color;
+$horizontal-border-grey: $gray-400;
+$hr-border-color: $gray-400;
+$horizontal-rule-grey: $gray-400;
 
 //--------------------------------
 //  BOX SHADOWS
@@ -208,6 +223,8 @@ $link-decoration-alt: underline;
 //  DROPDOWN MENU
 //--------------------------------
 
+$menu-link: $gray-400;
+$close-menu-bg: $gray-400;
 $dropdown-link-hover-bg: $gray-400; //bootstrap override
 $dropdown-link-hover-color: $gray-400; //bootstrap override
 
@@ -282,6 +299,7 @@ $text-muted: $gray-200;
 //--------------------------------
 
 $product-tile-promo: $pomegranate;
+$product-number-grey: $gray-400;
 
 //--------------------------------
 //  SPACING
@@ -399,6 +417,18 @@ $table-th-border-color: $primary;
 $table-border-color: $gray-300;
 
 //--------------------------------
+//  QUICKVIEW COMPONENT
+//--------------------------------
+
+$quickview-header-border: 2px solid #ccc;
+$quickview-content-border: 1px solid rgba(0, 0, 0, 0.2);
+$quickview-font-size1: $font-size-base * 0.625;
+$quickview-font-size2: $font-size-base * 1.5;
+$quickview-font-size3: $font-size-base * 1.6;
+$quickview-font-size4: $font-size-base * 1.875;
+$quickview-font-size5: $font-size-base * 2;
+
+//--------------------------------
 //  ICONOGRAPHY
 //--------------------------------
 
@@ -414,28 +444,3 @@ $svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org
 
 $slick-arrow-bg-color: transparent; // bootstrap override
 $slick-arrow-bg-color-hover: transparent; // bootstrap override
-
-//--------------------------------------
-//  OTHER VARS - Not sure what these are
-//--------------------------------------
-
-// TODO - These need to be mapped or discarded
-
-$brand-success: #008827;
-$brand-danger: #c00;
-$brand-primary: #00a1e0;
-$light-gray: $gray-400;
-$slightly-darker-gray: $gray-400;
-$dark-gray: $gray-400;
-$darker-gray: $gray-400;
-$brand-color: $primary;
-$horizontal-rule-grey: $gray-400;
-$product-number-grey: $gray-400;
-$horizontal-border-grey: $gray-400;
-$menu-link: $gray-400;
-$close-menu-bg: $gray-400;
-$hr-border-color: $gray-400;
-$state-danger-text: #fff;
-
-$alert-danger-bg: $brand-danger;
-$alert-success-bg: $brand-success;

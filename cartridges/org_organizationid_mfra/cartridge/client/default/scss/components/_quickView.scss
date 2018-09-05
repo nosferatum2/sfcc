@@ -18,7 +18,7 @@
 
     .modal-header {
         background-color: $grey2;
-        border-bottom: 2px solid #ccc;
+        border-bottom: $quickview-header-border;
         border-top-left-radius: 0.1875rem;
         border-top-right-radius: 0.1875rem;
 
@@ -27,17 +27,17 @@
         }
 
         .close {
-            font-size: 2rem;
+            font-size: $quickview-font-size5;
             line-height: 1.5rem;
         }
     }
 
     .modal-title {
-        font-size: 1em;
+        font-size: $font-size-base;
     }
 
     .product-name {
-        font-size: 1.875em;
+        font-size: $quickview-font-size4;
     }
 
     .swatch-circle {
@@ -49,7 +49,7 @@
         cursor: not-allowed;
 
         &.color-value.selected::after {
-            background-color: $gray-700;
+            background-color: $gray-500;
         }
     }
 
@@ -63,7 +63,7 @@
     }
 
     .modal-content {
-        border: 1px solid rgba(0, 0, 0, 0.2);
+        border: $quickview-content-border;
     }
 
     .modal-body {
@@ -72,7 +72,7 @@
     }
 
     button.close {
-        font-size: 1.25em;
+        font-size: $font-size-lg;
     }
 
     .modal-footer {
@@ -82,12 +82,12 @@
         border-bottom-left-radius: 0.1875rem;
 
         .prices .price {
-            font-size: 1.6em;
+            font-size: $quickview-font-size3;
         }
     }
 
     .prices .sales {
-        font-size: 1.5rem;
+        font-size: $quickview-font-size2;
     }
 
     .promotions {
@@ -97,7 +97,7 @@
 
     .bonus-summary {
         @include media-breakpoint-down(sm) {
-            font-size: 0.625em;
+            font-size: $quickview-font-size1;
         }
 
         .bonus-product-name {

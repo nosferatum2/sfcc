@@ -449,6 +449,10 @@
             </div>
         </span>
 
+        <i data-toggle="tooltip" data-placement="top" title="TOP TEST" class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+        <i data-toggle="tooltip" data-placement="right" title="RIGHT TEST" class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+
+
         <h3 class="section">Iconography</h3>
         <p><span class="text-primary">TODO Note:</span> TBD - Discuss how we want to handle SVGs</p>
 
@@ -545,7 +549,7 @@
                             </div>
                             <div class="tile-body">
                                 <div class="pdp-link">Product Name 1 line</div>
-                                <div class="pdp-link">Pro duct Name 2 lines</div>
+                                <div class="pdp-link">Product Name 2 lines</div>
                                 <div class="price">$00.00</div>
                                 <div class="row tile-body-footer">
                                     <div class="ratings col-xs-12 col-sm-6">
@@ -832,29 +836,46 @@
 
         <h4 class="sub-section">Loader</h4>
         <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy</p>
+        <p><span class="text-primary">TODO Note:</span> Currently using font awesome animated icons</p>
+        <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+        <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
 
         <h3 class="section">Motion</h3>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear</p>
     </div>
 </isdecorate>
 
+<!-- TODO - script includes for tooltip, add as middleware-->
+<!-- Popper -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <script>
 // TODO - Placeholder script for form validation example
 (function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
+    'use strict';
+    //Enables tooltip data toggle
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+  
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
 })();
 </script>
