@@ -769,7 +769,7 @@ if (options.deployCartridges) {
     }
 
     const dwupload = dwuploadModule();
-    const uploadArguments = getUploadOptions();
+    let uploadArguments = getUploadOptions();
 
     if (!uploadArguments.hostname) {
         console.log(chalk.red('Error: Please provide a hostname to deploy cartridges!'));
