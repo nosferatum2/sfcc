@@ -346,29 +346,6 @@ $sizes: map-merge(
     $sizes
 );
 
-//--------------------------------
-//  BREAKPOINTS
-//--------------------------------
-
-$grid-breakpoints: (
-    xs: 0,
-    sm: 320px,
-    md: 768px,
-    lg: 1025px,
-    xl: 1200px
-);
-
-// Grid containers
-
-// Define the maximum width of `.container` for different screen sizes.
-
-$container-max-widths: (
-    sm: 300px,
-    md: 767px,
-    lg: 1024px,
-    xl: 1199px
-);
-
 // Grid columns
 
 // Set the number of columns and specify the width of the gutters.
