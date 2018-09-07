@@ -18,7 +18,6 @@ $flag-icon-css-path: "../fonts/flags/";
 
 $white: #fff;
 $black: #000;
-$red: #c00;
 $denim: #1976d3;
 $anakiwa: #88c4ff;
 $blumine: #1d568e;
@@ -42,15 +41,15 @@ $cerulean-blue: #2553b5;
 $trans: transparent;
 
 // Gray Colors - Bootstrap overrides
-$gray-100: #22252a;
-$gray-200: #495056;
+$gray-100: #f8f9fb;
+$gray-200: #e8ecef;
 $gray-300: #cfd4da;
-$gray-400: #e8ecef;
-$gray-500: #f8f9fb;
-$gray-600: #f8f9fb;
-$gray-700: #f8f9fb;
-$gray-800: #f8f9fb;
-$gray-900: #f8f9fb;
+$gray-400: #495056;
+$gray-500: #22252a;
+$gray-600: #22252a;
+$gray-700: #22252a;
+$gray-800: #22252a;
+$gray-900: #22252a;
 
 // Theme Mappings
 $colors: () !default;
@@ -77,8 +76,8 @@ $colors: map-merge(
         "daisy-bush": $daisy-bush,
         "cerulean-blue": $cerulean-blue,
         "white": $white,
-        "gray": $gray-600,
-        "gray-dark": $gray-800
+        "gray": $gray-100,
+        "gray-dark": $gray-100
     ),
     $colors
 );
@@ -88,46 +87,54 @@ $primary-light: $anakiwa;
 $primary-dark: $blumine;
 $secondary: $orangepeel;
 $secondary-light: $creambrulee;
-$tertiary: $gray-100;
-$success: $japanese-laurel;
-$info: $calypso;
-$warning: $mustard;
-$error: $tamarillo;
-$brand-success: #008827;
-$brand-danger: $red;
-$brand-primary: #00a1e0;
-$brand-color: $primary;
-$state-danger-text: $white;
-$light: $gray-500;
-$dark: $gray-100;
-$light-gray: $gray-400;
-$slightly-darker-gray: $gray-400;
-$dark-gray: $gray-400;
-$darker-gray: $gray-400;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
 $accent-4: $pinegreen;
+$tertiary: $gray-500;
+$success: $japanese-laurel;
+$info: $calypso;
+$warning: $mustard;
+$error: $tamarillo;
+$light: $gray-100;
+$dark: $gray-500;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
     (
         "primary": $primary,
+        "primary-light": $primary-light,
+        "primary-dark": $primary-dark,
         "secondary": $secondary,
+        "secondary-light": $secondary-light,
+        "accent-1": $accent-1,
+        "accent-2": $accent-2,
+        "accent-3": $accent-3,
+        "accent-4": $accent-4,
         "tertiary": $tertiary,
         "success": $success,
         "info": $info,
         "warning": $warning,
         "error": $error,
         "light": $light,
-        "dark": $dark,
-        "accent-1": $accent-1,
-        "accent-2": $accent-2,
-        "accent-3": $accent-3,
-        "accent-4": $accent-4
+        "dark": $dark
     ),
     $theme-colors
 );
+
+//--------------------------------
+//  OTHER THEME COLORS
+//--------------------------------
+
+$brand-success: $pinegreen;
+$brand-danger: $cinnabar;
+$brand-primary: $cerulean-blue;
+$brand-color: $primary;
+$light-gray: $gray-200;
+$slightly-darker-gray: $gray-200;
+$dark-gray: $gray-200;
+$darker-gray: $gray-200;
+$state-danger-text: $white;
 
 //--------------------------------
 //  ALERTS
@@ -155,7 +162,7 @@ $enable-gradients: false; // bootstrap override -> must be set to true for gradi
 $font-size-base: 1rem; // sets base font size applied to html element
 $font-size-body: $font-size-base * 0.875; // font size applied to body element
 $font-size-xs: $font-size-base * 0.75;
-$body-color: $gray-100; //bootstrap override
+$body-color: $gray-500; //bootstrap override
 
 // Fonts
 
@@ -196,9 +203,12 @@ $border3-color: $mustard;
 $border3: 1px solid $border3-color;
 $border4-color: $blumine;
 $border4: 1px solid $border4-color;
-$horizontal-border-grey: $gray-400;
-$hr-border-color: $gray-400;
-$horizontal-rule-grey: $gray-400;
+$border5-color: $gray-200;
+$border5: 2px solid $border5-color;
+$border6: 1px solid rgba(0, 0, 0, 0.2);
+$horizontal-border-grey: $gray-200;
+$hr-border-color: $gray-200;
+$horizontal-rule-grey: $gray-200;
 
 //--------------------------------
 //  BOX SHADOWS
@@ -215,7 +225,7 @@ $shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
 //  LINKS
 //--------------------------------
 
-$link-color: $gray-100; //bootstrap override
+$link-color: $gray-500; //bootstrap override
 $link-hover-color: $denim; //bootstrap override
 $link-decoration-alt: underline;
 
@@ -223,10 +233,10 @@ $link-decoration-alt: underline;
 //  DROPDOWN MENU
 //--------------------------------
 
-$menu-link: $gray-400;
-$close-menu-bg: $gray-400;
-$dropdown-link-hover-bg: $gray-400; //bootstrap override
-$dropdown-link-hover-color: $gray-400; //bootstrap override
+$menu-link: $gray-200;
+$close-menu-bg: $gray-200;
+$dropdown-link-hover-bg: $gray-200; //bootstrap override
+$dropdown-link-hover-color: $gray-200; //bootstrap override
 
 //--------------------------------
 //  BUTTONS & FORMS
@@ -243,8 +253,8 @@ $btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
 
 $breadcrumb-bg: $white;
 $breadcrumb-before-color: $denim;
-$breadcrumb-active-color: $gray-200; //bootstrap override
-$breadcrumb-divider-color: $gray-200; //bootstrap override
+$breadcrumb-active-color: $gray-400; //bootstrap override
+$breadcrumb-divider-color: $gray-400; //bootstrap override
 
 //--------------------------------
 //  BUTTONS
@@ -254,10 +264,10 @@ $btn-icon-size: 12px;
 $btn-icon-spacing: 8px;
 $btn-link-color: $primary; //bootstrap override
 $btn-disabled-opacity: 1;
-$btn-disabled-main-color: $gray-200;
-$btn-disabled-main-bg: $gray-400;
-$btn-disabled-main-border-color: $gray-400;
-$btn-disabled-alt-color: $gray-100;
+$btn-disabled-main-color: $gray-400;
+$btn-disabled-main-bg: $gray-200;
+$btn-disabled-main-border-color: $gray-200;
+$btn-disabled-alt-color: $gray-500;
 $btn-disabled-alt-bg: $gray-300;
 $btn-disabled-alt-border-color: $gray-300;
 $btn-font-size: $font-size-body; //bootstrap override
@@ -277,12 +287,12 @@ $contentswitcher-active-bg: $denim;
 // all bootstrap overrides
 $form-group-margin-bottom: 1.5rem;
 $input-border-color: $gray-300;
-$input-color: $gray-200;
+$input-color: $gray-400;
 $input-border-radius: 0;
 $input-box-shadow: none;
-$input-bg: $gray-400;
-$input-placeholder-color: $gray-200;
-$custom-select-bg: $gray-400;
+$input-bg: $gray-200;
+$input-placeholder-color: $gray-400;
+$custom-select-bg: $gray-200;
 $custom-select-border-radius: 0;
 $custom-select-focus-box-shadow: none;
 $input-padding-x: 0.75rem;
@@ -292,14 +302,14 @@ $custom-select-bg-size: 22px 22px;
 $custom-checkbox-indicator-border-radius: 0;
 $custom-control-indicator-box-shadow: none;
 $custom-control-indicator-bg: $white;
-$text-muted: $gray-200;
+$text-muted: $gray-400;
 
 //--------------------------------
 // Product Tile
 //--------------------------------
 
 $product-tile-promo: $pomegranate;
-$product-number-grey: $gray-400;
+$product-number-grey: $gray-200;
 
 //--------------------------------
 //  SPACING
@@ -379,10 +389,10 @@ $modal-header-border-color: transparent;
 $nav-pills-link-color: $denim;
 $nav-pills-link-active-color: $white;
 $nav-pills-link-active-bg: $denim;
-$nav-tabs-link-color: $gray-100;
+$nav-tabs-link-color: $gray-500;
 $nav-tabs-link-active-color: $denim;
 $nav-tabs-link-hover-border-color: $white;
-$nav-link-disabled-color: $gray-200;
+$nav-link-disabled-color: $gray-400;
 $nav-tabs-border-color: $denim;
 $nav-tabs-border-bottom-width: 2px;
 
@@ -397,8 +407,6 @@ $table-border-color: $gray-300;
 //  QUICKVIEW COMPONENT
 //--------------------------------
 
-$quickview-header-border: 2px solid #ccc;
-$quickview-content-border: 1px solid rgba(0, 0, 0, 0.2);
 $quickview-font-size1: $font-size-base * 0.625;
 $quickview-font-size2: $font-size-base * 1.5;
 $quickview-font-size3: $font-size-base * 1.6;

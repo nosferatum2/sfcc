@@ -152,6 +152,7 @@
 
         <h3 class="section">Styles</h3>
         <h4 class="sub-section">Borders & Dividers</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/utilities/borders/">https://getbootstrap.com/docs/4.0/utilities/borders/</a></p>
         <p><span class="text-primary">TODO Note:</span> 1. Discuss with XD - these borders are not well mapped with the theme. 2. Do we want to be able to use the border utilities?</p>
 
         <div class="flex-container sg-borders">
@@ -313,6 +314,7 @@
         </div>
 
         <h3 class="section">Buttons</h3>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/buttons/">https://getbootstrap.com/docs/4.0/components/buttons/</a></p>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - 1. doesn't follow theme, 2. has too many disabled variants, used FA icons (discuss?)</p>
 
         <div class="sg-buttons">
@@ -347,6 +349,7 @@
         </div>
 
         <h3 class="section">Forms</h3>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/forms/">https://getbootstrap.com/docs/4.0/components/forms/</a></p>
         <div class="sg-forms">
             <form class="needs-validation" novalidate>
                 <div class="form-group">
@@ -384,6 +387,7 @@
 
         <h3 class="section">Messages</h3>
         <h4 class="sub-section">Alerts</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - the alerts mixins use lighten and darken values off of the theme colors to adjust the background and text shades - mixin would need to be rewritten per the design styleguide</p>
 
         <div class="alert-colors">
@@ -439,18 +443,10 @@
         </div>
 
         <h4 class="sub-section">Tooltips</h4>
-        <p><span class="text-primary">TODO Note:</span> OOB bootstrap tooltips are not being used, it's some customization of it - my recommendation is that we update these across the site to use bootstrap</p>
-        
-        <span>Bogus tooltip (notice how it doesn't have arrow and doesn't position properly)</span>
-        <span class="info-icon">
-            <span class="icon">i</span>
-            <div class="tooltip">
-                This tooltip is not an OOB bootstrap tooltip
-            </div>
-        </span>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/tooltips/">https://getbootstrap.com/docs/4.0/components/tooltips/</a></p>
 
-        <i data-toggle="tooltip" data-placement="top" title="TOP TEST" class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-        <i data-toggle="tooltip" data-placement="right" title="RIGHT TEST" class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+        <i data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas euismod sollicitudin. Morbi tincidunt euismod leo vel eleifend. " class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+        <i data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit dapibus tincidunt. Mauris egestas euismod sollicitudin." class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
 
 
         <h3 class="section">Iconography</h3>
@@ -460,6 +456,7 @@
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - the 'grid' shown in the design styleguide doesn't really match up with the bootstrap concept, and all viewports need to be equally divisible (not 8 for tablet)</p>
 
         <h4 class="sub-section">Grids</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a></p>
         <p class="sub-section">Desktop 1280px / 12 Columns</p>
         <p class="sub-section">Tablet 768px / 6 Columns (changed from 8)</p>
         <p class="sub-section">Mobile 320px / 4 Columns</p>
@@ -497,9 +494,8 @@
 
         <h3 class="section">Components</h3>
         <h4 class="sub-section">Product Tiles</h4>
-        <div class="container-fluid">
+        <div class="container-fluid sg-product-tiles">
             <div class="row">
-            
                 <div class="col-sm-6 col-md-3">
                     <div class="grid-tile">
                         <div class="product-tile">
@@ -609,6 +605,7 @@
         
         <h4 class="sub-section">Cards</h4>
         <p><span class="text-primary">TODO Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/card/">https://getbootstrap.com/docs/4.0/components/card/</a></p>
         <div class="sg-cards">
             <div class="card-deck">
                 <div class="card">
@@ -653,6 +650,7 @@
         </div>
         
         <h4 class="sub-section">Accordions</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example">https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example</a></p>
         <div id="accordion">
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -698,6 +696,7 @@
           </div>
 
         <h4 class="sub-section">Tabs</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/navs/">https://getbootstrap.com/docs/4.0/components/navs/</a></p>
             <!-- Nav pills -->
             <ul class="nav nav-pills">
                 <li class="nav-item">
@@ -756,6 +755,7 @@
         <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
 
         <h4 class="sub-section">Tables</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/content/tables/">https://getbootstrap.com/docs/4.0/content/tables/</a></p>
         <table class="table">
           <thead>
               <tr>
@@ -784,6 +784,7 @@
         </table>
 
         <h4 class="sub-section">Breadcrumbs</h4>
+        <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">https://getbootstrap.com/docs/4.0/components/breadcrumb/</a></p>
             <div class="breadcrumbs">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -835,27 +836,27 @@
         </ol>
 
         <h4 class="sub-section">Loader</h4>
-        <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy</p>
-        <p><span class="text-primary">TODO Note:</span> Currently using font awesome animated icons</p>
+        <p><span class="text-primary">TODO Note:</span> Should we really be redesigning this per project? We didn't on legacy. Currently using font awesome animated icons.</p>
         <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
         <span class="sr-only">Loading...</span>
         <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
         <span class="sr-only">Loading...</span>
 
-        <h3 class="sub-section">Motion</h3>
+        <h3 class="section">Motion</h3>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear</p>
         <div class="card-animation">
-            <h3 class="section">Card Hover Animation</h3>
+            <h4 class="sub-section">Card Hover Animation</h4>
 	            <div class="card default"></div>
 	            <div class="card animation easeincubic"></div>
 	            <div class="card animation easeoutcubic"></div>
 	            <div class="card hover"></div>
-            <h3 class="section">Button Hover Animation</h3>
+            <h4 class="sub-section">Button Hover Animation</h4>
         </div>
     </div>
 </isdecorate>
 
 <!-- TODO - script includes for tooltip, add as middleware-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 

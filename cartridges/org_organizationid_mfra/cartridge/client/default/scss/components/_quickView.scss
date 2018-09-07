@@ -13,12 +13,12 @@
     }
 
     .beenSelected {
-        background-color: $grey2;
+        background-color: $gray-200;
     }
 
     .modal-header {
-        background-color: $grey2;
-        border-bottom: $quickview-header-border;
+        background-color: $gray-200;
+        border-bottom: $border5;
         border-top-left-radius: 0.1875rem;
         border-top-right-radius: 0.1875rem;
 
@@ -63,7 +63,7 @@
     }
 
     .modal-content {
-        border: $quickview-content-border;
+        border: $border6;
     }
 
     .modal-body {
@@ -92,7 +92,7 @@
 
     .promotions {
         text-align: center;
-        color: $red;
+        color: $cinnabar;
     }
 
     .bonus-summary {
