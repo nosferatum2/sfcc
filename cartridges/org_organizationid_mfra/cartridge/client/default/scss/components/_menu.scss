@@ -108,7 +108,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     @include media-breakpoint-down($breakpoint-name) {
         .bg-inverse {
             background-color: white !important;
-            color: $gray-700;
+            color: $gray-100;
         }
     }
 
@@ -125,7 +125,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
                 padding-left: 1em;
 
                 + .nav-item {
-                    border-top: 1px solid $gray-200;
+                    border-top: 1px solid $gray-400;
                 }
             }
 

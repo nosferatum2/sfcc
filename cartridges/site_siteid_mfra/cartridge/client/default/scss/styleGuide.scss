@@ -18,8 +18,8 @@
     .section {
         margin: 1em;
         padding: 0.2em 0 0.2em 1em;
-        color: $gray-100;
-        border-left: 3px solid $gray-300;
+        color: $gray-500;
+        border-left: 3px solid $gray-200;
         background: none;
     }
 
@@ -29,7 +29,7 @@
         &.sub-section {
             padding: 0.5em 0 0.5em 1em;
             margin: 1em 0;
-            background: $gray-400;
+            background: $gray-200;
         }
     }
 
@@ -37,7 +37,7 @@
         display: inline-block;
         margin: 1em 0 0.5em;
         padding: 0.3em;
-        background: rgba($gray-400, 0.6);
+        background: rgba($gray-200, 0.6);
         clear: both;
 
         span {
@@ -46,7 +46,7 @@
     }
 
     .spec {
-        color: $gray-200;
+        color: $gray-400;
         margin-top: 0.5em;
     }
 
@@ -137,6 +137,12 @@
         }
     }
 
+    .sg-grid-demo {
+        .col {
+            border: $border;
+        }
+    }
+
     .sg-spacers {
         .spacer {
             background: mistyrose;
@@ -164,6 +170,22 @@
             display: block;
         }
     }
+
+    .sg-lists {
+        ul, // hack for dashes
+        ol {
+            ul,
+            ol {
+                list-style-type: none;
+
+                li::before {
+                    content: '\2014';
+                    position: absolute;
+                    margin-left: -20px;
+                }
+            }
+        }
+    }
 }
 
 // Colors
@@ -174,7 +196,7 @@
         width: 200px;
         height: 200px;
         margin-bottom: 5px;
-        color: $gray-600;
+        color: $gray-100;
     }
 
     .color-var {
@@ -249,12 +271,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $gray-100;
+                    color: $gray-500;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $gray-100;
+                border: 1px solid $gray-500;
             }
         }
     }
@@ -298,13 +320,13 @@
 .gray-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
     $colorlist: (
-        $black,
+        $white,
         $gray-100,
         $gray-200,
         $gray-300,
         $gray-400,
         $gray-500,
-        $white
+        $black
     );
 
     @for $i from 1 through length($colorlist) {
@@ -322,12 +344,12 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 @if lightness($c) > 75 {
-                    color: $gray-100;
+                    color: $gray-500;
                 }
             }
 
             @if lightness($c) > lightness($light-gray) {
-                border: 1px solid $gray-100;
+                border: 1px solid $gray-500;
             }
         }
     }
@@ -373,6 +395,28 @@
             box-shadow: $c;
             border: $border;
             background: $white;
+        }
+    }
+}
+
+.sg-cards {
+    .card-deck {
+        @include media-breakpoint-up(sm) {
+            display: flex;
+            flex-flow: row wrap;
+
+            .card {
+                margin-bottom: $card-deck-margin;
+                flex: 1 1 auto;
+
+                @include media-breakpoint-up(md) {
+                    flex: 1 0 40%;
+                }
+
+                @include media-breakpoint-up(lg) {
+                    flex: 1 0 20%;
+                }
+            }
         }
     }
 }

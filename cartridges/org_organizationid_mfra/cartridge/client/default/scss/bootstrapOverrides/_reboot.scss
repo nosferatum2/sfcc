@@ -13,17 +13,3 @@ form {
 label {
     font-weight: $font-weight-bold;
 }
-
-ul, // hack for dashes
-ol {
-    ul,
-    ol {
-        list-style-type: none;
-
-        li::before {
-            content: '\2014';
-            position: absolute;
-            margin-left: -20px;
-        }
-    }
-}
