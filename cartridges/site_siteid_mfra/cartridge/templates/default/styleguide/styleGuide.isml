@@ -444,10 +444,14 @@
 
         <h4 class="sub-section">Tooltips</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/tooltips/">https://getbootstrap.com/docs/4.0/components/tooltips/</a></p>
-
-        <i data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas euismod sollicitudin. Morbi tincidunt euismod leo vel eleifend. " class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-        <i data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit dapibus tincidunt. Mauris egestas euismod sollicitudin." class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-
+        <div class="row">
+	        <div class="col">
+	            TOP <i data-toggle="tooltip" data-placement="top" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris egestas euismod sollicitudin. Morbi tincidunt euismod leo vel eleifend. " class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+	        </div>
+	        <div class="col">
+	            RIGHT <i data-toggle="tooltip" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam suscipit dapibus tincidunt. Mauris egestas euismod sollicitudin." class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+	        </div>
+        </div>
 
         <h3 class="section">Iconography</h3>
         <p><span class="text-primary">TODO Note:</span> TBD - Discuss how we want to handle SVGs</p>
