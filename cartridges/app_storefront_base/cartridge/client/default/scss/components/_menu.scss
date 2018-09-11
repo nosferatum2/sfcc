@@ -81,14 +81,8 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         z-index: 4;
 
         // Mobile version fix so that nav container height fits to screen.
-        .container {
-            height: 100%;
-        }
-
-        .row {
-            height: 100%;
-        }
-
+        .container,
+        .row,
         .menu-group {
             height: 100%;
         }
