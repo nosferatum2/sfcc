@@ -69,36 +69,3 @@
         text-decoration: none;
     }
 }
-
-// Card Animation
-
-.card-animation {
-    .card {
-        height: 140px;
-        width: 140px;
-
-        &.animation.easeincubic:hover {
-            animation: easeInCubic 200ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
-        }
-
-        &.animation.easeoutcubic:hover {
-            animation: easeOutCubic 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        @keyframes easeInCubic {
-            to {
-                transform: translate(200px);
-            }
-        }
-
-        @keyframes easeOutCubic {
-            to {
-                transform: translate(200px);
-            }
-        }
-
-        &.hover:hover {
-            transform: scale(1.25);
-        }
-    }
-}

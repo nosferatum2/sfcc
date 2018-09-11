@@ -7,6 +7,7 @@
         <h1>SFRA Style Guide</h1>
 
         <h3 class="section">Color Theme & Palette</h3>
+        <p>Link: <a href="http://getbootstrap.com/docs/4.0/getting-started/theming/">http://getbootstrap.com/docs/4.0/getting-started/theming/</a></p>
         <p><span class="text-primary">Note:</span> Bolded values indicate the theme name</p>
 
         <h4 class="sub-section">Main Colors</h4>
@@ -65,23 +66,13 @@
         <h4 class="sub-section">Grays</h4>
         <div class="flex-container color gray-colors">
             <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var">$white</code>
-               <div class="spec">Spec:</div>
-            </div>
-            <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var"><span>$dark:</span> $gray-100</code>
-               <div class="spec">Spec:</div>
-            </div>
-            <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$gray-200</code>
+                <code class="color-var">$black</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$gray-300</code>
+                <code class="color-var"><span>$dark:</span> $gray-500</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
@@ -91,13 +82,23 @@
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$light:</span> $gray-500</code>
+                <code class="color-var">$gray-300</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var">$black</code>
+                <code class="color-var">$gray-200</code>
                 <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>$light:</span> $gray-100</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var">$white</code>
+               <div class="spec">Spec:</div>
             </div>
         </div>
 
@@ -483,36 +484,33 @@
 
         <div class="container sg-grid-demo">
             <div class="row">
-                <div class="col col-sm-3">
-                    col-sm-3
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div class="xs">col-12 <span>&#60 576px</span></div>
+                    <div class="sm">col-sm-6 <span>&#8805 540px</span></div>
+                    <div class="md">col-md-4 <span>&#8805 720px</span></div>
+                    <div class="lg">col-lg-3 <span>&#8805 960px</span></div>
+                    <div class="xl">col-xl-3 <span>&#8805 1200px</span></div>
                 </div>
-                <div class="col col-sm-3">
-                    col-sm-3
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div class="xs">col-12 <span>&#60 576px</span></div>
+                    <div class="sm">col-sm-6 <span>&#8805 540px</span></div>
+                    <div class="md">col-md-4 <span>&#8805 720px</span></div>
+                    <div class="lg">col-lg-3 <span>&#8805 960px</span></div>
+                    <div class="xl">col-xl-3 <span>&#8805 1200px</span></div>
                 </div>
-                <div class="col col-sm-3">
-                    col-sm-3
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div class="xs">col-12 <span>&#60 576px</span></div>
+                    <div class="sm">col-sm-6 <span>&#8805 540px</span></div>
+                    <div class="md">col-md-4 <span>&#8805 720px</span></div>
+                    <div class="lg">col-lg-3 <span>&#8805 960px</span></div>
+                    <div class="xl">col-xl-3 <span>&#8805 1200px</span></div>
                 </div>
-                <div class="col col-sm-3">
-                    col-sm-3
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-md-4">
-                    col-md-4
-                </div>
-                <div class="col col-md-4">
-                    col-md-4
-                </div>
-                <div class="col col-md-4">
-                    col-md-4
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-lg-6">
-                    col-lg-6
-                </div>
-                <div class="col col-lg-6">
-                    col-lg-6
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                    <div class="xs">col-12 <span>&#60 576px</span></div>
+                    <div class="sm">col-sm-6 <span>&#8805 540px</span></div>
+                    <div class="md">col-md-4 <span>&#8805 720px</span></div>
+                    <div class="lg">col-lg-3 <span>&#8805 960px</span></div>
+                    <div class="xl">col-xl-3 <span>&#8805 1200px</span></div>
                 </div>
             </div>
         </div>
@@ -887,18 +885,21 @@
 
         <h3 class="section">Motion</h3>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear, in progress</p>
-        <div class="card-animation">
-            <h4 class="sub-section">Card Hover Animation</h4>
-                <div class="card default"></div>
-                <div class="card animation easeincubic"></div>
-                <div class="card animation easeoutcubic"></div>
-                <div class="card hover"></div>
-        </div>
-        <div class="button-animation">
-            <h4 class="sub-section">Button Hover Animation</h4>
-                <button class="btn btn-secondary"></button>
-                <button class="btn btn-secondary"></button>
-                <button class="btn btn-secondary"></button>
+        <div class="sg-motion">
+            <div class="card-animation">
+                <h4 class="sub-section">Card Hover Animation</h4>
+                <div class="card default">Default</div>
+                <div class="card animation easeincubic">EaseInCubic</div>
+                <div class="card animation easeoutcubic">EaseOutCubic</div>
+                <div class="card hover">Hover</div>
+            </div>
+            <div class="button-animation">
+            <p><span class="text-primary">TODO Note:</span> ElasticInEase Animation</p>
+                <h4 class="sub-section">Button Hover Animation</h4>
+                <button class="btn btn-secondary"><h6>Default</h6></button>
+                <button class="btn btn-secondary animation easeinelastic"><h6>EaseInElastic</h6></button>
+                <button class="btn btn-secondary hover"><h6>Hover</h6></button>
+            </div>
         </div>
     </div>
 </isdecorate>

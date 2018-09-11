@@ -140,6 +140,57 @@
     .sg-grid-demo {
         .col {
             border: $border;
+
+            span {
+                margin-left: 3em;
+            }
+
+            .sm,
+            .md,
+            .lg,
+            .xl {
+                display: none;
+            }
+
+            @include media-breakpoint-up(sm) {
+                .xs {
+                    display: none;
+                }
+
+                .sm {
+                    display: block;
+                }
+            }
+
+            @include media-breakpoint-up(md) {
+                .sm {
+                    display: none;
+                }
+
+                .md {
+                    display: block;
+                }
+            }
+
+            @include media-breakpoint-up(lg) {
+                .md {
+                    display: none;
+                }
+
+                .lg {
+                    display: block;
+                }
+            }
+
+            @include media-breakpoint-up(xl) {
+                .lg {
+                    display: none;
+                }
+
+                .xl {
+                    display: block;
+                }
+            }
         }
     }
 
@@ -182,6 +233,51 @@
                     content: '\2014';
                     position: absolute;
                     margin-left: -20px;
+                }
+            }
+        }
+    }
+
+    .sg-motion {
+        .card-animation {
+            .card {
+                height: 140px;
+                width: 140px;
+                margin: 2em 4em;
+
+                &.animation.easeincubic:hover {
+                    animation: easeInCubic 200ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+                }
+
+                &.animation.easeoutcubic:hover {
+                    animation: easeOutCubic 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+                }
+
+                @keyframes easeInCubic {
+                    to {
+                        transform: translate(150px);
+                    }
+                }
+
+                @keyframes easeOutCubic {
+                    to {
+                        transform: translate(150px);
+                    }
+                }
+
+                &.hover:hover {
+                    transform: scale(1.25);
+                }
+            }
+        }
+
+        .button-animation {
+            .btn {
+                height: 40px;
+                width: 200px;
+
+                &.hover:hover {
+                    transform: scaleY(1.5);
                 }
             }
         }
@@ -320,13 +416,13 @@
 .gray-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
     $colorlist: (
-        $white,
-        $gray-100,
-        $gray-200,
-        $gray-300,
-        $gray-400,
+        $black,
         $gray-500,
-        $black
+        $gray-400,
+        $gray-300,
+        $gray-200,
+        $gray-100,
+        $white
     );
 
     @for $i from 1 through length($colorlist) {

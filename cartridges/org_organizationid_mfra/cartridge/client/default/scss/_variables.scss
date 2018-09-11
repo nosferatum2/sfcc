@@ -75,9 +75,9 @@ $colors: map-merge(
         "cornflower-blue": $cornflower-blue,
         "daisy-bush": $daisy-bush,
         "cerulean-blue": $cerulean-blue,
+        "trans": $trans,
         "white": $white,
-        "gray": $gray-100,
-        "gray-dark": $gray-100
+        "black": $black
     ),
     $colors
 );
@@ -132,8 +132,8 @@ $brand-primary: $cerulean-blue;
 $brand-color: $primary;
 $light-gray: $gray-200;
 $slightly-darker-gray: $gray-200;
-$dark-gray: $gray-200;
-$darker-gray: $gray-200;
+$dark-gray: $gray-400;
+$darker-gray: $gray-500;
 $state-danger-text: $white;
 
 //--------------------------------
@@ -309,7 +309,7 @@ $text-muted: $gray-400;
 //--------------------------------
 
 $product-tile-promo: $pomegranate;
-$product-number-grey: $gray-200;
+$product-number-grey: $gray-400;
 
 //--------------------------------
 //  SPACING
