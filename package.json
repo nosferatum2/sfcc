@@ -142,5 +142,8 @@
         "data_test_static"
       ]
     }
+  },
+  "buildEnvironment": {
+    "verbose" : "false"
   }
 }

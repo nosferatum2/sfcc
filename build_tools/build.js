@@ -21,6 +21,7 @@ const chalk = require('chalk');
 const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
+const helpers = require('./helpers');
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -207,7 +208,7 @@ function checkForDwJson() {
  * Deletes all files in the tmp directory
  */
 function clearTmp() {
-    if (options.verbose) {
+    if (helpers.isBuildEnvironment('verbose')) {
         console.log(chalk.green('build.js:clearTmp()'));
     }
     shell.rm('-rf', TEMP_DIR);
@@ -432,9 +433,7 @@ function createVersionProperties(uploadArguments) {
 }
 
 const options = optionator.parse(process.argv);
-
-/** @todo - need to handle verbose flag better. Hardcoded to verbose mode for n */
-options.verbose = true;
+const uploadArguments = getUploadOptions();
 
 if (options.help) {
     console.log(optionator.generateHelp());
@@ -568,7 +567,7 @@ if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
         console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (options.verbose) {
+        if (helpers.isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
         }
@@ -584,7 +583,7 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (options.verbose) {
+        if (helpers.isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
         }
@@ -770,7 +769,7 @@ if (options.deployCartridges) {
     }
 
     const dwupload = dwuploadModule();
-    var uploadArguments = getUploadOptions();
+    let uploadArguments = getUploadOptions();
 
     if (!uploadArguments.hostname) {
         console.log(chalk.red('Error: Please provide a hostname to deploy cartridges!'));
