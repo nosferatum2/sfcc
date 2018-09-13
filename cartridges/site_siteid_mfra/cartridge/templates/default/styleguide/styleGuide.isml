@@ -782,11 +782,11 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 <p> 
-                    <div class="tab-pane active" id="tab1" role="tabpanel" aria-labelledby="home-tab">Content from tab 1</div>
-                    <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="profile-tab">Content from tab 2</div>
-                    <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="messages-tab">Content from tab 3</div>
-                    <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="settings-tab">Content from tab 4</div>
-                    <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="settings-tab">Content from tab 5</div>
+                    <div class="tab-pane" id="tab1" role="tabpanel" aria-labelledby="content1-tab">Content from tab 1</div>
+                    <div class="tab-pane active" id="tab2" role="tabpanel" aria-labelledby="content2-tab">Content from tab 2</div>
+                    <div class="tab-pane" id="tab3" role="tabpanel" aria-labelledby="content3-tab">Content from tab 3</div>
+                    <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="content4-tab">Content from tab 4</div>
+                    <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="content5-tab">Content from tab 5</div>
                 </p>
             </div>
 
@@ -846,6 +846,7 @@
             </div>
 
         <h4 class="sub-section">Content Switcher</h4>
+        <p><span class="text-primary">TODO Note:</span> This part serves the same purpose as the nav tabs above a few sections above?</p>
         <div class="content-switcher">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-outline-primary">First section</button>
