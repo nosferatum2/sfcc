@@ -550,8 +550,9 @@ if (options.compile) {
                 for (var key in packageFile.sites[siteIndex].paths) {
                     var cartridgePath = packageFile.sites[siteIndex].paths[key];
                     var cartridgeName = cartridgePath.split(path.sep).pop();
+
                     if (cartridgeName) {
-                        console.log(chalk.blue('Building css for Site ' + cartridgeName));
+                        console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
                         css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
                             if (code == 1) {
                               process.exit(code);

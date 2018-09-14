@@ -8,7 +8,7 @@ try {
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     const chalk = require('chalk');
 
-    const verbose = true;
+    const verbose = false;
 
     const bootstrapPackages = {
         Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
