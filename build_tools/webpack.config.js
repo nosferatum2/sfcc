@@ -7,8 +7,7 @@ try {
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     const chalk = require('chalk');
-
-    const verbose = false;
+    const helpers = require('./helpers');
 
     const bootstrapPackages = {
         Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
@@ -36,7 +35,7 @@ try {
         const jsFiles = require('./helpers').createJsPath(packageName);
         const scssFiles = require('./helpers').createScssPath(packageName);
 
-        if (verbose) {
+        if (helpers.isBuildEnvironment('verbose')) {
             console.log(chalk.gray('Webpack(ing) js files'));
             if (jsFiles) {
                 for (let key in jsFiles) {
@@ -127,7 +126,7 @@ try {
                         })
                     }]
                 },
-                devtool: 'source-map',
+                devtool: 'cheap-eval-source-map',
                 plugins: plugins
             });
         }

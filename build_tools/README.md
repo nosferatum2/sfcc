@@ -170,3 +170,19 @@ SCSS paths will work similar to the JavaScript paths above. If you are importing
   After all of the properties have been entered click the "Apply" button at the bottom of the screen. This will save your project options.
 
   To test out the build, scroll to the top of the configuration and click the "Build Now" option in the upper left. If everything was setup correctly the build should complete successfully.
+  
+  
+##Examples
+
+Uploading individual cartridges to your sandbox/instance
+
+1. Configure dw.json file with your username, password, activation instance (sandbox URL) and currently active code version
+2. Configure the package.json file at the root directory level for the cartridges you want to upload (see "uploadCartridge")
+3. Navigate to the command line tool (CMD for Windows, Terminal for OSX)
+4. OSX/MAC
+		"cd <path to your build tools>"   Sample -> cd /Users/testuser/git/reference-application-sfra
+		"npm run uploadCartridge"  
+		
+##Notes
+
+Build environment flags (i.e Verbose Logging) are controlled via the "buildEnvironment" object in the package.json file

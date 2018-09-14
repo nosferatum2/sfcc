@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
-const verbose = false;
 
 /**
  * @function
@@ -40,8 +39,8 @@ const createAliases = (packageFile, pwd, returnSass) => {
                         }
                     });
                 }
-
-                if (verbose) {
+                
+                if (isBuildEnvironment('verbose')) {
                     console.log('Created aliases: ');
                     Object.keys(aliases).forEach(key => {
                         console.log('    ' + key + ' is ' + aliases[key]);
@@ -57,7 +56,7 @@ const createAliases = (packageFile, pwd, returnSass) => {
                     const innerPackage = require(path.join(cartridge, '../..', 'package.json'));
 
                     if (innerPackage.paths) {
-                        if (verbose) {
+                        if (isBuildEnvironment('verbose')) {
                             console.log(chalk.green('    Inner package found.'));
                         }
 
@@ -68,14 +67,14 @@ const createAliases = (packageFile, pwd, returnSass) => {
                                 aliases[key] = newAliases[key];
                             }
                         });
-                    } else {
-                        if (verbose) {
-                            console.log(chalk.gray('    No inner package found.'));
-                        }
+                    } else if (isBuildEnvironment('verbose')) {
+                        console.log(chalk.gray('    No inner package found.'));
                     }
                 } catch (e) {
-                    console.log(chalk.red('    ' + e));
-                    console.log(chalk.gray('    No inner package found.'));
+                    if (isBuildEnvironment('verbose')) {
+                        console.log(chalk.red('    ' + e));
+                        console.log(chalk.gray('    No inner package found.'));
+                    }
                 }
             }
 
@@ -97,59 +96,89 @@ const createAliases = (packageFile, pwd, returnSass) => {
     return aliases;
 };
 
-module.exports = {
-    /** updated packageName as a parameter so we can build multiple sites */
-    createJsPath: (packageName) => {
-        let result = null;
-        let jsFiles;
+/**
+ * @function
+ * @desc Creates the Javascript file paths for each given cartridge
+ * @param {String} packageName - reference to cartridge to create Javascript paths for
+ */
+function createJsPath(packageName) {
+    let result = null;
+    let jsFiles;
 
-        try {
-            jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/**/*.js`));
-        } catch(e) {
-            result = null;
-        }
+    try {
+        jsFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/js/**/*.js`));
+    } catch(e) {
+        result = null;
+    }
 
-        if (jsFiles) {
-            result = {};
-            jsFiles.forEach(filePath => {
+    if (jsFiles) {
+        result = {};
+
+        jsFiles.forEach(filePath => {
+            let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
+
+            if (location) {
+                location = location.substr(0, location.length - 3);
+                result[location] = filePath;
+            }
+        });
+    }
+
+    return result;
+}
+
+/**
+ * @function
+ * @desc Creates the Sass file paths for each given cartridge
+ * @param {String} packageName - reference to cartridge to create Sass paths for
+ */
+function createScssPath(packageName) {
+    let result = null;
+    let cssFiles;
+
+    try {
+        cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
+    } catch(e) {
+        result = null;
+    }
+
+    if (cssFiles) {
+        result = {};
+
+        cssFiles.forEach(filePath => {
+            const name = path.basename(filePath, '.scss');
+
+            if (name.indexOf('_') !== 0) {
                 let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
+
                 if (location) {
-                    location = location.substr(0, location.length - 3);
+                    location = location.substr(0, location.length - 5).replace('scss', 'css');
                     result[location] = filePath;
                 }
-            });
-        }
+            }
+        });
+    }
 
-        return result;
-    },
+    return result;
+}
+
+/**
+ * @function
+ * @desc Determines if the given build environment variable exists and is set to true
+ * @param opt
+ * @returns
+ */
+function isBuildEnvironment(opt) {
+    const packageFile = require(path.join(cwd, './package.json'));
+    return (packageFile.buildEnvironment[opt] && packageFile.buildEnvironment[opt] === 'true');
+}
+
+module.exports = {
     /** updated packageName as a parameter so we can build multiple sites */
-    createScssPath: (packageName) => {
-        let result = null;
-        let cssFiles;
-
-        try {
-            cssFiles = shell.ls(path.join(cwd, `./cartridges/${packageName}/cartridge/client/**/scss/**/*.scss`));
-        } catch(e) {
-            result = null;
-        }
-
-        if (cssFiles) {
-            result = {};
-            cssFiles.forEach(filePath => {
-                const name = path.basename(filePath, '.scss');
-
-                if (name.indexOf('_') !== 0) {
-                    let location = path.relative(path.join(cwd, `./cartridges/${packageName}/cartridge/client`), filePath);
-
-                    if (location) {
-                        location = location.substr(0, location.length - 5).replace('scss', 'css');
-                        result[location] = filePath;
-                    }
-                }
-            });
-        }
-
-        return result;
-    },
-    createAliases
+    createJsPath,
+    /** updated packageName as a parameter so we can build multiple sites */
+    createScssPath,
+    isBuildEnvironment,
+    createAliases,
 };
+
