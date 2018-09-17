@@ -10,7 +10,6 @@
         "vars-on-top": "off",
         "global-require": "off",
         "no-shadow": ["error", { "allow": ["err", "callback"]}],
-        "max-len": "off",
-        "linebreak-style": ["error", "windows"]
+        "max-len": "off"
     }
 }
