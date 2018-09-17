@@ -428,3 +428,28 @@ $svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org
 
 $slick-arrow-bg-color: transparent; // bootstrap override
 $slick-arrow-bg-color-hover: transparent; // bootstrap override
+
+//--------------------------------
+//  MOTION
+//--------------------------------
+
+$ease-in-cubic-bezier: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out-cubic-bezier: cubic-bezier(0.215, 0.61, 0.355, 1);
+$card-hover-scale: scale(1.25);
+$button-hover-scaley: scaleY(1.5);
+
+@keyframes easeInCubicMotion {
+    to {
+        transform: translate(150px);
+    }
+}
+
+@keyframes easeOutCubicMotion {
+    to {
+        transform: translate(150px);
+    }
+}
+
+$ease-in-cubic: easeInCubicMotion 200ms $ease-in-cubic-bezier;
+$ease-out-cubic: easeOutCubicMotion 200ms $ease-out-cubic-bezier;
+

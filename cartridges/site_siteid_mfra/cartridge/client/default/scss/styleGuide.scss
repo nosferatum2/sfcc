@@ -55,7 +55,8 @@
 
         &.color,
         &.gradient,
-        &.sg-shadows {
+        &.sg-shadows,
+        &.sg-motion {
             flex-wrap: wrap;
             justify-content: space-between;
             text-align: center;
@@ -233,51 +234,6 @@
                     content: '\2014';
                     position: absolute;
                     margin-left: -20px;
-                }
-            }
-        }
-    }
-
-    .sg-motion {
-        .card-animation {
-            .card {
-                height: 140px;
-                width: 140px;
-                margin: 2em 4em;
-
-                &.animation.easeincubic:hover {
-                    animation: easeInCubic 200ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
-                }
-
-                &.animation.easeoutcubic:hover {
-                    animation: easeOutCubic 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
-                }
-
-                @keyframes easeInCubic {
-                    to {
-                        transform: translate(150px);
-                    }
-                }
-
-                @keyframes easeOutCubic {
-                    to {
-                        transform: translate(150px);
-                    }
-                }
-
-                &.hover:hover {
-                    transform: scale(1.25);
-                }
-            }
-        }
-
-        .button-animation {
-            .btn {
-                height: 40px;
-                width: 200px;
-
-                &.hover:hover {
-                    transform: scaleY(1.5);
                 }
             }
         }
@@ -645,6 +601,35 @@
                     flex: 1 0 20%;
                 }
             }
+        }
+    }
+}
+
+.sg-motion {
+    .card {
+        height: 140px;
+        width: 140px;
+        background-color: $denim;
+
+        &.animation.easeincubic:hover {
+            animation: $ease-in-cubic;
+        }
+
+        &.animation.easeoutcubic:hover {
+            animation: $ease-out-cubic;
+        }
+
+        &.hover:hover {
+            transform: $card-hover-scale;
+        }
+    }
+
+    .btn {
+        height: 40px;
+        width: 200px;
+
+        &.hover:hover {
+            transform: $button-hover-scaley;
         }
     }
 }

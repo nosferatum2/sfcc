@@ -886,21 +886,45 @@
 
         <h3 class="section">Motion</h3>
         <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear, in progress</p>
-        <div class="sg-motion">
-            <div class="card-animation">
-                <h4 class="sub-section">Card Hover Animation</h4>
-                <div class="card default">Default</div>
-                <div class="card animation easeincubic">EaseInCubic</div>
-                <div class="card animation easeoutcubic">EaseOutCubic</div>
-                <div class="card hover">Hover</div>
+
+        <h4 class="sub-section">Card Hover Animation</h4>
+        <div class="flex-container sg-motion">
+            <div class="item">
+                <div class="card default"></div>
+                <code>Default</code>
+                <div class="spec">Spec:</div>
             </div>
-            <div class="button-animation">
-            <p><span class="text-primary">TODO Note:</span> ElasticInEase Animation</p>
-                <h4 class="sub-section">Button Hover Animation</h4>
-                <button class="btn btn-secondary"><h6>Default</h6></button>
-                <button class="btn btn-secondary animation easeinelastic"><h6>EaseInElastic</h6></button>
-                <button class="btn btn-secondary hover"><h6>Hover</h6></button>
+            <div class="item">
+                <div class="card animation easeincubic"></div>
+                <code>$ease-in-cubic</code>
+                <div class="spec">Spec: cubic-bezier(0.55, 0.055, 0.675, 0.19);</div>
             </div>
+            <div class="item">
+                <div class="card animation easeoutcubic"></div>
+                <code>$ease-out-cubic</code>
+                <div class="spec">Spec: cubic-bezier(0.215, 0.61, 0.355, 1)</div>
+            </div>
+            <div class="item">
+                <div class="card hover"></div>
+                <code>$card-hover-scale</code>
+                <div class="spec">Spec: scale(1.25)</div>
+            </div>
+        </div>
+
+        <p><span class="text-primary">TODO Note:</span> ElasticInEase Animation</p>
+        <h4 class="sub-section">Button Hover Animation</h4>
+        <div class="flex-container sg-motion">
+            <div class="item">
+               <button class="btn btn-secondary"></button>
+               <code>Default</code>
+               <div class="spec">Spec:</div>
+            </div>
+            <div class="item">
+               <button class="btn btn-secondary hover"></button>
+               <code>$button-hover-scaley</code>
+               <div class="spec">Spec: scaleY(1.5)</div>
+            </div>
+        </div>
         </div>
     </div>
 </isdecorate>
