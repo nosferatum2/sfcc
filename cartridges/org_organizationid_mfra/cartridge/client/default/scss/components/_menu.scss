@@ -36,10 +36,6 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             bottom: 0;
             transition: $slide-out-animation;
             display: block;
-            $gutter: $grid-gutter-width;
-
-            padding-left: $gutter / 2;
-            padding-right: $gutter / 2;
 
             &.in {
                 min-width: 50%;
@@ -50,8 +46,13 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 }
 
 .navbar.bg-inverse {
+<<<<<<< HEAD
     background-color: $trans !important;
     padding: 0 1rem;
+=======
+    background-color: transparent !important;
+    padding: 0;
+>>>>>>> develop
 
     @include media-breakpoint-up($next-breakpoint) {
         .navbar-nav .nav-item + .nav-item {
@@ -65,6 +66,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     }
 }
 
+.nav-item .nav-link:hover,
 .nav-item .nav-link:focus,
 .nav-item.show .nav-link {
     background-color: $white;
@@ -87,9 +89,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
 .menu-toggleable-left {
     .close-menu {
-        height: 60px;
-        margin-right: -1rem;
-        margin-left: -1rem;
+        flex: 0 0 100%;
         padding: 15px;
         background-color: $close-menu-bg;
         border-bottom: 1px solid $gray-300;
@@ -97,6 +97,10 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         @include media-breakpoint-up($next-breakpoint) {
             display: none;
         }
+    }
+
+    .menu-group {
+        flex: 0 0 100%;
     }
 
     li > .close-menu {
@@ -121,11 +125,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
         @include media-breakpoint-down($breakpoint-name) {
             .nav-item {
-                margin: 0 -1em;
-                padding-left: 1em;
-
                 + .nav-item {
                     border-top: 1px solid $gray-400;
+                }
+
+                .nav-link {
+                    padding-left: 1rem;
                 }
             }
 
@@ -135,7 +140,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             }
 
             .dropdown-toggle {
-                padding-right: 5em;
+                padding-left: 1rem;
 
                 &::after {
                     @include caret-right();
