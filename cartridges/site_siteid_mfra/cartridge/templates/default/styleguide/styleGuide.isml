@@ -158,27 +158,27 @@
         <div class="flex-container sg-borders">
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border / $border-light</code>
+                <code><span>$border</span> / .border-light</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-thick</code>
+                <code><span>$border-thick</span></code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-2 / $border-accent4</code>
+                <code><span>$border-2</span> / .border-accent4</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-3 / $border-info</code>
+                <code><span>$border-3</span> / .border-info</code>
                 <div class="spec">Spec:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
-                <code>$border-4 / no theme associated with this $blumine color</code>
+                <code><span>$border-4</span> / .border-primary-dark</code>
                 <div class="spec">Spec:</div>
             </div>
         </div>
