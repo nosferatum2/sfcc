@@ -126,7 +126,7 @@ try {
                         })
                     }]
                 },
-                devtool: 'source-map',
+                devtool: 'cheap-eval-source-map',
                 plugins: plugins
             });
         }
