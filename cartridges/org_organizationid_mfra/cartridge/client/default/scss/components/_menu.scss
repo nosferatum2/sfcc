@@ -46,13 +46,8 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 }
 
 .navbar.bg-inverse {
-<<<<<<< HEAD
     background-color: $trans !important;
     padding: 0 1rem;
-=======
-    background-color: transparent !important;
-    padding: 0;
->>>>>>> develop
 
     @include media-breakpoint-up($next-breakpoint) {
         .navbar-nav .nav-item + .nav-item {
