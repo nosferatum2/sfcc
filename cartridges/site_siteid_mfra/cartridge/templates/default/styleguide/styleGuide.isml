@@ -154,7 +154,6 @@
         <h3 class="section">Styles</h3>
         <h4 class="sub-section">Borders & Dividers</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/utilities/borders/">https://getbootstrap.com/docs/4.0/utilities/borders/</a></p>
-        <p><span class="text-primary">TODO Note:</span> 1. Discuss with XD - these borders are not well mapped with the theme. 2. Do we want to be able to use the border utilities?</p>
 
         <div class="flex-container sg-borders">
             <div class="item">
@@ -204,12 +203,11 @@
         </div>
 
         <h4 class="sub-section">Patterns</h4>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - I do not see any patterns in bootstrap or on the SFRA site</p>
+        <p><span class="text-primary">Note:</span> Patterns TBD</p>
 
         <!-- TODO Note: In the below sections I am using the bootstrap flex utility classes instead of applying in the SASS -->
         <h3 class="section">Typography</h3>
         <h4 class="sub-section">Fonts</h4>
-        <p><span class="text-primary">TODO Note:</span> Discuss how we want to handle the loading of more than 2 fonts</p>
 
         <div class="sg-type">
             <div class="item d-flex justify-content-start flex-wrap">
@@ -316,7 +314,6 @@
 
         <h3 class="section">Buttons</h3>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/buttons/">https://getbootstrap.com/docs/4.0/components/buttons/</a></p>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - 1. doesn't follow theme, 2. has too many disabled variants, used FA icons (discuss?)</p>
 
         <div class="sg-buttons">
             <div class="item">
@@ -389,7 +386,7 @@
         <h3 class="section">Messages</h3>
         <h4 class="sub-section">Alerts</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - this section doesn't work very well - the alerts mixins use lighten and darken values off of the theme colors to adjust the background and text shades - mixin would need to be rewritten per the design styleguide</p>
+        <p><span class="text-primary">Note:</span> Updates from XD pending</p>
 
         <div class="alert-colors">
             <div class="item">
@@ -455,16 +452,14 @@
         </div>
 
         <h3 class="section">Iconography</h3>
-        <p><span class="text-primary">TODO Note:</span> TBD - Discuss how we want to handle SVGs</p>
+        <p><span class="text-primary">Note:</span> SVG implementation pending</p>
 
         <h3 class="section">Grids & Spacing</h3>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - the 'grid' shown in the design styleguide doesn't really match up with the bootstrap concept, and all viewports need to be equally divisible (not 8 for tablet)</p>
 
         <h4 class="sub-section">Grids</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a></p>
-        <p class="sub-section">Desktop 1280px / 12 Columns</p>
-        <p class="sub-section">Tablet 768px / 6 Columns (changed from 8)</p>
-        <p class="sub-section">Mobile 320px / 4 Columns</p>
+        <p class="sub-section">12 columns for all viewports</p>
+
         <div class="container sg-grid">
             <div class="row">
                 <div class="col col-sm-3 col-md-2 col-lg-1"></div>
@@ -643,7 +638,6 @@
         
         
         <h4 class="sub-section">Cards</h4>
-        <p><span class="text-primary">TODO Note:</span> Product tiles as seen in the design styleguide are <span class="font-weight-bold">NOT</span> cards</p>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/card/">https://getbootstrap.com/docs/4.0/components/card/</a></p>
         <div class="sg-cards">
             <div class="card-deck">
@@ -791,7 +785,7 @@
             </div>
 
         <h4 class="sub-section">Progress Indicator</h4>
-        <p><span class="text-primary">TODO Note:</span> This looks like the checkout steps, not the bootstrap progress indicator</p>
+        <p><span class="text-primary">Note: </span> Checkout steps progress indicator will be developed in the feature</p>
 
         <h4 class="sub-section">Tables</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/content/tables/">https://getbootstrap.com/docs/4.0/content/tables/</a></p>
@@ -846,7 +840,7 @@
             </div>
 
         <h4 class="sub-section">Content Switcher</h4>
-        <p><span class="text-primary">TODO Note:</span> This part serves the same purpose as the nav tabs above a few sections above?</p>
+        <p><span class="text-primary">Note:</span> This part serves the same purpose as the nav tabs above a few sections above?</p>
         <div class="content-switcher">
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-outline-primary">First section</button>
@@ -878,14 +872,13 @@
         </div>
 
         <h4 class="sub-section">Loader</h4>
-        <p><span class="text-primary">TODO Note:</span> Currently using font awesome animated icons.</p>
         <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
         <span class="sr-only">Loading...</span>
         <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
         <span class="sr-only">Loading...</span>
 
         <h3 class="section">Motion</h3>
-        <p><span class="text-primary">TODO Note:</span> Discuss with XD - the application of this is not clear, in progress</p>
+        <p><span class="text-primary">Note:</span> XD will provide usage</p>
 
         <h4 class="sub-section">Card Hover Animation</h4>
         <div class="flex-container sg-motion">
