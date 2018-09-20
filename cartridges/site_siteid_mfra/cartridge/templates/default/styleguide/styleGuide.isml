@@ -15,27 +15,27 @@
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$primary:</span> $denim</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$primary-light:</span> $anakiwa</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$primary-dark:</span> $blumine</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$secondary:</span> $orangepeel</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$secondary-light:</span> $creambrulee</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -44,22 +44,22 @@
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$accent-1:</span> $sapphire</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$accent-2:</span> $cinnabar</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$accent-3:</span> $orangepeel</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$accent-4:</span> $pinegreen</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -68,37 +68,37 @@
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$black</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>$dark:</span> $gray-500</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-400</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-300</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-200</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$light:</span> $gray-100</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var">$white</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -107,22 +107,22 @@
             <div class="item">
                <div class="color-block bg-success"></div>
                <code class="color-var"><span>$success:</span> $japanese-laurel</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block bg-info"></div>
                <code class="color-var"><span>$info:</span> $calypso</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block bg-warning"></div>
                 <code class="color-var"><span>$warning:</span> $mustard</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block bg-error"></div>
                 <code class="color-var"><span>$error:</span> $tamarillo</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -132,22 +132,22 @@
             <div class="item">
                 <div class="gradient-block gradient-lin1"></div>
                 <code>.gradient-lin1 / @include gradient-lin1</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-lin2"></div>
                 <code>.gradient-lin2 / @include gradient-lin2</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-radial"></div>
                 <code>.gradient-radial / @include gradient-radial</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-lin3"></div>
                 <code>.gradient-lin3 / @include gradient-lin3</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -159,27 +159,27 @@
             <div class="item">
                 <div class="border-block"></div>
                 <code><span>$border</span> / .border-light</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
                 <code><span>$border-thick</span></code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
                 <code><span>$border-2</span> / .border-accent4</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
                 <code><span>$border-3</span> / .border-info</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="border-block"></div>
                 <code><span>$border-4</span> / .border-primary-dark</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -188,17 +188,17 @@
             <div class="item">
                 <div class="shadow-block"></div>
                 <code>$shadow</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="shadow-block"></div>
                 <code>$shadow2</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="shadow-block"></div>
                 <code>$shadow3</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -210,105 +210,105 @@
         <h4 class="sub-section">Fonts</h4>
 
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 1</div>
                 <code>$font-family-base</code>
-                <div class="spec">Spec: </div>
+                <div class="spec">Usage: </div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 2</div>
                 <code>$font-family-second</code>
-                <div class="spec">Spec: </div>
+                <div class="spec">Usage: </div>
             </div>
         </div>
 
         <h4 class="sub-section">Displays</h4>
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="display-1">Display XL</div>
                 <code>.display-1</code>
-                <div class="spec">Spec: 6rem</div>
+                <div class="spec">Usage: 6rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="display-2">Display SM</div>
                 <code>.display-2</code>
-                <div class="spec">Spec: 5rem</div>
+                <div class="spec">Usage: 5rem</div>
             </div>
         </div>
 
         <h4 class="sub-section">Headings</h4>
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h1">H1: Page Title XL</div>
                 <code>.h1 </code>
-                <div class="spec">Spec: 3rem</div>
+                <div class="spec">Usage: 3rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h2">H2: Page Title SM</div>
                 <code>.h2</code>
-                <div class="spec">Spec: 2.5rem</div>
+                <div class="spec">Usage: 2.5rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h3">H3: Section Title SM</div>
                 <code>.h3</code>
-                <div class="spec">Spec: 2.25rem</div>
+                <div class="spec">Usage: 2.25rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h4">H4: Subsection Title</div>
                 <code>.h4</code>
-                <div class="spec">Spec: 1.75rem</div>
+                <div class="spec">Usage: 1.75rem</div>
             </div>
         </div>
 
         <h4 class="sub-section">Labels</h4>
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <label class="label-xl">Label XL</label>
                 <code>.label-xl / $label-xl </code>
-                <div class="spec">Spec: 1.25rem</div>
+                <div class="spec">Usage: 1.25rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <label class="label-sm">Label SM</label>
                 <code>.label-sm / $label-sm </code>
-                <div class="spec">Spec: 1rem</div>
+                <div class="spec">Usage: 1rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <label class="label-xs">Label XS</label>
                 <code>.label-xs / $label-xs </code>
-                <div class="spec">Spec: .75rem</div>
+                <div class="spec">Usage: .75rem</div>
             </div>
         </div>
 
         <h4 class="sub-section">Body</h4>
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <p>Paragraph</p>
                 <code>p </code>
-                <div class="spec">Spec: .875rem</div>
+                <div class="spec">Usage: .875rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <p class="font-weight-bold">Paragraph Bold</p>
                 <code>p.font-weight-bold </code>
-                <div class="spec">Spec: .875rem</div>
+                <div class="spec">Usage: .875rem</div>
             </div>
         </div>
 
         <h4 class="sub-section">Links</h4>
         <div class="sg-type">
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="main-nav">Main Navigation</a>
                 <code>.main-nav </code>
-                <div class="spec">Spec: .875rem</div>
+                <div class="spec">Usage: .875rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="link-primary">Primary Link</a>
                 <code>.link-primary </code>
-                <div class="spec">Spec: .875rem</div>
+                <div class="spec">Usage: .875rem</div>
             </div>
-            <div class="item d-flex justify-content-start flex-wrap">
+            <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="link-secondary">Secondary Link</a>
                 <code>.link-primary </code> 
-                <div class="spec">Spec: .75rem</div>
+                <div class="spec">Usage: .75rem</div>
             </div>
         </div>
 
@@ -392,22 +392,22 @@
             <div class="item">
                <div class="alert alert-success">Success alert</div>
                <code class="color-var"><span>.alert-success:</span> $japanese-laurel</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="alert alert-info">Info alert</div>
                <code class="color-var"><span>.alert-info:</span> $calypso</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="alert alert-warning">Warning alert</div>
                 <code class="color-var"><span>.alert-warning:</span> $mustard</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="alert alert-error">Error alert</div>
                 <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -885,22 +885,22 @@
             <div class="item">
                 <div class="card default"></div>
                 <code>Default</code>
-                <div class="spec">Spec:</div>
+                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="card animation easeincubic"></div>
                 <code>$ease-in-cubic</code>
-                <div class="spec">Spec: cubic-bezier(0.55, 0.055, 0.675, 0.19);</div>
+                <div class="spec">Usage: cubic-bezier(0.55, 0.055, 0.675, 0.19);</div>
             </div>
             <div class="item">
                 <div class="card animation easeoutcubic"></div>
                 <code>$ease-out-cubic</code>
-                <div class="spec">Spec: cubic-bezier(0.215, 0.61, 0.355, 1)</div>
+                <div class="spec">Usage: cubic-bezier(0.215, 0.61, 0.355, 1)</div>
             </div>
             <div class="item">
                 <div class="card hover"></div>
                 <code>$card-hover-scale</code>
-                <div class="spec">Spec: scale(1.25)</div>
+                <div class="spec">Usage: scale(1.25)</div>
             </div>
         </div>
 
@@ -910,12 +910,12 @@
             <div class="item">
                <button class="btn btn-secondary"></button>
                <code>Default</code>
-               <div class="spec">Spec:</div>
+               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <button class="btn btn-secondary hover"></button>
                <code>$button-hover-scaley</code>
-               <div class="spec">Spec: scaleY(1.5)</div>
+               <div class="spec">Usage: scaleY(1.5)</div>
             </div>
         </div>
         </div>

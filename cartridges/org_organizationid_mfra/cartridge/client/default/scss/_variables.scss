@@ -426,8 +426,8 @@ $svg-check: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org
 //  SLICK CAROUSEL
 //--------------------------------
 
-$slick-arrow-bg-color: transparent; // bootstrap override
-$slick-arrow-bg-color-hover: transparent; // bootstrap override
+$slick-arrow-bg-color: transparent;
+$slick-arrow-bg-color-hover: transparent;
 
 //--------------------------------
 //  MOTION
@@ -452,4 +452,3 @@ $button-hover-scaley: scaleY(1.5);
 
 $ease-in-cubic: easeInCubicMotion 200ms $ease-in-cubic-bezier;
 $ease-out-cubic: easeOutCubicMotion 200ms $ease-out-cubic-bezier;
-
