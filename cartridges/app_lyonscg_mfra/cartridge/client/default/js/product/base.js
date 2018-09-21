@@ -7,8 +7,8 @@ var slickConfigs = require('../config/slickConfigs');
  * Init the product carousel using a predefined slick configuration
  */
 function carouselInit() {
-    if($('.product-carousel').length > 0) {
-      $('.product-carousel').not('.slick-initialized').slick(slickConfigs.pdp);
+    if ($('.product-carousel').length) {
+        $('.product-carousel').not('.slick-initialized').slick(slickConfigs.pdp);
     }
 }
 
