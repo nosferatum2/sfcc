@@ -23,7 +23,7 @@
     <target name="check-node" unless="${have-node}">
         <echo level="info">The node_modules directory was not found.</echo>
         <echo level="info">Please ensure the node modules are installed in the following directory:</echo>
-        <echo level="info">- ${baseDir}/../node_modules</echo>
+        <echo level="info">- ${basedir}/../node_modules</echo>
         <echo level="info">Using the following command:</echo>
         <echo level="info">&gt; npm install</echo>
         <echo level="info">Users on Mac or Linux may need to use sudo:</echo>
