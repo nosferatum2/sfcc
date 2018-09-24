@@ -96,7 +96,7 @@ server.get(
 
         if (!order) {
 //        	@TODO SFRA Issue 74 - START
-        	var actionUrl = URLUtils.url('Account-Login');
+            var actionUrl = URLUtils.url('Account-Login');
 
             res.render('/account/login', {
                 navTabValue: 'login',
