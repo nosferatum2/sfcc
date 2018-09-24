@@ -95,8 +95,8 @@ server.get(
         }
 
         if (!order) {
-//        	@TODO SFRA Issue 74 - START
-        	var actionUrl = URLUtils.url('Account-Login');
+//          @TODO SFRA Issue 74 - START
+            var actionUrl = URLUtils.url('Account-Login');
 
             res.render('/account/login', {
                 navTabValue: 'login',
@@ -104,7 +104,7 @@ server.get(
                 profileForm: profileForm,
                 userName: '',
                 actionUrl: actionUrl
-//         	@TODO SFRA Issue 74 - END
+//          @TODO SFRA Issue 74 - END
             });
             next();
         } else {
