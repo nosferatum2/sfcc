@@ -25,6 +25,8 @@
     h3,
     h4,
     p {
+        word-break: break-all;
+
         &.sub-section {
             margin: 1em;
             margin-left: 0;
