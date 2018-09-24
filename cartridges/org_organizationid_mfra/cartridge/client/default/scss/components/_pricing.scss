@@ -1,11 +1,11 @@
 @import "../variables";
 
 .price {
-    color: $grey7;
+    color: $gray-500;
 
     .strike-through {
         text-decoration: line-through;
-        color: $grey4;
+        color: $gray-200;
         margin-right: 0.938rem;
     }
 
@@ -16,15 +16,15 @@
     }
 
     .tiered {
-        color: $grey7;
+        color: $gray-100;
 
         table {
-            border-top: 1px solid $grey3;
+            border-top: 1px solid $gray-300;
             margin: 0 auto;
 
             tr {
                 &:nth-child(odd) {
-                    background-color: $grey2;
+                    background-color: $gray-400;
                 }
             }
         }

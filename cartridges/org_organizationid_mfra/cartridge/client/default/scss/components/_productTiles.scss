@@ -1,5 +1,6 @@
 @import "../utilities/swatch";
 @import "productCommon";
+@import "quickView";
 
 .product-carousel {
     img {
@@ -9,7 +10,6 @@
 }
 
 .product-tile {
-
     @include media-breakpoint-down(md) {
         min-height: 23.4375em;
     }
@@ -123,84 +123,49 @@
     }
 }
 
-.quick-view-dialog {
-    max-width: 56.25em;
-
-    .modal-header {
-        background-color: $grey2;
-        border-bottom: 2px solid #ccc;
-        border-top-left-radius: 0.1875rem;
-        border-top-right-radius: 0.1875rem;
-
-        .full-pdp-link {
-            color: $brand-color;
-        }
-
-        .close {
-            font-size: 2rem;
-
-            span {
-                font-size: 1rem;
-                margin-right: 0.313em;
-            }
+#chooseBonusProductModal {
+    .modal-footer {
+        .container {
+            margin-left: 0;
+            width: 100%;
+            margin-right: 0;
         }
     }
 
-    .modal-title {
-        font-size: 1em;
+    .select-cbp-container {
+        margin-top: auto;
+        margin-bottom: auto;
     }
 
-    .product-name {
-        font-size: 1.875em;
+    .product-name-wrapper {
+        width: 100%;
     }
 
-    .swatch-circle {
-        // $white will be replaced by color image background via Javascript
-        @include swatch(2.5em, $white);
-    }
-
-    a[disabled] .swatch-circle {
-        cursor: not-allowed;
-
-        &.color-value.selected::after {
-            background-color: $gray-light;
-        }
-    }
-
-    .availablity-container {
-        text-align: right;
-    }
-
-    .availablity-container,
-    .size-chart {
+    .bonus-quantity,
+    .bonus-option {
         margin-top: 0.938em;
     }
 
-    .modal-content {
-        border: 1px solid rgba(0, 0, 0, 0.2);
+    .bonus-quantity-select {
+        min-width: 5em;
     }
 
-    .modal-body {
-        max-height: 28.125em; /* 450/16 */
-        overflow-y: auto;
+    .select-bonus-product {
+        margin-top: 1em;
     }
 
-    button.close {
-        font-size: 1.25em;
-    }
+    .selected-pid {
+        border: $border;
 
-    .modal-footer {
-        background-color: $white;
-        border: none;
-        border-bottom-right-radius: 0.1875rem;
-        border-bottom-left-radius: 0.1875rem;
-
-        .prices .price {
-            font-size: 1.6em;
+        .bonus-product-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
-    .prices .sales {
-        font-size: 1.5rem;
+    .bonus-product-price {
+        text-align: center;
+        margin-top: 1em;
     }
 }

@@ -46,8 +46,8 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 }
 
 .navbar.bg-inverse {
-    background-color: transparent !important;
-    padding: 0;
+    background-color: $trans !important;
+    padding: 0 1rem;
 
     @include media-breakpoint-up($next-breakpoint) {
         .navbar-nav .nav-item + .nav-item {
@@ -65,7 +65,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 .nav-item .nav-link:focus,
 .nav-item.show .nav-link {
     background-color: $white;
-    color: $menu-link;
+    color: $link-color;
 }
 
 @include media-breakpoint-up($next-breakpoint) {
@@ -87,7 +87,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         flex: 0 0 100%;
         padding: 15px;
         background-color: $close-menu-bg;
-        border-bottom: 1px solid $grey3;
+        border-bottom: 1px solid $gray-300;
 
         @include media-breakpoint-up($next-breakpoint) {
             display: none;
@@ -107,7 +107,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     @include media-breakpoint-down($breakpoint-name) {
         .bg-inverse {
             background-color: white !important;
-            color: $grey7;
+            color: $gray-100;
         }
     }
 
@@ -121,7 +121,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         @include media-breakpoint-down($breakpoint-name) {
             .nav-item {
                 + .nav-item {
-                    border-top: 1px solid $grey2;
+                    border-top: 1px solid $gray-400;
                 }
 
                 .nav-link {

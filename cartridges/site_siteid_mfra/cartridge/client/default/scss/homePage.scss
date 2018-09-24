@@ -1,4 +1,4 @@
-@import "variables";
+@import "~org/variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "~base/components/categoryTiles";
@@ -107,7 +107,7 @@
     margin: 0;
 
     .hp-product-content {
-        background-color: transparent; // remove if no longer using Bootstrap .card styles
+        background-color: $trans; // remove if no longer using Bootstrap .card styles
         text-align: center;
         border: 0;
 
@@ -148,7 +148,7 @@
 }
 
 .home-email-signup {
-    background-color: $grey6;
+    background-color: $gray-400;
 
     > .container {
         padding-top: 0.625em;

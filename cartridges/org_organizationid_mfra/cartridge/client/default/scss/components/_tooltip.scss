@@ -7,7 +7,7 @@ $arrow-height: 1.25em; /* 20/16 */
 
     .icon {
         border-radius: 1.25rem;
-        background-color: #00a1e0;
+        background-color: $dark;
         width: 1.5625rem;
         display: inline-block;
         text-align: center;
@@ -25,7 +25,7 @@ $arrow-height: 1.25em; /* 20/16 */
         bottom: 100%;
         padding: 0.312rem;
         border-radius: $border-radius;
-        background-color: $grey6;
+        background-color: $dark;
         color: $white;
         font-size: 0.928rem;
         min-width: 20rem;
@@ -53,7 +53,7 @@ $arrow-height: 1.25em; /* 20/16 */
         &::after {
             border-left: solid transparent $arrow-height/2; /* 10/16 */
             border-right: solid transparent $arrow-height/2; /* 10/16 */
-            border-top: solid $grey6 $arrow-height/2;
+            border-top: solid $gray-100 $arrow-height/2;
             bottom: -$arrow-height/2;
             content: " ";
             height: 0;
