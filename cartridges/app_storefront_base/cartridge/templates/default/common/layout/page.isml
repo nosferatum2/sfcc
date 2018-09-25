@@ -4,7 +4,8 @@
 <isset name="pageStyleGuide" value="${pdict.action == 'StyleGuide-Show' ? 'pt_styleguide' : ''}" scope="page" />
 
 <!DOCTYPE html>
-<html lang="en">
+<iscomment>Updated the HTML element to contain a dynamic locale instead of a static 'en' (LRA-23)</iscomment>
+<html lang="${session.custom.currentLocale}">
     <head>
         <!--[if gt IE 9]><!-->
             <isinclude sf-toolkit="off" template="/common/scripts" />
