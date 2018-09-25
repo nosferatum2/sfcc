@@ -1,6 +1,6 @@
 <project name="npm-install" default="npm-install" basedir="." >
 
-<!--This task will run npm install and locally install node modules as
+<!-- This task will run npm install and locally install node modules as
   	specified in package.json. It is referenced and run as part of builders.xml,
   	but may be run individually.
 
@@ -26,16 +26,13 @@
 		<echo level="error">This step will be skipped and npm install will not be run.</echo>
 	</target>
 
-	<!-- Save the package.json file contents to packageJSON variable and assign to pkg_display and pkg_node_v properties -->
+	<!-- Save the package.json file contents to packageJSON variable and assign the node version to pkg_node_v property -->
 	<target name="get-package-json" if="${has_package}">
 		<loadfile property="packageJSON" srcFile="${basedir}/../package.json" />
-		<!-- Parse packageJSON to get required node version and assign to pkg_display property
-		for console output and pkg_node_v property for version comparison -->
 		<script language="javascript">
 			var package_node = JSON.parse(packageJSON).engines.node;
-      		project.setProperty('pkg_display', package_node);
-      		project.setProperty('pkg_node_v', package_node.replace(/[^0-9]/g, ""));
-  		</script>
+  		project.setProperty('pkg_node_v', package_node.match(/[^.]/));
+		</script>
 	</target>
 
   	<!-- Depending on OS, run cmd or bash to grab local node version and assign to local_node_v property -->
@@ -50,8 +47,7 @@
                     node -v; '/>
 		</exec>
 	  	<script language="javascript">
-	  		project.setProperty('local_display', localnode.replace(/[a-zA-Z]/g,""));
-	      	project.setProperty('local_node_v', localnode.replace(/[^0-9]/g, ""));
+      	project.setProperty('local_node_v', localnode.replace(/[a-zA-Z]/g,"").match(/[^.]*/));
 	  	</script>
   	</target>
 
@@ -68,20 +64,20 @@
 
 	<!-- Alert if local node version and the package.json file node versions do not match -->
 	<target name="check-node-match" if="${has_package}" unless="${node_match}">
-		<echo level="error">The locally installed version of node (${local_display}) does not match</echo>
-		<echo level="error">the version of node required by the package.json file (${pkg_display}).</echo>
-		<echo level="error">The version must match in order to run npm install.</echo>
-		<echo level="error">Please set the local version of node to (${pkg_display})</echo>
+		<echo level="error">The locally installed major release version of node (${local_node_v}) does not match</echo>
+		<echo level="error">the major release version of node required by the package.json file (${pkg_node_v}).</echo>
+		<echo level="error">The versions must match in order to run npm install.</echo>
+		<echo level="error">Please set the local version of node to (${pkg_node_v}).</echo>
 	</target>
 
-  	<!-- Depending on OS, run cmd or bash to run npm install and install node modules as specified in package.json then set have-node property to true for use in builders.xml -->
-  	<target name="run-npm-install" if="${node_match}">
-  		<echo level="info">Running npm install...</echo>
+	<!-- Depending on OS, run cmd or bash to run npm install and install node modules as specified in package.json then set have-node property to true for use in builders.xml -->
+	<target name="run-npm-install" if="${node_match}">
+		<echo level="info">Updating node modules using npm...</echo>
 		<exec executable="cmd" osfamily="windows" failonerror="false">
 			<arg value="/c"/>
 			<arg value='npm install'/>
 		</exec>
-  		<exec executable="/bin/bash" osfamily="unix" failonerror="false">
+		<exec executable="/bin/bash" osfamily="unix" failonerror="false">
   			<arg value="-c"/>
   			<arg value='export PATH=/usr/local/bin:$PATH;
   				npm install;'/>
