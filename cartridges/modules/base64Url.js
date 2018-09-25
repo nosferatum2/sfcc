@@ -1,3 +1,7 @@
+/**
+ * This utility provides a standard implementation of URL friendly base64 encoding.
+ * https://brockallen.com/2014/10/17/base64url-encoding/
+ */
 'use strict'
 
 var StringUtils = require('dw/util/StringUtils');

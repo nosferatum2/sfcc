@@ -1,3 +1,8 @@
+/**
+ * This controller adds support for re-creating baskets via a click-through URL.
+ * Please see the Start route definition below for more detail.
+ * Note: Depends on base64Url utility module.
+ */
 'use strict'
 
 var server = require('server');
