@@ -65,7 +65,7 @@
 .suggestions {
     display: block;
     position: absolute;
-    border: 1px solid $grey3;
+    border: 1px solid $gray-300;
     background-color: $white;
     top: 0;
     right: 0;
@@ -83,12 +83,12 @@
     }
 
     .header {
-        color: $grey4;
+        color: $gray-300;
         font-size: 0.875em;
         padding-top: 0.625em;
 
         &:not(:first-child) {
-            border-top: 1px solid $grey3;
+            border-top: 1px solid $gray-300;
         }
     }
 
@@ -114,7 +114,7 @@
 
 .more-below {
     -moz-border-radius: 1.25em;
-    background: $grey3;
+    background: $gray-300;
     border: 0.063em solid rgba(0, 0, 0, 0.1);
     border-radius: 1.25em;
     bottom: 1.875em;

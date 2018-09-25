@@ -21,7 +21,7 @@
     "lint:js": "node build_tools/build --lint js",
     "lint:serverjs": "node build_tools/build --lint server-js",
     "upload": "node build_tools/build --upload",
-    "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --activateCodeVersion",
+    "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --uploadCartridge app_lyonscg_mfra && node build_tools/build --uploadCartridge org_organizationid_mfra && node build_tools/build --uploadCartridge site_siteid_mfra && node build_tools/build --activateCodeVersion",
     "watch": "node build_tools/build --watch",
     "release": "node bin/Makefile release --",
     "deployCartridges": "node build_tools/build --deployCartridges"
@@ -98,8 +98,10 @@
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
+    "popper.js": "^1.14.4",
     "slick-carousel": "1.7.1",
-    "svg4everybody": "2.1.9"
+    "svg4everybody": "2.1.9",
+    "uninstall-all-modules": "^1.0.5"
   },
   "browserslist": [
     "last 2 versions",

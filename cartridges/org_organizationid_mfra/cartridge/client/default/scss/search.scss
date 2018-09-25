@@ -39,8 +39,8 @@
 }
 
 .header-bar {
-    background-color: $grey2;
-    border-bottom: 0.063em solid $grey2;
+    background-color: $gray-400;
+    border-bottom: 0.063em solid $gray-400;
 
     button.close {
         font-size: 1rem;
@@ -282,7 +282,7 @@
 
 .search-nav {
     margin-bottom: 1em;
-    border-bottom: 0.063em solid $grey3;
+    border-bottom: 0.063em solid $gray-300;
 
     .nav-tabs-wrapper {
         padding: 0;
@@ -297,7 +297,7 @@
     }
 
     .nav-link:focus {
-        background-color: $grey1;
+        background-color: $gray-500;
     }
 }
 

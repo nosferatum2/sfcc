@@ -2,7 +2,12 @@
 
 @import "variables";
 @import "bootstrap/scss/bootstrap";
-@import "bootstrapOverrides";
+@import "bootstrapOverrides/buttons";
+@import "bootstrapOverrides/forms";
+@import "bootstrapOverrides/reboot";
+@import "bootstrapOverrides/card";
+@import "bootstrapOverrides/modal";
+@import "bootstrapOverrides/tables";
 @import "slick";
 @import "slick_theme";
 @import "utilities/responsiveUtils";
@@ -23,3 +28,4 @@
 @import "miniCart";
 @import "components/tooltip";
 @import "components/headerSearch";
+@import "components/productTiles";
