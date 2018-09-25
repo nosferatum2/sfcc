@@ -7,11 +7,8 @@
             >
             <div class="security-code-input ${loopSate.first ? '' : 'checkout-hidden'}">
                 <label class="form-control-label" for="saved-payment-security-code">${Resource.msg('label.credit.card-security.code','checkout',null)}</label>
-                <span class="info-icon">
-                    <span class="icon">i</span>
-                    <div class="tooltip">
-                        ${Resource.msg('tooltip.security.code','creditCard',null)}
-                    </div>
+                <span class="info-icon ">
+                    <span class="icon" data-toggle="tooltip" data-placement="top" title="${Resource.msg('tooltip.security.code','creditCard',null)}">i</span>
                 </span>
 
                 <input type="text" class="form-control saved-payment-security-code" id="saved-payment-security-code" maxlength="4">

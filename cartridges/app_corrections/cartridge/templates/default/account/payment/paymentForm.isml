@@ -40,11 +40,8 @@
         <!-- Edit Card Number -->
         <div class="form-group">
             ${pdict.paymentForm.editNumber.label}
-            <span class="info-icon">
-                <span class="icon">i</span>
-                <div class="tooltip">
-                    ${Resource.msg('msg.edit.card.tooltip','payment',null)}
-                </div>
+            <span class="info-icon ">
+                <span class="icon" data-toggle="tooltip" data-placement="top" title="${Resource.msg('msg.edit.card.tooltip','payment',null)}">i</span>
             </span>
             <p class="masked-card-number">${pdict.paymentForm.editNumber.htmlValue}</p>
         </div>
