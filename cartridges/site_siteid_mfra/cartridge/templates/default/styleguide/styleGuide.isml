@@ -1,8 +1,67 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/styleGuide.js');
         assets.addCss('/css/styleGuide.css');
     </isscript>
+
+    <div class="sidenav">
+        <ul>
+            <li class="section-nav"><a>Color Theme & Palette</a></li>
+            <li><a href="#main-colors">Main Colors</a></li>
+            <li><a href="#accent-colors">Accent Colors</a></li>
+            <li><a href="#grays">Grays</a></li>
+            <li><a href="#messages-alerts">Messages & Alerts</a></li>
+
+            <li class="section-nav"><a>Backgrounds</a></li>
+            <li><a href="#background-gradients">Background Gradients</a></li>
+
+            <li class="section-nav"><a>Styles</a></li>
+            <li><a href="#borders-dividers">Borders & Dividers</a></li>
+            <li><a href="#shadows">Shadows</a></li>
+            <li><a href="#patterns">Patterns</a></li>
+
+            <li class="section-nav"><a>Typography</a></li>
+            <li><a href="#fonts">Fonts</a></li>
+            <li><a href="#displays">Displays</a></li>
+            <li><a href="#headings">Headings</a></li>
+            <li><a href="#labels">Labels</a></li>
+            <li><a href="#body">Body</a></li>
+            <li><a href="#links">Links</a></li>
+
+            <li class="section-nav"><a href="#buttons">Buttons</a></li>
+
+            <li class="section-nav"><a href="#forms">Forms</a></li>
+
+            <li class="section-nav"><a>Messages</a></li>
+            <li><a href="#alerts">Alerts</a></li>
+            <li><a href="#modals">Modals</a></li>
+            <li><a href="#tooltips">Tooltips</a></li>
+
+            <li class="section-nav"><a href="#iconography">Iconography</a></li>
+
+            <li class="section-nav"><a>Grids & Spacing</a></li>
+            <li><a href="#grids">Grids</a></li>
+            <li><a href="#spacing">Spacing</a></li>
+
+            <li class="section-nav"><a>Components</a></li>
+            <li><a href="#product-tiles">Product Tiles</a></li>
+            <li><a href="#cards">Cards</a></li>
+            <li><a href="#accordions">Accordions</a></li>
+            <li><a href="#tabs">Tabs</a></li>
+            <li><a href="#progress-indicator">Progress Indicator</a></li>
+            <li><a href="#tables">Tables</a></li>
+            <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+            <li><a href="#content-switcher">Content Switcher</a></li>
+            <li><a href="#lists">Lists</a></li>
+            <li><a href="#loader">Loader</a></li>
+
+            <li class="section-nav"><a>Motions</a></li>
+            <li><a href="#card-hover-animation">Card Hover Animation</a></li>
+            <li><a href="#button-hover-animation">Button Hover Animation</a></li>
+        </ul>
+    </div>
+
     <div class="wrapper">
         <h1>SFRA Style Guide</h1>
 
@@ -10,55 +69,55 @@
         <p>Link: <a href="http://getbootstrap.com/docs/4.0/getting-started/theming/">http://getbootstrap.com/docs/4.0/getting-started/theming/</a></p>
         <p><span class="text-primary">Note:</span> Bolded values indicate the theme name</p>
 
-        <h4 class="sub-section">Main Colors</h4>
+        <h4 class="sub-section" id="main-colors">Main Colors</h4>
         <div class="flex-container color main-colors">
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>$primary:</span> $denim</code>
+               <code class="color-var"><span>Theme color: $primary</span><br> $denim</code>
                <div class="spec">Usage: Brand Main</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>$primary-light:</span> $anakiwa</code>
+               <code class="color-var"><span>Theme color: $primary-light</span><br> $anakiwa</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$primary-dark:</span> $blumine</code>
+                <code class="color-var"><span>Theme color: $primary-dark</span><br> $blumine</code>
                 <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$secondary:</span> $gray-400</code>
+                <code class="color-var"><span>Theme color: $secondary</span><br> $gray-400</code>
                 <div class="spec">Usage: Brand Second</div>
             </div>
         </div>
 
-        <h4 class="sub-section">Accent Colors</h4>
+        <h4 class="sub-section" id="accent-colors">Accent Colors</h4>
         <div class="flex-container color accent-colors">
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>$accent-1:</span> $sapphire</code>
+               <code class="color-var"><span>Theme color: $accent-1</span><br> $sapphire</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>$accent-2:</span> $cinnabar</code>
+               <code class="color-var"><span>Theme color: $accent-2</span><br> $cinnabar</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$accent-3:</span> $orangepeel</code>
+                <code class="color-var"><span>Theme color: $accent-3</span><br> $orangepeel</code>
                 <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$accent-4:</span> $pinegreen</code>
+                <code class="color-var"><span>Theme color: $accent-4</span><br> $pinegreen</code>
                 <div class="spec">Usage:</div>
             </div>
         </div>
 
-        <h4 class="sub-section">Grays</h4>
+        <h4 class="sub-section" id="grays">Grays</h4>
         <div class="flex-container color gray-colors">
             <div class="item">
                 <div class="color-block"></div>
@@ -97,7 +156,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Messages & Alerts</h4>
+        <h4 class="sub-section" id="messages-alerts">Messages & Alerts</h4>
         <div class="flex-container color">
             <div class="item">
                <div class="color-block bg-success"></div>
@@ -122,7 +181,7 @@
         </div>
 
         <h3 class="section">Backgrounds</h3>
-        <h4 class="sub-section">Background Gradients</h4>
+        <h4 class="sub-section" id="background-gradients">Background Gradients</h4>
         <div class="flex-container gradient">
             <div class="item">
                 <div class="gradient-block gradient-lin1"></div>
@@ -147,7 +206,7 @@
         </div>
 
         <h3 class="section">Styles</h3>
-        <h4 class="sub-section">Borders & Dividers</h4>
+        <h4 class="sub-section" id="borders-dividers">Borders & Dividers</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/utilities/borders/">https://getbootstrap.com/docs/4.0/utilities/borders/</a></p>
 
         <div class="flex-container sg-borders">
@@ -178,7 +237,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Shadows</h4>
+        <h4 class="sub-section" id="shadows">Shadows</h4>
         <div class="flex-container sg-shadows">
             <div class="item">
                 <div class="shadow-block"></div>
@@ -197,12 +256,12 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Patterns</h4>
+        <h4 class="sub-section" id="patterns">Patterns</h4>
         <p><span class="text-primary">Note:</span> Patterns TBD</p>
 
         <!-- TODO Note: In the below sections I am using the bootstrap flex utility classes instead of applying in the SASS -->
         <h3 class="section">Typography</h3>
-        <h4 class="sub-section">Fonts</h4>
+        <h4 class="sub-section" id="fonts">Fonts</h4>
 
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
@@ -217,7 +276,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Displays</h4>
+        <h4 class="sub-section" id="displays">Displays</h4>
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="display-1">Display XL</div>
@@ -231,7 +290,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Headings</h4>
+        <h4 class="sub-section" id="headings">Headings</h4>
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h1">H1: Page Title XL</div>
@@ -255,7 +314,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Labels</h4>
+        <h4 class="sub-section" id="labels">Labels</h4>
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <label class="label-xl">Label XL</label>
@@ -274,7 +333,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Body</h4>
+        <h4 class="sub-section" id="body">Body</h4>
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <p>Paragraph</p>
@@ -288,7 +347,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Links</h4>
+        <h4 class="sub-section" id="links">Links</h4>
         <div class="sg-type">
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="main-nav">Main Navigation</a>
@@ -307,7 +366,7 @@
             </div>
         </div>
 
-        <h3 class="section">Buttons</h3>
+        <h3 class="section" id="buttons">Buttons</h3>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/buttons/">https://getbootstrap.com/docs/4.0/components/buttons/</a></p>
 
         <div class="sg-buttons">
@@ -341,7 +400,7 @@
             </div>
         </div>
 
-        <h3 class="section">Forms</h3>
+        <h3 class="section" id="forms">Forms</h3>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/forms/">https://getbootstrap.com/docs/4.0/components/forms/</a></p>
         <div class="sg-forms">
             <form class="needs-validation" novalidate>
@@ -379,7 +438,7 @@
         </div>
 
         <h3 class="section">Messages</h3>
-        <h4 class="sub-section">Alerts</h4>
+        <h4 class="sub-section" id="alerts">Alerts</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/alerts/">https://getbootstrap.com/docs/4.0/components/alerts/</a></p>
         <p><span class="text-primary">Note:</span> Updates from XD pending</p>
 
@@ -406,7 +465,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Modals</h4>
+        <h4 class="sub-section" id="modals">Modals</h4>
         <a
             id="example-modal"
             class="hidden-xs-down"
@@ -435,7 +494,7 @@
             </div>
         </div>
 
-        <h4 class="sub-section">Tooltips</h4>
+        <h4 class="sub-section" id="tooltips">Tooltips</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/tooltips/">https://getbootstrap.com/docs/4.0/components/tooltips/</a></p>
         <div class="row">
 	        <div class="col">
@@ -446,12 +505,12 @@
 	        </div>
         </div>
 
-        <h3 class="section">Iconography</h3>
+        <h3 class="section" id="iconography">Iconography</h3>
         <p><span class="text-primary">Note:</span> SVG implementation pending</p>
 
         <h3 class="section">Grids & Spacing</h3>
 
-        <h4 class="sub-section">Grids</h4>
+        <h4 class="sub-section" id="grids">Grids</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/layout/grid/">https://getbootstrap.com/docs/4.0/layout/grid/</a></p>
         <p class="sub-section">12 columns for all viewports</p>
 
@@ -505,7 +564,7 @@
             </div>
         </div>
         
-        <h4 class="sub-section">Spacing</h4>
+        <h4 class="sub-section" id="spacing">Spacing</h4>
         <div class="sg-spacers">
             <div class="spacer _8 mb-1">8px</div>
             <code>.mb-1</code>
@@ -522,7 +581,7 @@
         </div>
 
         <h3 class="section">Components</h3>
-        <h4 class="sub-section">Product Tiles</h4>
+        <h4 class="sub-section" id="product-tiles">Product Tiles</h4>
         <div class="container-fluid sg-product-tiles">
             <div class="row">
                 <div class="col-sm-6 col-md-3">
@@ -632,7 +691,7 @@
         </div>
         
         
-        <h4 class="sub-section">Cards</h4>
+        <h4 class="sub-section" id="cards">Cards</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/card/">https://getbootstrap.com/docs/4.0/components/card/</a></p>
         <div class="sg-cards">
             <div class="card-deck">
@@ -677,7 +736,7 @@
             </div>
         </div>
         
-        <h4 class="sub-section">Accordions</h4>
+        <h4 class="sub-section" id="accordions">Accordions</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example">https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example</a></p>
         <div id="accordion">
             <div class="card">
@@ -723,7 +782,7 @@
                 </div>
           </div>
 
-        <h4 class="sub-section">Tabs</h4>
+        <h4 class="sub-section" id="tabs">Tabs</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/navs/">https://getbootstrap.com/docs/4.0/components/navs/</a></p>
             <!-- Nav pills -->
             <ul class="nav nav-pills">
@@ -779,10 +838,10 @@
                 </p>
             </div>
 
-        <h4 class="sub-section">Progress Indicator</h4>
+        <h4 class="sub-section" id="progress-indicator">Progress Indicator</h4>
         <p><span class="text-primary">Note: </span> Checkout steps progress indicator will be developed in the feature</p>
 
-        <h4 class="sub-section">Tables</h4>
+        <h4 class="sub-section" id="tables">Tables</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/content/tables/">https://getbootstrap.com/docs/4.0/content/tables/</a></p>
         <table class="table">
           <thead>
@@ -811,7 +870,7 @@
           </tbody>
         </table>
 
-        <h4 class="sub-section">Breadcrumbs</h4>
+        <h4 class="sub-section" id="breadcrumbs">Breadcrumbs</h4>
         <p>Link: <a href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">https://getbootstrap.com/docs/4.0/components/breadcrumb/</a></p>
             <div class="breadcrumbs">
                 <nav aria-label="breadcrumb">
@@ -834,7 +893,7 @@
                 </nav>
             </div>
 
-        <h4 class="sub-section">Content Switcher</h4>
+        <h4 class="sub-section" id="content-switcher">Content Switcher</h4>
         <p><span class="text-primary">Note:</span> This part serves the same purpose as the nav tabs above a few sections above?</p>
         <div class="content-switcher">
             <div class="btn-group" role="group" aria-label="Basic example">
@@ -843,7 +902,7 @@
             </div>   
         </div>
 
-        <h4 class="sub-section">Lists</h4>
+        <h4 class="sub-section" id="lists">Lists</h4>
         <div class="sg-lists">
         <ul>
             <li>Unordered list level 1</li>
@@ -866,7 +925,7 @@
         </ol>
         </div>
 
-        <h4 class="sub-section">Loader</h4>
+        <h4 class="sub-section" id="loader">Loader</h4>
         <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw"></i>
         <span class="sr-only">Loading...</span>
         <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
@@ -875,7 +934,7 @@
         <h3 class="section">Motion</h3>
         <p><span class="text-primary">Note:</span> XD will provide usage</p>
 
-        <h4 class="sub-section">Card Hover Animation</h4>
+        <h4 class="sub-section" id="card-hover-animation">Card Hover Animation</h4>
         <div class="flex-container sg-motion">
             <div class="item">
                 <div class="card default"></div>
@@ -900,7 +959,7 @@
         </div>
 
         <p><span class="text-primary">TODO Note:</span> ElasticInEase Animation</p>
-        <h4 class="sub-section">Button Hover Animation</h4>
+        <h4 class="sub-section" id="button-hover-animation">Button Hover Animation</h4>
         <div class="flex-container sg-motion">
             <div class="item">
                <button class="btn btn-secondary"></button>

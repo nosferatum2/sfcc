@@ -11,9 +11,47 @@
 @import "~org/bootstrapOverrides/button-group";
 @import "~org/bootstrapOverrides/gradients";
 
+.sidenav {
+    position: fixed;
+    width: 13%;
+    padding: 0 1em;
+
+    ul {
+        padding: 0;
+        line-height: 1.6;
+
+        li {
+            list-style-type: none;
+
+            a {
+                text-decoration: none;
+                padding-left: 0.3em;
+            }
+
+            &:hover {
+                background-color: rgba(126, 192, 238, 0.3);
+            }
+        }
+
+        .section-nav {
+            font-weight: bold;
+            margin-top: 0.5em;
+        }
+    }
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+}
+
 .pt_styleguide {
     .wrapper {
         margin: 1em;
+
+        @include media-breakpoint-up(md) {
+            margin-left: 13%;
+        }
     }
 
     .section {
