@@ -85,8 +85,7 @@ $colors: map-merge(
 $primary: $denim;
 $primary-light: $anakiwa;
 $primary-dark: $blumine;
-$secondary: $orangepeel;
-$secondary-light: $creambrulee;
+$secondary: $gray-400;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
@@ -106,7 +105,6 @@ $theme-colors: map-merge(
         "primary-light": $primary-light,
         "primary-dark": $primary-dark,
         "secondary": $secondary,
-        "secondary-light": $secondary-light,
         "accent-1": $accent-1,
         "accent-2": $accent-2,
         "accent-3": $accent-3,
@@ -140,7 +138,9 @@ $state-danger-text: $white;
 //  ALERTS
 //--------------------------------
 
-$alert-bg-level: 0; // bootstrap override
+$alert-bg-level: -10; // bootstrap override
+$alert-border-level: -9; // bootstrap override
+$alert-color-level: 4; // bootstrap override
 $alert-danger-bg: $brand-danger;
 $alert-success-bg: $brand-success;
 

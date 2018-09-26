@@ -15,7 +15,7 @@
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>$primary:</span> $denim</code>
-               <div class="spec">Usage:</div>
+               <div class="spec">Usage: Brand Main</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
@@ -29,13 +29,8 @@
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$secondary:</span> $orangepeel</code>
-                <div class="spec">Usage:</div>
-            </div>
-            <div class="item">
-                <div class="color-block"></div>
-                <code class="color-var"><span>$secondary-light:</span> $creambrulee</code>
-                <div class="spec">Usage:</div>
+                <code class="color-var"><span>$secondary:</span> $gray-400</code>
+                <div class="spec">Usage: Brand Second</div>
             </div>
         </div>
 
@@ -327,9 +322,9 @@
                 <code>.btn-outline-primary</code>
             </div>
             <div class="item">
-                <button class="btn btn-tertiary">Button Tertiary</button>
-                <button class="btn btn-tertiary" disabled>Button Tertiary Disabled</button>
-                <code>.btn-tertiary</code>
+                <button class="btn btn-secondary">Button Secondary</button>
+                <button class="btn btn-secondary" disabled>Button Secondary Disabled</button>
+                <code>.btn-secondary</code>
             </div>
             <div class="item">
                 <button class="btn btn-primary">Button Icon <i class="fa fa-play" aria-hidden="true"></i></button>
