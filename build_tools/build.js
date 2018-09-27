@@ -36,7 +36,7 @@ const TEMP_DIR = path.resolve(cwd,'./tmp');
 
 /** Identify the script as soon as it starts. */
 const packageFile = require(path.join(cwd, './package.json'));
-console.log(chalk.bgYellow.black.bold('Starting LyonsCG SFRA Build Script v' + packageFile.version));
+console.log(chalk.bgYellow.black.bold('Starting LyonsCG Build Script v' + packageFile.lcgversion + ' for SFRA v' + packageFile.version));
 
 /** Base Build Options */
 const optionator = require('optionator')({
