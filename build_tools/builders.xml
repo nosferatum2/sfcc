@@ -16,6 +16,12 @@
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
     <property name="buildMode" value="development" />
 
+	<condition property="have-node" else="false">
+ 		<and>
+ 			<available file="${basedir}/../node_modules" type="dir"/>
+ 		</and>
+	</condition>
+
     <target name="core-modification-warning">
         <echo>WARNING: A core cartridge has been modified. Typically this is not correct and the modifications should be made in a site or organization cartridge.</echo>
     </target>
