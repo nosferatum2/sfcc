@@ -106,10 +106,15 @@
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isif condition="${pdict.addToCartUrl}">
-                    <isinclude template="product/components/addToCartGlobal" />
-                <iselse>
-                    <isinclude template="product/components/updateProduct" />
+                <isscript>
+                	var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
+                </isscript>
+                <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+	                <isif condition="${pdict.addToCartUrl}">
+	                    <isinclude template="product/components/addToCartGlobal" />
+	                <iselse>
+	                    <isinclude template="product/components/updateCartProduct" />
+	                </isif>
                 </isif>
             </div>
         </div>

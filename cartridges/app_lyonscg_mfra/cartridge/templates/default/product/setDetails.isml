@@ -4,6 +4,8 @@
         var assets = require('*/cartridge/scripts/assets');
         assets.addJs('/js/productDetail.js');
         assets.addCss('/css/product/detail.css');
+        
+        var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
     </isscript>
 
     <iscomment>
@@ -47,7 +49,9 @@
                 <!-- Prices -->
                 <isinclude template="product/components/pricing/setPrice" />
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addToCartGlobal" />
+                <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                	<isinclude template="product/components/addToCartGlobal" />
+                </isif>
             </div>
         </div>
     </div>

@@ -28,7 +28,12 @@
                     <isinclude template="product/components/pricing/setPrice" />
                 </div>
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addToCartGlobal" />
+                isscript>
+                	var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
+                </isscript> 
+                <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                	<isinclude template="product/components/addToCartGlobal" />
+                </isif>
             </div>
         </div>
     </div>

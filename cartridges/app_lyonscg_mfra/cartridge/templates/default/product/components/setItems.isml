@@ -1,3 +1,6 @@
+<isscript> 
+	var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
+</isscript>
 <div class="set-items" itemtype="http://schema.org/SomeProducts" itemid="#product">
     <isloop items="${productCopy.individualProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
@@ -87,8 +90,9 @@
                                 <isinclude template="product/components/pricing/main" />
                             </div>
 
-                            <!-- Cart and [Optionally] Apple Pay -->
-                            <isinclude template="product/components/addToCartProduct" />
+                           <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                            	<isinclude template="product/components/addToCartProduct" />
+                           </isif>
                         </div>
 
                         <!-- Social Sharing Icons -->

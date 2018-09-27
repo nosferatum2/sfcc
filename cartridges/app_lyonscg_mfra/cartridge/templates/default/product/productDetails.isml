@@ -4,6 +4,8 @@
         var assets = require('*/cartridge/scripts/assets');
         assets.addJs('/js/productDetail.js');
         assets.addCss('/css/product/detail.css');
+        
+        var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
     </isscript>
 
     <isset name="product" value="${pdict.product}" scope="page" />
@@ -100,7 +102,9 @@
                             </div>
 
                             <!-- Cart and [Optionally] Apple Pay -->
-                            <isinclude template="product/components/addToCartProduct" />
+                            <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                            	<isinclude template="product/components/addToCartProduct" />
+                            </isif>
                         </div>
 
                         <!-- Social Sharing Icons -->

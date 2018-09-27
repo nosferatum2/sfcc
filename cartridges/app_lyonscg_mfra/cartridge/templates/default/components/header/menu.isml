@@ -30,7 +30,12 @@
                     </isif>
                 </isloop>
             </isif>
-            <isinclude url="${URLUtils.url('Account-Header', 'mobile', true)}" />
+            <isscript> 
+				var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue("siteDisableCommerceFunctionality");
+			</isscript>
+			<isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+            	<isinclude url="${URLUtils.url('Account-Header', 'mobile', true)}" />
+            </isif>
             <isinclude url="${URLUtils.url('Page-Locale', 'mobile', true)}" />
         </ul>
     </div>

@@ -1,3 +1,6 @@
+<isscript> 
+	var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue("siteDisableCommerceFunctionality");
+</isscript>
 <div class="header-banner slide-up">
     <div class="container">
         <div class="row">
@@ -28,7 +31,9 @@
                     <div class="navbar-header">
                         <div class="pull-left">
                             <div class="hidden-md-down">
-                                <isinclude url="${URLUtils.url('Account-Header')}" />
+                                <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                                	<isinclude url="${URLUtils.url('Account-Header')}" />
+                                </isif>
                                 <isinclude url="${URLUtils.url('Page-Locale')}" />
                             </div>
                             <button class="navbar-toggler d-md-none" type="button" aria-controls="sg-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +44,11 @@
                             <div class="search hidden-xs-down">
                                 <isinclude template="components/header/search" />
                             </div>
-                            <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
-                                <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
-                            </div>
+                            <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
+                            	<div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
+	                                <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
+	                            </div>
+                            </isif>
                         </div>
                     </div>
                 </div>
