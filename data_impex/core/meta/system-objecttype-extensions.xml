@@ -96,6 +96,7 @@
                     <attribute attribute-id="quantityType"/>
                     <attribute attribute-id="quantityMaxValue"/>
                     <attribute attribute-id="searchRefinementsLayout"/>
+                    <attribute attribute-id="siteDisableCommerceFunctionality"/>
                 </attribute-group>
             </group-definitions>
         -->
