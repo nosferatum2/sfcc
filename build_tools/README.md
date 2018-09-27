@@ -186,3 +186,5 @@ Uploading individual cartridges to your sandbox/instance
 ##Notes
 
 Build environment flags (i.e Verbose Logging) are controlled via the "buildEnvironment" object in the package.json file
+
+The builders.xml Ant task includes the 'run npm install.xml' task that utilizes npm to automatically install the package.json specified node modules. The installation task may install tens of thousands of files and thus, on initial run, may take as long as ten minutes to complete. Subsequent runs are exponentially quicker as npm will only update those modules requiring an update. Additionally, the 'run npm install.xml' Ant task may be run on independently of builders.xml
