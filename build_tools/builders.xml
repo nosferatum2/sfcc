@@ -16,17 +16,17 @@
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
     <property name="buildMode" value="development" />
 
-	<condition property="have-node" else="false">
- 		<and>
- 			<available file="${basedir}/../node_modules" type="dir"/>
- 		</and>
-	</condition>
+  <condition property="have-node" else="false">
+     <and>
+       <available file="${basedir}/../node_modules" type="dir"/>
+     </and>
+  </condition>
 
     <target name="core-modification-warning">
         <echo>WARNING: A core cartridge has been modified. Typically this is not correct and the modifications should be made in a site or organization cartridge.</echo>
     </target>
 
-    <target name="check-node" unless="${have-node}">
+    <target name="check-node">
         <echo level="info">The node_modules directory was not found.</echo>
         <echo level="info">Please ensure the node modules are installed in the following directory:</echo>
         <echo level="info">- ${basedir}/../node_modules</echo>
@@ -78,7 +78,7 @@
         <echo level="info">Upload complete!</echo>
     </target>
 
-    <target name="css" depends="check-node" if="${have-node}">
+    <target name="css">
         <echo level="info">Running CSS build task for ${os.name} in ${basedir}</echo>
         <echo level="info">Sass Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
@@ -104,7 +104,7 @@
         <echo level="info">Styles build done!</echo>
     </target>
 
-    <target name="js" depends="check-node" if="${have-node}">
+    <target name="js">
         <echo level="info">Client JavaScript Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
@@ -129,7 +129,7 @@
         <echo level="info">Client JavaScript build done!</echo>
     </target>
 
-    <target name="fonts" depends="check-node" if="${have-node}">
+    <target name="fonts">
         <echo level="info">Fonts build running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
@@ -142,7 +142,7 @@
         <echo level="info">Client JavaScript build done!</echo>
     </target>
 
-    <target name="server-js" depends="check-node" if="${have-node}">
+    <target name="server-js">
         <echo level="info">Server JavaScript Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
@@ -155,7 +155,7 @@
         <echo level="info">Server JavaScript Linter Successful</echo>
     </target>
 
-    <target name="cover" depends="check-node" if="${have-node}">
+    <target name="cover">
         <echo level="info">Test coverage running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
