@@ -77,6 +77,13 @@
                     </value-definition>
                 </value-definitions>
             </attribute-definition>
+            <attribute-definition attribute-id="siteDisableCommerceFunctionality">
+                <display-name xml:lang="x-default">Disable Commerce Functionality</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <!--
             If added, this grouping will remove all other default assignments to the Storefront Configs group.
