@@ -7,11 +7,11 @@ server.extend(page);
 
 var ecommerce = require('*/cartridge/scripts/middleware/ecommerce');
 
-server.prepend('Login', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('Login', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('Begin', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('Begin', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 

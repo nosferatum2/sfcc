@@ -7,51 +7,51 @@ server.extend(page);
 
 var ecommerce = require('*/cartridge/scripts/middleware/ecommerce');
 
-server.prepend('Show', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('Show', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('Login', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('Login', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('SubmitRegistration', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('SubmitRegistration', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('EditProfile', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('EditProfile', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('SaveProfile', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('SaveProfile', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('EditPassword', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('EditPassword', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('SavePassword', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('SavePassword', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('PasswordResetDialogForm', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('PasswordResetDialogForm', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('PasswordReset', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('PasswordReset', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('SetNewPassword', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('SetNewPassword', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('SaveNewPassword', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('SaveNewPassword', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
-server.prepend('Header', ecommerce.checkEcommerceEnabled, function(req, res, next) {
+server.prepend('Header', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 

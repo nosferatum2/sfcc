@@ -12,7 +12,7 @@ server.prepend('Show', ecommerce.checkEcommerceEnabled, function (req, res, next
 });
 
 server.prepend('AddProduct', ecommerce.checkEcommerceEnabled, function (req, res, next) {
-	next();
+    next();
 });
 
 server.prepend('MiniCart', ecommerce.checkEcommerceEnabled, function (req, res, next) {
@@ -24,7 +24,7 @@ server.prepend('Get', ecommerce.checkEcommerceEnabled, function (req, res, next)
 });
 
 server.prepend('RemoveProductLineItem', ecommerce.checkEcommerceEnabled, function (req, res, next) {
-	 next();
+    next();
 });
 
 server.prepend('UpdateQuantity', ecommerce.checkEcommerceEnabled, function (req, res, next) {
@@ -32,7 +32,7 @@ server.prepend('UpdateQuantity', ecommerce.checkEcommerceEnabled, function (req,
 });
 
 server.prepend('SelectShippingMethod', ecommerce.checkEcommerceEnabled, function (req, res, next) {
-	next();
+    next();
 });
 
 server.prepend('MiniCartShow', ecommerce.checkEcommerceEnabled, function (req, res, next) {
@@ -40,11 +40,11 @@ server.prepend('MiniCartShow', ecommerce.checkEcommerceEnabled, function (req, r
 });
 
 server.prepend('AddCoupon', ecommerce.checkEcommerceEnabled, function (req, res, next) {
-	next(); 
+    next();
 });
 
 server.prepend('RemoveCouponLineItem', ecommerce.checkEcommerceEnabled, function (req, res, next) {
-   next();
+    next();
 });
 
 server.prepend('AddBonusProducts', ecommerce.checkEcommerceEnabled, function (req, res, next) {
