@@ -2,12 +2,17 @@
  * This utility provides a standard implementation of URL friendly base64 encoding.
  * https://brockallen.com/2014/10/17/base64url-encoding/
  */
-'use strict'
+'use strict';
 
 var StringUtils = require('dw/util/StringUtils');
 
+/**
+ * Base64 encodes strings for use on the url
+ * @param {string} input - string to encode
+ * @returns {string} Base64 encoding and scrubbed for URLs
+ */
 function encode(input) {
-    let output = StringUtils.encodeBase64(input);
+    var output = StringUtils.encodeBase64(input);
 
     output = output.split('=')[0]; // Remove any trailing '='s
     output = output.replace('+', '-'); // 62nd char of encoding
@@ -16,14 +21,19 @@ function encode(input) {
     return output;
 }
 
+/**
+ * Base64 decodes strings
+ * @param {string} input - string to decode
+ * @returns {string} decoded base64 string
+ */
 function decode(input) {
-    let output = input;
+    var output = input;
 
     output = output.replace('-', '+'); // 62nd char of encoding
     output = output.replace('_', '/'); // 63rd char of encoding
 
-    switch (output.length % 4) // Pad with trailing '='s
-    {
+    // Pad with trailing '='s
+    switch (output.length % 4) {
         case 0:
             break; // No pad chars in this case
         case 2:
@@ -36,7 +46,7 @@ function decode(input) {
             throw new Error('Illegal base64url input!');
     }
 
-    let converted = StringUtils.decodeBase64(output); // Standard base64 decoder
+    var converted = StringUtils.decodeBase64(output); // Standard base64 decoder
 
     return converted;
 }
