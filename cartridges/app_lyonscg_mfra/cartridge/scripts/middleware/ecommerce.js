@@ -11,13 +11,13 @@ var Site = require('dw/system/Site');
  * @returns {void}
  */
 function checkEcommerceEnabled(req, res, next) {
-	var siteDisableCommerceFunctionality = Site.getCurrent().getCustomPreferenceValue("siteDisableCommerceFunctionality");
-    if(!empty(siteDisableCommerceFunctionality) && siteDisableCommerceFunctionality){
-    	res.redirect(URLUtils.url('Home-Show'));
+    var siteDisableCommerceFunctionality = Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
+    if (siteDisableCommerceFunctionality !== null && siteDisableCommerceFunctionality) {
+        res.redirect(URLUtils.url('Home-Show'));
     }
     next();
 }
 
 module.exports = {
-	checkEcommerceEnabled: checkEcommerceEnabled
+    checkEcommerceEnabled: checkEcommerceEnabled
 };
