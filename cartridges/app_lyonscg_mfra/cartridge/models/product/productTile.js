@@ -1,33 +1,14 @@
 'use strict';
 
-var decorators = require('*/cartridge/models/product/decorators/index');
-var promotionCache = require('*/cartridge/scripts/util/promotionCache');
-var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-
 /**
- * Get product search hit for a given product
- * @param {dw.catalog.Product} apiProduct - Product instance returned from the API
- * @returns {dw.catalog.ProductSearchHit} - product search hit for a given product
+ * Base product tile model overridden to decorate product tile with promotion callout messages
+ * Promotion callout messages display on product tile if site preference enablePromoCalloutMessagesProductTile is enabled
+ *
  */
-function getProductSearchHit(apiProduct) {
-    var searchModel = new ProductSearchModel();
-    searchModel.setSearchPhrase(apiProduct.ID);
-    searchModel.search();
 
-    if (searchModel.count === 0) {
-        searchModel.setSearchPhrase(apiProduct.ID.replace(/-/g, ' '));
-        searchModel.search();
-    }
-
-    var hit = searchModel.getProductSearchHit(apiProduct);
-    if (!hit) {
-        var tempHit = searchModel.getProductSearchHits().next();
-        if (tempHit.firstRepresentedProductID === apiProduct.ID) {
-            hit = tempHit;
-        }
-    }
-    return hit;
-}
+var base = module.superModule;
+var decorators = require('*/cartridge/models/product/decorators/index');
+var Site = require('dw/system/Site');
 
 /**
  * Decorate product with product tile information
@@ -38,12 +19,13 @@ function getProductSearchHit(apiProduct) {
  * @returns {Object} - Decorated product model
  */
 module.exports = function productTile(product, apiProduct, productType) {
-    var productSearchHit = getProductSearchHit(apiProduct);
-    decorators.base(product, apiProduct, productType);
-    decorators.searchPrice(product, productSearchHit, promotionCache.promotions, getProductSearchHit);
-    decorators.images(product, apiProduct, { types: ['medium'], quantity: 'single' });
-    decorators.ratings(product);
-    decorators.searchVariationAttributes(product, productSearchHit);
-
+    base.call(this, product, apiProduct, productType);
+    var enablePromoCalloutMessagesProductTile = Site.getCurrent().getCustomPreferenceValue('enablePromoCalloutMessagesProductTile');
+    if (enablePromoCalloutMessagesProductTile !== null && enablePromoCalloutMessagesProductTile) {
+        var PromotionMgr = require('dw/campaign/PromotionMgr');
+        var promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(apiProduct);
+        decorators.promotions(product, promotions);
+    }
     return product;
 };
+
