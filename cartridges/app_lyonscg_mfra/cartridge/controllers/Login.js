@@ -17,7 +17,7 @@ server.prepend('Show', ecommerce.checkEcommerceEnabled, function (req, res, next
     next();
 });
 
-server.get('Logout', ecommerce.checkEcommerceEnabled, function (req, res, next) {
+server.prepend('Logout', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     next();
 });
 
