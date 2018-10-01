@@ -12,45 +12,58 @@
 @import "~org/bootstrapOverrides/gradients";
 
 .sidenav {
+    width: auto;
     position: fixed;
-    width: 13%;
-    padding: 0 1em;
+    height: 130px;
+    font-size: 10px;
+    top: 0;
+    overflow-x: hidden;
+    padding: 1em;
+    background-color: white;
+    z-index: 1;
+    opacity: 0.8;
 
-    ul {
-        padding: 0;
-        line-height: 1.6;
+    .section-nav {
+        font-weight: bold;
+    }
 
-        li {
-            list-style-type: none;
-
-            a {
-                text-decoration: none;
-                padding-left: 0.3em;
-            }
-
-            &:hover {
-                background-color: rgba(126, 192, 238, 0.3);
-            }
-        }
+    @include media-breakpoint-up(sm) {
+        width: 18%;
+        height: 100%;
+        padding: 0 1em 3em;
+        opacity: 1;
 
         .section-nav {
-            font-weight: bold;
             margin-top: 0.5em;
         }
     }
-}
 
-.fixed {
-    position: fixed;
-    top: 0;
+    a,
+    .dropdown-btn {
+        text-decoration: none;
+        display: block;
+        font-size: 12px;
+        text-align: left;
+        padding-left: 0.3em;
+        line-height: 1.6;
+
+        @include media-breakpoint-up(sm) {
+            font-size: 20px;
+        }
+
+        &:hover {
+            background-color: rgba(126, 192, 238, 0.3);
+        }
+    }
 }
 
 .pt_styleguide {
     .wrapper {
         margin: 1em;
+        padding-left: 1em;
 
-        @include media-breakpoint-up(md) {
-            margin-left: 13%;
+        @include media-breakpoint-up(sm) {
+            margin-left: 18%;
         }
     }
 

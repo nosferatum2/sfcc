@@ -1,9 +1,8 @@
 $(document).ready(function () {
-    $(window).scroll(function () {
-        if ($(window).scrollTop() >= 120) {
-            $('.sidenav').addClass('fixed');
-        } else {
-            $('.sidenav').removeClass('fixed');
-        }
+    var body = $('html, body');
+
+    $('a[href*=\\#]').on('click', function (event) {
+        event.preventDefault();
+        body.animate({ scrollTop: $(this.hash).offset().top }, 500);
     });
 });
