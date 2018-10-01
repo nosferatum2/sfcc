@@ -10,6 +10,7 @@
  */
 
 var Status = require('dw/system/Status');
+var Locale = require('dw/util/Locale');
 
 /**
  * @function
@@ -17,9 +18,9 @@ var Status = require('dw/system/Status');
  * @return {Object} - Status object with an OK status
  */
 exports.onSession = function () {
-    // Updated the HTML element to contain a dynamic locale instead of a static 'en' (LRA-23)
-    var locale = !empty(request.locale) ? request.locale : 'en';
-    session.custom.currentLocale = !empty(locale) && locale !== 'default' ? locale.replace(/_/g, '-').toLowerCase() : 'en';
+    // Updated the HTML element to contain a dynamic ISO 639 language code instead of a static 'en' (LRA-23)
+    var locale = !empty(request.locale) ? request.locale : 'en_US';
+    session.custom.currentLang = !empty(locale) && locale !== 'default' ? Locale.getLocale(locale).language : 'en';
 
     return new Status(Status.OK);
 };
