@@ -5,7 +5,7 @@
         assets.addCss('/css/styleGuide.css');
     </isscript>
 
-    <div class="sidenav">
+    <div class="sg-sidenav">
         <a class="section-nav">Color Theme & Palette</a>
         <a href="#main-colors">Main Colors</a>
         <a href="#accent-colors">Accent Colors</a>
