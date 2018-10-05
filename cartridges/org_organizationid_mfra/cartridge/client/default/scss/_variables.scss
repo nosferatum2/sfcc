@@ -82,40 +82,44 @@ $colors: map-merge(
     $colors
 );
 
+$brand-main: $denim;
+$brand-second: $gray-400;
+$brand-light: $anakiwa;
+$brand-dark: $blumine;
 $primary: $denim;
-$primary-light: $anakiwa;
-$primary-dark: $blumine;
 $secondary: $gray-400;
+$dark: $gray-500;
+$light: $gray-100;
+$success: $japanese-laurel;
+$info: $calypso;
+$warning: $mustard;
+$danger: $tamarillo;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
 $accent-4: $pinegreen;
 $tertiary: $gray-500;
-$success: $japanese-laurel;
-$info: $calypso;
-$warning: $mustard;
-$error: $tamarillo;
-$light: $gray-100;
-$dark: $gray-500;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
     (
+        "brand-main": $brand-main,
+        "brand-second": $brand-second,
+        "brand-light": $brand-light,
+        "brand-dark": $brand-dark,
         "primary": $primary,
-        "primary-light": $primary-light,
-        "primary-dark": $primary-dark,
         "secondary": $secondary,
+        "dark": $dark,
+        "light": $light,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
         "accent-1": $accent-1,
         "accent-2": $accent-2,
         "accent-3": $accent-3,
         "accent-4": $accent-4,
-        "tertiary": $tertiary,
-        "success": $success,
-        "info": $info,
-        "warning": $warning,
-        "error": $error,
-        "light": $light,
-        "dark": $dark
+        "tertiary": $tertiary
     ),
     $theme-colors
 );
@@ -127,7 +131,6 @@ $theme-colors: map-merge(
 $brand-success: $pinegreen;
 $brand-danger: $cinnabar;
 $brand-primary: $cerulean-blue;
-$brand-color: $primary;
 $light-gray: $gray-200;
 $slightly-darker-gray: $gray-300;
 $dark-gray: $gray-400;
@@ -154,36 +157,6 @@ $alert-success-bg: $brand-success;
 // Gradients utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-gradient
 
 $enable-gradients: false; // bootstrap override -> must be set to true for gradients to be visible on the site
-
-//--------------------------------
-//  TYPOGRAPHY
-//--------------------------------
-
-$font-size-base: 1rem; // sets base font size applied to html element
-$font-size-body: $font-size-base * 0.875; // font size applied to body element
-$font-size-xs: $font-size-base * 0.75;
-$body-color: $gray-500; //bootstrap override
-
-// Fonts
-
-// Displays
-$display1-size: 6rem; //bootstrap override
-$display2-size: 5rem; //bootstrap override
-
-// Headings
-
-$h1-font-size: $font-size-base * 3; //bootstrap override
-$h2-font-size: $font-size-base * 2.5; //bootstrap override
-$h3-font-size: $font-size-base * 2.25; //bootstrap override
-$h4-font-size: $font-size-base * 1.75; //bootstrap override
-$h5-font-size: $font-size-base * 1.25; //bootstrap override
-$h6-font-size: $font-size-xs; //bootstrap override
-
-// Labels
-
-$label-xl: $font-size-base * 1.25;
-$label-sm: $font-size-base;
-$label-xs: $font-size-base * 0.75;
 
 //--------------------------------
 //  BORDERS / DIVIDERS
@@ -222,39 +195,42 @@ $shadow2: 0 8px 14px 0 rgba(0, 20px, 31px, 0.05);
 $shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
 
 //--------------------------------
+//  TYPOGRAPHY
+//--------------------------------
+
+$font-size-base: 1rem; // sets base font size applied to html element
+$font-size-body: $font-size-base * 0.875; // font size applied to body element
+$font-size-xs: $font-size-base * 0.75;
+$body-color: $gray-500; //bootstrap override
+
+// Fonts
+
+// Displays
+$display1-size: 6rem; //bootstrap override
+$display2-size: 5rem; //bootstrap override
+
+// Headings
+
+$h1-font-size: $font-size-base * 3; //bootstrap override
+$h2-font-size: $font-size-base * 2.5; //bootstrap override
+$h3-font-size: $font-size-base * 2.25; //bootstrap override
+$h4-font-size: $font-size-base * 1.75; //bootstrap override
+$h5-font-size: $font-size-base * 1.25; //bootstrap override
+$h6-font-size: $font-size-xs; //bootstrap override
+
+// Labels
+
+$label-xl: $font-size-base * 1.25;
+$label-sm: $font-size-base;
+$label-xs: $font-size-base * 0.75;
+
+//--------------------------------
 //  LINKS
 //--------------------------------
 
 $link-color: $gray-500; //bootstrap override
 $link-hover-color: $denim; //bootstrap override
 $link-decoration-alt: underline;
-
-//--------------------------------
-//  DROPDOWN MENU
-//--------------------------------
-
-$menu-link: $gray-200;
-$close-menu-bg: $gray-200;
-$dropdown-link-hover-bg: $gray-200; //bootstrap override
-$dropdown-link-hover-color: $gray-200; //bootstrap override
-
-//--------------------------------
-//  BUTTONS & FORMS
-//--------------------------------
-
-$input-btn-padding-y: 0.75rem; //bootstrap override
-$input-btn-padding-x: 1rem; //bootstrap override
-$btn-box-shadow: 0 0 0 transparent; //bootstrap override
-$btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
-
-//--------------------------------
-// BREADCRUMBS
-//--------------------------------
-
-$breadcrumb-bg: $white;
-$breadcrumb-before-color: $denim;
-$breadcrumb-active-color: $gray-400; //bootstrap override
-$breadcrumb-divider-color: $gray-400; //bootstrap override
 
 //--------------------------------
 //  BUTTONS
@@ -273,13 +249,6 @@ $btn-disabled-alt-border-color: $gray-300;
 $btn-font-size: $font-size-body; //bootstrap override
 $font-size-lg: $font-size-base * 1.25; //bootstrap override
 $btn-padding-y-lg: 0.9rem; //bootstrap override
-
-//--------------------------------
-// CONTENT SWITCHER
-//--------------------------------
-
-$contentswitcher-active-color: $white;
-$contentswitcher-active-bg: $denim;
 
 //--------------------------------
 //  FORMS
@@ -303,6 +272,40 @@ $custom-checkbox-indicator-border-radius: 0;
 $custom-control-indicator-box-shadow: none;
 $custom-control-indicator-bg: $white;
 $text-muted: $gray-400;
+
+//--------------------------------
+//  BUTTONS & FORMS
+//--------------------------------
+
+$input-btn-padding-y: 0.75rem; //bootstrap override
+$input-btn-padding-x: 1rem; //bootstrap override
+$btn-box-shadow: 0 0 0 transparent; //bootstrap override
+$btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
+
+//--------------------------------
+//  DROPDOWN MENU
+//--------------------------------
+
+$menu-link: $gray-200;
+$close-menu-bg: $gray-200;
+$dropdown-link-hover-bg: $gray-200; //bootstrap override
+$dropdown-link-hover-color: $gray-200; //bootstrap override
+
+//--------------------------------
+// BREADCRUMBS
+//--------------------------------
+
+$breadcrumb-bg: $white;
+$breadcrumb-before-color: $denim;
+$breadcrumb-active-color: $gray-400; //bootstrap override
+$breadcrumb-divider-color: $gray-400; //bootstrap override
+
+//--------------------------------
+// CONTENT SWITCHER
+//--------------------------------
+
+$contentswitcher-active-color: $white;
+$contentswitcher-active-bg: $denim;
 
 //--------------------------------
 // Product Tile

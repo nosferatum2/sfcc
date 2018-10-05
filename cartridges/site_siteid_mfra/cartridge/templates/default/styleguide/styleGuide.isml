@@ -7,10 +7,10 @@
 
     <div class="sg-sidenav">
         <a class="section-nav">Color Theme & Palette</a>
-        <a href="#main-colors">Main Colors</a>
-        <a href="#accent-colors">Accent Colors</a>
+        <a href="#brand-colors">Brand Colors</a>
+        <a href="#ui-colors">UI Colors</a>
         <a href="#grays">Grays</a>
-        <a href="#messages-alerts">Messages & Alerts</a>
+        <a href="#accent-colors">Accent Colors</a>
 
         <a class="section-nav">Backgrounds</a>
         <a href="#background-gradients">Background Gradients</a>
@@ -66,52 +66,73 @@
         <h3 class="section">Color Theme & Palette</h3>
         <p>Link: <a href="http://getbootstrap.com/docs/4.0/getting-started/theming/">http://getbootstrap.com/docs/4.0/getting-started/theming/</a></p>
         <p><span class="text-primary">Note:</span> Bolded values indicate the theme name</p>
+        <p><span class="text-primary">Usage:</span> Primary brand, interactive text, primary icon color, border highlight</p>
 
-        <h4 class="sub-section" id="main-colors">Main Colors</h4>
-        <div class="flex-container color main-colors">
+        <h4 class="sub-section" id="brand-colors">Brand Colors</h4>
+        <div class="flex-container color brand-colors">
             <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var"><span>Theme color: $primary</span><br> $denim</code>
-               <div class="spec">Usage: Brand Main</div>
-            </div>
-            <div class="item">
-               <div class="color-block"></div>
-               <code class="color-var"><span>Theme color: $primary-light</span><br> $anakiwa</code>
-               <div class="spec">Usage:</div>
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $brand-main</span><br> $denim</code>
+                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>Theme color: $primary-dark</span><br> $blumine</code>
-                <div class="spec">Usage:</div>
+                <code class="color-var"><span>Theme color: $brand-second</span><br> $gray-400</code>
+                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>Theme color: $secondary</span><br> $gray-400</code>
-                <div class="spec">Usage: Brand Second</div>
+                <code class="color-var"><span>Theme color: $brand-light</span><br> $anakiwa</code>
+                <div class="spec">Usage: </div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $brand-dark</span><br> $blumine</code>
+                <div class="spec">Usage: </div>
             </div>
         </div>
 
-        <h4 class="sub-section" id="accent-colors">Accent Colors</h4>
-        <div class="flex-container color accent-colors">
+        <h4 class="sub-section" id="ui-colors">UI Colors</h4>
+        <div class="flex-container color ui-colors">
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>Theme color: $accent-1</span><br> $sapphire</code>
-               <div class="spec">Usage:</div>
+               <code class="color-var"><span>Theme color: $primary</span><br> $denim</code>
+               <div class="spec">Usage: </div>
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>Theme color: $accent-2</span><br> $cinnabar</code>
+               <code class="color-var"><span>Theme color: $secondary</span><br> $gray-400</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>Theme color: $accent-3</span><br> $orangepeel</code>
+                <code class="color-var"><span>Theme color: $dark</span><br> $gray-500</code>
                 <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>Theme color: $accent-4</span><br> $pinegreen</code>
+                <code class="color-var"><span>Theme color: $light</span><br> $gray-100</code>
+                <div class="spec">Usage: </div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>Theme color: $success</span><br> $japanese-laurel</code>
+               <div class="spec">Usage: </div>
+            </div>
+            <div class="item">
+               <div class="color-block"></div>
+               <code class="color-var"><span>Theme color: $info</span><br> $calypso</code>
+               <div class="spec">Usage:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $warning</span><br> $mustard</code>
                 <div class="spec">Usage:</div>
+            </div>
+            <div class="item">
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $danger</span><br> $tamarillo</code>
+                <div class="spec">Usage: </div>
             </div>
         </div>
 
@@ -154,26 +175,26 @@
             </div>
         </div>
 
-        <h4 class="sub-section" id="messages-alerts">Messages & Alerts</h4>
-        <div class="flex-container color">
+        <h4 class="sub-section" id="accent-colors">Accent Colors</h4>
+        <div class="flex-container color accent-colors">
             <div class="item">
-               <div class="color-block bg-success"></div>
-               <code class="color-var"><span>$success:</span> $japanese-laurel</code>
+               <div class="color-block"></div>
+               <code class="color-var"><span>Theme color: $accent-1</span><br> $sapphire</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
-               <div class="color-block bg-info"></div>
-               <code class="color-var"><span>$info:</span> $calypso</code>
+               <div class="color-block"></div>
+               <code class="color-var"><span>Theme color: $accent-2</span><br> $cinnabar</code>
                <div class="spec">Usage:</div>
             </div>
             <div class="item">
-                <div class="color-block bg-warning"></div>
-                <code class="color-var"><span>$warning:</span> $mustard</code>
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $accent-3</span><br> $orangepeel</code>
                 <div class="spec">Usage:</div>
             </div>
             <div class="item">
-                <div class="color-block bg-error"></div>
-                <code class="color-var"><span>$error:</span> $tamarillo</code>
+                <div class="color-block"></div>
+                <code class="color-var"><span>Theme color: $accent-4</span><br> $pinegreen</code>
                 <div class="spec">Usage:</div>
             </div>
         </div>
@@ -265,12 +286,12 @@
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 1</div>
                 <code>$font-family-base</code>
-                <div class="spec">Usage: </div>
+                <div class="spec">Usage: Fallback system font for Google fonts </div>
             </div>
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <div class="h3">Font Family 2</div>
                 <code>$font-family-second</code>
-                <div class="spec">Usage: </div>
+                <div class="spec">Usage: Fallback system font for Google fonts</div>
             </div>
         </div>
 
@@ -350,12 +371,13 @@
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="main-nav">Main Navigation</a>
                 <code>.main-nav </code>
-                <div class="spec">Usage: .875rem</div>
+                <div class="spec">Usage: Use paragraph style, .875rem</div>
+                
             </div>
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="link-primary">Primary Link</a>
                 <code>.link-primary </code>
-                <div class="spec">Usage: .875rem</div>
+                <div class="spec">Usage: Use paragraph bold style, stand alone links, link lists, footer links, .875rem</div>
             </div>
             <div class="item d-md-flex justify-content-start flex-wrap">
                 <a href="" class="link-secondary">Secondary Link</a>
@@ -372,29 +394,35 @@
                 <button class="btn btn-primary">Button Primary</button>
                 <button class="btn btn-primary" disabled>Button Primary Disabled</button>
                 <code>.btn-primary</code>
+                <div class="spec">Usage: CTA button for all primary actions</div>
             </div>
             <div class="item">
                 <button class="btn btn-outline-primary">Button Outline Primary</button>
                 <button class="btn btn-outline-primary" disabled>Button Outline Primary Disabled</button>
                 <code>.btn-outline-primary</code>
+                <div class="spec">Usage: CTA button for all secondary actions, use next to Main Buttons to establish hierarchies between the two</div>
             </div>
             <div class="item">
                 <button class="btn btn-secondary">Button Secondary</button>
                 <button class="btn btn-secondary" disabled>Button Secondary Disabled</button>
                 <code>.btn-secondary</code>
+                <div class="spec">Usage: CTA button for all tertiary actions, use for standalone action, establish hierarchy on pages with multiple CTAs</div>
             </div>
             <div class="item">
                 <button class="btn btn-primary">Button Icon <i class="fa fa-play" aria-hidden="true"></i></button>
                 <button class="btn btn-primary" disabled>Button Icon Disabled <i class="fa fa-play" aria-hidden="true"></i></button>
                 <code>.btn-primary</code>
+                <div class="spec">Usage: Alternate CTA button for primary actions</div>
             </div>
             <div class="item">
                 <button class="btn btn-link">Button Link</button>
                 <code>.btn-link</code>
+                <div class="spec">Usage: Used for standalone CTA's, eg. tertiary actions that follow content blocks ("Read More")</div>
             </div>
             <div class="item">
                 <button class="btn btn-primary btn-lg">Button Primary Large</button>
                 <code>.btn-primary .btn-lg</code>
+                <div class="spec">Usage: </div>
             </div>
         </div>
 
@@ -457,8 +485,8 @@
                 <div class="spec">Usage:</div>
             </div>
             <div class="item">
-                <div class="alert alert-error">Error alert</div>
-                <code class="color-var"><span>.alert-error:</span> $tamarillo</code>
+                <div class="alert alert-danger">Danger alert</div>
+                <code class="color-var"><span>.alert-danger:</span> $tamarillo</code>
                 <div class="spec">Usage:</div>
             </div>
         </div>
@@ -937,22 +965,22 @@
             <div class="item">
                 <div class="card default"></div>
                 <code>Default</code>
-                <div class="spec">Usage:</div>
+                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="card animation easeincubic"></div>
                 <code>$ease-in-cubic</code>
-                <div class="spec">Usage: cubic-bezier(0.55, 0.055, 0.675, 0.19);</div>
+                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="card animation easeoutcubic"></div>
                 <code>$ease-out-cubic</code>
-                <div class="spec">Usage: cubic-bezier(0.215, 0.61, 0.355, 1)</div>
+                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="card hover"></div>
                 <code>$card-hover-scale</code>
-                <div class="spec">Usage: scale(1.25)</div>
+                <div class="spec">Usage: </div>
             </div>
         </div>
 
@@ -962,12 +990,12 @@
             <div class="item">
                <button class="btn btn-secondary"></button>
                <code>Default</code>
-               <div class="spec">Usage:</div>
+               <div class="spec">Usage: </div>
             </div>
             <div class="item">
                <button class="btn btn-secondary hover"></button>
                <code>$button-hover-scaley</code>
-               <div class="spec">Usage: scaleY(1.5)</div>
+               <div class="spec">Usage: </div>
             </div>
         </div>
         </div>

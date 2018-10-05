@@ -12,6 +12,7 @@
 @import "~org/bootstrapOverrides/gradients";
 
 .sg-sidenav {
+    font-family: $font-family-base;
     width: 100%;
     position: fixed;
     height: 200px;
@@ -205,11 +206,17 @@
 
     .sg-buttons {
         .item {
-            margin-bottom: 1em;
+            margin-bottom: 2em;
 
             .btn {
                 margin-right: 2em;
                 margin-bottom: 1em;
+            }
+
+            .spec,
+            code {
+                margin: 0;
+                margin-bottom: 0.7em;
             }
         }
     }
@@ -570,7 +577,7 @@
 .item {
     .color-block {
         position: relative;
-        width: 100%;
+        width: 200px;
         height: 200px;
         margin-bottom: 5px;
         color: $gray-100;
@@ -605,9 +612,39 @@
 
 // TODO - Using this mixin instead of the utilities - do we want to use utilities?
 
-.main-colors {
+.brand-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
-    $colorlist: ($primary, $primary-light, $primary-dark, $secondary);
+    $colorlist: ($brand-main, $brand-second, $brand-light, $brand-dark);
+
+    @for $i from 1 through length($colorlist) {
+        $c: nth($colorlist, $i);
+
+        .item:nth-child(#{$i}) .color-block {
+            background-color: $c;
+            border-radius: $border-radius;
+
+            &::before {
+                content: "#{$c}";
+                color: $white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                @if lightness($c) > 75 {
+                    color: $gray-500;
+                }
+            }
+
+            @if lightness($c) > lightness($light-gray) {
+                border: 1px solid $gray-500;
+            }
+        }
+    }
+}
+
+.ui-colors {
+    // Set the list of color blocks in order of how they should appear in the style guide.
+    $colorlist: ($primary, $secondary, $dark, $light, $success, $info, $warning, $danger);
 
     @for $i from 1 through length($colorlist) {
         $c: nth($colorlist, $i);
@@ -728,6 +765,10 @@ a:hover {
 
 .main-nav {
     font-size: $font-size-sm;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .link-primary {
