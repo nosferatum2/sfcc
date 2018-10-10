@@ -170,8 +170,7 @@ const optionator = require('optionator')({
         option: 'data-bundle',
         type: 'String',
         description: 'The data bundle that will be deployed. Data bundles are defined in package.json',
-        required: false,
-        default: 'core'
+        required: false
     }, {
         option: 'generate-object-report',
         type: 'Boolean',
