@@ -1,161 +1,45 @@
 'use strict';
 
+/**
+ * Search base controller overridden to show breadcrumbs on product listing page
+ *
+ */
+
+var page = module.superModule;
 var server = require('server');
 
-var CatalogMgr = require('dw/catalog/CatalogMgr');
-var cache = require('*/cartridge/scripts/middleware/cache');
-var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
-var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
+server.extend(page);
 
-server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
-    var ProductSearch = require('*/cartridge/models/search/productSearch');
-
-    var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    apiProductSearch.search();
-    var productSearch = new ProductSearch(
-        apiProductSearch,
-        req.querystring,
-        req.querystring.srule,
-        CatalogMgr.getSortingOptions(),
-        CatalogMgr.getSiteCatalog().getRoot()
-    );
-
-    res.render('/search/productGrid', {
-        productSearch: productSearch
-    });
-
-    next();
-});
-
-server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-    var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
-
-    var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    apiProductSearch.search();
-    var productSearch = new ProductSearch(
-        apiProductSearch,
-        req.querystring,
-        req.querystring.srule,
-        CatalogMgr.getSortingOptions(),
-        CatalogMgr.getSiteCatalog().getRoot()
-    );
-    res.render('/search/searchRefineBar', {
-        productSearch: productSearch,
-        querystring: req.querystring
-    });
-
-    next();
-});
-
-
-server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-    var URLUtils = require('dw/web/URLUtils');
-    var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
-    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
-    var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
-
-    var categoryTemplate = '';
-    var productSearch;
-    var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
-        && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
-    var resultsTemplate = isAjax ? 'search/searchResultsNoDecorator' : 'search/searchResults';
-    var apiProductSearch = new ProductSearchModel();
-    var maxSlots = 4;
-    var reportingURLs;
-    var searchRedirect = req.querystring.q
-        ? apiProductSearch.getSearchRedirect(req.querystring.q)
-        : null;
-
-    if (searchRedirect) {
-        res.redirect(searchRedirect.getLocation());
-        return next();
-    }
-
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    apiProductSearch.search();
-
-    categoryTemplate = searchHelper.getCategoryTemplate(apiProductSearch);
-    productSearch = new ProductSearch(
-        apiProductSearch,
-        req.querystring,
-        req.querystring.srule,
-        CatalogMgr.getSortingOptions(),
-        CatalogMgr.getSiteCatalog().getRoot()
-    );
-
-    pageMetaHelper.setPageMetaTags(req.pageMetaData, productSearch);
-
-    var refineurl = URLUtils.url('Search-Refinebar');
-    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
-    Object.keys(req.querystring).forEach(function (element) {
-        if (whitelistedParams.indexOf(element) > -1) {
-            refineurl.append(element, req.querystring[element]);
-        }
-        if (element === 'preferences') {
-            var i = 1;
-            Object.keys(req.querystring[element]).forEach(function (preference) {
-                refineurl.append('prefn' + i, preference);
-                refineurl.append('prefv' + i, req.querystring[element][preference]);
-                i++;
-            });
-        }
-    });
-
-    if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
-        reportingURLs = reportingUrlsHelper.getProductSearchReportingURLs(productSearch);
-    }
-
-    if (
-        productSearch.isCategorySearch
-        && !productSearch.isRefinedCategorySearch
-        && categoryTemplate
-        && apiProductSearch.category.parent.ID === 'root'
-    ) {
-        pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
-
-        if (isAjax) {
-            res.render(resultsTemplate, {
-                productSearch: productSearch,
-                maxSlots: maxSlots,
-                reportingURLs: reportingURLs,
-                refineurl: refineurl
-            });
-        } else {
-            res.render(categoryTemplate, {
-                productSearch: productSearch,
-                maxSlots: maxSlots,
-                category: apiProductSearch.category,
-                reportingURLs: reportingURLs,
-                refineurl: refineurl
-            });
-        }
-    } else {
-        res.render(resultsTemplate, {
-            productSearch: productSearch,
-            maxSlots: maxSlots,
-            reportingURLs: reportingURLs,
-            refineurl: refineurl
+/**
+ * Creates the breadcrumbs object
+ * @param {string} cgid - category ID from navigation and search
+ * @param {Array} breadcrumbs - array of breadcrumbs object
+ * @returns {Array} an array of breadcrumb objects
+ */
+function getAllBreadcrumbs(cgid, breadcrumbs) {
+    var category;
+    if (cgid) {
+        var URLUtils = require('dw/web/URLUtils');
+        var CatalogMgr = require('dw/catalog/CatalogMgr');
+        category = CatalogMgr.getCategory(cgid);
+        breadcrumbs.push({
+            htmlValue: category.displayName,
+            url: URLUtils.url('Search-Show', 'cgid', category.ID)
         });
+        if (category.parent && category.parent.ID !== 'root') {
+            return getAllBreadcrumbs(category.parent.ID, breadcrumbs);
+        }
     }
+    return breadcrumbs;
+}
 
-    return next();
-}, pageMetaData.computedPageMetaData);
-
-server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
-    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
-
-    var contentSearch = searchHelper.setupContentSearch(req.querystring);
-    res.render('/search/contentGrid', {
-        contentSearch: contentSearch
-    });
+server.append('Show', function (req, res, next) {
+    if (req.querystring.cgid) {
+        var viewData = res.getViewData();
+        var breadcrumbs = getAllBreadcrumbs(req.querystring.cgid, []).reverse();
+        viewData.breadcrumbs = breadcrumbs;
+        res.setViewData(viewData);
+    }
     next();
 });
 

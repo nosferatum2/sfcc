@@ -36,6 +36,11 @@
                 </ul>
             </div>
         </isif>
+        <isif condition="${pdict.productSearch.isCategorySearch}">
+        	<div class="breadcrumbs">
+        		<isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
+        	</div>
+        </isif>
     </div>
     <div class="row">
         <div class="tab-content col-12">
