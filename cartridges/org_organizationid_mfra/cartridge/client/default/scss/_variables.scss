@@ -166,6 +166,9 @@ $enable-gradients: false; // bootstrap override -> must be set to true for gradi
 
 // Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
 
+$border-success: 1px solid $success;
+$border-warning: 1px solid $warning;
+$border-danger: 1px solid $danger;
 $border-width: 1px; // could be bootstrap override
 $border-color: $gray-300; // default color - could be bootstrap override
 $border: 1px solid $border-color;

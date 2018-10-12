@@ -73,22 +73,18 @@
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $brand-main</span><br> $denim</code>
-                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $brand-second</span><br> $gray-400</code>
-                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $brand-light</span><br> $anakiwa</code>
-                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $brand-dark</span><br> $blumine</code>
-                <div class="spec">Usage: </div>
             </div>
         </div>
 
@@ -97,42 +93,34 @@
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $primary</span><br> $denim</code>
-               <div class="spec">Usage: </div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $secondary</span><br> $gray-400</code>
-               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $dark</span><br> $gray-500</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $light</span><br> $gray-100</code>
-                <div class="spec">Usage: </div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $success</span><br> $japanese-laurel</code>
-               <div class="spec">Usage: </div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $info</span><br> $calypso</code>
-               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $warning</span><br> $mustard</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $danger</span><br> $tamarillo</code>
-                <div class="spec">Usage: </div>
             </div>
         </div>
 
@@ -141,37 +129,30 @@
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$black</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
-                <code class="color-var"><span>$dark:</span> $gray-500</code>
-                <div class="spec">Usage:</div>
+                <code class="color-var">$gray-500</code>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-400</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-300</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var">$gray-200</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
-               <code class="color-var"><span>$light:</span> $gray-100</code>
-               <div class="spec">Usage:</div>
+               <code class="color-var">$gray-100</code>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var">$white</code>
-               <div class="spec">Usage:</div>
             </div>
         </div>
 
@@ -180,47 +161,40 @@
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $accent-1</span><br> $sapphire</code>
-               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                <div class="color-block"></div>
                <code class="color-var"><span>Theme color: $accent-2</span><br> $cinnabar</code>
-               <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $accent-3</span><br> $orangepeel</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="color-block"></div>
                 <code class="color-var"><span>Theme color: $accent-4</span><br> $pinegreen</code>
-                <div class="spec">Usage:</div>
             </div>
         </div>
 
         <h3 class="section">Backgrounds</h3>
+        <p><span class="text-primary">Usage:</span> Primary brand, interactive text, primary icon color, border highlight</p>
         <h4 class="sub-section" id="background-gradients">Background Gradients</h4>
         <div class="flex-container gradient">
             <div class="item">
                 <div class="gradient-block gradient-lin1"></div>
                 <code>.gradient-lin1 / @include gradient-lin1</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-lin2"></div>
                 <code>.gradient-lin2 / @include gradient-lin2</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-radial"></div>
                 <code>.gradient-radial / @include gradient-radial</code>
-                <div class="spec">Usage:</div>
             </div>
             <div class="item">
                 <div class="gradient-block gradient-lin3"></div>
                 <code>.gradient-lin3 / @include gradient-lin3</code>
-                <div class="spec">Usage:</div>
             </div>
         </div>
 
