@@ -6,58 +6,58 @@
     </isscript>
 
     <div class="sg-sidenav">
-        <a class="section-nav">Color Theme & Palette</a>
-        <a href="#brand-colors">Brand Colors</a>
-        <a href="#ui-colors">UI Colors</a>
-        <a href="#grays">Grays</a>
-        <a href="#accent-colors">Accent Colors</a>
+        <li class="section-nav">Color Theme & Palette</li>
+        <li class="list-link"><a href="#brand-colors">Brand Colors</a></li>
+        <li class="list-link"><a href="#ui-colors">UI Colors</a></li>
+        <li class="list-link"><a href="#grays">Grays</a></li>
+        <li class="list-link"><a href="#accent-colors">Accent Colors</a></li>
 
-        <a class="section-nav">Backgrounds</a>
-        <a href="#background-gradients">Background Gradients</a>
+        <li class="section-nav">Backgrounds</li>
+        <li class="list-link"><a href="#background-gradients">Background Gradients</a></li>
 
-        <a class="section-nav">Styles</a>
-        <a href="#borders-dividers">Borders & Dividers</a>
-        <a href="#shadows">Shadows</a>
-        <a href="#patterns">Patterns</a>
+        <li class="section-nav">Styles</li>
+        <li class="list-link"><a href="#borders-dividers">Borders & Dividers</a></li>
+        <li class="list-link"><a href="#shadows">Shadows</a></li>
+        <li class="list-link"><a href="#patterns">Patterns</a></li>
 
-        <a class="section-nav">Typography</a>
-        <a href="#fonts">Fonts</a>
-        <a href="#displays">Displays</a>
-        <a href="#headings">Headings</a>
-        <a href="#labels">Labels</a>
-        <a href="#body">Body</a>
-        <a href="#links">Links</a>
+        <li class="section-nav">Typography</li>
+        <li class="list-link"><a href="#fonts">Fonts</a></li>
+        <li class="list-link"><a href="#displays">Displays</a></li>
+        <li class="list-link"><a href="#headings">Headings</a></li>
+        <li class="list-link"><a href="#labels">Labels</a></li>
+        <li class="list-link"><a href="#body">Body</a></li>
+        <li class="list-link"><a href="#links">Links</a></li>
 
-        <a class="section-nav" href="#buttons">Buttons</a>
+        <li class="list-link section-nav"><a href="#buttons">Buttons</a></li>
 
-        <a class="section-nav" href="#forms">Forms</a>
+        <li class="list-link section-nav"><a href="#forms">Forms</a></li>
 
-        <a class="section-nav">Messages</a>
-        <a href="#alerts">Alerts</a>
-        <a href="#modals">Modals</a>
-        <a href="#tooltips">Tooltips</a>
+        <li class="section-nav">Messages</li>
+        <li class="list-link"><a href="#alerts">Alerts</a></li>
+        <li class="list-link"><a href="#modals">Modals</a></li>
+        <li class="list-link"><a href="#tooltips">Tooltips</a></li>
 
-        <a class="section-nav" href="#iconography">Iconography</a>
+        <li class="list-link section-nav"><a href="#iconography">Iconography</a></li>
 
-        <a class="section-nav">Grids & Spacing</a>
-        <a href="#grids">Grids</a>
-        <a href="#spacing">Spacing</a>
+        <li class="section-nav">Grids & Spacing</li>
+        <li class="list-link"><a href="#grids">Grids</a></li>
+        <li class="list-link"><a href="#spacing">Spacing</a></li>
 
-        <a class="section-nav">Components</a>
-        <a href="#product-tiles">Product Tiles</a>
-        <a href="#cards">Cards</a>
-        <a href="#accordions">Accordions</a>
-        <a href="#tabs">Tabs</a>
-        <a href="#progress-indicator">Progress Indicator</a>
-        <a href="#tables">Tables</a>
-        <a href="#breadcrumbs">Breadcrumbs</a>
-        <a href="#content-switcher">Content Switcher</a>
-        <a href="#lists">Lists</a>
-        <a href="#loader">Loader</a>
+        <li class="section-nav">Components</li>
+        <li class="list-link"><a href="#product-tiles">Product Tiles</a></li>
+        <li class="list-link"><a href="#cards">Cards</a></li>
+        <li class="list-link"><a href="#accordions">Accordions</a></li>
+        <li class="list-link"><a href="#tabs">Tabs</a></li>
+        <li class="list-link"><a href="#progress-indicator">Progress Indicator</a></li>
+        <li class="list-link"><a href="#tables">Tables</a></li>
+        <li class="list-link"><a href="#breadcrumbs">Breadcrumbs</a></li>
+        <li class="list-link"><a href="#content-switcher">Content Switcher</a></li>
+        <li class="list-link"><a href="#lists">Lists</a></li>
+        <li class="list-link"><a href="#loader">Loader</a></li>
 
-        <a class="section-nav">Motions</a>
-        <a href="#card-hover-animation">Card Hover Animation</a>
-        <a href="#button-hover-animation">Button Hover Animation</a>
+        <li class="section-nav">Motions</li>
+        <li class="list-link"><a href="#card-hover-animation">Card Hover Animation</a></li>
+        <li class="list-link"><a href="#button-hover-animation">Button Hover Animation</a></li>
     </div>
 
     <div class="wrapper">
@@ -176,7 +176,7 @@
             </div>
         </div>
 
-        <h3 class="section">Backgrounds</h3>
+        <h3 class="section">Backgroundsss</h3>
         <p><span class="text-primary">Usage:</span> Primary brand, interactive text, primary icon color, border highlight</p>
         <h4 class="sub-section" id="background-gradients">Background Gradients</h4>
         <div class="flex-container gradient">
