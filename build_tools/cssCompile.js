@@ -47,8 +47,14 @@ module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
 
         webpack(scssConfig, (err, stats) => {
             if (err) {
-                console.error(err);
-                callback(1);
+                console.error(chalk.red(err));
+                callback(0);
+                return;
+            }
+
+            if (stats.compilation.errors && stats.compilation.errors.length) {
+                console.error(chalk.red(stats.compilation.errors));
+                callback(0);
                 return;
             }
 
