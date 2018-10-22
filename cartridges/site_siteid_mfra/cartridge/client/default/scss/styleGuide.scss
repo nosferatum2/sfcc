@@ -646,7 +646,16 @@
 
 .ui-colors {
     // Set the list of color blocks in order of how they should appear in the style guide.
-    $colorlist: ($primary, $secondary, $dark, $light, $success, $info, $warning, $danger);
+    $colorlist: (
+        $primary,
+        $secondary,
+        $dark,
+        $light,
+        $success,
+        $info,
+        $warning,
+        $danger
+    );
 
     @for $i from 1 through length($colorlist) {
         $c: nth($colorlist, $i);
