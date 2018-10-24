@@ -5,6 +5,8 @@
         assets.addCss('/css/styleGuide.css');
     </isscript>
 
+    <div class="sg-sidenav-icon"><i class="fa fa-bars fa-lg"></i></div>
+
     <ul class="sg-sidenav">
         <li class="section-nav">Color Theme & Palette</li>
         <li class="list-link">
