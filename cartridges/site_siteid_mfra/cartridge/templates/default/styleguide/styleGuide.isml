@@ -5,7 +5,7 @@
         assets.addCss('/css/styleGuide.css');
     </isscript>
 
-    <div class="sg-sidenav">
+    <ul class="sg-sidenav">
         <li class="section-nav">Color Theme & Palette</li>
         <li class="list-link">
             <a href="#brand-colors">Brand Colors</a>
@@ -126,7 +126,7 @@
         <li class="list-link">
             <a href="#button-hover-animation">Button Hover Animation</a>
         </li>
-    </div>
+    </ul>
 
     <div class="wrapper">
         <h1>SFRA Style Guide</h1>
