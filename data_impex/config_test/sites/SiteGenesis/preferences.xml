@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
     <standard-preferences>
-        <all-instances/>
+        <all-instances>
+            <!-- TODO: 
+                Update catalog, inventory, and pricebooks 
+                based on Site Architecture and Preferences documentation 
+            -->
+            <!--
+            <preference preference-id="SiteCatalog">site-catalog-id-us</preference>
+            <preference preference-id="SiteInventoryList">inventory-id</preference>
+            <preference preference-id="SitePriceBooks">id-currency-list:id-currency-sale</preference>
+            -->
+        </all-instances>
         <development/>
         <staging/>
         <production/>
