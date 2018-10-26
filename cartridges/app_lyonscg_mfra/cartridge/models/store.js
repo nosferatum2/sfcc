@@ -1,39 +1,34 @@
 'use strict';
 
 /**
+ * Base store model overridden to add SEO attributes to store object
+ *
+ */
+
+var base = module.superModule;
+
+/**
  * @constructor
  * @classdesc The stores model
  * @param {dw.catalog.Store} storeObject - a Store objects
  */
 function store(storeObject) {
+    base.call(this, storeObject);
     if (storeObject) {
-        this.ID = storeObject.ID;
-        this.name = storeObject.name;
-        this.address1 = storeObject.address1;
-        this.address2 = storeObject.address2;
-        this.city = storeObject.city;
-        this.postalCode = storeObject.postalCode;
-        this.latitude = storeObject.latitude;
-        this.longitude = storeObject.longitude;
-
-        if (storeObject.phone) {
-            this.phone = storeObject.phone;
+        if (storeObject.custom.pageKeywords) {
+            this.pageKeywords = storeObject.custom.pageKeywords;
         }
 
-        if (storeObject.stateCode) {
-            this.stateCode = storeObject.stateCode;
+        if (storeObject.custom.pageTitle) {
+            this.pageTitle = storeObject.custom.pageTitle;
         }
 
-        if (storeObject.countryCode) {
-            this.countryCode = storeObject.countryCode.value;
+        if (storeObject.custom.pageDescription) {
+            this.pageDescription = storeObject.custom.pageDescription;
         }
 
-        if (storeObject.stateCode) {
-            this.stateCode = storeObject.stateCode;
-        }
-
-        if (storeObject.storeHours) {
-            this.storeHours = storeObject.storeHours.markup;
+        if (storeObject.custom.pageURL) {
+            this.pageURL = storeObject.custom.pageURL;
         }
     }
 }
