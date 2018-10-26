@@ -1,0 +1,34 @@
+<isdecorate template="common/layout/page">
+<div class="store-locator-details">
+   <isif condition="${pdict.Store.image != null}">
+      <img src="${pdict.Store.image.getURL()}" title="${pdict.Store.name}" alt="${pdict.Store.name}" />
+   <iselse/>
+      <img src="${URLUtils.staticURL(URLUtils.CONTEXT_LIBRARY, null, 'images/stores/store_locator_storefront.png')}" title="${pdict.Store.name}" alt="${pdict.Store.name}" />
+   </isif>
+   <h1>
+      <isprint value="${pdict.Store.name}"/>
+   </h1>
+   <p>
+      <strong>
+         <isprint value="${pdict.Store.address1}"/>
+         <br/>
+         <isprint value="${pdict.Store.city}"/>
+         <isif condition="${pdict.Store.city != null && pdict.Store.stateCode != null}">,</isif>
+         <isprint value="${pdict.Store.stateCode}"/>
+         <isprint value="${pdict.Store.postalCode}"/>
+         <br/>
+         <isprint value="${pdict.Store.countryCode}"/>
+      </strong>
+   </p>
+   <isif condition="${pdict.Store.storeHours != null}">
+      <p>
+         <isprint value="${pdict.Store.storeHours}" encoding="off"/>
+      </p>
+   </isif>
+   <isif condition="${pdict.Store.storeEvents != null}">
+      <p>
+         <isprint value="${pdict.Store.storeEvents}" encoding="off"/>
+      </p>
+   </isif>
+</div>
+</isdecorate>
