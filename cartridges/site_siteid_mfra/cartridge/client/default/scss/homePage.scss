@@ -147,6 +147,10 @@
     }
 }
 
+.homepage .row {
+    overflow: hidden; // Fixes overflow issue on homepage grid
+}
+
 .home-email-signup {
     background-color: $gray-400;
 
