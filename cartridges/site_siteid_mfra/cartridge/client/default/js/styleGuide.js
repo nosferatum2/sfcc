@@ -13,8 +13,4 @@ $(document).ready(function () {
             $('html, body').animate({ scrollTop: $(this.hash).offset().top - sidenav.height() }, 500);
         }
     });
-
-    $(window).resize(function () {
-        location.reload();
-    });
 });
