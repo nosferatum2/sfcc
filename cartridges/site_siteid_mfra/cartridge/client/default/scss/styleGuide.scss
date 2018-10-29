@@ -18,6 +18,8 @@
     padding: 0.5em;
     border-radius: 4px;
     background-color: white;
+    border-bottom: 2px solid $gray-500;
+    border-right: 2px solid $gray-500;
 
     @include media-breakpoint-up(sm) {
         display: none;
@@ -25,8 +27,7 @@
 }
 
 .sg-sidenav-icon-border {
-    border-bottom: 2px solid $gray-500;
-    border-right: 2px solid $gray-500;
+    border: none;
 }
 
 .sg-sidenav {
@@ -35,6 +36,7 @@
     position: fixed;
     height: 180px;
     top: 0;
+    display: none;
     overflow-x: hidden;
     padding: 0 1.2em;
     background-color: white;
