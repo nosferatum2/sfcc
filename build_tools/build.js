@@ -22,7 +22,7 @@ const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
 const helpers = require('./helpers');
-var jsonlint = require("jsonlint");
+const jsonlint = require("jsonlint");
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -428,26 +428,26 @@ function getCartridges(packageFile) {
 * @param {String} type - the file extension to search for E.G '.json'
 */
 function fileSearch(startFile, type) {
-   if(!fs.existsSync(startFile)){
+   if (!fs.existsSync(startFile)) {
      console.error("no directory: ", startFile);
      return;
    }
 
-   var files=fs.readdirSync(startFile);
-   for(var i=0;i<files.length;i++){
-       var filename=path.join(startFile,files[i]);
-       var stat=fs.lstatSync(filename);
-       if(stat.isDirectory()){
+   var files = fs.readdirSync(startFile);
+   for (var i = 0; i < files.length; i++) {
+       var filename = path.join(startFile,files[i]);
+       var stat = fs.lstatSync(filename);
+       if (stat.isDirectory()) {
            fileSearch(filename,type);
        }
-       else if (filename.indexOf(type)>=0){
+       else if (filename.indexOf(type) >= 0) {
            if (helpers.isBuildEnvironment('verbose') || options.verbose) {
                console.log('FOUND JSON: ',filename);
 	   }
 	   try {
-             jsonlint.parse(fs.readFileSync(filename, 'utf8'));
-	   }catch(e){
-             console.error(chalk.red('JSON parsing error'), e);
+               jsonlint.parse(fs.readFileSync(filename, 'utf8'));
+	   } catch(e) {
+               console.error(chalk.red('JSON parsing error'), e);
 	   }
        }
    }
@@ -638,10 +638,9 @@ if (options.lint) {
 if (options.jsonlint) {
     const packageFile = require(path.join(cwd, './package.json'));
     var cartridges = getCartridges(packageFile);
-    for(var i=0;i<cartridges.length;i++){
+    for (var i = 0; i < cartridges.length; i++) {
         fileSearch(path.resolve(pwd, cartridges[i]),'.json');
     }
-
 }
 
 if (options.createCartridge) {
