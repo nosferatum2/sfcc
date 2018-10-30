@@ -53,3 +53,36 @@ header ~ .container a:not(.btn-primary) {
 .error.continue-shopping {
     margin-bottom: 6.25em;
 }
+
+// Contact Us Page
+.registration {
+    display: flex;
+    flex-wrap: wrap;
+
+    .form-group {
+        flex: 1 0 100%;
+
+        @include media-breakpoint-up(sm) {
+            flex: 1 0 50%;
+            padding: 0 10px;
+        }
+    }
+
+    .recaptch-content {
+        flex: 1 0 100%;
+        margin-bottom: 3rem;
+
+        @include media-breakpoint-up(sm) {
+            padding-left: 10px;
+        }
+    }
+
+    .contant-us {
+        margin-bottom: 3rem;
+
+        @include media-breakpoint-up(sm) {
+            margin-left: 10px;
+            width: auto;
+        }
+    }
+}
