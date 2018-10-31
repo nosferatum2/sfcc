@@ -27,7 +27,7 @@ For example:
 For example:
 `node build_tools/build --compile css`
 
-`node build_tools/build --lint String` - Lint scss/js files. - either: js or css
+`node build_tools/build --lint String` - Lint scss/js files. - either: js server-js css or json
 
 For example:
 `node build_tools/build --lint css`

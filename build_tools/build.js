@@ -71,7 +71,7 @@ const optionator = require('optionator')({
         option: 'lint',
         type: 'String',
         description: 'Lint scss/js files.',
-        enum: ['js', 'server-js', 'css']
+        enum: ['js', 'server-js', 'css', 'json']
     }, {
         option: 'jsonlint',
         type: 'Boolean',
@@ -633,13 +633,12 @@ if (options.lint) {
             process.exit(code);
         });
     }
-}
-
-if (options.jsonlint) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    var cartridges = getCartridges(packageFile);
-    for (var i = 0; i < cartridges.length; i++) {
-        fileSearch(path.resolve(pwd, cartridges[i]),'.json');
+    if (options.lint === 'json') {
+        const packageFile = require(path.join(cwd, './package.json'));
+        var cartridges = getCartridges(packageFile);
+        for (var i = 0; i < cartridges.length; i++) {
+            fileSearch(path.resolve(pwd, '../cartridges', cartridges[i]),'.json');
+        }
     }
 }
 
