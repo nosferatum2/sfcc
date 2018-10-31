@@ -131,6 +131,12 @@
       "core": [
         "core"
       ],
+      "config": [
+        "config_test"
+      ],
+      "data": [
+        "data_test"
+      ],
       "core-config": [
         "core",
         "config_test"
