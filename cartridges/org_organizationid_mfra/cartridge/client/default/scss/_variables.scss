@@ -82,42 +82,44 @@ $colors: map-merge(
     $colors
 );
 
+$brand-main: $denim;
+$brand-second: $gray-400;
+$brand-light: $anakiwa;
+$brand-dark: $blumine;
 $primary: $denim;
-$primary-light: $anakiwa;
-$primary-dark: $blumine;
-$secondary: $orangepeel;
-$secondary-light: $creambrulee;
+$secondary: $gray-400;
+$dark: $gray-500;
+$light: $gray-100;
+$success: $japanese-laurel;
+$info: $calypso;
+$warning: $mustard;
+$danger: $tamarillo;
 $accent-1: $sapphire;
 $accent-2: $cinnabar;
 $accent-3: $orangepeel;
 $accent-4: $pinegreen;
 $tertiary: $gray-500;
-$success: $japanese-laurel;
-$info: $calypso;
-$warning: $mustard;
-$error: $tamarillo;
-$light: $gray-100;
-$dark: $gray-500;
 
 $theme-colors: () !default;
 $theme-colors: map-merge(
     (
+        "brand-main": $brand-main,
+        "brand-second": $brand-second,
+        "brand-light": $brand-light,
+        "brand-dark": $brand-dark,
         "primary": $primary,
-        "primary-light": $primary-light,
-        "primary-dark": $primary-dark,
         "secondary": $secondary,
-        "secondary-light": $secondary-light,
+        "dark": $dark,
+        "light": $light,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
         "accent-1": $accent-1,
         "accent-2": $accent-2,
         "accent-3": $accent-3,
         "accent-4": $accent-4,
-        "tertiary": $tertiary,
-        "success": $success,
-        "info": $info,
-        "warning": $warning,
-        "error": $error,
-        "light": $light,
-        "dark": $dark
+        "tertiary": $tertiary
     ),
     $theme-colors
 );
@@ -129,7 +131,6 @@ $theme-colors: map-merge(
 $brand-success: $pinegreen;
 $brand-danger: $cinnabar;
 $brand-primary: $cerulean-blue;
-$brand-color: $primary;
 $light-gray: $gray-200;
 $slightly-darker-gray: $gray-300;
 $dark-gray: $gray-400;
@@ -140,7 +141,9 @@ $state-danger-text: $white;
 //  ALERTS
 //--------------------------------
 
-$alert-bg-level: 0; // bootstrap override
+$alert-bg-level: -10; // bootstrap override
+$alert-border-level: -9; // bootstrap override
+$alert-color-level: 4; // bootstrap override
 $alert-danger-bg: $brand-danger;
 $alert-success-bg: $brand-success;
 
@@ -154,6 +157,45 @@ $alert-success-bg: $brand-success;
 // Gradients utility class documentation: https://getbootstrap.com/docs/4.0/utilities/colors/#background-gradient
 
 $enable-gradients: false; // bootstrap override -> must be set to true for gradients to be visible on the site
+
+//--------------------------------
+//  BORDERS / DIVIDERS
+//--------------------------------
+
+// TODO - Should we use the border utility classes instead?
+
+// Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
+
+$border-success: 1px solid $success;
+$border-warning: 1px solid $warning;
+$border-danger: 1px solid $danger;
+$border-width: 1px; // could be bootstrap override
+$border-color: $gray-300; // default color - could be bootstrap override
+$border: 1px solid $border-color;
+$border-thick: 4px solid $border-color;
+$border2-color: $pinegreen;
+$border2: 1px solid $border2-color;
+$border3-color: $mustard;
+$border3: 1px solid $border3-color;
+$border4-color: $blumine;
+$border4: 1px solid $border4-color;
+$border5-color: $gray-200;
+$border5: 2px solid $border5-color;
+$border6: 1px solid rgba(0, 0, 0, 0.2);
+$horizontal-border-grey: $gray-200;
+$hr-border-color: $gray-200;
+$horizontal-rule-grey: $gray-200;
+
+//--------------------------------
+//  BOX SHADOWS
+//--------------------------------
+
+// TODO - Should we update to 4.1 so we can include the shadow utility?
+
+$enable-shadows: true; // bootstrap override
+$shadow: 0 8px 14px 0 rgba(224, 229, 238, 0.5);
+$shadow2: 0 8px 14px 0 rgba(0, 20px, 31px, 0.05);
+$shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
 
 //--------------------------------
 //  TYPOGRAPHY
@@ -186,75 +228,12 @@ $label-sm: $font-size-base;
 $label-xs: $font-size-base * 0.75;
 
 //--------------------------------
-//  BORDERS / DIVIDERS
-//--------------------------------
-
-// TODO - Should we use the border utility classes instead?
-
-// Borders utility class documentation: https://getbootstrap.com/docs/4.0/utilities/borders/
-
-$border-width: 1px; // could be bootstrap override
-$border-color: $gray-300; // default color - could be bootstrap override
-$border: 1px solid $border-color;
-$border-thick: 4px solid $border-color;
-$border2-color: $pinegreen;
-$border2: 1px solid $border2-color;
-$border3-color: $mustard;
-$border3: 1px solid $border3-color;
-$border4-color: $blumine;
-$border4: 1px solid $border4-color;
-$border5-color: $gray-200;
-$border5: 2px solid $border5-color;
-$border6: 1px solid rgba(0, 0, 0, 0.2);
-$horizontal-border-grey: $gray-200;
-$hr-border-color: $gray-200;
-$horizontal-rule-grey: $gray-200;
-
-//--------------------------------
-//  BOX SHADOWS
-//--------------------------------
-
-// TODO - Should we update to 4.1 so we can include the shadow utility?
-
-$enable-shadows: true; // bootstrap override
-$shadow: 0 8px 14px 0 rgba(224, 229, 238, 0.5);
-$shadow2: 0 8px 14px 0 rgba(0, 20px, 31px, 0.05);
-$shadow3: 0 8px 14px 0 rgba(0, 0, 0, 0.16);
-
-//--------------------------------
 //  LINKS
 //--------------------------------
 
 $link-color: $gray-500; //bootstrap override
 $link-hover-color: $denim; //bootstrap override
 $link-decoration-alt: underline;
-
-//--------------------------------
-//  DROPDOWN MENU
-//--------------------------------
-
-$menu-link: $gray-200;
-$close-menu-bg: $gray-200;
-$dropdown-link-hover-bg: $gray-200; //bootstrap override
-$dropdown-link-hover-color: $gray-200; //bootstrap override
-
-//--------------------------------
-//  BUTTONS & FORMS
-//--------------------------------
-
-$input-btn-padding-y: 0.75rem; //bootstrap override
-$input-btn-padding-x: 1rem; //bootstrap override
-$btn-box-shadow: 0 0 0 transparent; //bootstrap override
-$btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
-
-//--------------------------------
-// BREADCRUMBS
-//--------------------------------
-
-$breadcrumb-bg: $white;
-$breadcrumb-before-color: $denim;
-$breadcrumb-active-color: $gray-400; //bootstrap override
-$breadcrumb-divider-color: $gray-400; //bootstrap override
 
 //--------------------------------
 //  BUTTONS
@@ -273,13 +252,6 @@ $btn-disabled-alt-border-color: $gray-300;
 $btn-font-size: $font-size-body; //bootstrap override
 $font-size-lg: $font-size-base * 1.25; //bootstrap override
 $btn-padding-y-lg: 0.9rem; //bootstrap override
-
-//--------------------------------
-// CONTENT SWITCHER
-//--------------------------------
-
-$contentswitcher-active-color: $white;
-$contentswitcher-active-bg: $denim;
 
 //--------------------------------
 //  FORMS
@@ -303,6 +275,40 @@ $custom-checkbox-indicator-border-radius: 0;
 $custom-control-indicator-box-shadow: none;
 $custom-control-indicator-bg: $white;
 $text-muted: $gray-400;
+
+//--------------------------------
+//  BUTTONS & FORMS
+//--------------------------------
+
+$input-btn-padding-y: 0.75rem; //bootstrap override
+$input-btn-padding-x: 1rem; //bootstrap override
+$btn-box-shadow: 0 0 0 transparent; //bootstrap override
+$btn-active-box-shadow: 0 0 0 transparent; //bootstrap override
+
+//--------------------------------
+//  DROPDOWN MENU
+//--------------------------------
+
+$menu-link: $gray-200;
+$close-menu-bg: $gray-200;
+$dropdown-link-hover-bg: $gray-200; //bootstrap override
+$dropdown-link-hover-color: $gray-200; //bootstrap override
+
+//--------------------------------
+// BREADCRUMBS
+//--------------------------------
+
+$breadcrumb-bg: $white;
+$breadcrumb-before-color: $denim;
+$breadcrumb-active-color: $gray-400; //bootstrap override
+$breadcrumb-divider-color: $gray-400; //bootstrap override
+
+//--------------------------------
+// CONTENT SWITCHER
+//--------------------------------
+
+$contentswitcher-active-color: $white;
+$contentswitcher-active-bg: $denim;
 
 //--------------------------------
 // Product Tile
