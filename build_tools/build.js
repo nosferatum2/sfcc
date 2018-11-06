@@ -22,6 +22,7 @@ const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
 const helpers = require('./helpers');
+const jsonlint = require("jsonlint");
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -70,7 +71,11 @@ const optionator = require('optionator')({
         option: 'lint',
         type: 'String',
         description: 'Lint scss/js files.',
-        enum: ['js', 'server-js', 'css']
+        enum: ['js', 'server-js', 'css', 'json']
+    }, {
+        option: 'jsonlint',
+        type: 'Boolean',
+        description: 'json validator',
     }, {
         option: 'createCartridge',
         type: 'String',
@@ -416,6 +421,38 @@ function getCartridges(packageFile) {
     return cartridges;
 }
 
+
+/**
+* recursively search through file structure starting at startFile for any files with the type extension (e.g. '.json')
+* @param {String} startFile - path to starting directory for search
+* @param {String} type - the file extension to search for E.G '.json'
+*/
+function fileSearch(startFile, type) {
+   if (!fs.existsSync(startFile)) {
+     console.error("no directory: ", startFile);
+     return;
+   }
+
+   var files = fs.readdirSync(startFile);
+   for (var i = 0; i < files.length; i++) {
+       var filename = path.join(startFile,files[i]);
+       var stat = fs.lstatSync(filename);
+       if (stat.isDirectory()) {
+           fileSearch(filename,type);
+       }
+       else if (filename.indexOf(type) >= 0) {
+           if (helpers.isBuildEnvironment('verbose') || options.verbose) {
+               console.log('FOUND JSON: ',filename);
+	   }
+	   try {
+               jsonlint.parse(fs.readFileSync(filename, 'utf8'));
+	   } catch(e) {
+               console.error(chalk.red('JSON parsing error'), e);
+	   }
+       }
+   }
+}
+
 /**
  * creates version.properties file
  * @param {array} uploadArguments - the current uploadArguments
@@ -595,6 +632,13 @@ if (options.lint) {
             console.log(chalk.cyan('    Finished scss linting.'));
             process.exit(code);
         });
+    }
+    if (options.lint === 'json') {
+        const packageFile = require(path.join(cwd, './package.json'));
+        var cartridges = getCartridges(packageFile);
+        for (var i = 0; i < cartridges.length; i++) {
+            fileSearch(path.resolve(pwd, '../cartridges', cartridges[i]),'.json');
+        }
     }
 }
 
