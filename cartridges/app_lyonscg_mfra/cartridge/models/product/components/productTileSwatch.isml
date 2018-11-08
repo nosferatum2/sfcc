@@ -6,8 +6,8 @@
                                 && swatch.images != null
                                 && swatch.images.swatch[0] != null
                                 && swatch.images.swatch[0].url != null}">
-                    <a href="${swatch.url}">
-                        <span>
+                    <a href="${swatch.url}" data-swatchimg="${swatch.images['swatchImg'][0].url}">
+                        <span data-attr-value="${swatch.id}">
                             <img class="swatch swatch-circle"
                                  data-index="${loopstate.count-1}"
                                  style="background-image: url(${swatch.images.swatch[0].url})"

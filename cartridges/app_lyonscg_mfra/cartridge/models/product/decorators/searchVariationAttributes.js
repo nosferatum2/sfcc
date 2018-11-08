@@ -16,6 +16,7 @@ module.exports = function (object, hit) {
                 swatchable: true,
                 values: collections.map(colors, function (color) {
                     var apiImage = color.getImage('swatch', 0);
+                    var variantImage = color.getImage('medium', 0);
                     if (!apiImage) {
                         return {};
                     }
@@ -31,6 +32,11 @@ module.exports = function (object, hit) {
                                 alt: apiImage.alt,
                                 url: apiImage.URL.toString(),
                                 title: apiImage.title
+                            }],
+                            swatchImg: [{
+                                alt: variantImage.alt,
+                                url: variantImage.URL.toString(),
+                                title: variantImage.title
                             }]
                         },
                         url: URLUtils.url(
