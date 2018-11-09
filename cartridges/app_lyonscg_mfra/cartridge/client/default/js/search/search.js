@@ -207,5 +207,27 @@ module.exports = {
             getContent($(this), $('#content-search-results .result-count'));
             $('.show-more-content').remove();
         });
+    },
+
+    colorAttribute: function () {
+        $(document).on('click', '.color-swatches a', function (e) {
+            e.preventDefault();
+
+            var swatchImg = $(e.currentTarget).data('swatchimg');
+            var $productContainer = $(this).closest('.set-item'); // Need to check and see what classes a product set tile has if any?
+
+            if (!$productContainer.length) {
+                $productContainer = $(this).closest('.grid-tile');
+            }
+
+            var currentImg = $($productContainer).find('.tile-image').attr('src');
+
+            if ($(this).attr('disabled') || currentImg === swatchImg) {
+                return;
+            }
+
+            $($productContainer).find('.tile-image').attr('src', swatchImg);
+
+        });
     }
 };
