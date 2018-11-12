@@ -91,6 +91,12 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+			<attribute-definition attribute-id="pageContextMap">
+                <display-name xml:lang="x-default">Page Context Map</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
         </custom-attribute-definitions>
         <!--
             If added, this grouping will remove all other default assignments to the Storefront Configs group.
@@ -105,6 +111,7 @@
                     <attribute attribute-id="searchRefinementsLayout"/>
                     <attribute attribute-id="siteDisableCommerceFunctionality"/>
                     <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
+					<attribute attribute-id="pageContextMap"/>
                 </attribute-group>
             </group-definitions>
         -->
