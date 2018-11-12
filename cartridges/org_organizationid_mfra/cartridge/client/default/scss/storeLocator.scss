@@ -4,12 +4,12 @@
 
 .btn-storelocator-search {
     background-color: $light-gray;
-    border-color: $brand-color;
+    border-color: $brand-main;
     border-radius: 0;
-    color: $brand-color;
+    color: $brand-main;
 
     &:hover {
-        background-color: $brand-color;
+        background-color: $brand-main;
         color: $light-gray;
     }
 }
@@ -21,7 +21,7 @@
 .map-marker {
     float: left;
     font-size: 2.5em;
-    color: $brand-color;
+    color: $brand-main;
     margin-left: 0.625rem;
 }
 
