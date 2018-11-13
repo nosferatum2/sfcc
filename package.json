@@ -20,6 +20,7 @@
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
     "lint:css": "node build_tools/build --lint css",
     "lint:js": "node build_tools/build --lint js",
+    "lint:json": "node build_tools/build --lint json",
     "lint:serverjs": "node build_tools/build --lint server-js",
     "upload": "node build_tools/build --upload",
     "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --uploadCartridge app_lyonscg_mfra && node build_tools/build --uploadCartridge org_organizationid_mfra && node build_tools/build --uploadCartridge site_siteid_mfra && node build_tools/build --activateCodeVersion",
