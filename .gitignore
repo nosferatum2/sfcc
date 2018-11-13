@@ -6,6 +6,7 @@ coverage/
 npm-debug.log
 cartridges.zip
 .idea/
+.vscode/
 sitegenesisdata/
 mobilefirstdata/
 storefrontdata/
@@ -15,5 +16,6 @@ build_tools/artifacts
 build_tools/*.zip
 data_impex/*.zip
 lastbuild.properties
-.vscode
+.tern-project
 dw.json
+jsconfig.json

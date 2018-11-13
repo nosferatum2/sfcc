@@ -27,7 +27,7 @@ For example:
 For example:
 `node build_tools/build --compile css`
 
-`node build_tools/build --lint String` - Lint scss/js files. - either: js or css
+`node build_tools/build --lint String` - Lint scss/js files. - either: js server-js css or json
 
 For example:
 `node build_tools/build --lint css`
@@ -66,6 +66,40 @@ In order for all commands to work, this script makes a few assumptions:
 * ESLint and Stylelint are dev-dependancies of your cartridge. You have all required plugins and configs installed as well.
 * There's a webpack.config.js in build_tools that specifies how to compile client-side JavaScript files.
 * Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
+
+### Platform-specific File Separator
+
+Please use your OS-specific file separators within the sites propert in package.json.
+
+For example, on Mac/OSX:
+```
+"sites": [
+  {
+    "paths": {
+      "base": "../cartridges/app_storefront_base",
+      "lyonscg": "../cartridges/app_lyonscg_mfra",
+      "org": "../cartridges/org_organizationid_mfra",
+      "site": "../cartridges/site_siteid_mfra"
+    },
+    "packageName": "app_storefront_base"
+  }
+]
+```
+
+For example, on Windows:
+```
+"sites": [
+  {
+    "paths": {
+      "base": "..\\cartridges\\app_storefront_base",
+      "lyonscg": "..\\cartridges\\app_lyonscg_mfra",
+      "org": "..\\cartridges\\org_organizationid_mfra",
+      "site": "..\\cartridges\\site_siteid_mfra"
+    },
+    "packageName": "app_storefront_base"
+  }
+]
+```
 
 # Overriding Client-side SCSS and JS Files
 
