@@ -22,7 +22,7 @@ const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
 const helpers = require('./helpers');
-const jsonlint = require("jsonlint");
+const jsonlint = require('jsonlint');
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -429,7 +429,7 @@ function getCartridges(packageFile) {
 */
 function fileSearch(startFile, type) {
    if (!fs.existsSync(startFile)) {
-     console.error("no directory: ", startFile);
+     console.error('no directory: ', startFile);
      return;
    }
 
