@@ -227,7 +227,6 @@ module.exports = {
             }
 
             $($productContainer).find('.tile-image').attr('src', swatchImg);
-
         });
     }
 };
