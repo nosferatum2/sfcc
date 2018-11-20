@@ -20,6 +20,7 @@
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
     "lint:css": "node build_tools/build --lint css",
     "lint:js": "node build_tools/build --lint js",
+    "lint:json": "node build_tools/build --lint json",
     "lint:serverjs": "node build_tools/build --lint server-js",
     "upload": "node build_tools/build --upload",
     "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --uploadCartridge app_lyonscg_mfra && node build_tools/build --uploadCartridge org_organizationid_mfra && node build_tools/build --uploadCartridge site_siteid_mfra && node build_tools/build --activateCodeVersion",
@@ -99,6 +100,7 @@
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1",
+    "jsonlint": "^1.6.3",
     "popper.js": "^1.14.4",
     "slick-carousel": "1.7.1",
     "svg4everybody": "2.1.9",
@@ -130,6 +132,12 @@
     "dataBundles": {
       "core": [
         "core"
+      ],
+      "config": [
+        "config_test"
+      ],
+      "data": [
+        "data_test"
       ],
       "core-config": [
         "core",
