@@ -1,6 +1,7 @@
 <isdecorate template="common/layout/page">
 <div class="gmap-wrapper">
    <isset name="coordinates" value="${pdict.Store.latitude + ', ' + pdict.Store.longitude}" scope="page"/>
+   <!-- REMOVE - Do not hardcode api key into map url string -->
    <iframe
    width="100%"
    height="450"
@@ -14,6 +15,7 @@
             <isprint value="${pdict.Store.name}"/>
          </h3>
          <div class="store-info-wrapper store-address">
+            <h5>Address</h5> <!-- REMOVE - Change to resource message -->
             <isprint value="${pdict.Store.address1}"/>
             <br/>
             <isprint value="${pdict.Store.city}"/>
@@ -25,11 +27,13 @@
          </div>
          <isif condition="${pdict.Store.storeHours != null}">
             <div class="store-info-wrapper store-hours">
+               <h5>Hours</h5> <!-- REMOVE - Change to resource message -->
                <isprint value="${pdict.Store.storeHours}" encoding="off"/>
             </div>
          </isif>
          <isif condition="${pdict.Store.storeEvents != null}">
             <div class="store-info-wrapper ">
+               <h5>Events</h5> <!-- REMOVE - Change to resource message -->
                <isprint value="${pdict.Store.storeEvents}" encoding="off"/>
             </div>
          </isif>
