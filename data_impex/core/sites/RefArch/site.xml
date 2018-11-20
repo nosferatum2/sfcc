@@ -3,14 +3,13 @@
     Update site-id, name, currency, and taxation based on
     Site Architecure and Preferences documentation 
 -->
-<site xmlns="http://www.demandware.com/xml/impex/site/2007-04-30" site-id="SiteGenesis">
-    <name>SiteGenesis</name>
+<site xmlns="http://www.demandware.com/xml/impex/site/2007-04-30" site-id="RefArch">
+    <name>RefArch</name>
     <currency>USD</currency>
     <taxation>net</taxation>
     <!-- Site cartridge path -->
-    <custom-cartridges>sitegenesis_storefront_pipelines:sitegenesis_storefront_core</custom-cartridges>
+    <custom-cartridges>app_storefront_base</custom-cartridges>
     <storefront-status>protected</storefront-status>
     <!-- TODO: add a simple storefront password. This should be added to project documentation home -->
     <storefront-password>sg</storefront-password>
 </site>
-
