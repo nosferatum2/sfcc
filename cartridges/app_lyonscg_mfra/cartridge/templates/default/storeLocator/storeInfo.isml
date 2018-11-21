@@ -1,42 +1,51 @@
 <isdecorate template="common/layout/page">
+
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addCss('/css/storeLocator.css');
+</isscript>
+
 <div class="gmap-wrapper">
    <isset name="coordinates" value="${pdict.Store.latitude + ', ' + pdict.Store.longitude}" scope="page"/>
-   <!-- REMOVE - Do not hardcode api key into map url string -->
+   <!-- REMOVE - Do not hardcode api key into map url string, create custom site preference with value -->
    <iframe
    width="100%"
    height="450"
    frameborder="0" style="border:0"
-   src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAkTjC0negDM989NyRmQXZbLbs7NegrfEE&q=${pdict.Store.latitude + ', ' + pdict.Store.longitude}" allowfullscreen></iframe>
+   src="https://www.google.com/maps/embed/v1/place?key=${dw.system.Site.getCurrent().getCustomPreferenceValue('mapAPI')}&q=${pdict.Store.latitude + ', ' + pdict.Store.longitude}" allowfullscreen></iframe>
 </div>
+
 <div class="store-locator-details container">
    <div class="row">
       <div class="col-sm">
          <h3>
             <isprint value="${pdict.Store.name}"/>
          </h3>
-         <div class="store-info-wrapper store-address">
-            <h5>Address</h5> <!-- REMOVE - Change to resource message -->
-            <isprint value="${pdict.Store.address1}"/>
-            <br/>
-            <isprint value="${pdict.Store.city}"/>
-            <isif condition="${pdict.Store.city != null && pdict.Store.stateCode != null}">,</isif>
-            <isprint value="${pdict.Store.stateCode}"/>
-            <isprint value="${pdict.Store.postalCode}"/>
-            <br/>
-            <isprint value="${pdict.Store.countryCode}"/>
+         <div class="store-info-wrapper">
+            <div class="store-info-block store-address">
+               <h5>${Resource.msg('store.details.address','storeLocator',null)}</h5>
+               <isprint value="${pdict.Store.address1}"/>
+               <br/>
+               <isprint value="${pdict.Store.city}"/>
+               <isif condition="${pdict.Store.city != null && pdict.Store.stateCode != null}">,</isif>
+               <isprint value="${pdict.Store.stateCode}"/>
+               <isprint value="${pdict.Store.postalCode}"/>
+               <br/>
+               <isprint value="${pdict.Store.countryCode}"/>
+            </div>
+            <isif condition="${pdict.Store.storeHours != null}">
+               <div class="store-info-block store-hours">
+                  <h5>${Resource.msg('store.details.hours','storeLocator',null)}</h5>
+                  <isprint value="${pdict.Store.storeHours}" encoding="off"/>
+               </div>
+            </isif>
+            <isif condition="${pdict.Store.storeEvents != null}">
+               <div class="store-info-block">
+                  <h5>${Resource.msg('store.details.events','storeLocator',null)}</h5>
+                  <isprint value="${pdict.Store.storeEvents}" encoding="off"/>
+               </div>
+            </isif>
          </div>
-         <isif condition="${pdict.Store.storeHours != null}">
-            <div class="store-info-wrapper store-hours">
-               <h5>Hours</h5> <!-- REMOVE - Change to resource message -->
-               <isprint value="${pdict.Store.storeHours}" encoding="off"/>
-            </div>
-         </isif>
-         <isif condition="${pdict.Store.storeEvents != null}">
-            <div class="store-info-wrapper ">
-               <h5>Events</h5> <!-- REMOVE - Change to resource message -->
-               <isprint value="${pdict.Store.storeEvents}" encoding="off"/>
-            </div>
-         </isif>
       </div>
       <div class="col-sm store-image-container">
          <isif condition="${pdict.Store.image != null}">

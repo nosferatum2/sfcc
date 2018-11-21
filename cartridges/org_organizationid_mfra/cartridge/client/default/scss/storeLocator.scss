@@ -96,3 +96,37 @@
         padding-right: 0.938em;
     }
 }
+
+.store-locator-details {
+    margin: 3em auto 6em;
+
+    @include media-breakpoint-down(sm) {
+        &.container {
+            max-width: none;
+        }
+    }
+}
+
+.store-info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.store-info-block {
+    flex: 0 0 50%;
+    margin-bottom: 2em;
+    padding-right: 1em;
+
+    h5 {
+        font-weight: 600;
+        font-size: 1.25em;
+    }
+
+    @include media-breakpoint-down(md) {
+        flex: 0 0 100%;    
+    }
+}
+
+.store-image-container img {
+    width: 100%;
+}
