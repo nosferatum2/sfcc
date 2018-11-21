@@ -9,17 +9,11 @@
     out of the group and will stop being displayed in Business Manager.
  -->
 <metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
-    <type-extension type-id="Appeasement">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Appeasement"/>
 
-    <type-extension type-id="AppeasementItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="AppeasementItem"/>
 
     <type-extension type-id="Basket">
-        <system-attribute-definitions/>
-        <custom-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Status">
                 <display-name xml:lang="x-default">Status</display-name>
@@ -28,7 +22,6 @@
     </type-extension>
 
     <type-extension type-id="BonusDiscountLineItem">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="bonusProductLineItemUUID">
                 <display-name xml:lang="x-default">Bonus Product Line Item UUID</display-name>
@@ -41,16 +34,11 @@
         </custom-attribute-definitions>
     </type-extension>
 
-    <type-extension type-id="Campaign">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Campaign"/>
 
-    <type-extension type-id="Catalog">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Catalog"/>
 
     <type-extension type-id="Category">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="alternativeUrl">
                 <display-name xml:lang="x-default">Alternative URL</display-name>
@@ -131,12 +119,9 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="CategoryAssignment">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="CategoryAssignment"/>
 
     <type-extension type-id="Content">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="body">
                 <display-name xml:lang="x-default">Body</display-name>
@@ -190,17 +175,11 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="Coupon">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Coupon"/>
 
-    <type-extension type-id="CouponLineItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="CouponLineItem"/>
 
     <type-extension type-id="CustomerActiveData">
-        <system-attribute-definitions/>
-        <custom-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Traffic">
                 <display-name xml:lang="x-default">Traffic</display-name>
@@ -241,7 +220,6 @@
     </type-extension>
 
     <type-extension type-id="CustomerAddress">
-        <system-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Standard">
                 <display-name xml:lang="x-default">Standard Address</display-name>
@@ -266,16 +244,11 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="CustomerGroup">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="CustomerGroup"/>
 
-    <type-extension type-id="CustomerPaymentInstrument">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="CustomerPaymentInstrument"/>
 
     <type-extension type-id="Folder">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="customCSSFile">
                 <display-name xml:lang="x-default">Custom CSS File</display-name>
@@ -309,32 +282,19 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="GiftCertificate">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="GiftCertificate"/>
 
-    <type-extension type-id="GiftCertificateLineItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="GiftCertificateLineItem"/>
 
-    <type-extension type-id="Invoice">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Invoice"/>
 
-    <type-extension type-id="InvoiceItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="InvoiceItem"/>
 
-    <type-extension type-id="Library">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Library"/>
 
-    <type-extension type-id="Order">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Order"/>
 
     <type-extension type-id="OrderAddress">
-        <system-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Standard">
                 <display-name xml:lang="x-default">Standard Address</display-name>
@@ -358,27 +318,17 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="OrderItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="OrderItem"/>
 
-    <type-extension type-id="OrderPaymentInstrument">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="OrderPaymentInstrument"/>
 
     <type-extension type-id="OrganizationPreferences"/>
 
-    <type-extension type-id="PaymentCard">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="PaymentCard"/>
 
-    <type-extension type-id="PaymentMethod">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="PaymentMethod"/>
 
     <type-extension type-id="PaymentTransaction">
-        <system-attribute-definitions/>
-        <custom-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Custom">
                 <display-name xml:lang="x-default">Custom</display-name>
@@ -388,16 +338,11 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="PriceAdjustment">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="PriceAdjustment"/>
 
-    <type-extension type-id="PriceBook">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="PriceBook"/>
 
     <type-extension type-id="Product">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="availableForInStorePickup">
                 <display-name xml:lang="x-default">Available for In Store Pickup</display-name>
@@ -570,7 +515,6 @@
     </type-extension>
 
     <type-extension type-id="ProductActiveData">
-        <system-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Traffic">
                 <display-name xml:lang="x-default">Traffic</display-name>
@@ -635,16 +579,11 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="ProductInventoryList">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ProductInventoryList"/>
 
-    <type-extension type-id="ProductInventoryRecord">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ProductInventoryRecord"/>
 
     <type-extension type-id="ProductLineItem">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="bonusProductLineItemUUID">
                 <display-name xml:lang="x-default">Bonus Product Line Item UUID</display-name>
@@ -673,21 +612,13 @@
         </custom-attribute-definitions>
     </type-extension>
 
-    <type-extension type-id="ProductList">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ProductList"/>
 
-    <type-extension type-id="ProductListItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ProductListItem"/>
 
-    <type-extension type-id="ProductListRegistrant">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ProductListRegistrant"/>
 
     <type-extension type-id="Profile">
-        <system-attribute-definitions/>
-        <custom-attribute-definitions/>
         <group-definitions>
             <attribute-group group-id="Standard">
                 <display-name xml:lang="x-default">Profile Attributes</display-name>
@@ -714,44 +645,25 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="Promotion">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Promotion"/>
 
-    <type-extension type-id="Recommendation">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Recommendation"/>
 
-    <type-extension type-id="Return">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="Return"/>
 
-    <type-extension type-id="ReturnCase">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ReturnCase"/>
 
-    <type-extension type-id="ReturnCaseItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ReturnCaseItem"/>
 
-    <type-extension type-id="ReturnItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ReturnItem"/>
 
-    <type-extension type-id="ServiceConfig">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ServiceConfig"/>
 
-    <type-extension type-id="ServiceCredential">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ServiceCredential"/>
 
-    <type-extension type-id="ServiceProfile">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ServiceProfile"/>
 
     <type-extension type-id="Shipment">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="fromStoreId">
                 <display-name xml:lang="x-default">Pickup Store ID</display-name>
@@ -778,12 +690,9 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="ShippingLineItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ShippingLineItem"/>
 
     <type-extension type-id="ShippingMethod">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="storePickupEnabled">
                 <display-name xml:lang="x-default">Store Pickup Enabled</display-name>
@@ -813,13 +722,9 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="ShippingOrder">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ShippingOrder"/>
 
-    <type-extension type-id="ShippingOrderItem">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="ShippingOrderItem"/>
 
     <type-extension type-id="SitePreferences">
         <custom-attribute-definitions>
@@ -1110,16 +1015,11 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="SlotConfiguration">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="SlotConfiguration"/>
 
-    <type-extension type-id="SourceCodeGroup">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="SourceCodeGroup"/>
 
     <type-extension type-id="Store">
-        <system-attribute-definitions/>
         <custom-attribute-definitions>
             <attribute-definition attribute-id="inventoryListId">
                 <display-name xml:lang="x-default">Store Inventory List ID</display-name>
@@ -1170,9 +1070,7 @@
         </group-definitions>
     </type-extension>
 
-    <type-extension type-id="TrackingInfo">
-        <system-attribute-definitions/>
-    </type-extension>
+    <type-extension type-id="TrackingInfo"/>
 
     <type-extension type-id="TrackingRef"/>
 
