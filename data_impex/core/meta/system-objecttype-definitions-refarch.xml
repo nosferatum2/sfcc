@@ -58,6 +58,13 @@
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
             </attribute-definition>
+            <attribute-definition attribute-id="enableCompare">
+                <display-name xml:lang="x-default">Enable Compare</display-name>
+                <description xml:lang="x-default">Used to define if/when the Compare feature is to be visualized in the storefront based on navigation. If enableCompare = FALSE, no Compare checkboxes will be displayed in the grid view. If enableCompare = TRUE, the category (and its children) will support the Compare feature.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
             <attribute-definition attribute-id="showInMenu">
                 <display-name xml:lang="x-default">Show in Menu Navigation</display-name>
                 <description xml:lang="x-default">Used to indicate that a category (such as Mens -&gt; Footwear -&gt; Boots) will display in the roll-over navigation. A sub-category only shows if also the parent category is marked as showInMenu. Up to three category levels are shown in roll-over navigation.</description>
@@ -114,6 +121,7 @@
                 <display-name xml:lang="x-default">Custom</display-name>
                 <attribute attribute-id="sizeChartID"/>
                 <attribute attribute-id="showInMenu"/>
+                <attribute attribute-id="enableCompare"/>
                 <attribute attribute-id="alternativeUrl"/>
             </attribute-group>
         </group-definitions>

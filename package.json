@@ -145,8 +145,8 @@
       ],
       "core-config-data": [
         "core",
-        "config_test",
-        "data_test"
+        "data_test",
+        "config_test"
       ],
       "static": [
         "data_test_static"
