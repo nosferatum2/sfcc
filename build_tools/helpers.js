@@ -163,14 +163,16 @@ function createScssPath(packageName) {
 }
 
 /**
- * @function
- * @desc Determines if the given build environment variable exists and is set to true
- * @param opt
- * @returns
+ * @name isBuildEnvironment
+ * @description checks whether the build environment flag exists 
+ * and is either equal to true or the passed value
+ * @param {String} key
+ * @param {String} value - optional
+ * @returns {Boolean}
  */
-function isBuildEnvironment(opt) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    return (packageFile.buildEnvironment[opt] && packageFile.buildEnvironment[opt] === 'true');
+function isBuildEnvironment(key, value) {
+    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
+                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
 }
 
 module.exports = {
