@@ -206,6 +206,17 @@ const optionator = require('optionator')({
 });
 
 /**
+ * @name setBuildEnvironmentFlags
+ * @description set environmental flags on the global process object
+ * Any options passed via the CLI (that are also accepted / parsed by optionator) will override the package.json file's "buildEnvironment" settings
+ * @param {File} packageFile
+ * @param {Object} options 
+ */
+function setBuildEnvironmentFlags(packageFile, options) {
+    Object.assign(process.env, packageFile.buildEnvironment, options);
+}
+
+/**
  * Checks for the dw.json config file in the build_tools subfolder
  * @returns {boolean}
  */
@@ -475,6 +486,8 @@ function createVersionProperties(uploadArguments) {
 
 const options = optionator.parse(process.argv);
 const uploadArguments = getUploadOptions();
+
+setBuildEnvironmentFlags(packageFile, options);
 
 if (options.help) {
     console.log(optionator.generateHelp());
