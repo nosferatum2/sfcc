@@ -196,6 +196,11 @@ const optionator = require('optionator')({
         type: 'String',
         description: 'cartridge name version.properties should be created within',
         required: false
+    }, {
+        option: 'mode',
+        type: 'String', 
+        description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
+        required: false
     }
     ]
 });
