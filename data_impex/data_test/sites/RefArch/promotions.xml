@@ -1154,134 +1154,6 @@
         </product-promotion-rule>
     </promotion>
 
-    <promotion promotion-id="ChoiceOfBonusProductOnOrderOfAmountAbove100">
-        <enabled-flag>true</enabled-flag>
-        <searchable-flag>true</searchable-flag>
-        <exclusivity>no</exclusivity>
-        <name xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</name>
-        <name xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</name>
-        <name xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</name>
-        <name xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</name>
-        <name xml:lang="zh-CN">选择奖赏产品订单金额超过100元</name>
-        <callout-msg xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</callout-msg>
-        <callout-msg xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</callout-msg>
-        <callout-msg xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</callout-msg>
-        <callout-msg xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</callout-msg>
-        <callout-msg xml:lang="zh-CN">选择奖赏产品订单金额超过100元</callout-msg>
-        <details xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</details>
-        <details xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</details>
-        <details xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</details>
-        <details xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</details>
-        <details xml:lang="zh-CN">选择奖赏产品订单金额超过100元</details>
-        <order-promotion-rule>
-            <qualifying-products>
-                <included-products>
-                    <condition-group>
-                        <product-id-condition operator="is equal">
-                            <product-id>013742002454M</product-id>
-                        </product-id-condition>
-                    </condition-group>
-                </included-products>
-            </qualifying-products>
-            <excluded-products>
-                <included-products>
-                    <condition-group>
-                        <category-condition catalog-id="storefront-catalog-m-en">
-                            <category-id>womens-jewelry-necklaces</category-id>
-                        </category-condition>
-                    </condition-group>
-                </included-products>
-            </excluded-products>
-            <discount-only-qualifying-products>false</discount-only-qualifying-products>
-            <discounts condition-type="order-total">
-                <discount>
-                    <threshold>100.0</threshold>
-                    <bonus-choice>
-                        <bonus-products>
-                            <bonus-product product-id="008885004540M">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="008884304047M">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="883360390116M">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="pioneer-pdp-6010fdM">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                        </bonus-products>
-                        <max-bonus-items>2</max-bonus-items>
-                    </bonus-choice>
-                </discount>
-            </discounts>
-        </order-promotion-rule>
-    </promotion>
-
-    <promotion promotion-id="ChoiceOfBonusProductOnOrderOfAmountAbove100-not-free">
-        <enabled-flag>false</enabled-flag>
-        <searchable-flag>true</searchable-flag>
-        <exclusivity>no</exclusivity>
-        <name xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</name>
-        <name xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</name>
-        <name xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</name>
-        <name xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</name>
-        <name xml:lang="zh-CN">选择奖赏产品订单金额超过100元</name>
-        <callout-msg xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</callout-msg>
-        <callout-msg xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</callout-msg>
-        <callout-msg xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</callout-msg>
-        <callout-msg xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</callout-msg>
-        <callout-msg xml:lang="zh-CN">选择奖赏产品订单金额超过100元</callout-msg>
-        <details xml:lang="x-default">Choice of Bonus Product on Order Amount Above 100</details>
-        <details xml:lang="fr-FR">ProduitBonusAuChoixCommandeSup100</details>
-        <details xml:lang="it-IT">Scelta di prodotti premio su ordini con importo superiore a € 100</details>
-        <details xml:lang="ja-JP">注文金額10,000円以上でボーナス商品を選択</details>
-        <details xml:lang="zh-CN">选择奖赏产品订单金额超过100元</details>
-        <order-promotion-rule>
-            <qualifying-products>
-                <included-products>
-                    <condition-group>
-                        <product-id-condition operator="is equal">
-                            <product-id>013742002454M</product-id>
-                        </product-id-condition>
-                    </condition-group>
-                </included-products>
-            </qualifying-products>
-            <excluded-products>
-                <included-products>
-                    <condition-group>
-                        <category-condition catalog-id="storefront-catalog-m-en">
-                            <category-id>womens-jewelry-necklaces</category-id>
-                        </category-condition>
-                    </condition-group>
-                </included-products>
-            </excluded-products>
-            <discount-only-qualifying-products>false</discount-only-qualifying-products>
-            <discounts condition-type="order-total">
-                <discount>
-                    <threshold>100.0</threshold>
-                    <bonus-choice>
-                        <bonus-products>
-                            <bonus-product product-id="008885004540M">
-                                <bonus-product-price>5</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="008884304047M">
-                                <bonus-product-price>10</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="883360390116M">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                            <bonus-product product-id="pioneer-pdp-6010fdM">
-                                <bonus-product-price>0</bonus-product-price>
-                            </bonus-product>
-                        </bonus-products>
-                        <max-bonus-items>2</max-bonus-items>
-                    </bonus-choice>
-                </discount>
-            </discounts>
-        </order-promotion-rule>
-    </promotion>
-
     <promotion promotion-id="10%offordersover150">
         <enabled-flag>false</enabled-flag>
         <searchable-flag>false</searchable-flag>
@@ -2236,48 +2108,6 @@
         </product-promotion-rule>
     </promotion>
 
-    <promotion promotion-id="15off-samsunglcd">
-        <enabled-flag>false</enabled-flag>
-        <searchable-flag>false</searchable-flag>
-        <exclusivity>class</exclusivity>
-        <name xml:lang="x-default">15% Off Samsung LCD Televisions</name>
-        <name xml:lang="fr-FR">15 % de rabais sur les téléviseurs LCD Samsung</name>
-        <name xml:lang="it-IT">15% di sconto su televisori LCD Samsung</name>
-        <name xml:lang="ja-JP">Samsung LCD テレビが 15% 割引</name>
-        <name xml:lang="zh-CN">三星 LCD 电视 85 折优惠</name>
-        <callout-msg xml:lang="x-default">Additional 15% Off Samsung LCD Televisions</callout-msg>
-        <callout-msg xml:lang="fr-FR">15 % de rabais supplémentaires sur les téléviseurs LCD Samsung</callout-msg>
-        <callout-msg xml:lang="it-IT">Ulteriore 15% di sconto su televisori LCD Samsung</callout-msg>
-        <callout-msg xml:lang="ja-JP">Samsung LCD テレビがさらに 15% 割引</callout-msg>
-        <callout-msg xml:lang="zh-CN">三星 LCD 电视享受额外 85 折优惠</callout-msg>
-        <details xml:lang="x-default">Additional 15% Off Samsung LCD Televisions, Limit 1 per order.</details>
-        <details xml:lang="fr-FR">15 % de rabais supplémentaires sur les téléviseurs LCD Samsung, offre limitée à un article par commande.</details>
-        <details xml:lang="it-IT">Ulteriore 15% di sconto su televisori LCD Samsung, con limite di 1 per ordine.</details>
-        <details xml:lang="ja-JP">Samsung LCD テレビがさらに 15% 割引になります (1 回のご注文で 1 台のみ)。</details>
-        <details xml:lang="zh-CN">三星 LCD 电视享受额外 85 折优惠，每个订单限 1 次优惠</details>
-        <product-promotion-rule>
-            <discounted-products>
-                <included-products>
-                    <condition-group>
-                        <category-condition catalog-id="storefront-catalog-m-en">
-                            <category-id>electronics-televisions-flat-screen</category-id>
-                        </category-condition>
-                        <brand-condition operator="is equal">
-                            <brand>Samsung</brand>
-                        </brand-condition>
-                        <attribute-condition operator="equals" attribute-id="tvType">
-                            <attribute-value>0020</attribute-value>
-                        </attribute-condition>
-                    </condition-group>
-                </included-products>
-            </discounted-products>
-            <simple-discount>
-                <percentage>15.0</percentage>
-            </simple-discount>
-            <max-applications>1</max-applications>
-        </product-promotion-rule>
-    </promotion>
-
     <promotion promotion-id="Rank-Exclusivity-No">
         <enabled-flag>false</enabled-flag>
         <searchable-flag>false</searchable-flag>
@@ -2619,14 +2449,6 @@
         </qualifiers>
     </promotion-campaign-assignment>
 
-    <promotion-campaign-assignment promotion-id="ChoiceOfBonusProductOnOrderOfAmountAbove100" campaign-id="Automation">
-        <qualifiers match-mode="any">
-            <customer-groups/>
-            <source-codes/>
-            <coupons/>
-        </qualifiers>
-    </promotion-campaign-assignment>
-
     <promotion-campaign-assignment promotion-id="ExclusivityNo" campaign-id="Automation">
         <qualifiers match-mode="any">
             <customer-groups/>
@@ -2775,12 +2597,6 @@
     </promotion-campaign-assignment>
 
     <promotion-campaign-assignment promotion-id="15off-nano" campaign-id="electronics-promotions">
-        <qualifiers match-mode="any">
-            <customer-groups/>
-        </qualifiers>
-    </promotion-campaign-assignment>
-
-    <promotion-campaign-assignment promotion-id="15off-samsunglcd" campaign-id="electronics-promotions">
         <qualifiers match-mode="any">
             <customer-groups/>
         </qualifiers>

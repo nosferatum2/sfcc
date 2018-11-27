@@ -75,6 +75,10 @@
         </weighted-attribute>
     </dynamic-attribute>
 
+    <sorting-rule rule-id="Einstein Automatic Sort for Revenue">
+        <description>Sort by Einstein determined attributes to optimize for revenue</description>
+    </sorting-rule>
+
     <sorting-rule rule-id="best-matches">
         <description>Applies static sortings (category position, search placement/rank), then text relevance, then explicit sortings</description>
         <sorting-attributes>
@@ -232,8 +236,8 @@
             <rule-id>most-popular</rule-id>
             <display-name xml:lang="x-default">Most Popular</display-name>
             <display-name xml:lang="fr-FR">Les plus populaires</display-name>
-            <display-name xml:lang="ja-JP">人気が高い順</display-name>
             <display-name xml:lang="it-IT">I più cercati</display-name>
+            <display-name xml:lang="ja-JP">人気が高い順</display-name>
             <display-name xml:lang="zh-CN">最热门</display-name>
         </sorting-option>
         <sorting-option option-id="top-sellers">
@@ -245,5 +249,7 @@
             <display-name xml:lang="zh-CN">最畅销</display-name>
         </sorting-option>
     </sorting-options>
+
+    <keyword-search-sorting-rule-assignment rule-id="best-matches"/>
 
 </sort>
