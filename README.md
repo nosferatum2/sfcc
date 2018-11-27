@@ -37,7 +37,7 @@ The latest version of SFRA is 3.0.0, which contains the following updates:
 
 5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
-6 Use https://bitbucket.org/demandware/storefrontdata to zip and import site date on your sandbox.
+6 Run `node build_tools/build --deploy-data --data-bundle=core-config-data-static` to initialize data on your sandbox. Visit https://bitbucket.org/lyonsconsultinggroup/sfra-storefront-data/ if you need a full set of static content (images), as that was omitted from this repository.
 
 7 Add the `app_storefront_base` cartridge to your cartridge path.
 

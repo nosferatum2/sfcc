@@ -148,6 +148,12 @@
         "data_test",
         "config_test"
       ],
+      "core-config-data-static": [
+        "core",
+        "data_test",
+        "config_test",
+        "data_test_static"
+      ],
       "static": [
         "data_test_static"
       ]
