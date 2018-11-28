@@ -193,12 +193,12 @@ function isBuildEnvironment(key, value) {
 }
 
 function getCssLoaders(mode) {
-    const loader = {}
-    loader.test = /\.scss$/;
+    const loaders = {}
+    loaders.test = /\.scss$/;
     const isSourceMap = isBuildEnvironment('cssSourceMaps', 'true');
 
     if (mode === 'production') {
-        loader.use = [
+        loaders.use = [
             { 
                 loader: MiniCssExtractPlugin.loader
             },
@@ -231,7 +231,7 @@ function getCssLoaders(mode) {
             }
         ];
     } else {
-        loader.use = [
+        loaders.use = [
             { 
                 loader: MiniCssExtractPlugin.loader
             },
@@ -256,7 +256,7 @@ function getCssLoaders(mode) {
         ];
     }
 
-    return loader;
+    return loaders;
 }  
 
 function getCssPlugins(mode) {
