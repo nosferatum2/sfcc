@@ -157,6 +157,7 @@
   },
   "buildEnvironment": {
     "mode": "development",
-    "verbose": "false"
+    "verbose": "false",
+    "cssSourceMaps": "true"
   }
 }
