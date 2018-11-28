@@ -27,7 +27,9 @@ try {
 
     module.exports = function (packageName) {        
         const mode = process.env.mode;
-        console.log(chalk.yellow('Using ' + mode + ' mode in webpack.config.js'));
+        
+        console.log(chalk.bgMagenta('Creating Webpack configuration for ' + packageName));
+        console.log(chalk.yellow('Using ' + mode + ' mode'));
 
         const entryFiles = (helpers.isBuildEnvironment('compile', 'css')) ? helpers.createScssPath(packageName) : helpers.createJsPath(packageName);
 

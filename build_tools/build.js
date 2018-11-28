@@ -599,22 +599,16 @@ if (options.compile) {
          * This build.js will likely be the only "site aware" script
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
-            if (packageFile.sites[siteIndex].paths) {
-                const cssAliases = helpers.createAliases(packageFile.sites[siteIndex], pwd, true);
-                if (helpers.isBuildEnvironment('verbose')) {
-                    console.log(chalk.black.bgGreen('Recieved cssAliases object from helpers.js'));
-                    for(var name in cssAliases ){
-                        console.log(chalk.blue(name) + ' is ' + chalk.gray(cssAliases[name]));
-                    }
-                }
-
-                for (var key in packageFile.sites[siteIndex].paths) {
-                    var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                    var cartridgeName = cartridgePath.split(path.sep).pop();
-
+            const site = packageFile.sites[siteIndex];
+            if (site.paths) {
+                const cartridges = site.paths;
+                const cssAliases = helpers.createAliases(site, pwd, true);
+                for (let cartridge in cartridges) {
+                    const cartridgePath = cartridges[cartridge];
+                    const cartridgeName = cartridgePath.split(path.sep).pop();
                     if (cartridgeName) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(packageFile.sites[siteIndex], cartridgeName, pwd, cssAliases, code => {
+                        css(cartridgeName, cssAliases, code => {
                             if (code == 1) {
                               process.exit(code);
                             }

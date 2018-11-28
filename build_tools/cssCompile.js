@@ -1,34 +1,38 @@
 'use strict';
 
 const path = require('path');
+const cwd = process.cwd();
 const webpack = require('webpack');
 const helpers = require('./helpers');
 const util = require('./util');
 const chalk = require('chalk');
 
-const cwd = process.cwd();
+const WebpackConfiguration = require('./webpack.config');
 
-module.exports = (sitePackageConfig, cartridgeName, pwd, aliases, callback) => {
-    
-    const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
+module.exports = (cartridgeName, aliases, callback) => {
+    // Retrieve Webpack configuration object 
+    const webpackConfig = WebpackConfiguration(cartridgeName);
 
     if (helpers.isBuildEnvironment('verbose')) {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }
 
+    // The Webpack configuration object can be empty if no entry points (sass files) are found for the current cartridge
     if (webpackConfig) {
-        let newResolve = {
+
+        // Merge the passed aliases with retrieved Webpack configuration
+        // @TODO move this logic into webpack.config.js; it should be in the actual creattion of the config object itself
+        let resolve = {
             alias: aliases,
             extensions: ['.scss']
         };
-
         if (webpackConfig.resolve) {
-            newResolve = util.mergeDeep(webpackConfig.resolve, newResolve);
+            resolve = util.mergeDeep(webpackConfig.resolve, resolve);
         }
+        webpackConfig.resolve = resolve;
 
-        webpackConfig.resolve = newResolve;
-
+        // Run the Webpack compiler
         webpack(webpackConfig, (err, stats) => {
             if (err) {
                 console.error(chalk.red(err));

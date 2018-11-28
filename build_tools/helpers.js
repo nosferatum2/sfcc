@@ -9,6 +9,7 @@ const cwd = process.cwd();
 /**
  * @function
  * @desc Creates the aliases for the JS/Sass file directories for each cartridge in the project
+ * https://webpack.js.org/configuration/resolve/#resolve-alias
  * @param {String} packageFile - reference to package.json file for the project
  * @param {String} pwd - reference to working directory of the project
  * @param {Boolean} returnSass - determines if the aliases should be Sass directories instead of JS directories
@@ -91,6 +92,14 @@ const createAliases = (packageFile, pwd, returnSass) => {
         });
 
         aliases = cssAliases;
+    }
+
+                    
+    if (isBuildEnvironment('verbose')) {
+        console.log(chalk.black.bgGreen('Generated aliases:'));
+        for (let name in aliases) {
+            console.log(chalk.blue(name) + ' is ' + chalk.gray(aliases[name]));
+        }
     }
 
     return aliases;
