@@ -8,22 +8,8 @@ const chalk = require('chalk');
 
 const cwd = process.cwd();
 
-module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
-    // adjusted to pwd for LyonsCG folder structure
-    const cssAliases = helpers.createAliases(sitePackageConfig, pwd, true);
-
-    if (helpers.isBuildEnvironment('verbose')) {
-        console.log(chalk.black.bgGreen('Recieved cssAliases object from helpers.js'));
-        for(var name in cssAliases ){
-            console.log(chalk.blue(name) + ' is ' + chalk.gray(cssAliases[name]));
-        }
-    }
-
-    if (helpers.isBuildEnvironment('verbose')) {
-        console.log(chalk.gray('Loading Webpack config '+ path.join(cwd, './build_tools/webpack.config.js')) + ' with parameter '  + sitePackageConfig.packageName);
-    }
-
-    // passing webpackConfig the name of the package we are compiling to
+module.exports = (sitePackageConfig, cartridgeName, pwd, aliases, callback) => {
+    
     const webpackConfig = require(path.join(cwd, './build_tools/webpack.config.js'))(cartridgeName);
 
     if (helpers.isBuildEnvironment('verbose')) {
@@ -35,7 +21,7 @@ module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
 
     if (scssConfig) {
         let newResolve = {
-            alias: cssAliases,
+            alias: aliases,
             extensions: ['.scss']
         };
 

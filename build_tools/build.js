@@ -600,13 +600,21 @@ if (options.compile) {
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
             if (packageFile.sites[siteIndex].paths) {
+                const cssAliases = helpers.createAliases(packageFile.sites[siteIndex], pwd, true);
+                if (helpers.isBuildEnvironment('verbose')) {
+                    console.log(chalk.black.bgGreen('Recieved cssAliases object from helpers.js'));
+                    for(var name in cssAliases ){
+                        console.log(chalk.blue(name) + ' is ' + chalk.gray(cssAliases[name]));
+                    }
+                }
+
                 for (var key in packageFile.sites[siteIndex].paths) {
                     var cartridgePath = packageFile.sites[siteIndex].paths[key];
                     var cartridgeName = cartridgePath.split(path.sep).pop();
 
                     if (cartridgeName) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                        css(packageFile.sites[siteIndex], cartridgeName, pwd, cssAliases, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
