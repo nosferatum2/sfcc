@@ -192,6 +192,12 @@ function isBuildEnvironment(key, value) {
                      (process.env.hasOwnProperty(key) && process.env[key] === 'true')
 }
 
+/**
+ * @name getCssLoaders
+ * @description builds the loaders object for the CSS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Object} loaders
+ */
 function getCssLoaders(mode) {
     const loaders = {}
     loaders.test = /\.scss$/;
@@ -259,6 +265,12 @@ function getCssLoaders(mode) {
     return loaders;
 }  
 
+/**
+ * @name getCssPlugins
+ * @description generates an array of plugins for the CSS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} plugins
+ */
 function getCssPlugins(mode) {
     const plugins = [
         new FixStyleOnlyEntriesPlugin({
