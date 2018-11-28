@@ -767,14 +767,17 @@ if (options.watch) {
             cssCompilingInProgress = true;
 
             Object.keys(packageFile.sites).forEach(siteIndex => {
-                if (packageFile.sites[siteIndex].paths) {
-                    for (var key in packageFile.sites[siteIndex].paths) {
-                        var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                        var cartridgeName = cartridgePath.split(path.sep).pop();
+                const site = packageFile.sites[siteIndex];
+                if (site.paths) {
+                    const cartridges = site.paths;
+                    const cssAliases = helpers.createAliases(site, pwd, true);
+                    for (let cartridge in cartridges) {
+                        const cartridgePath = cartridges[cartridge];
+                        const cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
-                            console.log(chalk.blue('Building css for Site ' + cartridgeName));
+                            console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
                             try {
-                                css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                                css(cartridgeName, cssAliases, code => {
                                     if (code == 1) {
                                       process.exit(code);
                                     }
