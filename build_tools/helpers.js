@@ -261,7 +261,9 @@ function getCssLoaders(mode) {
 
 function getCssPlugins(mode) {
     const plugins = [
-        new FixStyleOnlyEntriesPlugin(),
+        new FixStyleOnlyEntriesPlugin({
+            silent: true
+        }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
