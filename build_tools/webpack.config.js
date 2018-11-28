@@ -25,9 +25,7 @@ try {
         Util: 'exports-loader?Util!bootstrap/js/src/util'
     };
 
-    module.exports = function (packageName) {
-        console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
-        
+    module.exports = function (packageName) {        
         const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode in webpack.config.js'));
 
