@@ -29,31 +29,25 @@ try {
         const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode in webpack.config.js'));
 
-        const jsFiles = require('./helpers').createJsPath(packageName);
-        const scssFiles = require('./helpers').createScssPath(packageName);
+        const entryFiles = (helpers.isBuildEnvironment('compile', 'css')) ? helpers.createScssPath(packageName) : helpers.createJsPath(packageName);
+
+        if (!entryFiles) { 
+            return false;
+        }
 
         if (helpers.isBuildEnvironment('verbose')) {
-            console.log(chalk.gray('Webpack(ing) js files'));
-            if (jsFiles) {
-                for (let key in jsFiles) {
-                    console.log('   ' + chalk.gray(jsFiles[key]));
-                }
-            }
-
-            console.log(chalk.gray('Webpack(ing) scss files'));
-            if (scssFiles) {
-                for (let key in scssFiles) {
-                    console.log('    ' + chalk.gray(scssFiles[key]));
-                }
+            console.log(chalk.gray('Webpack(ing) entry files'));
+            for (let key in entryFiles) {
+                console.log('   ' + chalk.gray(entryFiles[key]));
             }
         }
 
         const webpackConfig = [];
-        if (jsFiles) {
-            webpackConfig.push({
+        if (helpers.isBuildEnvironment('compile', 'js')) {
+            return {
                 mode: mode.toString(),
                 name: 'js',
-                entry: jsFiles,
+                entry: entryFiles,
                 output: {
                     path: path.resolve('./cartridges/' + packageName + '/cartridge/static'),
                     filename: '[name].js'
@@ -76,26 +70,24 @@ try {
                 plugins: [
                     new webpack.ProvidePlugin(bootstrapPackages)
                 ]
-            });
+            };
         }
 
-        if (scssFiles) {
+        if (helpers.isBuildEnvironment('compile', 'css')) {
             const plugins = [
                 new MiniCssExtractPlugin({
-                // Options similar to the same options in webpackOptions.output
-                // both options are optional
-                filename: "[name].css",
-                chunkFilename: "[id].css"
+                    filename: "[name].css",
+                    chunkFilename: "[id].css"
               })];
             
             if (mode == 'production') {
                 plugins.push(new OptimizeCssAssetsPlugin());
             }
 
-            webpackConfig.push({
+            return {
                 mode: mode.toString(),
                 name: 'scss',
-                entry: scssFiles,
+                entry: entryFiles,
                 output: {
                     path: path.resolve('./cartridges/' + packageName + '/cartridge/static'),
                     filename: '[name].js'
@@ -135,11 +127,9 @@ try {
                     }]
                 },
                 devtool: 'cheap-eval-source-map',
-                plugins: plugins
-            });
+                plugins: plugins,
+            };
         }
-
-        return webpackConfig;
     };
 } catch (e) {
     console.log('... caught exception ' + e.toString());

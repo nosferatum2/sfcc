@@ -18,19 +18,18 @@ module.exports = (sitePackageConfig, cartridgeName, pwd, callback) => {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }
-    const jsConfig = webpackConfig.find(item => item.name === 'js');
 
-    if (jsConfig) {
+    if (webpackConfig) {
         let newResolve = {
             alias: jsAliases,
             extensions: ['.js']
         };
-        if (jsConfig.resolve) {
-            newResolve = util.mergeDeep(jsConfig.resolve, newResolve);
+        if (webpackConfig.resolve) {
+            newResolve = util.mergeDeep(webpackConfig.resolve, newResolve);
         }
-        jsConfig.resolve = newResolve;
+        webpackConfig.resolve = newResolve;
 
-        webpack(jsConfig, (err, stats) => {
+        webpack(webpackConfig, (err, stats) => {
             if (err) {
                 console.error(chalk.red(err));
                 callback(0);

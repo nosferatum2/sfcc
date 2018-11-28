@@ -17,21 +17,19 @@ module.exports = (sitePackageConfig, cartridgeName, pwd, aliases, callback) => {
         console.log(chalk.cyan('Note:') + ' You may see Webpack complain about no such target: --compile or css / js etc. That is safe to ignore.');
     }
 
-    const scssConfig = webpackConfig.find(item => item.name === 'scss');
-
-    if (scssConfig) {
+    if (webpackConfig) {
         let newResolve = {
             alias: aliases,
             extensions: ['.scss']
         };
 
-        if (scssConfig.resolve) {
-            newResolve = util.mergeDeep(scssConfig.resolve, newResolve);
+        if (webpackConfig.resolve) {
+            newResolve = util.mergeDeep(webpackConfig.resolve, newResolve);
         }
 
-        scssConfig.resolve = newResolve;
+        webpackConfig.resolve = newResolve;
 
-        webpack(scssConfig, (err, stats) => {
+        webpack(webpackConfig, (err, stats) => {
             if (err) {
                 console.error(chalk.red(err));
                 callback(0);
