@@ -123,6 +123,12 @@
       "packageName": "app_storefront_base"
     }
   ],
+  "buildEnvironment": {
+    "mode": "development",
+    "verbose": "false",
+    "cssSourceMaps": "true",
+    "cssAutoPrefixer": "false"
+  },
   "deployment": {
     "instanceRoot": ".evaluation.dw.demandware.net",
     "dataOptions": {
@@ -153,11 +159,5 @@
         "data_test_static"
       ]
     }
-  },
-  "buildEnvironment": {
-    "mode": "development",
-    "verbose": "false",
-    "cssSourceMaps": "true",
-    "cssAutoPrefixer": "false"
   }
 }
