@@ -6,6 +6,7 @@ try {
     const webpack = require('webpack');
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+    const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
@@ -80,7 +81,14 @@ try {
         }
 
         if (scssFiles) {
-            const plugins = [new ExtractTextPlugin({ filename: '[name].css' })];
+            const plugins = [
+                new MiniCssExtractPlugin({
+                // Options similar to the same options in webpackOptions.output
+                // both options are optional
+                filename: "[name].css",
+                chunkFilename: "[id].css"
+              })];
+            
             if (mode == 'production') {
                 plugins.push(new OptimizeCssAssetsPlugin());
             }
@@ -96,32 +104,35 @@ try {
                 module: {
                     rules: [{
                         test: /\.scss$/,
-                        use: ExtractTextPlugin.extract({
-                            use: [{
-                                loader: 'css-loader',
-                                options: {
-                                    url: false,
-                                    sourceMap: true,
-                                }
-                            }, {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: [
-                                        require('autoprefixer')()
-                                    ]
-                                }
-                            }, {
-                                loader: 'sass-loader',
-                                options: {
-                                    sourceMap: true,
-                                    includePaths: [
-                                        path.resolve('node_modules'),
-                                        path.resolve('node_modules/flag-icon-css/sass')
-                                    ]
-                                }
-                            }]
-                        })
+                        use: [
+                        {
+                            loader: MiniCssExtractPlugin.loader,
+                        },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                url: false,
+                                sourceMap: true,
+                                importLoader: 2
+                            }
+                        }, {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true,
+                                plugins: [
+                                    require('autoprefixer')()
+                                ]
+                            }
+                        }, {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true,
+                                includePaths: [
+                                    path.resolve('node_modules'),
+                                    path.resolve('node_modules/flag-icon-css/sass')
+                                ]
+                            }
+                        }]
                     }]
                 },
                 devtool: 'cheap-eval-source-map',
