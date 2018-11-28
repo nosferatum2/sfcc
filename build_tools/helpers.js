@@ -238,6 +238,9 @@ function getCssLoaders(mode) {
         ];
     } else {
         loaders.use = [
+            {
+                loader: 'cache-loader'
+            },
             { 
                 loader: MiniCssExtractPlugin.loader
             },
