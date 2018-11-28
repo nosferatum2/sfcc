@@ -7,6 +7,7 @@ try {
     const ExtractTextPlugin = require('extract-text-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+    const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
@@ -99,7 +100,7 @@ try {
                 entry: scssFiles,
                 output: {
                     path: path.resolve('./cartridges/' + packageName + '/cartridge/static'),
-                    filename: '[name].css'
+                    filename: '[name].js'
                 },
                 module: {
                     rules: [{
