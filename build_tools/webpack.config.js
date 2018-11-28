@@ -4,10 +4,6 @@ try {
     require('shelljs/make');
     const path = require('path');
     const webpack = require('webpack');
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
-    const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-    const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
@@ -76,16 +72,6 @@ try {
         }
 
         if (helpers.isBuildEnvironment('compile', 'css')) {
-            const plugins = [
-                new MiniCssExtractPlugin({
-                    filename: "[name].css",
-                    chunkFilename: "[id].css"
-              })];
-            
-            if (mode == 'production') {
-                plugins.push(new OptimizeCssAssetsPlugin());
-            }
-
             return {
                 mode: mode.toString(),
                 name: 'scss',
@@ -95,41 +81,12 @@ try {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [{
-                        test: /\.scss$/,
-                        use: [
-                        {
-                            loader: MiniCssExtractPlugin.loader,
-                        },
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                url: false,
-                                sourceMap: true,
-                                importLoader: 2
-                            }
-                        }, {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                plugins: [
-                                    require('autoprefixer')()
-                                ]
-                            }
-                        }, {
-                            loader: 'sass-loader',
-                            options: {
-                                sourceMap: true,
-                                includePaths: [
-                                    path.resolve('node_modules'),
-                                    path.resolve('node_modules/flag-icon-css/sass')
-                                ]
-                            }
-                        }]
-                    }]
+                    rules: [
+                        helpers.getCssLoaders(mode)
+                    ]
                 },
-                devtool: 'cheap-eval-source-map',
-                plugins: plugins,
+                devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-eval-source-map' : 'none',
+                plugins: helpers.getCssPlugins(mode),
             };
         }
     };

@@ -6,6 +6,10 @@ const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
 
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+
 /**
  * @function
  * @desc Creates the aliases for the JS/Sass file directories for each cartridge in the project
@@ -184,6 +188,89 @@ function isBuildEnvironment(key, value) {
                      (process.env.hasOwnProperty(key) && process.env[key] === 'true')
 }
 
+function getCssLoaders(mode) {
+    const loader = {}
+    loader.test = /\.scss$/;
+    const isSourceMap = isBuildEnvironment('cssSourceMaps', 'true');
+
+    if (mode === 'production') {
+        loader.use = [
+            { 
+                loader: MiniCssExtractPlugin.loader
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    url: false,
+                    sourceMap: isSourceMap,
+                    importLoader: 2
+                }
+            }, 
+            {
+                loader: 'postcss-loader',
+                options: {
+                    sourceMap: isSourceMap,
+                    plugins: [
+                        require('autoprefixer')()
+                    ]
+                }
+            }, 
+            {
+                loader: 'sass-loader',
+                options: {
+                    sourceMap: isSourceMap,
+                    includePaths: [
+                        path.resolve('node_modules'),
+                        path.resolve('node_modules/flag-icon-css/sass')
+                    ]
+                }
+            }
+        ];
+    } else {
+        loader.use = [
+            { 
+                loader: MiniCssExtractPlugin.loader
+            },
+            {
+                loader: 'css-loader',
+                options: {
+                    url: false,
+                    sourceMap: isSourceMap,
+                    importLoader: 1
+                }
+            }, 
+            {
+                loader: 'sass-loader',
+                options: {
+                    sourceMap: isSourceMap,
+                    includePaths: [
+                        path.resolve('node_modules'),
+                        path.resolve('node_modules/flag-icon-css/sass')
+                    ]
+                }
+            }
+        ];
+    }
+
+    return loader;
+}  
+
+function getCssPlugins(mode) {
+    const plugins = [
+        new FixStyleOnlyEntriesPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        })
+    ];
+
+    if (mode === 'production') {
+        plugins.push(new OptimizeCssAssetsPlugin());
+    }
+
+    return plugins;
+}
+
 module.exports = {
     /** updated packageName as a parameter so we can build multiple sites */
     createJsPath,
@@ -191,5 +278,7 @@ module.exports = {
     createScssPath,
     isBuildEnvironment,
     createAliases,
+    getCssLoaders,
+    getCssPlugins    
 };
 
