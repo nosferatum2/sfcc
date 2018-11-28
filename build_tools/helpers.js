@@ -26,7 +26,11 @@ const createAliases = (packageFile, pwd, returnSass) => {
         Object.keys(packageFile.paths).forEach(item => {
             if (!aliases[item]) {
                 const cartridge = path.resolve(pwd, packageFile.paths[item]);
-                console.log('Creating aliases for cartridge ' + cartridge);
+                
+                if (isBuildEnvironment('verbose')) {
+                    console.log('Creating aliases for cartridge ' + cartridge);
+                }
+
                 aliases[item] = path.join(cartridge, 'cartridge/client/default/js');
                 const clientFolder = path.join(cartridge, 'cartridge/client');
 
