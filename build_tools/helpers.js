@@ -203,9 +203,9 @@ function getCssLoaders(mode) {
     const autoPrefixer = isBuildEnvironment('cssAutoPrefixer', 'true');
     
     const loaders = {
-        test = /\.scss$/,
-        use = new Array();
-    }
+        test : /\.scss$/,
+        use  : new Array()
+    };
      
     // Compile Sass to CSS
     loaders.use.unshift({
@@ -222,7 +222,7 @@ function getCssLoaders(mode) {
     // Automatically add vendor prefixes to CSS rules
     // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
     if (autoPrefixer) {
-        loader.use.unshift({
+        loaders.use.unshift({
             loader: 'postcss-loader',
             options: {
                 sourceMap: sourceMap,
@@ -240,20 +240,16 @@ function getCssLoaders(mode) {
         options: {
             url: false,
             sourceMap: sourceMap,
-            importLoader: loaders.use.length;
+            importLoader: loaders.use.length
         }
-    })
+    });
 
     // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
-    loaders.use.unshift({
-        loader: MiniCssExtractPlugin.loader
-    })
+    loaders.use.unshift({ loader: MiniCssExtractPlugin.loader });
 
     // Caches the result of following loaders on disk (default) or in the database
     if (mode === 'development') {
-        loader.use.unshift({
-            loader: 'cache-loader'
-        })
+        loaders.use.unshift({ loader: 'cache-loader' });
     }
 
     return loaders;
