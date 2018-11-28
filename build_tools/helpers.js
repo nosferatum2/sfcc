@@ -11,6 +11,19 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 
 /**
+ * @name isBuildEnvironment
+ * @description checks whether the build environment flag exists 
+ * and is either equal to true or the passed value
+ * @param {String} key
+ * @param {String} value - optional
+ * @returns {Boolean}
+ */
+function isBuildEnvironment(key, value) {
+    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
+                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
+}
+
+/**
  * @function
  * @desc Creates the aliases for the JS/Sass file directories for each cartridge in the project
  * https://webpack.js.org/configuration/resolve/#resolve-alias
@@ -180,89 +193,67 @@ function createScssPath(packageName) {
 }
 
 /**
- * @name isBuildEnvironment
- * @description checks whether the build environment flag exists 
- * and is either equal to true or the passed value
- * @param {String} key
- * @param {String} value - optional
- * @returns {Boolean}
- */
-function isBuildEnvironment(key, value) {
-    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
-                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
-}
-
-/**
  * @name getCssLoaders
  * @description builds the loaders object for the CSS Webpack configuration
  * @param {String} mode - the build mode; 'development or 'production'
  * @returns {Object} loaders
  */
 function getCssLoaders(mode) {
-    const loaders = {}
-    loaders.test = /\.scss$/;
-    const isSourceMap = isBuildEnvironment('cssSourceMaps', 'true');
+    const sourceMap = isBuildEnvironment('cssSourceMaps', 'true');
+    const autoPrefixer = isBuildEnvironment('cssAutoPrefixer', 'true');
+    
+    const loaders = {
+        test = /\.scss$/,
+        use = new Array();
+    }
+     
+    // Compile Sass to CSS
+    loaders.use.unshift({
+        loader: 'sass-loader',
+        options: {
+            sourceMap: sourceMap,
+            includePaths: [
+                path.resolve('node_modules'),
+                path.resolve('node_modules/flag-icon-css/sass')
+            ]
+        }
+    });
 
-    if (mode === 'production') {
-        loaders.use = [
-            { 
-                loader: MiniCssExtractPlugin.loader
-            },
-            {
-                loader: 'css-loader',
-                options: {
-                    url: false,
-                    sourceMap: isSourceMap,
-                    importLoader: 2
-                }
+    // Automatically add vendor prefixes to CSS rules
+    // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
+    if (autoPrefixer) {
+        loader.use.unshift({
+            loader: 'postcss-loader',
+            options: {
+                sourceMap: sourceMap,
+                plugins: [
+                    require('autoprefixer')()
+                ]
             }, 
-            {
-                loader: 'postcss-loader',
-                options: {
-                    sourceMap: isSourceMap,
-                    plugins: [
-                        require('autoprefixer')()
-                    ]
-                }
-            }, 
-            {
-                loader: 'sass-loader',
-                options: {
-                    sourceMap: isSourceMap,
-                    includePaths: [
-                        path.resolve('node_modules'),
-                        path.resolve('node_modules/flag-icon-css/sass')
-                    ]
-                }
-            }
-        ];
-    } else {
-        loaders.use = [
-            {
-                loader: 'cache-loader'
-            },
-            { 
-                loader: MiniCssExtractPlugin.loader
-            },
-            {
-                loader: 'css-loader',
-                options: {
-                    url: false,
-                    sourceMap: isSourceMap,
-                    importLoader: 1
-                }
-            }, 
-            {
-                loader: 'sass-loader',
-                options: {
-                    sourceMap: isSourceMap,
-                    includePaths: [
-                        path.resolve('node_modules'),
-                        path.resolve('node_modules/flag-icon-css/sass')
-                    ]
-                }
-            }
-        ];
+        });
+    }
+
+    // Intrepret @import and url() like import/require() and will resolve them
+    // This loader converts the CSS to a CommonJS JavaScript module
+    loaders.use.unshift({
+        loader: 'css-loader',
+        options: {
+            url: false,
+            sourceMap: sourceMap,
+            importLoader: loaders.use.length;
+        }
+    })
+
+    // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
+    loaders.use.unshift({
+        loader: MiniCssExtractPlugin.loader
+    })
+
+    // Caches the result of following loaders on disk (default) or in the database
+    if (mode === 'development') {
+        loader.use.unshift({
+            loader: 'cache-loader'
+        })
     }
 
     return loaders;
@@ -276,9 +267,12 @@ function getCssLoaders(mode) {
  */
 function getCssPlugins(mode) {
     const plugins = [
+        // Remove generated the unused JS files from our style only entry points
         new FixStyleOnlyEntriesPlugin({
             silent: true
         }),
+        // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
+        // Supports MiniCssExtractPlugin.loader
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
@@ -286,6 +280,8 @@ function getCssPlugins(mode) {
     ];
 
     if (mode === 'production') {
+        // A Webpack plugin to optimize and minimize CSS assets
+        // Uses cssnano by default for minification
         plugins.push(new OptimizeCssAssetsPlugin());
     }
 
@@ -293,12 +289,10 @@ function getCssPlugins(mode) {
 }
 
 module.exports = {
-    /** updated packageName as a parameter so we can build multiple sites */
-    createJsPath,
-    /** updated packageName as a parameter so we can build multiple sites */
-    createScssPath,
     isBuildEnvironment,
     createAliases,
+    createJsPath,
+    createScssPath,
     getCssLoaders,
     getCssPlugins    
 };

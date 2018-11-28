@@ -158,6 +158,7 @@
   "buildEnvironment": {
     "mode": "development",
     "verbose": "false",
-    "cssSourceMaps": "true"
+    "cssSourceMaps": "true",
+    "cssAutoPrefixer": "false"
   }
 }
