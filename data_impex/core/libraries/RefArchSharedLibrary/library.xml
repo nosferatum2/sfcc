@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library xmlns="http://www.demandware.com/xml/impex/library/2006-10-31" library-id="RefArchSharedLibrary">
+    <content content-id="footer-email-signup">
+        <display-name xml:lang="x-default">Footer Email sign up</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;div class=&quot;container&quot;&gt;&#13;
+    &lt;form role=&quot;form&quot;&gt;&#13;
+        &lt;div class=&quot;row&quot;&gt;&#13;
+            &lt;div class=&quot;col-sm-5&quot;&gt;&#13;
+                &lt;div class=&quot;input-group&quot;&gt;&#13;
+                    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;hpEmailSignUp&quot; placeholder=&quot;Email&quot; aria-label=&quot;Email&quot;&gt;&#13;
+                    &lt;span class=&quot;input-group-btn&quot;&gt;&#13;
+                        &lt;button type=&quot;submit&quot; class=&quot;btn btn-primary&quot;&gt;Subscribe&lt;/button&gt;&#13;
+                    &lt;/span&gt;&#13;
+                &lt;/div&gt;&#13;
+            &lt;/div&gt;&#13;
+            &lt;div class=&quot;col-sm-7 email-description&quot;&gt;Sign up for email to receive 15% off your first order.&lt;/div&gt;&#13;
+        &lt;/div&gt;&#13;
+    &lt;/form&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+</library>
