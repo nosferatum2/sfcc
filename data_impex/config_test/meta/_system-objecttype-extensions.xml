@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+<!-- 
+	This file should only contain System Object Extensions for attributes 
+	with enum values that will be merchandised directly on the Staging environment.
+	Typically, object extensions should not be configured directly on Staging,
+    but enum values are a case where they might be.
+
+	The initial definition for Staging should be in a release folder
+	
+	No attribute groups should be maintained here
+-->
+
+    <!-- <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="merchandisingPrimaryCategory">
+                <display-name xml:lang="x-default">Merchandising Primary Category</display-name>
+                <description xml:lang="x-default">Used to report category for GTM</description>
+                <type>enum-of-string</type>
+                <value-definitions>
+					<value-definition><display xml:lang="x-default">Accessories</display><value>Accessories</value></value-definition>
+					<value-definition><display xml:lang="x-default">Bathroom</display><value>Bathroom</value></value-definition>
+					<value-definition><display xml:lang="x-default">Bedroom</display><value>Bedroom</value></value-definition>
+					<value-definition><display xml:lang="x-default">Entryway</display><value>Entryway</value></value-definition>
+                </value-definitions>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension> -->
+
+</metadata>
