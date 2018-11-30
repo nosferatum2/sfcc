@@ -1,0 +1,79 @@
+// Z-index Management
+//----------------------------------------------
+// These z-index values are accessed in SCSS using the function z(layers...).  Ex: z("minicart", "dropdown") returns 1.
+// The key word "this" is used to refer to the container of a nested map, much like JS objects  E.g. "minicart" is the
+// container for "minicart","dropdown". Ex: while the z-index value for z("minicart", "dropdown") would be 1, the value
+// for z("minicart") itself, would be 20.
+
+// Stick to the following coding conventions:
+// * Keep z-index definitions in order of highest to lowest, minding nested z-indexes whose index order should be independent of their parents.
+// * Keep all key values (the actual z-index number values) right-aligned.
+// * Always indent nested values correctly.
+// * Always use "this" as the first key in a nested list. The z() SASS function looks specific for this key.
+// * Use the following diagram as a guide to nest-levels:
+
+// $z-layers: (
+//     "[level-1-element]":                 [level-1 index],
+//     "[level-1-element]": (
+//          "this":                         [level-1 index],
+//          "[level-2-element]":            [level-2 index],
+//          "[level-2-element]": (
+//              "this":                     [level-2 index],
+//              "[level-3-element]":        [level-3 index]
+//              //etc...
+//          )
+//     )
+// );
+//----------------------------------------------
+
+//Site-wide z-index map
+$z-layers: (
+    "loader":                      1000,
+    "dialog-overlay":               140,
+    "ui-widget-overlay":            140,
+    "b2t-btn":                      130,
+    "quickview-zoomtitle":          120,
+    "quickview-zoompreload":        110,
+    "quickview-zoomwin":            110,
+    "quickview-zoomwrap":           110,
+    "quickview-zoomwrapimg":        110,
+    "quickview-zoompup":            101,
+    "quickview-zoomoverlay":        101,
+    "quickview-zoomimg":            101,
+    "loading-icon":                 100,
+    "pdp-rec-tooltip":              100,
+    "quickview-zoompad":             99,
+    "country-selector":              30,
+    "minicart": (
+        "this":                      20,
+        "dropdown":                   20
+    ),
+    "utility-panel":                 20,
+    "mega-menu":                      4,
+    "pdp-tab-content-open":           2,
+    "pdp-tab-content":                1,
+    "pdp-tab-label":                  1,
+    "search": (
+        "this":                       3,
+        "search-suggest-js":       8184,
+        "search-suggest-wrapper":     1
+    ),
+    "refinements": (
+        "refinements-sort-by":        3,
+        "refinements-main":           2,
+        "refinements-modal":          5
+    ),
+    "product-tile": (
+        "product-tile-quickview-hidden": -1,
+        "product-tile-quickview":         2,
+        "product-tile-badge":             1,
+        "product-tile-swatch":            1
+    ),
+    "product-set": (
+        "product-set-main-details":   1
+    ),
+    "primary-logo":                   1,
+    "compare-remove-btn":             1,
+    "quickview-zoomiframe":          -1,
+    "z-nav":                          6
+);
