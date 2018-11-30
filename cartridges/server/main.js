@@ -16,11 +16,22 @@ CustomServer.get = function () {
             var actions = req.path.split('/');
             if (actions.length > 0) {
                 var action = actions[actions.length - 1];
-                if (action != null && (action in pageContextMap)) {
+                // get controller name in case global pageContextMap fallback
+                var controllerName = action.split('-')[0];
+                if (action != null && (action in pageContextMap || controllerName in pageContextMap)) {
                     var pageContext = {};
-                    pageContext.title = ('title' in pageContextMap[action]) && pageContextMap[action].title != null ? pageContextMap[action].title : '';
-                    pageContext.type = ('type' in pageContextMap[action]) && pageContextMap[action].type != null ? pageContextMap[action].type : '';
-                    pageContext.ns = ('ns' in pageContextMap[action]) && pageContextMap[action].ns != null ? pageContextMap[action].ns : '';
+                    // create variable to hold pageContentMap lookup id and use in pageContext value assignments
+                    var routeMap;
+                    // assign value to routeMap based on values in pageContextMap
+                    if (action in pageContextMap) {
+                        routeMap = action;
+                    } else if (controllerName in pageContextMap) {
+                        routeMap = controllerName;
+                    }
+                    // assign values to pageContext with routeMap variable
+                    pageContext.title = ('title' in pageContextMap[routeMap]) && pageContextMap[routeMap].title != null ? pageContextMap[routeMap].title : '';
+                    pageContext.type = ('type' in pageContextMap[routeMap]) && pageContextMap[routeMap].type != null ? pageContextMap[routeMap].type : '';
+                    pageContext.ns = ('ns' in pageContextMap[routeMap]) && pageContextMap[routeMap].ns != null ? pageContextMap[routeMap].ns : '';
                     res.setViewData({ pageContext: pageContext });
                 }
             }
