@@ -13,7 +13,6 @@ $menu-item-margin: 0.625em;
 
     .user,
     .country-selector,
-    .search,
     .minicart {
         display: inline-block;
         margin: 1.125em 0 0 0.5em;
@@ -59,6 +58,11 @@ $menu-item-margin: 0.625em;
                 display: block;
             }
         }
+    }
+
+    .search {
+        display: inline-block;
+        margin: 0.75em 0 0 0.5em;
     }
 }
 
