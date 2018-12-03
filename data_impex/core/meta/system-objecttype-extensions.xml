@@ -84,7 +84,13 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
-
+            <attribute-definition attribute-id="enableGoogleRecaptcha">
+                <display-name xml:lang="x-default">Enable Google Recaptcha</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="enableStoreDetailsPage">
                 <display-name xml:lang="x-default">Enable Store Details Page</display-name>
                 <type>boolean</type>
@@ -92,13 +98,26 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
-
             <attribute-definition attribute-id="enablePromoCalloutMessagesProductTile">
                 <display-name xml:lang="x-default">Enable Promo Callout Messages on Product Tile</display-name>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSecretKey">
+                <display-name xml:lang="x-default">Google Recaptcha Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSiteKey">
+                <display-name xml:lang="x-default">Google Recaptcha Site Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
             </attribute-definition>
         </custom-attribute-definitions>
         <!--
@@ -116,6 +135,11 @@
                     <attribute attribute-id="enableStoreDetailsPage"/>
                     <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 </attribute-group>
+                <attribute-group group-id="Google Recaptcha">
+                	<attribute attribute-id="enableGoogleRecaptcha"/>
+                	<attribute attribute-id="googleRecaptchaSiteKey"/>
+                	<attribute attribute-id="googleRecaptchaSecretKey"/>
+            	</attribute-group>
             </group-definitions>
         -->
     </type-extension>
