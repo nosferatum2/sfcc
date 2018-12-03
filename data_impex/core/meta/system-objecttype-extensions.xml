@@ -84,8 +84,17 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+
             <attribute-definition attribute-id="enableStoreDetailsPage">
                 <display-name xml:lang="x-default">Enable Store Details Page</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+
+            <attribute-definition attribute-id="enablePromoCalloutMessagesProductTile">
+                <display-name xml:lang="x-default">Enable Promo Callout Messages on Product Tile</display-name>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
@@ -105,6 +114,7 @@
                     <attribute attribute-id="searchRefinementsLayout"/>
                     <attribute attribute-id="siteDisableCommerceFunctionality"/>
                     <attribute attribute-id="enableStoreDetailsPage"/>
+                    <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 </attribute-group>
             </group-definitions>
         -->

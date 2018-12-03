@@ -244,10 +244,17 @@ Webdav.prototype.importReady = async function () {
     const method = 'GET',
     deferred = Q.defer();
 
+    // Should not include cert.staging
+    var hostname = this.hostname;
+    if (this.hostname.indexOf('cert.') > -1) {
+        hostname = hostname.replace('cert.', '');
+    }
+
     // Build the options for the delete
     let options = this.buildHttpOptions({
         method: method,
-        uploadPath: this.impexStatusPath
+        uploadPath: this.impexStatusPath,
+        hostname: hostname
     });
     options.jar = true;
     options.rejectUnauthorized = false;
@@ -303,10 +310,17 @@ Webdav.prototype.importFile = async function (archiveFilename) {
     const method = 'POST',
     deferred = Q.defer();
 
+    // Should not include cert.staging
+    var hostname = this.hostname;
+    if (this.hostname.indexOf('cert.') > -1) {
+        hostname = hostname.replace('cert.', '');
+    }
+
     // Build the options for the delete
     let options = this.buildHttpOptions({
         method: method,
-        uploadPath: this.impexDispatchPath
+        uploadPath: this.impexDispatchPath,
+        hostname: hostname
     });
     options.form = {
         ImportFileName: archiveFilename,
@@ -488,7 +502,7 @@ Webdav.prototype.handleRequest = async function (options, callback) {
         console.error('problem with request: ' + e.message);
 
         if (typeof this.p12 !== 'undefined' && this.hostname.indexOf('-') > -1) {
-            console.warn('WARNING: Hyphens detected in instanceRoot. Two-factor authentication requires usage of the dot convention in hostname.');
+            console.warn('WARNING: Hyphens detected in hostname. Two-factor authentication requires usage of the dot convention in hostname.');
         }
 
         // Retry the request if an error has occurred up to the MAX_RETRY limit (default of 1)

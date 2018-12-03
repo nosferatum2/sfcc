@@ -14,4 +14,4 @@ instrumentation:
         "webpack.config.js", # This is webpack config for javascript
         "**/build_tools/**" # These are javascript build tools that don't need to be tested
     ]
-    include-all-sources: true
+    include-all-sources: false
