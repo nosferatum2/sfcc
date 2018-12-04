@@ -83,8 +83,8 @@ try {
                         helpers.getCssLoaders(mode)
                     ]
                 },
-                devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-eval-source-map' : 'none',
                 plugins: helpers.getCssPlugins(mode),
+                devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
             };
         }
     };
