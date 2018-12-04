@@ -6,7 +6,7 @@ var utils = {
     /**
      * @desc Media breakpoints that are used throughout the Javascript
      */
-    breakpoints: {
+    breakpoints: { // TODO: LFED Update with project breakpoints
         xs: 0,
         sm: 576,
         md: 768,
