@@ -1,12 +1,12 @@
 'use strict';
 
 const path = require('path');
-const cwd = process.cwd();
 const webpack = require('webpack');
 const helpers = require('./helpers');
 const util = require('./util');
 const chalk = require('chalk');
 
+const cwd = process.cwd();
 const WebpackConfiguration = require('./webpack.config');
 
 module.exports = (cartridgeName, aliases, callback) => {
@@ -20,7 +20,6 @@ module.exports = (cartridgeName, aliases, callback) => {
 
     // The Webpack configuration object can be empty if no entry points (sass files) are found for the current cartridge
     if (webpackConfig) {
-
         // Merge the passed aliases with retrieved Webpack configuration
         // @TODO move this logic into webpack.config.js; it should be in the actual creattion of the config object itself
         let resolve = {

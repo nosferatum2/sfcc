@@ -193,6 +193,63 @@ function createScssPath(packageName) {
 }
 
 /**
+ * @name getJsLoaders
+ * @description builds the loaders object for the JS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} loaders
+ */
+function getJsLoaders(mode) {
+    const loaders = new Array();
+
+    // Transpile ES6 into a backwards compatible version of JavaScript in current and older browsers or environments
+    loaders.unshift({
+        loader: 'babel-loader',
+        options: {
+            presets: ['@babel/env'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            cacheDirectory: true
+        }
+    });
+
+    // Caches the result of following loaders on disk (default) or in the database
+    if (mode === 'development') {
+        loaders.unshift({ loader: 'cache-loader' });
+    }
+
+    return loaders;
+}
+
+/**
+ * @name getJsPlugins
+ * @description generates an array of plugins for the JS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} plugins
+ */
+function getJsPlugins(mode) {
+    const bootstrapPackages = {
+        Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
+        // Button: 'exports-loader?Button!bootstrap/js/src/button',
+        Carousel: 'exports-loader?Carousel!bootstrap/js/src/carousel',
+        Collapse: 'exports-loader?Collapse!bootstrap/js/src/collapse',
+        // Dropdown: 'exports-loader?Dropdown!bootstrap/js/src/dropdown',
+        Modal: 'exports-loader?Modal!bootstrap/js/src/modal',
+        // Popover: 'exports-loader?Popover!bootstrap/js/src/popover',
+        Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/src/scrollspy',
+        Tab: 'exports-loader?Tab!bootstrap/js/src/tab',
+        Tooltip: 'exports-loader?Tooltip!bootstrap/js/src/tooltip',
+        Util: 'exports-loader?Util!bootstrap/js/src/util'
+    };
+
+    const plugins = [
+        // Automatically load modules (i.e Boostrap modules) instead of having to import or require them everywhere
+        new webpack.ProvidePlugin(bootstrapPackages)
+    ];
+
+    return plugins;
+}
+
+
+/**
  * @name getCssLoaders
  * @description builds the loaders object for the CSS Webpack configuration
  * @param {String} mode - the build mode; 'development or 'production'
@@ -202,13 +259,10 @@ function getCssLoaders(mode) {
     const sourceMap = isBuildEnvironment('cssSourceMaps', 'true');
     const autoPrefixer = isBuildEnvironment('cssAutoPrefixer', 'true');
     
-    const loaders = {
-        test : /\.scss$/,
-        use  : new Array()
-    };
+    const loaders = new Array();
      
     // Compile Sass to CSS
-    loaders.use.unshift({
+    loaders.unshift({
         loader: 'sass-loader',
         options: {
             sourceMap: sourceMap,
@@ -222,7 +276,7 @@ function getCssLoaders(mode) {
     // Automatically add vendor prefixes to CSS rules
     // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
     if (autoPrefixer) {
-        loaders.use.unshift({
+        loaders.unshift({
             loader: 'postcss-loader',
             options: {
                 sourceMap: sourceMap,
@@ -235,21 +289,21 @@ function getCssLoaders(mode) {
 
     // Intrepret @import and url() like import/require() and will resolve them
     // This loader converts the CSS to a CommonJS JavaScript module
-    loaders.use.unshift({
+    loaders.unshift({
         loader: 'css-loader',
         options: {
             url: false,
             sourceMap: sourceMap,
-            importLoader: loaders.use.length
+            importLoader: loaders.length
         }
     });
 
     // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
-    loaders.use.unshift({ loader: MiniCssExtractPlugin.loader });
+    loaders.unshift({ loader: MiniCssExtractPlugin.loader });
 
     // Caches the result of following loaders on disk (default) or in the database
     if (mode === 'development') {
-        loaders.use.unshift({ loader: 'cache-loader' });
+        loaders.unshift({ loader: 'cache-loader' });
     }
 
     return loaders;

@@ -7,20 +7,6 @@ try {
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
-    const bootstrapPackages = {
-        Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
-        // Button: 'exports-loader?Button!bootstrap/js/src/button',
-        Carousel: 'exports-loader?Carousel!bootstrap/js/src/carousel',
-        Collapse: 'exports-loader?Collapse!bootstrap/js/src/collapse',
-        // Dropdown: 'exports-loader?Dropdown!bootstrap/js/src/dropdown',
-        Modal: 'exports-loader?Modal!bootstrap/js/src/modal',
-        // Popover: 'exports-loader?Popover!bootstrap/js/src/popover',
-        Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/src/scrollspy',
-        Tab: 'exports-loader?Tab!bootstrap/js/src/tab',
-        Tooltip: 'exports-loader?Tooltip!bootstrap/js/src/tooltip',
-        Util: 'exports-loader?Util!bootstrap/js/src/util'
-    };
-
     module.exports = function (packageName) {        
         const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode'));
@@ -49,23 +35,14 @@ try {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [
-                        {
-                            test: /bootstrap(.)*\.js$/,
-                            use: {
-                                loader: 'babel-loader',
-                                options: {
-                                    presets: ['@babel/env'],
-                                    plugins: ['@babel/plugin-proposal-object-rest-spread'],
-                                    cacheDirectory: true
-                                }
-                            }
-                        }
+                    rules: [ 
+                        test: /bootstrap(.)*\.js$/,
+                        exclude: /(node_modules)/,
+                        use: helpers.getJsLoaders(mode)
+
                     ]
                 },
-                plugins: [
-                    new webpack.ProvidePlugin(bootstrapPackages)
-                ]
+                plugins: helpers.getJsPlugins(mode)
             };
         }
 
@@ -79,8 +56,9 @@ try {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [
-                        helpers.getCssLoaders(mode)
+                    rules: [ 
+                        test: /\.scss$/,
+                        use: helpers.getCssLoaders(mode) 
                     ]
                 },
                 devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-eval-source-map' : 'none',
