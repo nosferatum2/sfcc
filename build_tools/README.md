@@ -205,6 +205,18 @@ SCSS paths will work similar to the JavaScript paths above. If you are importing
 
   To test out the build, scroll to the top of the configuration and click the "Build Now" option in the upper left. If everything was setup correctly the build should complete successfully.
   
+#### Staging build options
+
+  In addition to the other properties above, there are 2 additional options for the Staging build to support 2-factor authentication:
+  
+  `twoFactorp12=/var/lib/jenkins/keys/jenkins.p12`
+  
+  `twoFactorPassword=YOURPASS`
+  
+  These can be set after generating and uploading the p12 file to Jenkins.
+  
+  Also, the `hostname` property should begin with 'cert' like 'cert.staging.na01.orgname.demandware.net'. The `activationHostname` will **not** use the prefix (ex. 'staging-na01-orgname.demandware.net').
+  
   
 ##Examples
 
