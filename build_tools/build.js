@@ -580,7 +580,6 @@ if (options.compile) {
         const site = packageFile.sites[siteIndex];
         if (site.paths) {
             const cartridges = site.paths;
-            console.log(helpers.isBuildEnvironment('compile', 'css'));
             const aliases = helpers.createAliases(site, pwd, (helpers.isBuildEnvironment('compile', 'css')));
             for (let cartridge in cartridges) {
                 const cartridgePath = cartridges[cartridge];
