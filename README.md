@@ -119,6 +119,10 @@ npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites
 
 Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
 
+The "development" settings object allows developers to change build configuration during development tasks.
+
+The "production" setting object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+
 Name | Description | Accepted Values
 --- | --- | --- | ---
 mode | Set the build / compilation mode | "development", "production" |

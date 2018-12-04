@@ -38,8 +38,6 @@
     </target>
 
     <target name="deploy" depends="cover,css,js,fonts,upload">
-        <property name="buildMode" value="${buildMode}" />
-        <echo level="info">deploy build mode: ${buildMode}</echo>
         <echo level="info">Deployment complete!</echo>
     </target>
 
@@ -93,13 +91,14 @@
         <echo level="info"></echo>
 
         <echo level="info">Sass build running...</echo>
+        <echo level="info">Using build environment properties defined within the buildEnvironment.production object of the root package.json file. </echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='npm run compile:scss'/>
+            <arg value='npm run compile:scss:prod'/>
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; export BUILD_MODE=${buildMode}; npm run compile:scss"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run compile:scss:prod"/>
         </exec>
         <echo level="info">Styles build done!</echo>
     </target>
@@ -118,13 +117,14 @@
         <echo level="info">
         </echo>
         <echo level="info">Client JavaScript build running...</echo>
+        <echo level="info">Using build environment properties defined within the buildEnvironment.production object of the root package.json file. </echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='npm run compile:js'/>
+            <arg value='npm run compile:js:prod'/>
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; export BUILD_MODE=${buildMode}; npm run compile:js"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run compile:js:prod"/>
         </exec>
         <echo level="info">Client JavaScript build done!</echo>
     </target>

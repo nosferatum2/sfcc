@@ -53,6 +53,10 @@ For example:
 
 Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
 
+The "development" settings object allows developers to change the build configuration during development tasks.
+
+The "production" settings object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+
 Name | Description | Accepted Values
 --- | --- | --- | ---
 mode | Set the build / compilation mode | "development", "production" |

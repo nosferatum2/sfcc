@@ -201,6 +201,10 @@ const optionator = require('optionator')({
         type: 'String', 
         description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
         required: false
+    }, {
+        option: 'buildEnvironment',
+        type: 'String',
+        description: 'Identifies which build environment object to use; "production" or "development"'
     }
     ]
 });
@@ -213,7 +217,9 @@ const optionator = require('optionator')({
  * @param {Object} options 
  */
 function setBuildEnvironmentFlags(packageFile, options) {
-    Object.assign(process.env, packageFile.buildEnvironment, options);
+    const buildEnvironment = (options.buildEnvironment && options.buildEnvironment === 'production') ? packageFile.buildEnvironment.production : 
+                                                                                                       packageFile.buildEnvironment.development
+    Object.assign(process.env, buildEnvironment, options);
 }
 
 /**

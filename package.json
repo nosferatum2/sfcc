@@ -15,7 +15,9 @@
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
     "compile:scss": "node build_tools/build --compile css",
+    "compile:scss:prod": "node build_tools/build --compile css --buildEnvironment production",
     "compile:js": "node build_tools/build --compile js",
+    "compile:js:prod": "node build_tools/build --compile js --buildEnvironment production",
     "compile:fonts": "node bin/Makefile compileFonts",
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
     "lint:css": "node build_tools/build --lint css",
@@ -125,10 +127,18 @@
     }
   ],
   "buildEnvironment": {
-    "mode": "development",
-    "verbose": "false",
-    "cssSourceMaps": "true",
-    "cssAutoPrefixer": "false"
+    "development": {
+      "mode": "development",
+      "verbose": "false",
+      "cssSourceMaps": "true",
+      "cssAutoPrefixer": "false"
+    },
+    "production": {
+      "mode": "production",
+      "verbose": "true",
+      "cssSourceMaps": "false",
+      "cssAutoPrefixer": "true"
+    }
   },
   "deployment": {
     "instanceRoot": ".evaluation.dw.demandware.net",
