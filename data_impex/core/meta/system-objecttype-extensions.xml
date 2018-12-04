@@ -84,12 +84,40 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="enableGoogleRecaptcha">
+                <display-name xml:lang="x-default">Enable Google Recaptcha</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="enableStoreDetailsPage">
+                <display-name xml:lang="x-default">Enable Store Details Page</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="enablePromoCalloutMessagesProductTile">
                 <display-name xml:lang="x-default">Enable Promo Callout Messages on Product Tile</display-name>
                 <type>boolean</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSecretKey">
+                <display-name xml:lang="x-default">Google Recaptcha Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSiteKey">
+                <display-name xml:lang="x-default">Google Recaptcha Site Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
             </attribute-definition>
         </custom-attribute-definitions>
         <!--
@@ -104,9 +132,60 @@
                     <attribute attribute-id="quantityMaxValue"/>
                     <attribute attribute-id="searchRefinementsLayout"/>
                     <attribute attribute-id="siteDisableCommerceFunctionality"/>
+                    <attribute attribute-id="enableStoreDetailsPage"/>
                     <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 </attribute-group>
+                <attribute-group group-id="Google Recaptcha">
+                	<attribute attribute-id="enableGoogleRecaptcha"/>
+                	<attribute attribute-id="googleRecaptchaSiteKey"/>
+                	<attribute attribute-id="googleRecaptchaSecretKey"/>
+            	</attribute-group>
             </group-definitions>
         -->
+    </type-extension>
+    <type-extension type-id="Store">
+    	<custom-attribute-definitions>
+    		<attribute-definition attribute-id="pageDescription">
+                <display-name xml:lang="x-default">Page Description</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageKeywords">
+                <display-name xml:lang="x-default">Page Keywords</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageTitle">
+                <display-name xml:lang="x-default">Page Title</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageURL">
+                <display-name xml:lang="x-default">Page URL</display-name>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+    	</custom-attribute-definitions>
+    	<group-definitions>
+    		<attribute-group group-id="ExternalSearch">
+                <display-name xml:lang="x-default">Search Engine Optimization Support</display-name>
+                <attribute attribute-id="pageKeywords"/>
+                <attribute attribute-id="pageTitle"/>
+                <attribute attribute-id="pageDescription"/>
+                <attribute attribute-id="pageURL"/>
+            </attribute-group>
+    	</group-definitions>
     </type-extension>
 </metadata>
