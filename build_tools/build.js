@@ -575,46 +575,27 @@ if (options.cover) {
 // compile static assets
 if (options.compile) {
     const packageFile = require(path.join(cwd, './package.json'));
-
-    if (options.compile === 'js') {
-        /**
-         * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" script
-         */
-        Object.keys(packageFile.sites).forEach(siteIndex => {
-            if (packageFile.sites[siteIndex].paths) {
-                for (var key in packageFile.sites[siteIndex].paths) {
-                    var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                    var cartridgeName = cartridgePath.split(path.sep).pop();
-                    if (cartridgeName) {
-                        console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
-                            if (code == 1) {
-                              process.exit(code);
-                            }
-                        });
-                    }
-                }
-            }
-        });
-
-    }
-    if (options.compile === 'css') {
-        /**
-         * Customized to loop through each site and provide "single site" config for build
-         * This build.js will likely be the only "site aware" script
-         */
-        Object.keys(packageFile.sites).forEach(siteIndex => {
-            const site = packageFile.sites[siteIndex];
-            if (site.paths) {
-                const cartridges = site.paths;
-                const cssAliases = helpers.createAliases(site, pwd, true);
-                for (let cartridge in cartridges) {
-                    const cartridgePath = cartridges[cartridge];
-                    const cartridgeName = cartridgePath.split(path.sep).pop();
-                    if (cartridgeName) {
+    
+    Object.keys(packageFile.sites).forEach(siteIndex => {
+        const site = packageFile.sites[siteIndex];
+        if (site.paths) {
+            const cartridges = site.paths;
+            console.log(helpers.isBuildEnvironment('compile', 'css'));
+            const aliases = helpers.createAliases(site, pwd, (helpers.isBuildEnvironment('compile', 'css')));
+            for (let cartridge in cartridges) {
+                const cartridgePath = cartridges[cartridge];
+                const cartridgeName = cartridgePath.split(path.sep).pop();
+                if (cartridgeName) {
+                    if (helpers.isBuildEnvironment('compile', 'css')) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, cssAliases, code => {
+                        css(cartridgeName, aliases, code => {
+                            if (code == 1) {
+                              process.exit(code);
+                            }
+                        });
+                    } else {
+                        console.log(chalk.blue('Building client js for Site ' + cartridgeName));
+                        js(cartridgeName, aliases, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -622,8 +603,8 @@ if (options.compile) {
                     }
                 }
             }
-        });
-    }
+        }
+    });
 }
 
 if (options.lint) {
