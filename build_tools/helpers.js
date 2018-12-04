@@ -6,6 +6,7 @@ const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
 
+const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
@@ -344,6 +345,8 @@ module.exports = {
     createJsPath,
     createScssPath,
     getCssLoaders,
-    getCssPlugins    
+    getCssPlugins,
+    getJsLoaders,
+    getJsPlugins   
 };
 

@@ -3,7 +3,6 @@
 try {
     require('shelljs/make');
     const path = require('path');
-    const webpack = require('webpack');
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
@@ -35,12 +34,12 @@ try {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [ 
+                    rules: [{
                         test: /bootstrap(.)*\.js$/,
                         exclude: /(node_modules)/,
                         use: helpers.getJsLoaders(mode)
 
-                    ]
+                    }]
                 },
                 plugins: helpers.getJsPlugins(mode)
             };
@@ -56,10 +55,10 @@ try {
                     filename: '[name].js'
                 },
                 module: {
-                    rules: [ 
+                    rules: [{ 
                         test: /\.scss$/,
                         use: helpers.getCssLoaders(mode) 
-                    ]
+                    }]
                 },
                 devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-eval-source-map' : 'none',
                 plugins: helpers.getCssPlugins(mode),
