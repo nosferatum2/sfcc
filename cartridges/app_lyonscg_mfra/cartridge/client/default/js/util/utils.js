@@ -1,36 +1,30 @@
 'use strict';
 
 var _ = require('lodash');
-var smallBreakpoint = 320;
-var mediumBreakpoint = 480;
-var largeBreakpoint = 768;
-var desktopBreakpoint = 1025;
-var maxBreakpoint = 1280;
 
 var utils = {
     /**
      * @desc Media breakpoints that are used throughout the Javascript
      */
     breakpoints: {
-        xs: smallBreakpoint,
-        sm: mediumBreakpoint,
-        md: largeBreakpoint,
-        lg: desktopBreakpoint,
-        xl: maxBreakpoint,
-        'mobile-menu': desktopBreakpoint
+        xs: 0,
+        sm: 576,
+        md: 768,
+        lg: 992,
+        xl: 1200
     },
 
     /**
      * @function
      * @description Returns either an object with all of the available breakpoints or a specific viewport based on the given size
-     * @param {string} size The viewport to return
-     * @param {string} breakpoints A custom breakpoints object
+     * @param {string=} size The viewport to return
+     * @param {Object=} breakpoints A custom breakpoints object
      * @returns {Object|string} - breakpoints or specific viewport
      */
     getViewports: function (size, breakpoints) {
-        var bps = typeof breakpoints !== 'undefined' ? breakpoints : this.breakpoints;
+        var bps = breakpoints || this.breakpoints;
 
-        if (typeof size !== 'undefined') {
+        if (size) {
             var viewport = bps[size];
 
             if (viewport) {

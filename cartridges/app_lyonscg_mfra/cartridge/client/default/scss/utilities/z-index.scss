@@ -26,54 +26,12 @@
 // );
 //----------------------------------------------
 
-//Site-wide z-index map
+//Site-wide z-index map example
 $z-layers: (
-    "loader":                      1000,
-    "dialog-overlay":               140,
-    "ui-widget-overlay":            140,
-    "b2t-btn":                      130,
-    "quickview-zoomtitle":          120,
-    "quickview-zoompreload":        110,
-    "quickview-zoomwin":            110,
-    "quickview-zoomwrap":           110,
-    "quickview-zoomwrapimg":        110,
-    "quickview-zoompup":            101,
-    "quickview-zoomoverlay":        101,
-    "quickview-zoomimg":            101,
-    "loading-icon":                 100,
-    "pdp-rec-tooltip":              100,
-    "quickview-zoompad":             99,
-    "country-selector":              30,
-    "minicart": (
-        "this":                      20,
-        "dropdown":                   20
-    ),
-    "utility-panel":                 20,
-    "mega-menu":                      4,
-    "pdp-tab-content-open":           2,
-    "pdp-tab-content":                1,
-    "pdp-tab-label":                  1,
-    "search": (
-        "this":                       3,
-        "search-suggest-js":       8184,
-        "search-suggest-wrapper":     1
-    ),
-    "refinements": (
-        "refinements-sort-by":        3,
-        "refinements-main":           2,
-        "refinements-modal":          5
-    ),
-    "product-tile": (
-        "product-tile-quickview-hidden": -1,
-        "product-tile-quickview":         2,
-        "product-tile-badge":             1,
-        "product-tile-swatch":            1
-    ),
-    "product-set": (
-        "product-set-main-details":   1
-    ),
-    "primary-logo":                   1,
-    "compare-remove-btn":             1,
-    "quickview-zoomiframe":          -1,
-    "z-nav":                          6
+    "example-1": 1,
+    "example-2": (
+        "this": 2,
+        "child-example-1": 3,
+        "child-example-2": 4
+    )
 );
