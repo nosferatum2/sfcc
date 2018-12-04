@@ -25,11 +25,8 @@ try {
 
     module.exports = function (packageName) {
         console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
-
-        let mode = 'development';
-        if (process.env.BUILD_MODE === 'production') {
-            mode = 'production';
-        }
+        
+        const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode in webpack.config.js'));
 
         const jsFiles = require('./helpers').createJsPath(packageName);
@@ -105,7 +102,6 @@ try {
                                 options: {
                                     url: false,
                                     sourceMap: true,
-                                    minimize: true
                                 }
                             }, {
                                 loader: 'postcss-loader',
