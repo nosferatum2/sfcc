@@ -131,13 +131,15 @@
       "mode": "development",
       "verbose": "false",
       "cssSourceMaps": "true",
-      "cssAutoPrefixer": "false"
+      "cssAutoPrefixer": "false",
+      "jsSourceMaps": "true"
     },
     "production": {
       "mode": "production",
       "verbose": "true",
       "cssSourceMaps": "false",
-      "cssAutoPrefixer": "true"
+      "cssAutoPrefixer": "true",
+      "jsSourceMaps": "false"
     }
   },
   "deployment": {

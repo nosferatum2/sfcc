@@ -41,7 +41,8 @@ try {
 
                     }]
                 },
-                plugins: helpers.getJsPlugins(mode)
+                plugins: helpers.getJsPlugins(mode),
+                devtool: helpers.isBuildEnvironment('jsSourceMaps') ? 'cheap-eval-source-map' : 'none'
             };
         }
 
