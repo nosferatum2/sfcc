@@ -723,18 +723,31 @@ if (options.watch) {
              * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
              */
             Object.keys(packageFile.sites).forEach(siteIndex => {
-                if (packageFile.sites[siteIndex].paths) {
-                    for (var key in packageFile.sites[siteIndex].paths) {
-                        var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                        var cartridgeName = cartridgePath.split(path.sep).pop();
+                const site = packageFile.sites[siteIndex];
+                if (site.paths) {
+                    const cartridges = site.paths;
+                    const jsAliases = helpers.createAliases(site, pwd, false);
+                    for (let cartridge in cartridges) {
+                        const cartridgePath = cartridges[cartridge];
+                        const cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
-                                if (code == 1) {
-                                  process.exit(code);
-                                }
+                            try {
+                                process.env["compile"] = "js";
+                                js(cartridgeName, jsAliases, code => {
+                                    if (code == 1) {
+                                      process.exit(code);
+                                    }
+                                    clearTmp();
+                                    console.log(chalk.green('JS files compiled.'));
+                                    delete process.env["compile"];
+                                    jsCompilingInProgress = false;
+                                });
+                            } catch(error) {
+                                clearTmp();
+                                console.error(chalk.red('Could not compile JS files.'), error);
                                 jsCompilingInProgress = false;
-                            });
+                            };
                         }
                     }
                 }
