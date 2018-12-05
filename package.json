@@ -118,7 +118,7 @@
     {
       "paths": {
         "base": "../cartridges/app_storefront_base",
-        "fixes": "../cartridge/app_corrections",
+        "fixes": "../cartridges/app_corrections",
         "lyonscg": "../cartridges/app_lyonscg_mfra",
         "org": "../cartridges/org_organizationid_mfra",
         "site": "../cartridges/site_siteid_mfra"
