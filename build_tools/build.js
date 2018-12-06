@@ -660,145 +660,196 @@ if (options.watch) {
 
     console.log('Watching for file changes...');
 
-    const scssWatcher = chokidar.watch(
-        cartridgesPath + '/**/*.scss', {
-                persistent: true,
-                ignoreInitial: true,
-                followSymlinks: false,
-                awaitWriteFinish: {
-                    stabilityThreshold: 300,
-                    pollInterval: 100
-                }
-    });
+    const mode = 'development';
+    const webpack = require('webpack');
+    const entryFiles = helpers.createScssPath('org_organizationid_mfra');
+    const aliases = helpers.createAliases(packageFile.sites[0], pwd, true);
+    
+    const webpackConfig = {
+        mode: mode,
+        name: 'scss',
+        entry: entryFiles,
+        output: {
+            path: path.resolve('./cartridges/' + 'org_organizationid_mfra' + '/cartridge/static'),
+            filename: '[name].js'
+        },
+        module: {
+            rules: [{ 
+                test: /\.scss$/,
+                use: helpers.getCssLoaders(mode) 
+            }]
+        },
+        plugins: helpers.getCssPlugins(mode),
+        devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
+    };
 
-    const clientJSWatcher = chokidar.watch(
-        cartridgesPath + '/**/client/**/*.js', {
-            persistent: true,
-            ignoreInitial: true,
-            followSymlinks: false,
-            awaitWriteFinish: {
-                    stabilityThreshold: 300,
-                    pollInterval: 100
-            }
-        });
+    let resolve = {
+        alias: aliases,
+        extensions: ['.scss']
+    };
 
-    if (!options.onlycompile) {
-        const watcher = chokidar.watch(cartridgesPath, {
-            ignored: [
-                '**/cartridge/js/**',
-                '**/cartridge/client/**',
-                '**/*.scss'
-            ],
-            persistent: true,
-            ignoreInitial: true,
-            followSymlinks: false,
-            awaitWriteFinish: {
-                stabilityThreshold: 300,
-                pollInterval: 100
-            }
-        });
-
-        watcher.on('change', filename => {
-            console.log('Detected change in file:', filename);
-            uploadFiles([filename]);
-        });
-
-        watcher.on('add', filename => {
-            console.log('Detected added file:', filename);
-            uploadFiles([filename]);
-        });
-
-        watcher.on('unlink', filename => {
-            console.log('Detected deleted file:', filename);
-            deleteFiles([filename]);
-        });
+    if (webpackConfig.resolve) {
+        resolve = util.mergeDeep(webpackConfig.resolve, resolve);
     }
 
-    let jsCompilingInProgress = false;
-    clientJSWatcher.on('change', filename => {
-        console.log('Detected change in client JS file:', filename);
-        if (!jsCompilingInProgress) {
-            jsCompilingInProgress = true;
-            /**
-             * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
-             */
-            Object.keys(packageFile.sites).forEach(siteIndex => {
-                const site = packageFile.sites[siteIndex];
-                if (site.paths) {
-                    const cartridges = site.paths;
-                    const jsAliases = helpers.createAliases(site, pwd, false);
-                    for (let cartridge in cartridges) {
-                        const cartridgePath = cartridges[cartridge];
-                        const cartridgeName = cartridgePath.split(path.sep).pop();
-                        if (cartridgeName) {
-                            console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            try {
-                                process.env["compile"] = "js";
-                                js(cartridgeName, jsAliases, code => {
-                                    if (code == 1) {
-                                      process.exit(code);
-                                    }
-                                    clearTmp();
-                                    console.log(chalk.green('JS files compiled.'));
-                                    delete process.env["compile"];
-                                    jsCompilingInProgress = false;
-                                });
-                            } catch(error) {
-                                clearTmp();
-                                console.error(chalk.red('Could not compile JS files.'), error);
-                                jsCompilingInProgress = false;
-                            };
-                        }
-                    }
-                }
-            });
+    webpackConfig.resolve = resolve;
 
-
-        } else {
-            console.log('Compiling already in progress.');
+    const compiler = webpack(webpackConfig);
+    const watching = compiler.watch({}, (err, stats) => {
+        if (err) {
+            console.error(chalk.red(err));
+            callback(0);
+            return;
         }
-    });
-
-    let cssCompilingInProgress = false;
-    scssWatcher.on('change', filename => {
-        console.log('Detected change in SCSS file:', filename);
-        if (!cssCompilingInProgress) {
-            cssCompilingInProgress = true;
-
-            Object.keys(packageFile.sites).forEach(siteIndex => {
-                const site = packageFile.sites[siteIndex];
-                if (site.paths) {
-                    const cartridges = site.paths;
-                    const cssAliases = helpers.createAliases(site, pwd, true);
-                    for (let cartridge in cartridges) {
-                        const cartridgePath = cartridges[cartridge];
-                        const cartridgeName = cartridgePath.split(path.sep).pop();
-                        if (cartridgeName) {
-                            console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                            try {
-                                css(cartridgeName, cssAliases, code => {
-                                    if (code == 1) {
-                                      process.exit(code);
-                                    }
-                                    clearTmp();
-                                    console.log(chalk.green('SCSS files compiled.'));
-                                    cssCompilingInProgress = false;
-                                });
-                            } catch(error) {
-                                clearTmp();
-                                console.error(chalk.red('Could not compile css files.'), error);
-                                cssCompilingInProgress = false;
-                            };
-                        }
-                    }
-                }
-            });
-
-
-        } else {
-            console.log('Compiling already in progress.');
+        if (stats.compilation.errors && stats.compilation.errors.length) {
+            console.error(chalk.red(stats.compilation.errors));
+            callback(0);
+            return;
         }
-    });
+        console.log(stats.toString({
+            chunks: false,
+            colors: true
+        }));
+    })
+
+    // const scssWatcher = chokidar.watch(
+    //     cartridgesPath + '/**/*.scss', {
+    //             persistent: true,
+    //             ignoreInitial: true,
+    //             followSymlinks: false,
+    //             awaitWriteFinish: {
+    //                 stabilityThreshold: 300,
+    //                 pollInterval: 100
+    //             }
+    // });
+
+    // const clientJSWatcher = chokidar.watch(
+    //     cartridgesPath + '/**/client/**/*.js', {
+    //         persistent: true,
+    //         ignoreInitial: true,
+    //         followSymlinks: false,
+    //         awaitWriteFinish: {
+    //                 stabilityThreshold: 300,
+    //                 pollInterval: 100
+    //         }
+    //     });
+
+    // if (!options.onlycompile) {
+    //     const watcher = chokidar.watch(cartridgesPath, {
+    //         ignored: [
+    //             '**/cartridge/js/**',
+    //             '**/cartridge/client/**',
+    //             '**/*.scss'
+    //         ],
+    //         persistent: true,
+    //         ignoreInitial: true,
+    //         followSymlinks: false,
+    //         awaitWriteFinish: {
+    //             stabilityThreshold: 300,
+    //             pollInterval: 100
+    //         }
+    //     });
+
+    //     watcher.on('change', filename => {
+    //         console.log('Detected change in file:', filename);
+    //         uploadFiles([filename]);
+    //     });
+
+    //     watcher.on('add', filename => {
+    //         console.log('Detected added file:', filename);
+    //         uploadFiles([filename]);
+    //     });
+
+    //     watcher.on('unlink', filename => {
+    //         console.log('Detected deleted file:', filename);
+    //         deleteFiles([filename]);
+    //     });
+    // }
+
+    // let jsCompilingInProgress = false;
+    // clientJSWatcher.on('change', filename => {
+    //     console.log('Detected change in client JS file:', filename);
+    //     if (!jsCompilingInProgress) {
+    //         jsCompilingInProgress = true;
+    //         /**
+    //          * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
+    //          */
+    //         Object.keys(packageFile.sites).forEach(siteIndex => {
+    //             const site = packageFile.sites[siteIndex];
+    //             if (site.paths) {
+    //                 const cartridges = site.paths;
+    //                 const jsAliases = helpers.createAliases(site, pwd, false);
+    //                 for (let cartridge in cartridges) {
+    //                     const cartridgePath = cartridges[cartridge];
+    //                     const cartridgeName = cartridgePath.split(path.sep).pop();
+    //                     if (cartridgeName) {
+    //                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
+    //                         try {
+    //                             process.env["compile"] = "js";
+    //                             js(cartridgeName, jsAliases, code => {
+    //                                 if (code == 1) {
+    //                                   process.exit(code);
+    //                                 }
+    //                                 clearTmp();
+    //                                 console.log(chalk.green('JS files compiled.'));
+    //                                 delete process.env["compile"];
+    //                                 jsCompilingInProgress = false;
+    //                             });
+    //                         } catch(error) {
+    //                             clearTmp();
+    //                             console.error(chalk.red('Could not compile JS files.'), error);
+    //                             jsCompilingInProgress = false;
+    //                         };
+    //                     }
+    //                 }
+    //             }
+    //         });
+
+
+    //     } else {
+    //         console.log('Compiling already in progress.');
+    //     }
+    // });
+
+    // let cssCompilingInProgress = false;
+    // scssWatcher.on('change', filename => {
+    //     console.log('Detected change in SCSS file:', filename);
+    //     if (!cssCompilingInProgress) {
+    //         cssCompilingInProgress = true;
+
+    //         Object.keys(packageFile.sites).forEach(siteIndex => {
+    //             const site = packageFile.sites[siteIndex];
+    //             if (site.paths) {
+    //                 const cartridges = site.paths;
+    //                 const cssAliases = helpers.createAliases(site, pwd, true);
+    //                 for (let cartridge in cartridges) {
+    //                     const cartridgePath = cartridges[cartridge];
+    //                     const cartridgeName = cartridgePath.split(path.sep).pop();
+    //                     if (cartridgeName) {
+    //                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
+    //                         try {
+    //                             css(cartridgeName, cssAliases, code => {
+    //                                 if (code == 1) {
+    //                                   process.exit(code);
+    //                                 }
+    //                                 clearTmp();
+    //                                 console.log(chalk.green('SCSS files compiled.'));
+    //                                 cssCompilingInProgress = false;
+    //                             });
+    //                         } catch(error) {
+    //                             clearTmp();
+    //                             console.error(chalk.red('Could not compile css files.'), error);
+    //                             cssCompilingInProgress = false;
+    //                         };
+    //                     }
+    //                 }
+    //             }
+    //         });
+
+
+    //     } else {
+    //         console.log('Compiling already in progress.');
+    //     }
 }
 
 if (options.deployData) {

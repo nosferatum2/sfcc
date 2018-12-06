@@ -52,6 +52,10 @@ module.exports = (cartridgeName, aliases, callback) => {
                 }));
             } else {
                 console.log(chalk.green('Webpack successfully compiled Sass files found in ' + cartridgeName));
+                console.log(stats.toString({
+                    chunks: false,
+                    colors: true
+                }));
             }
 
             callback(0);
