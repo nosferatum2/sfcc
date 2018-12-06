@@ -52,10 +52,6 @@ module.exports = (cartridgeName, aliases, watch, uploadFiles, callback) => {
                 }));
             } else {
                 console.log(chalk.green('Webpack successfully compiled Sass files found in ' + cartridgeName));
-                console.log(stats.toString({
-                    chunks: false,
-                    colors: true
-                }));
             }
 
             if (watch) {
@@ -70,7 +66,7 @@ module.exports = (cartridgeName, aliases, watch, uploadFiles, callback) => {
                         const changedFiles = [];
                         Object.entries(stats.compilation.assets).forEach((emission) => {
                             changedFiles.push(path.resolve('cartridges', cartridgeName, 'cartridge', 'static', emission[0]));
-                        })
+                        });
                         uploadFiles(changedFiles);
                     } 
     
