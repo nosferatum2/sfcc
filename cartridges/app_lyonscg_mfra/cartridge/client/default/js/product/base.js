@@ -4,6 +4,7 @@ var base = require('base/product/base');
 var slickConfigs = require('../config/slickConfigs');
 var zoomConfigs = require('../config/zoomConfigs');
 var imagesloaded = require('imagesloaded');
+var utils = require('../util/utils');
 
 /**
  * Disable PDP Zoom
@@ -18,12 +19,12 @@ function disableZoom() {
 function initZoom() {
     disableZoom();
 
-    var zoomMediaQuery = matchMedia('(min-width: 960px)');
+    var isDesktop = utils.mediaBreakpointUp('lg');
     var $activeSlide = $('.product-carousel .slick-active');
     var $image = $activeSlide.find('.slide-link.zoom-hires');
     var url = $image.attr('href');
 
-    if ($image.length > 0 && url && url !== 'null' && zoomMediaQuery.matches) {
+    if ($image.length > 0 && url && url !== 'null' && isDesktop) {
         // Start spinner while zoom image loads
         $activeSlide.spinner().start();
 
