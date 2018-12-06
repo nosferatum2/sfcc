@@ -154,6 +154,7 @@
     }
   },
   "buildEnvironment": {
+    "mode": "development",
     "verbose": "false"
   }
 }

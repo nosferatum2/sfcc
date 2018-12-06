@@ -14,6 +14,7 @@ $(document).ready(function () {
     processInclude(require('base/components/countrySelector'));
     processInclude(require('./components/carousels'));
     processInclude(require('./components/tooltips'));
+    processInclude(require('./util/utils'));
 });
 
 require('base/thirdParty/bootstrap');

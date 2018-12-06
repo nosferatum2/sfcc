@@ -196,9 +196,25 @@ const optionator = require('optionator')({
         type: 'String',
         description: 'cartridge name version.properties should be created within',
         required: false
+    }, {
+        option: 'mode',
+        type: 'String', 
+        description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
+        required: false
     }
     ]
 });
+
+/**
+ * @name setBuildEnvironmentFlags
+ * @description set environmental flags on the global process object
+ * Any options passed via the CLI (that are also accepted / parsed by optionator) will override the package.json file's "buildEnvironment" settings
+ * @param {File} packageFile
+ * @param {Object} options 
+ */
+function setBuildEnvironmentFlags(packageFile, options) {
+    Object.assign(process.env, packageFile.buildEnvironment, options);
+}
 
 /**
  * Checks for the dw.json config file in the build_tools subfolder
@@ -212,7 +228,7 @@ function checkForDwJson() {
  * Deletes all files in the tmp directory
  */
 function clearTmp() {
-    if (helpers.isBuildEnvironment('verbose') || options.verbose) {
+    if (helpers.isBuildEnvironment('verbose')) {
         console.log(chalk.green('build.js:clearTmp()'));
     }
     shell.rm('-rf', TEMP_DIR);
@@ -441,7 +457,7 @@ function fileSearch(startFile, type) {
            fileSearch(filename,type);
        }
        else if (filename.indexOf(type) >= 0) {
-           if (helpers.isBuildEnvironment('verbose') || options.verbose) {
+           if (helpers.isBuildEnvironment('verbose')) {
                console.log('FOUND JSON: ',filename);
 	   }
 	   try {
@@ -470,6 +486,8 @@ function createVersionProperties(uploadArguments) {
 
 const options = optionator.parse(process.argv);
 const uploadArguments = getUploadOptions();
+
+setBuildEnvironmentFlags(packageFile, options);
 
 if (options.help) {
     console.log(optionator.generateHelp());
@@ -604,7 +622,7 @@ if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
         console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (helpers.isBuildEnvironment('verbose') || options.verbose) {
+        if (helpers.isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
         }
@@ -620,7 +638,7 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (helpers.isBuildEnvironment('verbose') || options.verbose) {
+        if (helpers.isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
         }
