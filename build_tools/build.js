@@ -587,14 +587,14 @@ if (options.compile) {
                 if (cartridgeName) {
                     if (helpers.isBuildEnvironment('compile', 'css')) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, aliases, code => {
+                        css(cartridgeName, aliases, false, uploadFiles, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
                         });
                     } else {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(cartridgeName, aliases, code => {
+                        js(cartridgeName, aliases, false, uploadFiles, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -660,57 +660,86 @@ if (options.watch) {
 
     console.log('Watching for file changes...');
 
-    const mode = 'development';
-    const webpack = require('webpack');
-    const entryFiles = helpers.createScssPath('org_organizationid_mfra');
-    const aliases = helpers.createAliases(packageFile.sites[0], pwd, true);
+    Object.keys(packageFile.sites).forEach(siteIndex => {
+        const site = packageFile.sites[siteIndex];
+        if (site.paths) {
+            const cartridges = site.paths;
+            const cssAliases = helpers.createAliases(site, pwd, true);
+            const jsAliases =  helpers.createAliases(site, pwd, false);
+            for (let cartridge in cartridges) {
+                const cartridgePath = cartridges[cartridge];
+                const cartridgeName = cartridgePath.split(path.sep).pop();
+                if (cartridgeName) {
+                    // SASS Watch
+                    console.log(chalk.blue('init watcher for css for cartridge ' + cartridgeName));
+                    css(cartridgeName, cssAliases, 'css', uploadFiles, code => {
+                        if (code == 1) {
+                            process.exit(code);
+                        }
+                    });
+                    // JS Watch
+                    console.log(chalk.blue('init watcher for js for cartridge ' + cartridgeName));
+                    js(cartridgeName, jsAliases, 'js', uploadFiles, code => {
+                        if (code == 1) {
+                            process.exit(code);
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    // const mode = 'development';
+    // const webpack = require('webpack');
+    // const entryFiles = helpers.createScssPath('org_organizationid_mfra');
+    // const aliases = helpers.createAliases(packageFile.sites[0], pwd, true);
     
-    const webpackConfig = {
-        mode: mode,
-        name: 'scss',
-        entry: entryFiles,
-        output: {
-            path: path.resolve('./cartridges/' + 'org_organizationid_mfra' + '/cartridge/static'),
-            filename: '[name].js'
-        },
-        module: {
-            rules: [{ 
-                test: /\.scss$/,
-                use: helpers.getCssLoaders(mode) 
-            }]
-        },
-        plugins: helpers.getCssPlugins(mode),
-        devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
-    };
+    // const webpackConfig = {
+    //     mode: mode,
+    //     name: 'scss',
+    //     entry: entryFiles,
+    //     output: {
+    //         path: path.resolve('./cartridges/' + 'org_organizationid_mfra' + '/cartridge/static'),
+    //         filename: '[name].js'
+    //     },
+    //     module: {
+    //         rules: [{ 
+    //             test: /\.scss$/,
+    //             use: helpers.getCssLoaders(mode) 
+    //         }]
+    //     },
+    //     plugins: helpers.getCssPlugins(mode),
+    //     devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
+    // };
 
-    let resolve = {
-        alias: aliases,
-        extensions: ['.scss']
-    };
+    // let resolve = {
+    //     alias: aliases,
+    //     extensions: ['.scss']
+    // };
 
-    if (webpackConfig.resolve) {
-        resolve = util.mergeDeep(webpackConfig.resolve, resolve);
-    }
+    // if (webpackConfig.resolve) {
+    //     resolve = util.mergeDeep(webpackConfig.resolve, resolve);
+    // }
 
-    webpackConfig.resolve = resolve;
+    // webpackConfig.resolve = resolve;
 
-    const compiler = webpack(webpackConfig);
-    const watching = compiler.watch({}, (err, stats) => {
-        if (err) {
-            console.error(chalk.red(err));
-            callback(0);
-            return;
-        }
-        if (stats.compilation.errors && stats.compilation.errors.length) {
-            console.error(chalk.red(stats.compilation.errors));
-            callback(0);
-            return;
-        }
-        console.log(stats.toString({
-            chunks: false,
-            colors: true
-        }));
-    })
+    // const compiler = webpack(webpackConfig);
+    // const watching = compiler.watch({}, (err, stats) => {
+    //     if (err) {
+    //         console.error(chalk.red(err));
+    //         callback(0);
+    //         return;
+    //     }
+    //     if (stats.compilation.errors && stats.compilation.errors.length) {
+    //         console.error(chalk.red(stats.compilation.errors));
+    //         callback(0);
+    //         return;
+    //     }
+    //     console.log(stats.toString({
+    //         chunks: false,
+    //         colors: true
+    //     }));
+    // })
 
     // const scssWatcher = chokidar.watch(
     //     cartridgesPath + '/**/*.scss', {
