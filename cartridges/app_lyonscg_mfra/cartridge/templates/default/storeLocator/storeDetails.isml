@@ -1,0 +1,43 @@
+<isscript>
+	var enableStoreDetailsPage = dw.system.Site.getCurrent().getCustomPreferenceValue('enableStoreDetailsPage');
+</isscript>
+<div class="store-details" data-store-id="${store.ID}">
+	<isif condition="${!empty(enableStoreDetailsPage) && enableStoreDetailsPage}" >
+        <div class="store-name">
+            <a class="store-details-link" target="_blank" id="${store.ID}" href="${URLUtils.url('Stores-Details','storeID', store.ID)}">${store.name}</a>
+        </div>
+	<iselse/>
+    	<div class="store-name">${store.name}</div>
+    </isif>
+    <address>
+        <a class="store-map" target='_blank' href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">
+            ${store.address1}
+            <isif condition="${store.address2}">
+                ${store.address2}
+            </isif>
+            <isif condition="${store.city}">
+                ${store.city},
+            </isif>
+            <isif condition="${store.stateCode}">
+                ${store.stateCode}
+            </isif>
+            ${store.postalCode}
+        </a>
+        <div class="store-hours">
+            <isif condition="${store.storeHours}">
+                <isprint value="${store.storeHours}" encoding="off"/>
+            </isif>
+        </div>
+        <p>
+            <isif condition="${store.phone}">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span><a class="storelocator-phone" href="tel:${store.phone}">${store.phone}</a></span>
+            </isif>
+        </p>
+    </address>
+    <isif condition="${!empty(enableStoreDetailsPage) && enableStoreDetailsPage}">
+    	<div>
+        	<a class="store-details-link" target="_blank" href="${URLUtils.url('Stores-Details','storeID', store.ID)}" title="${Resource.msg('link.store.details','storeLocator',null)}">${Resource.msg('link.store.details','storeLocator',null)}</a>
+        </div>
+    </isif>
+</div>

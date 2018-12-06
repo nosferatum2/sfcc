@@ -9,7 +9,7 @@
     <div class="product-tile-caro row">
 
         <isloop items="${slotcontent.content}" var="product" status="loopstate">
-            <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'pview', 'tile', 'ratings', true, 'swatches', true)}"/>
+            <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.ID, 'pview', 'tile', 'ratings', false, 'swatches', true)}"/>
         </isloop>
 
     </div>
