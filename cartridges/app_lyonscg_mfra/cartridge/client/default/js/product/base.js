@@ -2,6 +2,8 @@
 
 var base = require('base/product/base');
 var slickConfigs = require('../config/slickConfigs');
+var zoomConfigs = require('../config/zoomConfigs');
+var imagesloaded = require('imagesloaded');
 
 /**
  * Disable PDP Zoom
@@ -17,13 +19,24 @@ function initZoom() {
     disableZoom();
 
     var zoomMediaQuery = matchMedia('(min-width: 960px)');
-    var $image = $('.slick-active .slide-link.zoom-hires');
+    var $activeSlide = $('.product-carousel .slick-active');
+    var $image = $activeSlide.find('.slide-link.zoom-hires');
     var url = $image.attr('href');
 
     if ($image.length > 0 && url && url !== 'null' && zoomMediaQuery.matches) {
-        $image.zoom({
-            url: url
-        });
+        // Start spinner while zoom image loads
+        $activeSlide.spinner().start();
+
+        var config = {
+            url: url,
+            callback: function () {
+                // Stop spinner when zoom image loaded
+                $activeSlide.spinner().stop();
+            }
+        };
+        config = $.extend({}, zoomConfigs, config);
+
+        $image.zoom(config);
     }
 }
 
@@ -34,8 +47,11 @@ function carouselInit() {
     var $carousel = $('.product-carousel');
 
     if ($carousel.length) {
-        $carousel.on('afterChange', initZoom);
-        $carousel.not('.slick-initialized').slick(slickConfigs.pdp);
+        imagesloaded($carousel).on('done', function () {
+            $carousel.on('init', initZoom);
+            $carousel.on('afterChange', initZoom);
+            $carousel.not('.slick-initialized').slick(slickConfigs.pdp);
+        });
     }
 }
 
@@ -46,6 +62,7 @@ function carouselUnslick() {
     var $carousel = $('.product-carousel');
 
     if ($carousel.length && $carousel.hasClass('slick-initialized')) {
+        $carousel.off('init', initZoom);
         $carousel.off('afterChange', initZoom);
         $carousel.slick('unslick');
     }
@@ -78,7 +95,6 @@ function updateMainImages(product) {
 var exportBase = $.extend({}, base, {
     carouselInit: carouselInit,
     carouselUnslick: carouselUnslick,
-    zoomInit: initZoom,
     updateMainImages: updateMainImages
 });
 
