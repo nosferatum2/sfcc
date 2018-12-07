@@ -119,7 +119,7 @@
     {
       "paths": {
         "base": "../cartridges/app_storefront_base",
-        "fixes": "../cartridge/app_corrections",
+        "fixes": "../cartridges/app_corrections",
         "lyonscg": "../cartridges/app_lyonscg_mfra",
         "org": "../cartridges/org_organizationid_mfra",
         "site": "../cartridges/site_siteid_mfra"
@@ -132,13 +132,15 @@
       "mode": "development",
       "verbose": "false",
       "cssSourceMaps": "true",
-      "cssAutoPrefixer": "false"
+      "cssAutoPrefixer": "false",
+      "jsSourceMaps": "true"
     },
     "production": {
       "mode": "production",
       "verbose": "true",
       "cssSourceMaps": "false",
-      "cssAutoPrefixer": "true"
+      "cssAutoPrefixer": "true",
+      "jsSourceMaps": "false"
     }
   },
   "deployment": {
