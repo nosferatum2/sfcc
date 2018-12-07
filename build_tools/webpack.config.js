@@ -21,11 +21,11 @@ try {
         Util: 'exports-loader?Util!bootstrap/js/src/util'
     };
 
-    module.exports = function (packageName) {        
+    module.exports = function (packageName, watch) {        
         const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode'));
 
-        const entryFiles = (helpers.isBuildEnvironment('compile', 'css')) ? helpers.createScssPath(packageName) : helpers.createJsPath(packageName);
+        const entryFiles = (helpers.isBuildEnvironment('compile', 'css') || watch === 'css') ? helpers.createScssPath(packageName) : helpers.createJsPath(packageName);
 
         if (!entryFiles) { 
             return false;
@@ -39,7 +39,7 @@ try {
         }
 
         const webpackConfig = [];
-        if (helpers.isBuildEnvironment('compile', 'js')) {
+        if (helpers.isBuildEnvironment('compile', 'js') || watch === 'js') {
             return {
                 mode: mode.toString(),
                 name: 'js',
@@ -69,7 +69,7 @@ try {
             };
         }
 
-        if (helpers.isBuildEnvironment('compile', 'css')) {
+        if (helpers.isBuildEnvironment('compile', 'css') || watch === 'css') {
             return {
                 mode: mode.toString(),
                 name: 'scss',

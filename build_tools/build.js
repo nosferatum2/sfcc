@@ -588,7 +588,7 @@ if (options.compile) {
                     var cartridgeName = cartridgePath.split(path.sep).pop();
                     if (cartridgeName) {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                        js(packageFile.sites[siteIndex], cartridgeName, pwd, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -614,7 +614,7 @@ if (options.compile) {
                     const cartridgeName = cartridgePath.split(path.sep).pop();
                     if (cartridgeName) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, cssAliases, code => {
+                        css(cartridgeName, cssAliases, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -749,7 +749,7 @@ if (options.watch) {
                         var cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                            js(packageFile.sites[siteIndex], cartridgeName, pwd, 'js', code => {
                                 if (code == 1) {
                                   process.exit(code);
                                 }
@@ -783,7 +783,7 @@ if (options.watch) {
                         if (cartridgeName) {
                             console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
                             try {
-                                css(cartridgeName, cssAliases, code => {
+                                css(cartridgeName, cssAliases, 'css', code => {
                                     if (code == 1) {
                                       process.exit(code);
                                     }
