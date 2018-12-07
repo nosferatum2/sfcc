@@ -121,7 +121,7 @@ Environment variables and flags are located in the "buildEnvironment" object in 
 
 The "development" settings object allows developers to change build configuration during development tasks.
 
-The "production" setting object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+The "production" settings object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
 
 Name | Description | Accepted Values
 --- | --- | --- | ---
@@ -130,6 +130,7 @@ verbose | Verbose logging | "true", "false" |
 cssSourceMaps | CSS source mapping | "true", "false" |
 cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
 jsSourceMaps | JS source mapping | "true", "false" |
+manualFileUpload | Toggles automatic upload for the watch functionality ('npm run watch'). This should always be set to "false" for development within VS Code, Eclipse, or any IDE that supports a digital server connection / auto-upload | "true", "false" |
 
 ### Performance Considerations
 

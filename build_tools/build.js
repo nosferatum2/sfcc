@@ -587,14 +587,14 @@ if (options.compile) {
                 if (cartridgeName) {
                     if (helpers.isBuildEnvironment('compile', 'css')) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, aliases, false, code => {
+                        css(cartridgeName, aliases, false, uploadFiles, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
                         });
                     } else {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(cartridgeName, aliases, false, code => {
+                        js(cartridgeName, aliases, false, uploadFiles, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -660,133 +660,32 @@ if (options.watch) {
 
     console.log('Watching for file changes...');
 
-    const scssWatcher = chokidar.watch(
-        cartridgesPath + '/**/*.scss', {
-                persistent: true,
-                ignoreInitial: true,
-                followSymlinks: false,
-                awaitWriteFinish: {
-                    stabilityThreshold: 300,
-                    pollInterval: 100
-                }
-    });
-
-    const clientJSWatcher = chokidar.watch(
-        cartridgesPath + '/**/client/**/*.js', {
-            persistent: true,
-            ignoreInitial: true,
-            followSymlinks: false,
-            awaitWriteFinish: {
-                    stabilityThreshold: 300,
-                    pollInterval: 100
-            }
-        });
-
-    if (!options.onlycompile) {
-        const watcher = chokidar.watch(cartridgesPath, {
-            ignored: [
-                '**/cartridge/js/**',
-                '**/cartridge/client/**',
-                '**/*.scss'
-            ],
-            persistent: true,
-            ignoreInitial: true,
-            followSymlinks: false,
-            awaitWriteFinish: {
-                stabilityThreshold: 300,
-                pollInterval: 100
-            }
-        });
-
-        watcher.on('change', filename => {
-            console.log('Detected change in file:', filename);
-            uploadFiles([filename]);
-        });
-
-        watcher.on('add', filename => {
-            console.log('Detected added file:', filename);
-            uploadFiles([filename]);
-        });
-
-        watcher.on('unlink', filename => {
-            console.log('Detected deleted file:', filename);
-            deleteFiles([filename]);
-        });
-    }
-
-    let jsCompilingInProgress = false;
-    clientJSWatcher.on('change', filename => {
-        console.log('Detected change in client JS file:', filename);
-        if (!jsCompilingInProgress) {
-            jsCompilingInProgress = true;
-            /**
-             * Modified for multi-site support. This needs to be optimized, otherwise you'll need to re-compile for each site.
-             */
-            Object.keys(packageFile.sites).forEach(siteIndex => {
-                const site = packageFile.sites[siteIndex];
-                if (site.paths) {
-                    const cartridges = site.paths;
-                    const jsAliases = helpers.createAliases(site, pwd, false);
-                    for (let cartridge in cartridges) {
-                        const cartridgePath = cartridges[cartridge];
-                        const cartridgeName = cartridgePath.split(path.sep).pop();
-                        if (cartridgeName) {
-                            console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            js(cartridgeName, jsAliases, 'js', code => {
-                                if (code == 1) {
-                                  process.exit(code);
-                                }
-                                jsCompilingInProgress = false;
-                            });
+    Object.keys(packageFile.sites).forEach(siteIndex => {
+        const site = packageFile.sites[siteIndex];
+        if (site.paths) {
+            const cartridges = site.paths;
+            const cssAliases = helpers.createAliases(site, pwd, true);
+            const jsAliases =  helpers.createAliases(site, pwd, false);
+            for (let cartridge in cartridges) {
+                const cartridgePath = cartridges[cartridge];
+                const cartridgeName = cartridgePath.split(path.sep).pop();
+                if (cartridgeName) {
+                    // SASS Watch
+                    console.log(chalk.blue('init watcher for css for cartridge ' + cartridgeName));
+                    css(cartridgeName, cssAliases, 'css', uploadFiles, code => {
+                        if (code == 1) {
+                            process.exit(code);
                         }
-                    }
-                }
-            });
-
-
-        } else {
-            console.log('Compiling already in progress.');
-        }
-    });
-
-    let cssCompilingInProgress = false;
-    scssWatcher.on('change', filename => {
-        console.log('Detected change in SCSS file:', filename);
-        if (!cssCompilingInProgress) {
-            cssCompilingInProgress = true;
-
-            Object.keys(packageFile.sites).forEach(siteIndex => {
-                const site = packageFile.sites[siteIndex];
-                if (site.paths) {
-                    const cartridges = site.paths;
-                    const cssAliases = helpers.createAliases(site, pwd, true);
-                    for (let cartridge in cartridges) {
-                        const cartridgePath = cartridges[cartridge];
-                        const cartridgeName = cartridgePath.split(path.sep).pop();
-                        if (cartridgeName) {
-                            console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                            try {
-                                css(cartridgeName, cssAliases, 'css', code => {
-                                    if (code == 1) {
-                                      process.exit(code);
-                                    }
-                                    clearTmp();
-                                    console.log(chalk.green('SCSS files compiled.'));
-                                    cssCompilingInProgress = false;
-                                });
-                            } catch(error) {
-                                clearTmp();
-                                console.error(chalk.red('Could not compile css files.'), error);
-                                cssCompilingInProgress = false;
-                            };
+                    });
+                    // JS Watch
+                    console.log(chalk.blue('init watcher for js for cartridge ' + cartridgeName));
+                    js(cartridgeName, jsAliases, 'js', uploadFiles, code => {
+                        if (code == 1) {
+                            process.exit(code);
                         }
-                    }
+                    });
                 }
-            });
-
-
-        } else {
-            console.log('Compiling already in progress.');
+            }
         }
     });
 }

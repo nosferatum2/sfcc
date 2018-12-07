@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const cwd = process.cwd();
 const WebpackConfiguration = require('./webpack.config');
 
-module.exports = (cartridgeName, aliases, watch, callback) => {
+module.exports = (cartridgeName, aliases, watch, uploadFiles, callback) => {
     // Retrieve Webpack configuration object 
     const webpackConfig = WebpackConfiguration(cartridgeName, watch);
 
@@ -32,7 +32,7 @@ module.exports = (cartridgeName, aliases, watch, callback) => {
         webpackConfig.resolve = resolve;
 
         // Run the Webpack compiler
-        webpack(webpackConfig, (err, stats) => {
+        const compiler = webpack(webpackConfig, (err, stats) => {
             if (err) {
                 console.error(chalk.red(err));
                 callback(0);
@@ -54,8 +54,41 @@ module.exports = (cartridgeName, aliases, watch, callback) => {
                 console.log(chalk.green('Webpack successfully compiled Sass files found in ' + cartridgeName));
             }
 
-            callback(0);
-            return;
+            if (watch) {
+                const watching = compiler.watch({}, (err, stats) => {
+                    if (err) {
+                        console.error(chalk.red(err));
+                        callback(0);
+                        return;
+                    }
+    
+                    if (helpers.isBuildEnvironment('manualFileUpload')) {
+                        const changedFiles = [];
+                        Object.entries(stats.compilation.assets).forEach((emission) => {
+                            changedFiles.push(path.resolve('cartridges', cartridgeName, 'cartridge', 'static', emission[0]));
+                        });
+                        uploadFiles(changedFiles);
+                    } 
+    
+                    if (stats.compilation.errors && stats.compilation.errors.length) {
+                        console.error(chalk.red(stats.compilation.errors));
+                        callback(0);
+                        return;
+                    }
+    
+                    if (helpers.isBuildEnvironment('verbose')) {
+                        console.log(stats.toString({
+                            chunks: false,
+                            colors: true
+                        }));
+                    } else {
+                        console.log(chalk.green('Webpack successfully compiled Sass files found in ' + cartridgeName));
+                    }
+                });
+            } else {
+                callback(0);
+                return;
+            }
         });
     } else {
         callback(0);

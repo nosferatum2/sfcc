@@ -133,14 +133,16 @@
       "verbose": "false",
       "cssSourceMaps": "true",
       "cssAutoPrefixer": "false",
-      "jsSourceMaps": "true"
+      "jsSourceMaps": "true",
+      "manualFileUpload": "false"
     },
     "production": {
       "mode": "production",
       "verbose": "true",
       "cssSourceMaps": "false",
       "cssAutoPrefixer": "true",
-      "jsSourceMaps": "false"
+      "jsSourceMaps": "false",
+      "manualFileUpload": "false"
     }
   },
   "deployment": {
