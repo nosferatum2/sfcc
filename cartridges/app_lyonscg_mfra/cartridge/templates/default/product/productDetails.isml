@@ -4,7 +4,7 @@
         var assets = require('*/cartridge/scripts/assets');
         assets.addJs('/js/productDetail.js');
         assets.addCss('/css/product/detail.css');
-        
+
         var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
     </isscript>
 
