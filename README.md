@@ -129,12 +129,14 @@ mode | Set the build / compilation mode | "development", "production" |
 verbose | Verbose logging | "true", "false" |
 cssSourceMaps | CSS source mapping | "true", "false" |
 cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
+jsSourceMaps | JS source mapping | "true", "false" |
 
 ### Performance Considerations
 
 - **mode**: Setting to "development" will significantly reduce compile times as this tells webpack when / how to use its built-in optimizations.
 - **cssSourceMaps**: If your development task doesn't require the use of css source maps, consider disabling them. This will significantly reduce compile times.
 - **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
+- **jsSourceMaps**: If your development task doesn't require the use of js source maps, consider disabling them. This will significantly reduce compile times.
   
 
 # [Contributing to MFRA](./CONTRIBUTING.md)
