@@ -587,14 +587,14 @@ if (options.compile) {
                 if (cartridgeName) {
                     if (helpers.isBuildEnvironment('compile', 'css')) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, aliases, code => {
+                        css(cartridgeName, aliases, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
                         });
                     } else {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(cartridgeName, aliases, code => {
+                        js(cartridgeName, aliases, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -732,12 +732,12 @@ if (options.watch) {
                         const cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            js(packageFile.sites[siteIndex], cartridgeName, pwd, 'js', code => {
+                            js(cartridgeName, jsAliases, 'js', code => {
                                 if (code == 1) {
                                   process.exit(code);
                                 }
                                 jsCompilingInProgress = false;
-                            };
+                            });
                         }
                     }
                 }

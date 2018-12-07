@@ -6,7 +6,7 @@ try {
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
-    module.exports = function (packageName) {        
+    module.exports = function (packageName, watch) {        
         const mode = process.env.mode;
         console.log(chalk.yellow('Using ' + mode + ' mode'));
 

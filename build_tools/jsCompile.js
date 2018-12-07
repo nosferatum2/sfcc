@@ -9,9 +9,9 @@ const chalk = require('chalk');
 const cwd = process.cwd();
 const WebpackConfiguration = require('./webpack.config');
 
-module.exports = (cartridgeName, aliases, callback) => {
+module.exports = (cartridgeName, aliases, watch, callback) => {
     // Retrieve Webpack configuration object 
-    const webpackConfig = WebpackConfiguration(cartridgeName);
+    const webpackConfig = WebpackConfiguration(cartridgeName, watch);
 
     if (helpers.isBuildEnvironment('verbose')) {
         console.log(chalk.green('Success. Loaded '+ path.join(cwd, './build_tools/webpack.config.js')));
