@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    System object extensions specific to the LYONSCG reference-application-sfra.
+ -->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="enablePromoCalloutMessagesProductTile">
+                <display-name xml:lang="x-default">Enable Promo Callout on Tiles</display-name>
+                <description xml:lang="x-default">When true, this enables display of promotion callout messages on product tiles.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="siteDisableCommerceFunctionality">
+                <display-name xml:lang="x-default">Disable Commerce Functionality</display-name>
+                <description xml:lang="x-default">When true, this disables commerce functionality across the site.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="LYONSCG Reference Application Storefront Configs">
+                <display-name xml:lang="x-default">LYONSCG Reference Application</display-name>
+                <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
+                <attribute attribute-id="siteDisableCommerceFunctionality"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
