@@ -150,17 +150,3 @@
 .homepage .row {
     overflow: hidden; // Fixes overflow issue on homepage grid
 }
-
-.home-email-signup {
-    background-color: $gray-400;
-
-    > .container {
-        padding-top: 0.625em;
-        padding-bottom: 0.625em;
-    }
-
-    .email-description {
-        padding-top: 0.375em;
-        color: $white;
-    }
-}

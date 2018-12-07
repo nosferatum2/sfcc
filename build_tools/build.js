@@ -732,20 +732,10 @@ if (options.watch) {
                         const cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            try {
-                                process.env["compile"] = "js";
-                                js(cartridgeName, jsAliases, code => {
-                                    if (code == 1) {
-                                      process.exit(code);
-                                    }
-                                    clearTmp();
-                                    console.log(chalk.green('JS files compiled.'));
-                                    delete process.env["compile"];
-                                    jsCompilingInProgress = false;
-                                });
-                            } catch(error) {
-                                clearTmp();
-                                console.error(chalk.red('Could not compile JS files.'), error);
+                            js(packageFile.sites[siteIndex], cartridgeName, pwd, 'js', code => {
+                                if (code == 1) {
+                                  process.exit(code);
+                                }
                                 jsCompilingInProgress = false;
                             };
                         }
@@ -776,7 +766,7 @@ if (options.watch) {
                         if (cartridgeName) {
                             console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
                             try {
-                                css(cartridgeName, cssAliases, code => {
+                                css(cartridgeName, cssAliases, 'css', code => {
                                     if (code == 1) {
                                       process.exit(code);
                                     }
