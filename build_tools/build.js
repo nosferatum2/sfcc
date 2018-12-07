@@ -201,6 +201,10 @@ const optionator = require('optionator')({
         type: 'String', 
         description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
         required: false
+    }, {
+        option: 'buildEnvironment',
+        type: 'String',
+        description: 'Identifies which build environment object to use; "production" or "development"'
     }
     ]
 });
@@ -213,7 +217,9 @@ const optionator = require('optionator')({
  * @param {Object} options 
  */
 function setBuildEnvironmentFlags(packageFile, options) {
-    Object.assign(process.env, packageFile.buildEnvironment, options);
+    const buildEnvironment = (options.buildEnvironment && options.buildEnvironment === 'production') ? packageFile.buildEnvironment.production : 
+                                                                                                       packageFile.buildEnvironment.development
+    Object.assign(process.env, buildEnvironment, options);
 }
 
 /**
@@ -582,7 +588,7 @@ if (options.compile) {
                     var cartridgeName = cartridgePath.split(path.sep).pop();
                     if (cartridgeName) {
                         console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                        js(packageFile.sites[siteIndex], cartridgeName, pwd, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -599,14 +605,16 @@ if (options.compile) {
          * This build.js will likely be the only "site aware" script
          */
         Object.keys(packageFile.sites).forEach(siteIndex => {
-            if (packageFile.sites[siteIndex].paths) {
-                for (var key in packageFile.sites[siteIndex].paths) {
-                    var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                    var cartridgeName = cartridgePath.split(path.sep).pop();
-
+            const site = packageFile.sites[siteIndex];
+            if (site.paths) {
+                const cartridges = site.paths;
+                const cssAliases = helpers.createAliases(site, pwd, true);
+                for (let cartridge in cartridges) {
+                    const cartridgePath = cartridges[cartridge];
+                    const cartridgeName = cartridgePath.split(path.sep).pop();
                     if (cartridgeName) {
                         console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                        css(cartridgeName, cssAliases, false, code => {
                             if (code == 1) {
                               process.exit(code);
                             }
@@ -741,7 +749,7 @@ if (options.watch) {
                         var cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
                             console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                            js(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                            js(packageFile.sites[siteIndex], cartridgeName, pwd, 'js', code => {
                                 if (code == 1) {
                                   process.exit(code);
                                 }
@@ -765,14 +773,17 @@ if (options.watch) {
             cssCompilingInProgress = true;
 
             Object.keys(packageFile.sites).forEach(siteIndex => {
-                if (packageFile.sites[siteIndex].paths) {
-                    for (var key in packageFile.sites[siteIndex].paths) {
-                        var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                        var cartridgeName = cartridgePath.split(path.sep).pop();
+                const site = packageFile.sites[siteIndex];
+                if (site.paths) {
+                    const cartridges = site.paths;
+                    const cssAliases = helpers.createAliases(site, pwd, true);
+                    for (let cartridge in cartridges) {
+                        const cartridgePath = cartridges[cartridge];
+                        const cartridgeName = cartridgePath.split(path.sep).pop();
                         if (cartridgeName) {
-                            console.log(chalk.blue('Building css for Site ' + cartridgeName));
+                            console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
                             try {
-                                css(packageFile.sites[siteIndex], cartridgeName, pwd, code => {
+                                css(cartridgeName, cssAliases, 'css', code => {
                                     if (code == 1) {
                                       process.exit(code);
                                     }

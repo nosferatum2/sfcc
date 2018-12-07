@@ -15,7 +15,9 @@
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
     "compile:scss": "node build_tools/build --compile css",
+    "compile:scss:prod": "node build_tools/build --compile css --buildEnvironment production",
     "compile:js": "node build_tools/build --compile js",
+    "compile:js:prod": "node build_tools/build --compile js --buildEnvironment production",
     "compile:fonts": "node bin/Makefile compileFonts",
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
     "lint:css": "node build_tools/build --lint css",
@@ -45,6 +47,7 @@
     "@babel/preset-env": "^7.0.0-beta.51",
     "@tridnguyen/config": "^2.3.1",
     "babel-loader": "^8.0.0-beta.3",
+    "cache-loader": "^1.2.5",
     "chai": "^3.5.0",
     "chai-subset": "^1.5.0",
     "chalk": "^1.1.3",
@@ -57,12 +60,12 @@
     "eslint-config-airbnb-base": "^5.0.1",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-sitegenesis": "~1.0.0",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "folder-zip": "0.0.5",
     "globalize": "^1.4.0",
     "inquirer": "^3.0.6",
     "istanbul": "^0.4.4",
     "lodash": "^4.14.2",
+    "mini-css-extract-plugin": "^0.4.5",
     "minimist": "^1.2.0",
     "mocha": "^2.5.3",
     "mocha-junit-reporter": "^1.15.0",
@@ -92,6 +95,7 @@
     "webdriverio": "^3.3.0",
     "webpack": "4.12.0",
     "webpack-cli": "^3.1.0",
+    "webpack-fix-style-only-entries": "0.0.5",
     "xml2js": "^0.4.17",
     "imagesloaded": "^4.1.4"
   },
@@ -123,6 +127,20 @@
       "packageName": "app_storefront_base"
     }
   ],
+  "buildEnvironment": {
+    "development": {
+      "mode": "development",
+      "verbose": "false",
+      "cssSourceMaps": "true",
+      "cssAutoPrefixer": "false"
+    },
+    "production": {
+      "mode": "production",
+      "verbose": "true",
+      "cssSourceMaps": "false",
+      "cssAutoPrefixer": "true"
+    }
+  },
   "deployment": {
     "instanceRoot": ".evaluation.dw.demandware.net",
     "dataOptions": {
@@ -153,9 +171,5 @@
         "data_test_static"
       ]
     }
-  },
-  "buildEnvironment": {
-    "mode": "development",
-    "verbose": "false"
   }
 }

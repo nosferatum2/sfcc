@@ -115,7 +115,27 @@ To run tests in a subsuite, such as the storeLocator subsuite:
 npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-RefArch-Site/en_US test/integration/storeLocator
 ```
 
+## Envrionment Variables and Flags
 
+Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
+
+The "development" settings object allows developers to change build configuration during development tasks.
+
+The "production" setting object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+
+Name | Description | Accepted Values
+--- | --- | --- | ---
+mode | Set the build / compilation mode | "development", "production" |
+verbose | Verbose logging | "true", "false" |
+cssSourceMaps | CSS source mapping | "true", "false" |
+cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
+
+### Performance Considerations
+
+- **mode**: Setting to "development" will significantly reduce compile times as this tells webpack when / how to use its built-in optimizations.
+- **cssSourceMaps**: If your development task doesn't require the use of css source maps, consider disabling them. This will significantly reduce compile times.
+- **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
+  
 
 # [Contributing to MFRA](./CONTRIBUTING.md)
 

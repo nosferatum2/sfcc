@@ -4,8 +4,6 @@ try {
     require('shelljs/make');
     const path = require('path');
     const webpack = require('webpack');
-    const ExtractTextPlugin = require('extract-text-webpack-plugin');
-    const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
     const chalk = require('chalk');
     const helpers = require('./helpers');
 
@@ -23,37 +21,29 @@ try {
         Util: 'exports-loader?Util!bootstrap/js/src/util'
     };
 
-    module.exports = function (packageName) {
-        console.log(chalk.bgMagenta('Webpack config recieved for ' + packageName));
-        
+    module.exports = function (packageName, watch) {        
         const mode = process.env.mode;
-        console.log(chalk.yellow('Using ' + mode + ' mode in webpack.config.js'));
+        console.log(chalk.yellow('Using ' + mode + ' mode'));
 
-        const jsFiles = require('./helpers').createJsPath(packageName);
-        const scssFiles = require('./helpers').createScssPath(packageName);
+        const entryFiles = (helpers.isBuildEnvironment('compile', 'css') || watch === 'css') ? helpers.createScssPath(packageName) : helpers.createJsPath(packageName);
+
+        if (!entryFiles) { 
+            return false;
+        }
 
         if (helpers.isBuildEnvironment('verbose')) {
-            console.log(chalk.gray('Webpack(ing) js files'));
-            if (jsFiles) {
-                for (let key in jsFiles) {
-                    console.log('   ' + chalk.gray(jsFiles[key]));
-                }
-            }
-
-            console.log(chalk.gray('Webpack(ing) scss files'));
-            if (scssFiles) {
-                for (let key in scssFiles) {
-                    console.log('    ' + chalk.gray(scssFiles[key]));
-                }
+            console.log(chalk.gray('Webpack(ing) entry files'));
+            for (let key in entryFiles) {
+                console.log('   ' + chalk.gray(entryFiles[key]));
             }
         }
 
         const webpackConfig = [];
-        if (jsFiles) {
-            webpackConfig.push({
+        if (helpers.isBuildEnvironment('compile', 'js') || watch === 'js') {
+            return {
                 mode: mode.toString(),
                 name: 'js',
-                entry: jsFiles,
+                entry: entryFiles,
                 output: {
                     path: path.resolve('./cartridges/' + packageName + '/cartridge/static'),
                     filename: '[name].js'
@@ -76,60 +66,27 @@ try {
                 plugins: [
                     new webpack.ProvidePlugin(bootstrapPackages)
                 ]
-            });
+            };
         }
 
-        if (scssFiles) {
-            const plugins = [new ExtractTextPlugin({ filename: '[name].css' })];
-            if (mode == 'production') {
-                plugins.push(new OptimizeCssAssetsPlugin());
-            }
-
-            webpackConfig.push({
+        if (helpers.isBuildEnvironment('compile', 'css') || watch === 'css') {
+            return {
                 mode: mode.toString(),
                 name: 'scss',
-                entry: scssFiles,
+                entry: entryFiles,
                 output: {
                     path: path.resolve('./cartridges/' + packageName + '/cartridge/static'),
-                    filename: '[name].css'
+                    filename: '[name].js'
                 },
                 module: {
-                    rules: [{
-                        test: /\.scss$/,
-                        use: ExtractTextPlugin.extract({
-                            use: [{
-                                loader: 'css-loader',
-                                options: {
-                                    url: false,
-                                    sourceMap: true,
-                                }
-                            }, {
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: true,
-                                    plugins: [
-                                        require('autoprefixer')()
-                                    ]
-                                }
-                            }, {
-                                loader: 'sass-loader',
-                                options: {
-                                    sourceMap: true,
-                                    includePaths: [
-                                        path.resolve('node_modules'),
-                                        path.resolve('node_modules/flag-icon-css/sass')
-                                    ]
-                                }
-                            }]
-                        })
-                    }]
+                    rules: [
+                        helpers.getCssLoaders(mode)
+                    ]
                 },
-                devtool: 'cheap-eval-source-map',
-                plugins: plugins
-            });
+                plugins: helpers.getCssPlugins(mode),
+                devtool: helpers.isBuildEnvironment('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
+            };
         }
-
-        return webpackConfig;
     };
 } catch (e) {
     console.log('... caught exception ' + e.toString());

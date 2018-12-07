@@ -19,3 +19,4 @@ lastbuild.properties
 .tern-project
 dw.json
 jsconfig.json
+.cache-loader/
