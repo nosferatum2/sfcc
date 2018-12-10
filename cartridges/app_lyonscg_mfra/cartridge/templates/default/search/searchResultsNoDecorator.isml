@@ -2,14 +2,20 @@
     <isinclude template="reporting/reportingUrls" />
 </isif>
 
-<h1 class="header page-title">
-    <isif condition="${pdict.productSearch.isCategorySearch}">
-        ${pdict.productSearch.category.name}
-    <iselse>
-        ${Resource.msg('label.header.banner', 'search', null)}
+<div class="hero slant-down search-banner"
+    <!--- If no image, default is specified in search.scss > .search-banner --->
+    <isif condition="${pdict.productSearch.bannerImageUrl}">
+        style="background-image: url(${pdict.productSearch.bannerImageUrl})"
     </isif>
-</h1>
-
+>
+    <h1 class="header page-title">
+        <isif condition="${pdict.productSearch.isCategorySearch}">
+            ${pdict.productSearch.category.name}
+        <iselse>
+            ${Resource.msg('label.header.banner', 'search', null)}
+        </isif>
+    </h1>
+</div>
 <div class="container search-results">
     <div class="row search-nav">
         <isif condition="${!pdict.productSearch.isCategorySearch}">
