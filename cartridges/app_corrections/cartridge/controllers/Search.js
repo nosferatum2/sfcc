@@ -117,7 +117,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         productSearch.isCategorySearch
         && !productSearch.isRefinedCategorySearch
         && categoryTemplate
-        && apiProductSearch.category.parent.ID === 'root'
+        // @TODO SFRA Issue 87 - START
+        // @TODO SFRA Issue 87 - START
     ) {
         pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
 
