@@ -51,24 +51,22 @@ function parseHtml(html) {
 
 /**
  * replaces the content in the modal window on for the selected product variation.
- * @param {string} productUrl - url to be used for going to the product details page
  * @param {string} selectedValueUrl - url to be used to retrieve a new product model
  */
-function fillModalElement(productUrl, selectedValueUrl) {
+function fillModalElement(selectedValueUrl) {
     $('.modal-body').spinner().start();
     $.ajax({
         url: selectedValueUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (data) {
+            var parsedHtml = parseHtml(data.renderedTemplate);
 
             $('.modal-body').empty();
-            // $('.modal-body').html(html);
             $('.modal-body').html(parsedHtml.body);
             $('.modal-footer').html(parsedHtml.footer);
-            $('#quickViewModal .full-pdp-link').attr('href', productUrl);
-            $('#quickViewModal .size-chart').attr('href', productUrl);
+            $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
+            $('#quickViewModal .size-chart').attr('href', data.productUrl);
             $('#quickViewModal').modal('show');
             $.spinner().stop();
         },
@@ -83,12 +81,18 @@ module.exports = {
         $('body').on('click', '.quickview', function (e) {
             e.preventDefault();
             var selectedValueUrl = $(this).closest('a.quickview').attr('href');
-            var productUrl = selectedValueUrl.replace('Product-ShowQuickView', 'Product-Show');
             $(e.target).trigger('quickview:show');
             getModalHtmlElement();
-            fillModalElement(productUrl, selectedValueUrl);
+            fillModalElement(selectedValueUrl);
         });
     },
+    colorAttribute: base.colorAttribute,
+    selectAttribute: base.selectAttribute,
+    removeBonusProduct: base.removeBonusProduct,
+    selectBonusProduct: base.selectBonusProduct,
+    enableBonusProductSelection: base.enableBonusProductSelection,
+    showMoreBonusProducts: base.showMoreBonusProducts,
+    addBonusProductsToCart: base.addBonusProductsToCart,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {
@@ -110,12 +114,14 @@ module.exports = {
         $('body').on('product:afterAttributeSelect', function (e, response) {
             if ($('.modal.show .product-quickview>.bundle-items').length) {
                 $('.modal.show').find(response.container).data('pid', response.data.product.id);
-                $('.modal.show').find(response.container).find('.product-id').text(response.data.product.id);
+                $('.modal.show').find(response.container)
+                    .find('.product-id').text(response.data.product.id);
             } else if ($('.set-items').length) {
                 response.container.find('.product-id').text(response.data.product.id);
             } else {
                 $('.modal.show .product-quickview').data('pid', response.data.product.id);
-                $('.modal.show .full-pdp-link').attr('href', response.data.product.selectedProductUrl);
+                $('.modal.show .full-pdp-link')
+                    .attr('href', response.data.product.selectedProductUrl);
             }
         });
     },
@@ -133,6 +139,45 @@ module.exports = {
                 !$('.global-availability', dialog).data('ready-to-order')
                 || !$('.global-availability', dialog).data('available')
             );
+        });
+    },
+    updateAvailability: function () {
+        $('body').on('product:updateAvailability', function (e, response) {
+            // bundle individual products
+            $('.product-availability', response.$productContainer)
+                .data('ready-to-order', response.product.readyToOrder)
+                .data('available', response.product.available)
+                .find('.availability-msg')
+                .empty()
+                .html(response.message);
+
+
+            var dialog = $(response.$productContainer)
+                .closest('.quick-view-dialog');
+
+            if ($('.product-availability', dialog).length) {
+                // bundle all products
+                var allAvailable = $('.product-availability', dialog).toArray()
+                    .every(function (item) { return $(item).data('available'); });
+
+                var allReady = $('.product-availability', dialog).toArray()
+                    .every(function (item) { return $(item).data('ready-to-order'); });
+
+                $('.global-availability', dialog)
+                    .data('ready-to-order', allReady)
+                    .data('available', allAvailable);
+
+                $('.global-availability .availability-msg', dialog).empty()
+                    .html(allReady ? response.message : response.resources.info_selectforstock);
+            } else {
+                // single product
+                $('.global-availability', dialog)
+                    .data('ready-to-order', response.product.readyToOrder)
+                    .data('available', response.product.available)
+                    .find('.availability-msg')
+                    .empty()
+                    .html(response.message);
+            }
         });
     }
 };
