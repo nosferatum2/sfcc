@@ -22,7 +22,7 @@ For example:
 
 `node build_tools/build --cover` - Run all unittests with coverage report.
 
-`node build_tools/build --compile --compile String` - Compile css/js files. - either: css or js
+`node build_tools/build --compile String` - Compile css/js files. - either: css or js
 
 For example:
 `node build_tools/build --compile css`
@@ -48,6 +48,30 @@ For example:
 
 For example:
 `node build_tools/build --deploy-data --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword --data-bundle=core`
+
+## Envrionment Variables and Flags
+
+Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
+
+The "development" settings object allows developers to change build configuration during development tasks.
+
+The "production" settings object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+
+Name | Description | Accepted Values
+--- | --- | --- | ---
+mode | Set the build / compilation mode | "development", "production" |
+verbose | Verbose logging | "true", "false" |
+cssSourceMaps | CSS source mapping | "true", "false" |
+cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
+jsSourceMaps | JS source mapping | "true", "false" |
+manualFileUpload | Toggles automatic upload for the watch functionality ('npm run watch'). This should always be set to "false" for development within VS Code, Eclipse, or any IDE that supports a digital server connection / auto-upload | "true", "false" |
+
+### Performance Considerations
+
+- **mode**: Setting to "development" will significantly reduce compile times as this tells webpack when / how to use its built-in optimizations.
+- **cssSourceMaps**: If your development task doesn't require the use of css source maps, consider disabling them. This will significantly reduce compile times.
+- **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
+- **jsSourceMaps**: If your development task doesn't require the use of js source maps, consider disabling them. This will significantly reduce compile times.
 
 ## Installation and Usage
 
@@ -230,7 +254,5 @@ Uploading individual cartridges to your sandbox/instance
 		"npm run uploadCartridge"  
 		
 ##Notes
-
-Build environment flags (i.e Verbose Logging) are controlled via the "buildEnvironment" object in the package.json file
 
 The builders.xml Ant task includes the 'run npm install.xml' task that utilizes npm to automatically install the package.json specified node modules. The installation task may install tens of thousands of files and thus, on initial run, may take as long as ten minutes to complete. Subsequent runs are exponentially quicker as npm will only update those modules requiring an update. Additionally, the 'run npm install.xml' Ant task may be run on independently of builders.xml

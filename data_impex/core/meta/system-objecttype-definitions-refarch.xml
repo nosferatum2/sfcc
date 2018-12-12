@@ -1,0 +1,1085 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    This is a pared down version of the meta-data provided by SFCC
+    for the SFRA, located here: https://github.com/SalesforceCommerceCloud/storefrontdata
+
+    System attributes have been stripped from this file to make it easier to read,
+    and since they are set up by default when an instance is initialized. They still
+    need to be defined as attributes within an attribute-group, otherwise they'll fall
+    out of the group and will stop being displayed in Business Manager.
+ -->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Appeasement"/>
+
+    <type-extension type-id="AppeasementItem"/>
+
+    <type-extension type-id="Basket">
+        <group-definitions>
+            <attribute-group group-id="Status">
+                <display-name xml:lang="x-default">Status</display-name>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="BonusDiscountLineItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="bonusProductLineItemUUID">
+                <display-name xml:lang="x-default">Bonus Product Line Item UUID</display-name>
+                <description xml:lang="x-default">This represents the UUID of the product line item that holds the qualifying product.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension>
+
+    <type-extension type-id="Campaign"/>
+
+    <type-extension type-id="Catalog"/>
+
+    <type-extension type-id="Category">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="alternativeUrl">
+                <display-name xml:lang="x-default">Alternative URL</display-name>
+                <description xml:lang="x-default">Renders an alternative URL in main navigation. Uses Commerce Cloud content url notation. For example: $url('Account-Show')$ or normal URL http://xchange.demandware.com</description>
+                <type>html</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <field-length>0</field-length>
+                <field-height>2</field-height>
+            </attribute-definition>
+            <attribute-definition attribute-id="customCSSFile">
+                <display-name xml:lang="x-default">Custom CSS File</display-name>
+                <description xml:lang="x-default">Use this attribute to apply custom styles for this category.</description>
+                <type>image</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="enableCompare">
+                <display-name xml:lang="x-default">Enable Compare</display-name>
+                <description xml:lang="x-default">Used to define if/when the Compare feature is to be visualized in the storefront based on navigation. If enableCompare = FALSE, no Compare checkboxes will be displayed in the grid view. If enableCompare = TRUE, the category (and its children) will support the Compare feature.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="showInMenu">
+                <display-name xml:lang="x-default">Show in Menu Navigation</display-name>
+                <description xml:lang="x-default">Used to indicate that a category (such as Mens -&gt; Footwear -&gt; Boots) will display in the roll-over navigation. A sub-category only shows if also the parent category is marked as showInMenu. Up to three category levels are shown in roll-over navigation.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sizeChartID">
+                <display-name xml:lang="x-default">Size Chart</display-name>
+                <description xml:lang="x-default">Used to define the content asset ID of the Size Chart that is appropriate for products whose PRIMARY category is the associated category (and its children). Whenever a product detail page (or quick view) is rendered, the Size Chart link is populated based on the value of this attribute for the products primary categorization. If not defined, NO size chart link is displayed.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="slotBannerImage">
+                <display-name xml:lang="x-default">Category Landing Slot Image</display-name>
+                <description xml:lang="x-default">Image used on either the top or bottom slot on the category landing pages.</description>
+                <type>image</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ExternalSearch">
+                <display-name xml:lang="x-default">Search Engine Optimization Support</display-name>
+                <attribute attribute-id="pageTitle" system="true"/>
+                <attribute attribute-id="pageDescription" system="true"/>
+                <attribute attribute-id="pageKeywords" system="true"/>
+                <attribute attribute-id="pageURL" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="SiteMap">
+                <display-name xml:lang="x-default">Sitemap Attributes</display-name>
+                <attribute attribute-id="siteMapIncluded" system="true"/>
+                <attribute attribute-id="siteMapChangeFrequency" system="true"/>
+                <attribute attribute-id="siteMapPriority" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Presentation">
+                <display-name xml:lang="x-default">Presentation Attributes</display-name>
+                <attribute attribute-id="thumbnail" system="true"/>
+                <attribute attribute-id="image" system="true"/>
+                <attribute attribute-id="template" system="true"/>
+                <attribute attribute-id="slotBannerImage"/>
+                <attribute attribute-id="customCSSFile"/>
+            </attribute-group>
+            <attribute-group group-id="SearchRanking">
+                <display-name xml:lang="x-default">Search Ranking</display-name>
+                <attribute attribute-id="searchPlacement" system="true"/>
+                <attribute attribute-id="searchRank" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="customAttributes">
+                <display-name xml:lang="x-default">Custom</display-name>
+                <attribute attribute-id="sizeChartID"/>
+                <attribute attribute-id="showInMenu"/>
+                <attribute attribute-id="enableCompare"/>
+                <attribute attribute-id="alternativeUrl"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="CategoryAssignment"/>
+
+    <type-extension type-id="Content">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="body">
+                <display-name xml:lang="x-default">Body</display-name>
+                <type>html</type>
+                <localizable-flag>true</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="customCSSFile">
+                <display-name xml:lang="x-default">Custom CSS File</display-name>
+                <description xml:lang="x-default">Use this attribute to apply custom styles for this content asset.</description>
+                <type>image</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <display-name xml:lang="x-default">Standard</display-name>
+                <attribute attribute-id="ID" system="true"/>
+                <attribute attribute-id="name" system="true"/>
+                <attribute attribute-id="description" system="true"/>
+                <attribute attribute-id="onlineFlag" system="true"/>
+                <attribute attribute-id="searchableFlag" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="ExternalSearch">
+                <display-name xml:lang="x-default">Search Engine Optimization Support</display-name>
+                <attribute attribute-id="pageTitle" system="true"/>
+                <attribute attribute-id="pageDescription" system="true"/>
+                <attribute attribute-id="pageKeywords" system="true"/>
+                <attribute attribute-id="pageURL" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="SiteMap">
+                <display-name xml:lang="x-default">Sitemap Attributes</display-name>
+                <attribute attribute-id="siteMapIncluded" system="true"/>
+                <attribute attribute-id="siteMapChangeFrequency" system="true"/>
+                <attribute attribute-id="siteMapPriority" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Presentation">
+                <display-name xml:lang="x-default">Presentation</display-name>
+                <attribute attribute-id="template" system="true"/>
+                <attribute attribute-id="customCSSFile"/>
+            </attribute-group>
+            <attribute-group group-id="Content">
+                <display-name xml:lang="x-default">Content</display-name>
+                <attribute attribute-id="body"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="Coupon"/>
+
+    <type-extension type-id="CouponLineItem"/>
+
+    <type-extension type-id="CustomerActiveData">
+        <group-definitions>
+            <attribute-group group-id="Traffic">
+                <display-name xml:lang="x-default">Traffic</display-name>
+                <attribute attribute-id="visitsWeek" system="true"/>
+                <attribute attribute-id="visitsMonth" system="true"/>
+                <attribute attribute-id="visitsYear" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Conversion">
+                <display-name xml:lang="x-default">Conversion</display-name>
+                <attribute attribute-id="orders" system="true"/>
+                <attribute attribute-id="orderValueMonth" system="true"/>
+                <attribute attribute-id="orderValue" system="true"/>
+                <attribute attribute-id="avgOrderValue" system="true"/>
+                <attribute attribute-id="discountValueWithoutCoupon" system="true"/>
+                <attribute attribute-id="discountValueWithCoupon" system="true"/>
+                <attribute attribute-id="sourceCodeOrders" system="true"/>
+                <attribute attribute-id="lastOrderDate" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Returns">
+                <display-name xml:lang="x-default">Returns</display-name>
+                <attribute attribute-id="returns" system="true"/>
+                <attribute attribute-id="returnValue" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Gifts">
+                <display-name xml:lang="x-default">Gifts</display-name>
+                <attribute attribute-id="giftOrders" system="true"/>
+                <attribute attribute-id="giftUnits" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Products">
+                <display-name xml:lang="x-default">Products</display-name>
+                <attribute attribute-id="topCategoriesOrdered" system="true"/>
+                <attribute attribute-id="productsOrdered" system="true"/>
+                <attribute attribute-id="productMastersOrdered" system="true"/>
+                <attribute attribute-id="productsViewedMonth" system="true"/>
+                <attribute attribute-id="productsAbandonedMonth" system="true"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="CustomerAddress">
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <display-name xml:lang="x-default">Standard Address</display-name>
+                <attribute attribute-id="ID" system="true"/>
+                <attribute attribute-id="title" system="true"/>
+                <attribute attribute-id="companyName" system="true"/>
+                <attribute attribute-id="salutation" system="true"/>
+                <attribute attribute-id="firstName" system="true"/>
+                <attribute attribute-id="secondName" system="true"/>
+                <attribute attribute-id="lastName" system="true"/>
+                <attribute attribute-id="suffix" system="true"/>
+                <attribute attribute-id="address1" system="true"/>
+                <attribute attribute-id="address2" system="true"/>
+                <attribute attribute-id="suite" system="true"/>
+                <attribute attribute-id="postBox" system="true"/>
+                <attribute attribute-id="city" system="true"/>
+                <attribute attribute-id="postalCode" system="true"/>
+                <attribute attribute-id="countryCode" system="true"/>
+                <attribute attribute-id="stateCode" system="true"/>
+                <attribute attribute-id="phone" system="true"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="CustomerGroup"/>
+
+    <type-extension type-id="CustomerPaymentInstrument"/>
+
+    <type-extension type-id="Folder">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="customCSSFile">
+                <display-name xml:lang="x-default">Custom CSS File</display-name>
+                <description xml:lang="x-default">Use this attribute to apply custom styles for this category.</description>
+                <type>image</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <display-name xml:lang="x-default">Standard</display-name>
+                <attribute attribute-id="displayName" system="true"/>
+                <attribute attribute-id="ID" system="true"/>
+                <attribute attribute-id="description" system="true"/>
+                <attribute attribute-id="online" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="ExternalSearch">
+                <display-name xml:lang="x-default">Search Engine Optimization Support</display-name>
+                <attribute attribute-id="pageTitle" system="true"/>
+                <attribute attribute-id="pageDescription" system="true"/>
+                <attribute attribute-id="pageKeywords" system="true"/>
+                <attribute attribute-id="pageURL" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Presentation">
+                <display-name xml:lang="x-default">Presentation</display-name>
+                <attribute attribute-id="template" system="true"/>
+                <attribute attribute-id="customCSSFile"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="GiftCertificate"/>
+
+    <type-extension type-id="GiftCertificateLineItem"/>
+
+    <type-extension type-id="Invoice"/>
+
+    <type-extension type-id="InvoiceItem"/>
+
+    <type-extension type-id="Library"/>
+
+    <type-extension type-id="Order"/>
+
+    <type-extension type-id="OrderAddress">
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <display-name xml:lang="x-default">Standard Address</display-name>
+                <attribute attribute-id="title" system="true"/>
+                <attribute attribute-id="companyName" system="true"/>
+                <attribute attribute-id="salutation" system="true"/>
+                <attribute attribute-id="firstName" system="true"/>
+                <attribute attribute-id="secondName" system="true"/>
+                <attribute attribute-id="lastName" system="true"/>
+                <attribute attribute-id="suffix" system="true"/>
+                <attribute attribute-id="address1" system="true"/>
+                <attribute attribute-id="address2" system="true"/>
+                <attribute attribute-id="suite" system="true"/>
+                <attribute attribute-id="postBox" system="true"/>
+                <attribute attribute-id="city" system="true"/>
+                <attribute attribute-id="postalCode" system="true"/>
+                <attribute attribute-id="countryCode" system="true"/>
+                <attribute attribute-id="stateCode" system="true"/>
+                <attribute attribute-id="phone" system="true"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="OrderItem"/>
+
+    <type-extension type-id="OrderPaymentInstrument"/>
+
+    <type-extension type-id="OrganizationPreferences"/>
+
+    <type-extension type-id="PaymentCard"/>
+
+    <type-extension type-id="PaymentMethod"/>
+
+    <type-extension type-id="PaymentTransaction">
+        <group-definitions>
+            <attribute-group group-id="Custom">
+                <display-name xml:lang="x-default">Custom</display-name>
+                <!-- Left as an example for reference -->
+                <!-- <attribute attribute-id="eFundsTransactionHistory"/> -->
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="PriceAdjustment"/>
+
+    <type-extension type-id="PriceBook"/>
+
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="availableForInStorePickup">
+                <display-name xml:lang="x-default">Available for In Store Pickup</display-name>
+                <description xml:lang="x-default">Signals if there are inventory lists for brick-and-mortar stores associated with this product.</description>
+                <type>boolean</type>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <visible-flag>false</visible-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="color">
+                <display-name xml:lang="x-default">Color</display-name>
+                <description xml:lang="x-default">Product color used for variation attribute</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <visible-flag>false</visible-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="customCSSFile">
+                <display-name xml:lang="x-default">Custom CSS File</display-name>
+                <description xml:lang="x-default">Use this attribute to apply custom styles for this product.</description>
+                <type>image</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <visible-flag>false</visible-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refinementColor">
+                <display-name xml:lang="x-default">Refinement Color</display-name>
+                <type>enum-of-string</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <visible-flag>false</visible-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">Black</display>
+                        <value>black</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Blue</display>
+                        <value>blue</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Green</display>
+                        <value>green</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Red</display>
+                        <value>red</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Orange</display>
+                        <value>orange</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Pink</display>
+                        <value>pink</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Purple</display>
+                        <value>purple</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">White</display>
+                        <value>white</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Yellow</display>
+                        <value>yellow</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Grey</display>
+                        <value>grey</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Beige</display>
+                        <value>beige</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Miscellaneous</display>
+                        <value>miscellaneous</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Brown</display>
+                        <value>brown</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">Navy</display>
+                        <value>navy</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="size">
+                <display-name xml:lang="x-default">Size</display-name>
+                <description xml:lang="x-default">This attribute is used for all footwear, apparel and accessory sizing for men, women and kids products.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <site-specific-flag>false</site-specific-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <visible-flag>false</visible-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <order-required-flag>false</order-required-flag>
+                <externally-defined-flag>false</externally-defined-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ExternalSearch">
+                <display-name xml:lang="x-default">Search Engine Optimization Support</display-name>
+                <attribute attribute-id="pageTitle" system="true"/>
+                <attribute attribute-id="pageDescription" system="true"/>
+                <attribute attribute-id="pageKeywords" system="true"/>
+                <attribute attribute-id="pageURL" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="SiteMap">
+                <display-name xml:lang="x-default">Sitemap Attributes</display-name>
+                <attribute attribute-id="siteMapIncluded" system="true"/>
+                <attribute attribute-id="siteMapChangeFrequency" system="true"/>
+                <attribute attribute-id="siteMapPriority" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Presentation">
+                <display-name xml:lang="x-default">Presentation Attributes</display-name>
+                <attribute attribute-id="thumbnail" system="true"/>
+                <attribute attribute-id="image" system="true"/>
+                <attribute attribute-id="template" system="true"/>
+                <attribute attribute-id="customCSSFile"/>
+            </attribute-group>
+            <attribute-group group-id="SearchRanking">
+                <display-name xml:lang="x-default">Search Ranking</display-name>
+                <attribute attribute-id="searchPlacement" system="true"/>
+                <attribute attribute-id="searchRank" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Order">
+                <display-name xml:lang="x-default">Order Attributes</display-name>
+                <attribute attribute-id="unit" system="true"/>
+                <attribute attribute-id="minOrderQuantity" system="true"/>
+                <attribute attribute-id="stepQuantity" system="true"/>
+                <attribute attribute-id="taxClassID" system="true"/>
+                <attribute attribute-id="EAN" system="true"/>
+                <attribute attribute-id="UPC" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="inStorePickup">
+                <display-name xml:lang="x-default">In Store Pickup</display-name>
+                <attribute attribute-id="availableForInStorePickup"/>
+            </attribute-group>
+            <attribute-group group-id="storefrontAttributes">
+                <display-name xml:lang="x-default">Storefront Attributes</display-name>
+                <attribute attribute-id="refinementColor"/>
+            </attribute-group>
+            <attribute-group group-id="searchRefinements">
+                <display-name xml:lang="x-default">Search Refinements</display-name>
+                <!-- Left as an example for reference -->
+                <!-- <attribute attribute-id="skinConcern"/> -->
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="ProductActiveData">
+        <group-definitions>
+            <attribute-group group-id="Traffic">
+                <display-name xml:lang="x-default">Traffic</display-name>
+                <attribute attribute-id="impressionsDay" system="true"/>
+                <attribute attribute-id="impressionsWeek" system="true"/>
+                <attribute attribute-id="impressionsMonth" system="true"/>
+                <attribute attribute-id="impressionsYear" system="true"/>
+                <attribute attribute-id="viewsDay" system="true"/>
+                <attribute attribute-id="viewsWeek" system="true"/>
+                <attribute attribute-id="viewsMonth" system="true"/>
+                <attribute attribute-id="viewsYear" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Conversion">
+                <display-name xml:lang="x-default">Conversion</display-name>
+                <attribute attribute-id="conversionDay" system="true"/>
+                <attribute attribute-id="conversionWeek" system="true"/>
+                <attribute attribute-id="conversionMonth" system="true"/>
+                <attribute attribute-id="conversionYear" system="true"/>
+                <attribute attribute-id="ordersDay" system="true"/>
+                <attribute attribute-id="ordersWeek" system="true"/>
+                <attribute attribute-id="ordersMonth" system="true"/>
+                <attribute attribute-id="ordersYear" system="true"/>
+                <attribute attribute-id="unitsDay" system="true"/>
+                <attribute attribute-id="unitsWeek" system="true"/>
+                <attribute attribute-id="unitsMonth" system="true"/>
+                <attribute attribute-id="unitsYear" system="true"/>
+                <attribute attribute-id="revenueDay" system="true"/>
+                <attribute attribute-id="revenueWeek" system="true"/>
+                <attribute attribute-id="revenueMonth" system="true"/>
+                <attribute attribute-id="revenueYear" system="true"/>
+                <attribute attribute-id="lookToBookRatioDay" system="true"/>
+                <attribute attribute-id="lookToBookRatioWeek" system="true"/>
+                <attribute attribute-id="lookToBookRatioMonth" system="true"/>
+                <attribute attribute-id="lookToBookRatioYear" system="true"/>
+                <attribute attribute-id="salesVelocityDay" system="true"/>
+                <attribute attribute-id="salesVelocityWeek" system="true"/>
+                <attribute attribute-id="salesVelocityMonth" system="true"/>
+                <attribute attribute-id="salesVelocityYear" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="PricesAndRates">
+                <display-name xml:lang="x-default">Prices &amp; Rates</display-name>
+                <attribute attribute-id="costPrice" system="true"/>
+                <attribute attribute-id="avgSalesPriceDay" system="true"/>
+                <attribute attribute-id="avgSalesPriceWeek" system="true"/>
+                <attribute attribute-id="avgSalesPriceMonth" system="true"/>
+                <attribute attribute-id="avgSalesPriceYear" system="true"/>
+                <attribute attribute-id="avgGrossMarginValueDay" system="true"/>
+                <attribute attribute-id="avgGrossMarginValueWeek" system="true"/>
+                <attribute attribute-id="avgGrossMarginValueMonth" system="true"/>
+                <attribute attribute-id="avgGrossMarginValueYear" system="true"/>
+                <attribute attribute-id="avgGrossMarginPercentDay" system="true"/>
+                <attribute attribute-id="avgGrossMarginPercentWeek" system="true"/>
+                <attribute attribute-id="avgGrossMarginPercentMonth" system="true"/>
+                <attribute attribute-id="avgGrossMarginPercentYear" system="true"/>
+                <attribute attribute-id="returnRate" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Freshness">
+                <display-name xml:lang="x-default">Freshness</display-name>
+                <attribute attribute-id="availableDate" system="true"/>
+                <attribute attribute-id="daysAvailable" system="true"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="ProductInventoryList"/>
+
+    <type-extension type-id="ProductInventoryRecord"/>
+
+    <type-extension type-id="ProductLineItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="bonusProductLineItemUUID">
+                <display-name xml:lang="x-default">Bonus Product Line Item UUID</display-name>
+                <description xml:lang="x-default">This represents the UUID of the product line item that holds the qualifying product.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="fromStoreId">
+                <display-name xml:lang="x-default">From Store ID</display-name>
+                <description xml:lang="x-default">Links the store to the product line item for grouping shipments in the checkout process.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="preOrderUUID">
+                <display-name xml:lang="x-default">pre order uuid</display-name>
+                <description xml:lang="x-default">this custom attribute captures the original product line item uuid before it is part of an placed order</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+    </type-extension>
+
+    <type-extension type-id="ProductList"/>
+
+    <type-extension type-id="ProductListItem"/>
+
+    <type-extension type-id="ProductListRegistrant"/>
+
+    <type-extension type-id="Profile">
+        <group-definitions>
+            <attribute-group group-id="Standard">
+                <display-name xml:lang="x-default">Profile Attributes</display-name>
+                <attribute attribute-id="salutation" system="true"/>
+                <attribute attribute-id="title" system="true"/>
+                <attribute attribute-id="companyName" system="true"/>
+                <attribute attribute-id="jobTitle" system="true"/>
+                <attribute attribute-id="firstName" system="true"/>
+                <attribute attribute-id="lastName" system="true"/>
+                <attribute attribute-id="suffix" system="true"/>
+                <attribute attribute-id="gender" system="true"/>
+                <attribute attribute-id="birthday" system="true"/>
+                <attribute attribute-id="email" system="true"/>
+                <attribute attribute-id="nextBirthday" system="true"/>
+                <attribute attribute-id="secondName" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Phone">
+                <display-name xml:lang="x-default">Phone Numbers</display-name>
+                <attribute attribute-id="phoneHome" system="true"/>
+                <attribute attribute-id="phoneBusiness" system="true"/>
+                <attribute attribute-id="phoneMobile" system="true"/>
+                <attribute attribute-id="fax" system="true"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="Promotion"/>
+
+    <type-extension type-id="Recommendation"/>
+
+    <type-extension type-id="Return"/>
+
+    <type-extension type-id="ReturnCase"/>
+
+    <type-extension type-id="ReturnCaseItem"/>
+
+    <type-extension type-id="ReturnItem"/>
+
+    <type-extension type-id="ServiceConfig"/>
+
+    <type-extension type-id="ServiceCredential"/>
+
+    <type-extension type-id="ServiceProfile"/>
+
+    <type-extension type-id="Shipment">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="fromStoreId">
+                <display-name xml:lang="x-default">Pickup Store ID</display-name>
+                <description xml:lang="x-default">Used to map the shipment to a  brick and mortar store.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="shipmentType">
+                <display-name xml:lang="x-default">When this attribute equals 'instore', the checkout flow will assign the shipping method (005) which has a no shipping charge.</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="storepickup">
+                <display-name xml:lang="x-default">Store Pickup Information</display-name>
+                <attribute attribute-id="fromStoreId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="ShippingLineItem"/>
+
+    <type-extension type-id="ShippingMethod">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="storePickupEnabled">
+                <display-name xml:lang="x-default">Store Pickup Enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>true</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="estimatedArrivalTime">
+                <display-name xml:lang="x-default">Estimated Arrival Time</display-name>
+                <description xml:lang="x-default">Estimated days until delivery</description>
+                <type>string</type>
+                <localizable-flag>true</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="storePickUp">
+                <display-name xml:lang="x-default">Store Pick Up</display-name>
+                <attribute attribute-id="storePickupEnabled"/>
+            </attribute-group>
+            <attribute-group group-id="shippingMethodAttr">
+                <display-name xml:lang="x-default">Shipping Method Attributes</display-name>
+                <attribute attribute-id="estimatedArrivalTime"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="ShippingOrder"/>
+
+    <type-extension type-id="ShippingOrderItem"/>
+
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="GoogleVerificationTag">
+                <display-name xml:lang="x-default">GoogleVerificationTag - Content Attribute</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="buildNotificationEmailList">
+                <display-name xml:lang="x-default">Build Notification Email List</display-name>
+                <description xml:lang="x-default">Semicolon separated list</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="checkTLS">
+                <display-name xml:lang="x-default">Check TLS</display-name>
+                <description xml:lang="x-default">When true, this causes a TLS check to take place based on whether or not a cookie ('dw_TLSWarning') has been set on the browser</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="countryCode">
+                <display-name xml:lang="x-default">Default Country Code</display-name>
+                <description xml:lang="x-default">Default country code for store searches</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">USA</display>
+                        <value>US</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">CANADA</display>
+                        <value>CA</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerServiceEmail">
+                <display-name xml:lang="x-default">Customer Service Email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>0</field-length>
+                <default-value>noreply@dsalesforce.com</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="disableResponsiveDesign">
+                <display-name xml:lang="x-default">Disable Responsive Design</display-name>
+                <description xml:lang="x-default">Disable Responsive Design for Storefront</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="enableInfiniteScroll">
+                <display-name xml:lang="x-default">Enable Infinite Scroll</display-name>
+                <description xml:lang="x-default">This Boolean toggles the option for infinite scrolling or pagination from within the search grid.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="enableMultiShipping">
+                <display-name xml:lang="x-default">Enable MultiShipping</display-name>
+                <description xml:lang="x-default">The attribute is used to enable/disable Multi-Shipment Checkout for each site via BM.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="enableStorePickUp">
+                <display-name xml:lang="x-default">Enable In Store Pickup</display-name>
+                <description xml:lang="x-default">This Boolean enables the storefront ability to perform tasks related to in store orders</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="listPriceDefault">
+                <display-name xml:lang="x-default">Default List Price Book ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>usd-m-list-prices</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="mapAPI">
+                <display-name xml:lang="x-default">google map api key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+	    <attribute-definition attribute-id="rateLimiterThreshold">
+		<display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
+		<description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
+		<type>int</type>
+		<mandatory-flag>false</mandatory-flag>
+		<externally-managed-flag>false</externally-managed-flag>
+		<min-value>0.0</min-value>
+		<default-value>5</default-value>
+	    </attribute-definition>
+            <attribute-definition attribute-id="slideshoweffect">
+                <display-name xml:lang="x-default">Slide Slow effect</display-name>
+                <description xml:lang="x-default">Please visit http://jquery.malsup.com/cycle/browser.html for complete visual effects</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">blindX (slide from left)</display>
+                        <value>blindX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">blindY (slide from bottom)</display>
+                        <value>blindY</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">blindZ (slide from bottom right corner)</display>
+                        <value>blindZ</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">cover (slide from left, clean)</display>
+                        <value>cover</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">curtainX (expand from center horizontally)</display>
+                        <value>curtainX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">curtainY (expand from center vertically)</display>
+                        <value>curtainY</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">fade</display>
+                        <value>fade</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">fadeZoom (Zoom out from center)</display>
+                        <value>fadeZoom</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">growX (grow from center horizontally)</display>
+                        <value>growX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">growY (grow from center vertically)</display>
+                        <value>growY</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">none (No effects)</display>
+                        <value>none</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollUp (Scroll Up)</display>
+                        <value>scrollUp</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollDown (Scroll Down)</display>
+                        <value>scrollDown</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollLeft (Scroll Left)</display>
+                        <value>scrollLeft</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollRight (Scroll Right)</display>
+                        <value>scrollRight</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollHorz (Scroll Horizontally)</display>
+                        <value>scrollHorz</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">scrollVert (Scroll Vertically)</display>
+                        <value>scrollVert</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">shuffle</display>
+                        <value>shuffle</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">slideX (Slide to the right)</display>
+                        <value>slideX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">slideY (Slide Bottom)</display>
+                        <value>slideY</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">toss</display>
+                        <value>toss</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">turnUp</display>
+                        <value>turnUp</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">turnDown</display>
+                        <value>turnDown</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">turnLeft</display>
+                        <value>turnLeft</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">turnRight</display>
+                        <value>turnRight</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">uncover</display>
+                        <value>uncover</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">wipe</display>
+                        <value>wipe</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">zoom</display>
+                        <value>zoom</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="storeLookupMaxDistance">
+                <display-name xml:lang="x-default">Store Lookup Max Distance</display-name>
+                <description xml:lang="x-default">Store Lookup Max Distance</description>
+                <type>enum-of-int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">50</display>
+                        <value>50</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">75</display>
+                        <value>75</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">100</display>
+                        <value>100</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">150</display>
+                        <value>150</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">200</display>
+                        <value>200</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="storeLookupUnit">
+                <display-name xml:lang="x-default">Store Lookup Unit</display-name>
+                <description xml:lang="x-default">Used in finding the store near the ZIP code specified in the storefront by the end user.</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition>
+                        <display xml:lang="x-default">kilometers</display>
+                        <value>km</value>
+                    </value-definition>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">miles</display>
+                        <value>mi</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Storefront Configs">
+                <display-name xml:lang="x-default">Storefront Configurations</display-name>
+                <attribute attribute-id="listPriceDefault"/>
+                <attribute attribute-id="GoogleVerificationTag"/>
+                <attribute attribute-id="buildNotificationEmailList"/>
+                <attribute attribute-id="enableStorePickUp"/>
+                <attribute attribute-id="countryCode"/>
+                <attribute attribute-id="customerServiceEmail"/>
+                <attribute attribute-id="mapAPI"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="SlotConfiguration"/>
+
+    <type-extension type-id="SourceCodeGroup"/>
+
+    <type-extension type-id="Store">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="inventoryListId">
+                <display-name xml:lang="x-default">Store Inventory List ID</display-name>
+                <description xml:lang="x-default">Store Inventory List ID</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Basic">
+                <display-name xml:lang="x-default">Basic Attributes</display-name>
+                <attribute attribute-id="ID" system="true"/>
+                <attribute attribute-id="name" system="true"/>
+                <attribute system="true" attribute-id="inventoryListID"/>
+            </attribute-group>
+            <attribute-group group-id="Address">
+                <display-name xml:lang="x-default">Address</display-name>
+                <attribute attribute-id="address1" system="true"/>
+                <attribute attribute-id="address2" system="true"/>
+                <attribute attribute-id="postalCode" system="true"/>
+                <attribute attribute-id="city" system="true"/>
+                <attribute attribute-id="stateCode" system="true"/>
+                <attribute attribute-id="countryCode" system="true"/>
+                <attribute attribute-id="longitude" system="true"/>
+                <attribute attribute-id="latitude" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Contact">
+                <display-name xml:lang="x-default">Contact Details</display-name>
+                <attribute attribute-id="phone" system="true"/>
+                <attribute attribute-id="fax" system="true"/>
+                <attribute attribute-id="email" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Details">
+                <display-name xml:lang="x-default">Store Details</display-name>
+                <attribute attribute-id="storeHours" system="true"/>
+                <attribute attribute-id="storeEvents" system="true"/>
+                <attribute attribute-id="image" system="true"/>
+                <attribute attribute-id="longitude" system="true"/>
+                <attribute attribute-id="latitude" system="true"/>
+            </attribute-group>
+            <attribute-group group-id="Inventory">
+                <display-name xml:lang="x-default">Inventory</display-name>
+                <attribute attribute-id="inventoryListId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="TrackingInfo"/>
+
+    <type-extension type-id="TrackingRef"/>
+
+</metadata>
