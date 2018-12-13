@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * Address base controller SaveAddress route overridden to properly display error message in the event of an attempt to save/add duplicate address to AddressBook
+ *
+ */
+
 var page = module.superModule;
 var server = require('server');
 
@@ -8,8 +13,9 @@ server.extend(page);
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var ecommerce = require('*/cartridge/scripts/middleware/ecommerce');
 
-server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, res, next) {
+server.replace('SaveAddress', csrfProtection.validateAjaxRequest, ecommerce.checkEcommerceEnabled, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var formErrors = require('*/cartridge/scripts/formErrors');
@@ -29,7 +35,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                 var address = req.querystring.addressId
                     ? addressBook.getAddress(req.querystring.addressId)
                     : addressBook.createAddress(formInfo.addressId);
-                if (address) {
+                if (address && ((req.querystring.addressId === formInfo.addressId) || (addressBook.getAddress(formInfo.addressId) === null))) {
                     if (req.querystring.addressId) {
                         address.setID(formInfo.addressId);
                     }
@@ -70,7 +76,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                         Resource.msg('error.message.idalreadyexists', 'forms', null);
                     res.json({
                         success: false,
-                        fields: formErrors(addressForm)
+                        fields: formErrors.getFormErrors(addressForm)
                     });
                 }
             });
@@ -78,7 +84,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     } else {
         res.json({
             success: false,
-            fields: formErrors(addressForm)
+            fields: formErrors.getFormErrors(addressForm)
         });
     }
     return next();
