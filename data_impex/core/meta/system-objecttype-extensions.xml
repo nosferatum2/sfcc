@@ -96,6 +96,8 @@
                 <type>text</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>
+                <default-value>{"Account":{"title":"My Account","type":"MyAccount","ns":"account"},"Cart":{"title":"Cart","type":"Cart","ns":"cart"},"Checkout":{"title":"Checkout","type":"checkout","ns":"checkout"},"Error-Start":{"title":"General Error","type":"error","ns":"error"},"Home-Show":{"title":"Storefront","type":"storefront","ns":"storefront"},"Order-Confirmation":{"title":"Order Confirmation","type":"orderconfirmation","ns":"orderconfirmation"},"Product-Show":{"title":"Product Detail","type":"product","ns":"product"},"Search-Show":{"title":"Product Search Results","type":"search","ns":"search"},"Stores-Find":{"title":"Store Locator","type":"StoreLocator","ns":"storelocator"}}
+                </default-value>
             </attribute-definition>
         </custom-attribute-definitions>
         <!--
