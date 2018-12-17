@@ -1,7 +1,7 @@
-@import "~org/scss/variables";
+@import "~org/variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "~base/scss/components/categoryTiles";
+@import "~base/components/categoryTiles";
 
 .page {
     .hero {

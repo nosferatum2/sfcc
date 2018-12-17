@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('base/js/product/base');
+var base = require('base/product/base');
 var slickConfigs = require('../config/slickConfigs');
 var zoomConfigs = require('../config/zoomConfigs');
 var imagesloaded = require('imagesloaded');

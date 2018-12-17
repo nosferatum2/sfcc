@@ -1,6 +1,6 @@
 'use strict';
 
-var cart = require('base/js/cart/cart');
+var cart = require('base/cart/cart');
 var base = require('../product/base');
 
 base.carouselInit();

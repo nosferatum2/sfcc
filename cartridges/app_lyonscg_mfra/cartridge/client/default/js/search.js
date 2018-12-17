@@ -1,8 +1,8 @@
 'use strict';
 
-var processInclude = require('base/js/util');
+var processInclude = require('base/util');
 
 $(document).ready(function () {
     processInclude(require('./search/search'));
-    processInclude(require('base/js/product/quickView'));
+    processInclude(require('base/product/quickView'));
 });

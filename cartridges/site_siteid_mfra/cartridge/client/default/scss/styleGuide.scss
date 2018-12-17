@@ -1,15 +1,15 @@
-@import "~org/scss/variables";
+@import "~org/variables";
 @import "bootstrap/scss/bootstrap";
-@import "~org/scss/bootstrapOverrides/buttons";
-@import "~org/scss/bootstrapOverrides/forms";
-@import "~org/scss/bootstrapOverrides/reboot";
-@import "~org/scss/bootstrapOverrides/card";
-@import "~org/scss/bootstrapOverrides/modal";
-@import "~org/scss/bootstrapOverrides/tables";
-@import "~org/scss/bootstrapOverrides/breadcrumb";
-@import "~org/scss/bootstrapOverrides/nav";
-@import "~org/scss/bootstrapOverrides/button-group";
-@import "~org/scss/bootstrapOverrides/gradients";
+@import "~org/bootstrapOverrides/buttons";
+@import "~org/bootstrapOverrides/forms";
+@import "~org/bootstrapOverrides/reboot";
+@import "~org/bootstrapOverrides/card";
+@import "~org/bootstrapOverrides/modal";
+@import "~org/bootstrapOverrides/tables";
+@import "~org/bootstrapOverrides/breadcrumb";
+@import "~org/bootstrapOverrides/nav";
+@import "~org/bootstrapOverrides/button-group";
+@import "~org/bootstrapOverrides/gradients";
 
 .sg-sidenav-icon {
     position: fixed;
