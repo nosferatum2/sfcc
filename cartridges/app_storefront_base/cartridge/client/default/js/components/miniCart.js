@@ -1,6 +1,6 @@
 'use strict';
 
-var cart = require('lyonscg/cart/cart');
+var cart = require('lyonscg/js/cart/cart');
 
 module.exports = function () {
     cart();

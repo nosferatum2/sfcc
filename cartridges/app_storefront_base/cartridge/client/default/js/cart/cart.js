@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('lyonscg/product/base');
+var base = require('lyonscg/js/product/base');
 
 /**
  * appends params to a url

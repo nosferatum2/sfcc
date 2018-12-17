@@ -1,9 +1,9 @@
 @import "../variables";
 @import "bootstrap/scss/variables";
-@import "~base/checkout/checkoutComponents";
+@import "~base/scss/checkout/checkoutComponents";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
-@import "~base/components/creditCardField";
+@import "~base/scss/components/creditCardField";
 
 $checkout-font-weight: 600;
 
