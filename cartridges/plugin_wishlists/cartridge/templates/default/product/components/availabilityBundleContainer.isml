@@ -1,0 +1,5 @@
+<isset name="isWishlistEnabled" value="${dw.system.Site.getCurrent().getCustomPreferenceValue('enableWishlist')}" scope="page"/>
+<isinclude template="product/components/availability" />
+<isif condition="${isWishlistEnabled}">
+    <isinclude template="wishlist/components/addToWishListButton" />
+</isif>
