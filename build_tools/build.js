@@ -572,40 +572,6 @@ if (options.cover) {
     });
 }
 
-// compile static assets
-if (options.compile) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        const site = packageFile.sites[siteIndex];
-        if (site.paths) {
-            const cartridges = site.paths;
-            const aliases = helpers.createAliases(site, pwd, (helpers.isBuildEnvironment('compile', 'css')));
-            for (let cartridge in cartridges) {
-                const cartridgePath = cartridges[cartridge];
-                const cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName) {
-                    if (helpers.isBuildEnvironment('compile', 'css')) {
-                        console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, aliases, false, uploadFiles, code => {
-                            if (code == 1) {
-                              process.exit(code);
-                            }
-                        });
-                    } else {
-                        console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(cartridgeName, aliases, false, uploadFiles, code => {
-                            if (code == 1) {
-                              process.exit(code);
-                            }
-                        });
-                    }
-                }
-            }
-        }
-    });
-}
-
 if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
@@ -652,42 +618,6 @@ if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
     console.log(chalk.green('Creating folders and files for cartridge ' + cartridgeName));
     createCartridge(cartridgeName, cwd);
-}
-
-if (options.watch) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    const cartridgesPath = path.join(cwd, 'cartridges');
-
-    console.log('Watching for file changes...');
-
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        const site = packageFile.sites[siteIndex];
-        if (site.paths) {
-            const cartridges = site.paths;
-            const cssAliases = helpers.createAliases(site, pwd, true);
-            const jsAliases =  helpers.createAliases(site, pwd, false);
-            for (let cartridge in cartridges) {
-                const cartridgePath = cartridges[cartridge];
-                const cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName) {
-                    // SASS Watch
-                    console.log(chalk.blue('init watcher for css for cartridge ' + cartridgeName));
-                    css(cartridgeName, cssAliases, 'css', uploadFiles, code => {
-                        if (code == 1) {
-                            process.exit(code);
-                        }
-                    });
-                    // JS Watch
-                    console.log(chalk.blue('init watcher for js for cartridge ' + cartridgeName));
-                    js(cartridgeName, jsAliases, 'js', uploadFiles, code => {
-                        if (code == 1) {
-                            process.exit(code);
-                        }
-                    });
-                }
-            }
-        }
-    });
 }
 
 if (options.deployData) {
