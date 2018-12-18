@@ -123,7 +123,8 @@
         "lyonscg": "../cartridges/app_lyonscg_mfra",
         "org": "../cartridges/org_organizationid_mfra",
         "site": "../cartridges/site_siteid_mfra",
-		"wishlist": "../cartridges/plugin_wishlists"
+		"wishlist": "../cartridges/plugin_wishlists",
+		"productCompare": "../cartridges/plugin_productcompare"
       },
       "packageName": "app_storefront_base"
     }

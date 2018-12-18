@@ -4,5 +4,6 @@ var processInclude = require('base/util');
 
 $(document).ready(function () {
     processInclude(require('lyonscg/search'));
-    processInclude(require('./product/wishlistHeart'));
+    processInclude(require('wishlist/product/wishlistHeart'));
+    processInclude(require('./product/compare'));
 });
