@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const glob = require("glob");
 const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -185,11 +186,26 @@ module.exports = class WebpackConfiguration {
     };
 
     getResolver(type) {
-        const aliases = {};
+        const aliases = new Object();
+
         this.cartridges.forEach(cartridge => {
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
-            aliases[cartridge.alias] = path.resolve(clientPath, `default/${type}`)
+            aliases[cartridge.alias] = path.join(clientPath, 'default', type);
+            
+            if (fs.existsSync(clientPath)) {
+                const locales = fs.readdirSync(clientPath)
+                    .map(name => path.join(clientPath, name))
+                    .filter(folder => fs.lstatSync(folder).isDirectory())
+                    .filter(folder => folder.charAt(0) !== '.')
+                    .filter(folder => path.basename(folder) !== 'default') // added a filter to block hidden folders, like .DS_Store
+                
+                for (let locale in locales) {
+                    const name = path.basename(locales[locale]);
+                    aliases[path.join(cartridge.alias, name)] = path.join(clientPath, name, type);
+                }
+            }
         });
+
         return {
             modules: ["node_modules", path.resolve(__dirname, "cartridges")],
             alias: aliases,
