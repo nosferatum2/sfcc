@@ -338,9 +338,10 @@ module.exports = class WebpackConfigurator {
         const plugins = new Array();
 
         if (this.isOption('mode', 'production')) {
+            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static")
             plugins.push(new CleanWebpackPlugin([
-                `${this.output.path}/*/css`, 
-                `${this.output.path}/*/js`, 
+                `${outputPath}/*/css`, 
+                `${outputPath}/*/js`, 
                 ".cache-loader"
             ], {
                 root: process.cwd(),
