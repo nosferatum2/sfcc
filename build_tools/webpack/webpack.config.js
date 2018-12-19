@@ -103,7 +103,7 @@ module.exports = class WebpackConfigurator {
     getJsFiles() {
         const files = new Object();
 
-        this.cartridges.forEach(cartridge => {
+        for (let cartridge of this.cartridges) {
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
             glob.sync(path.resolve(clientPath, "*", "js", "*.js")).forEach(file => {
                 const key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, ".js"));
@@ -111,7 +111,8 @@ module.exports = class WebpackConfigurator {
                     files[key] = file;
                 }
             });
-        });
+        }
+
         return files;
     };
 
@@ -123,7 +124,7 @@ module.exports = class WebpackConfigurator {
     getScssFiles() {
         const files = new Object();
 
-        this.cartridges.forEach(cartridge => {
+        for (let cartridge of this.cartridges) {
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
             glob.sync(path.resolve(clientPath, "*", "scss", "**", "*.scss"))
             .filter(file => !path.basename(file).startsWith("_"))
@@ -134,8 +135,8 @@ module.exports = class WebpackConfigurator {
                     files[key] = file;
                 }
             });
-        });
-        
+        }
+
         return files;
     };
 
@@ -266,7 +267,7 @@ module.exports = class WebpackConfigurator {
     getResolver(type) {
         const aliases = new Object();
 
-        this.cartridges.forEach(cartridge => {
+        for (let cartridge of this.cartridges) { 
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
             aliases[cartridge.alias] = path.join(clientPath, 'default', type);
             
@@ -277,12 +278,12 @@ module.exports = class WebpackConfigurator {
                     .filter(folder => folder.charAt(0) !== '.')
                     .filter(folder => path.basename(folder) !== 'default') // added a filter to block hidden folders, like .DS_Store
                 
-                for (let locale in locales) {
-                    const name = path.basename(locales[locale]);
+                for (let locale of locales) {
+                    const name = path.basename(locale)
                     aliases[path.join(cartridge.alias, name)] = path.join(clientPath, name, type);
                 }
-            }
-        });
+            }   
+        }
 
         return {
             modules: ["node_modules", path.resolve(__dirname, "cartridges")],
