@@ -10,18 +10,14 @@ const shell = require('shelljs');
 const spawn = require('child_process').spawn;
 const path = require('path');
 const fs = require('fs');
-const css = require('./cssCompile');
-const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
 const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
-const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
-const helpers = require('./helpers');
 const jsonlint = require('jsonlint');
 
 // current working directory is meant to be the root of the project, not build_tools
@@ -63,11 +59,6 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Run all unittests with coverage report.'
     }, {
-        option: 'compile',
-        type: 'String',
-        description: 'Compile css/js files.',
-        enum: ['css', 'js']
-    }, {
         option: 'lint',
         type: 'String',
         description: 'Lint scss/js files.',
@@ -80,10 +71,6 @@ const optionator = require('optionator')({
         option: 'createCartridge',
         type: 'String',
         description: 'Create new cartridge structure'
-    }, {
-        option: 'watch',
-        type: 'Boolean',
-        description: 'Watch and upload files'
     }, {
         option: 'onlycompile',
         type: 'Boolean',
@@ -196,18 +183,22 @@ const optionator = require('optionator')({
         type: 'String',
         description: 'cartridge name version.properties should be created within',
         required: false
-    }, {
-        option: 'mode',
-        type: 'String', 
-        description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
-        required: false
-    }, {
-        option: 'buildEnvironment',
-        type: 'String',
-        description: 'Identifies which build environment object to use; "production" or "development"'
     }
     ]
 });
+
+/**
+ * @name isBuildEnvironment
+ * @description checks whether the build environment flag exists 
+ * and is either equal to true or the passed value
+ * @param {String} key
+ * @param {String} value - optional
+ * @returns {Boolean}
+ */
+function isBuildEnvironment(key, value) {
+    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
+                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
+}
 
 /**
  * @name setBuildEnvironmentFlags
@@ -234,7 +225,7 @@ function checkForDwJson() {
  * Deletes all files in the tmp directory
  */
 function clearTmp() {
-    if (helpers.isBuildEnvironment('verbose')) {
+    if (isBuildEnvironment('verbose')) {
         console.log(chalk.green('build.js:clearTmp()'));
     }
     shell.rm('-rf', TEMP_DIR);
@@ -463,7 +454,7 @@ function fileSearch(startFile, type) {
            fileSearch(filename,type);
        }
        else if (filename.indexOf(type) >= 0) {
-           if (helpers.isBuildEnvironment('verbose')) {
+           if (isBuildEnvironment('verbose')) {
                console.log('FOUND JSON: ',filename);
 	   }
 	   try {
@@ -576,7 +567,7 @@ if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
         console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (helpers.isBuildEnvironment('verbose')) {
+        if (isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
         }
@@ -592,7 +583,7 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (helpers.isBuildEnvironment('verbose')) {
+        if (isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
         }
