@@ -2,6 +2,10 @@
 
 const minimatch = require('minimatch');
 
+/**
+ * A custom Webpack plugin to remove unneeded JavaScript files that
+ * are generated during the Scss compilation
+ */
 module.exports = class MiniCssExtractPluginCleanup {
     apply(compiler) {
         compiler.hooks.emit.tapAsync('MiniCssExtractPluginCleanup', (compilation, callback) => {

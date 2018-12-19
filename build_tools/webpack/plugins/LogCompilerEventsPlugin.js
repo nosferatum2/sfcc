@@ -1,6 +1,10 @@
 'use strict';
 
 const chalk = require('chalk');
+
+/**
+ * A custom Webpack plugin to generate logging around compiler events
+ */
 module.exports = class LogCompilerEventsPlugin {
     constructor(options) {
         this.cartridges = options.cartridges || [];

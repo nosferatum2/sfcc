@@ -11,7 +11,16 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
 const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
 
+/**
+ * Class to generate Webpack configurations
+ * https://webpack.js.org/configuration/
+ */
 module.exports = class WebpackConfigurator {
+    /**
+     * Initialize configurator instance with variables to aid in building the configuration object 
+     * @param {Object} Site - A site definition (see the root package.json "sites" array)
+     * @param {Object} options - Additional options to determine configuration object (see the root package.json "buildEnvironment" object)
+     */
     constructor(site, options) {
         this.site = site;
         this.options = options;
@@ -20,6 +29,10 @@ module.exports = class WebpackConfigurator {
         this.siteCartridge = this.cartridges[this.cartridges.findIndex(cartridge => cartridge.alias === 'site')];
     };
 
+    /**
+     * Create configuration objects for the given site
+     * @return {Array} - JavaScript and Scss configuration objects
+     */
     create() {
         return [
             this.createJsConfiguration(),
@@ -27,6 +40,10 @@ module.exports = class WebpackConfigurator {
         ];
     };
 
+    /**
+     * Create a JS configuration object
+     * @return {Object}
+     */
     createJsConfiguration() {
         return Object.assign(this.getCommonConfigurationOptions(), {
             name    : 'js',
@@ -38,6 +55,10 @@ module.exports = class WebpackConfigurator {
         });
     };    
 
+    /**
+     * Create a Scss configuration object
+     * @return {Object}
+     */
     createScssConfiguration() {
         return Object.assign(this.getCommonConfigurationOptions(), {
             name    : 'scss',
@@ -49,6 +70,10 @@ module.exports = class WebpackConfigurator {
         });
     };
 
+    /**
+     * Get configuration options that are independent of asset type
+     * @return {Object}
+     */
     getCommonConfigurationOptions() {
         return {
             mode   : this.getOption('mode'),
@@ -57,13 +82,24 @@ module.exports = class WebpackConfigurator {
         };
     };
 
+    /**
+     * Tell webpack where to emit the bundles and how to name these files
+     * https://webpack.js.org/concepts/#output
+     * @return {Object}
+     */
     getOutput() {
         return {
+            // Set the path to the static folder of the current "site" cartridge
             path: path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static"),
             filename: "[name].js"
         };
     };
 
+    /**
+     * Get JS files (as name : 'path/to/file') that webpack should use to build out its internal dependency graph
+     * https://webpack.js.org/concepts/#entry
+     * @return {Object}
+     */
     getJsFiles() {
         const files = new Object();
 
@@ -79,6 +115,11 @@ module.exports = class WebpackConfigurator {
         return files;
     };
 
+    /**
+     * Get Scss files (as name : 'path/to/file') that webpack should use to build out its internal dependency graph
+     * https://webpack.js.org/concepts/#entry
+     * @return {Object}
+     */
     getScssFiles() {
         const files = new Object();
 
@@ -98,6 +139,11 @@ module.exports = class WebpackConfigurator {
         return files;
     };
 
+    /**
+     * Build the module option to determine how Webpack should handle JS dependencies
+     * https://webpack.js.org/configuration/module/
+     * @return {Object}
+     */
     handleJsModules() {
         return {
             rules: [
@@ -110,6 +156,11 @@ module.exports = class WebpackConfigurator {
         }
     };
 
+    /**
+     * Build the module option to determine how Webpack should handle Scss dependencies
+     * https://webpack.js.org/configuration/module/
+     * @return {Object}
+     */
     handleScssModules() {
         return {
             rules: [
@@ -121,6 +172,11 @@ module.exports = class WebpackConfigurator {
         }
     };
 
+    /**
+     * Build the JS loaders array
+     * https://webpack.js.org/concepts/loaders/
+     * @return {Array}
+     */
     getJsLoaders() {
         const loaders = new Array();
 
@@ -144,6 +200,11 @@ module.exports = class WebpackConfigurator {
         return loaders;
     };
 
+    /**
+     * Build the Scss loaders array
+     * https://webpack.js.org/concepts/loaders/
+     * @return {Array}
+     */
     getScssLoaders() {
         const sourceMap = this.isOption('cssSourceMaps');
         const loaders = new Array();
@@ -196,6 +257,12 @@ module.exports = class WebpackConfigurator {
         return loaders;
     };
 
+    /**
+     * Create aliases for the client Js/Scss directories for each cartridge
+     * https://webpack.js.org/configuration/resolve/#resolve-alias
+     * @param {string} type - the asset type; 'js or 'scss'
+     * @return {Object}
+     */
     getResolver(type) {
         const aliases = new Object();
 
@@ -223,6 +290,11 @@ module.exports = class WebpackConfigurator {
         };
     };
 
+    /**
+     * Build an array of plugins needed for the JS configuration
+     * https://webpack.js.org/concepts/plugins/
+     * @return {Array}
+     */
     getJsPlugins() {
         const plugins = new Array();
         const bootstrapPackages = {
@@ -256,6 +328,11 @@ module.exports = class WebpackConfigurator {
         return plugins;
     };
 
+    /**
+     * Build an array of plugins needed for the Scss configuration
+     * https://webpack.js.org/concepts/plugins/
+     * @return {Array}
+     */
     getScssPlugins() {
         const plugins = new Array();
 
@@ -294,15 +371,31 @@ module.exports = class WebpackConfigurator {
         return plugins;
     };
 
+    /**
+     * Decide the amount of bundle information that is displayed by the compiler
+     * https://webpack.js.org/configuration/stats/
+     * @return {string}
+     */
     getStats() {
         return (this.isOption('verbose')) ? "normal" : 'errors-only';
     }
 
+    /**
+     * Check whether an environmental option exists and is either equal to true or the passed value
+     * @param {string} key
+     * @param {string} value - this is optional
+     * @return {boolean}
+     */
     isOption(key, value) {
         return (value) ? (this.options.hasOwnProperty(key) && this.options[key] === value) :
                          (this.options.hasOwnProperty(key) && this.options[key] === 'true');
     };
 
+    /**
+     * Get the value of an environmental option 
+     * @param {string} key
+     * @return {any}
+     */
     getOption(key) {
         return this.options[key];
     };
