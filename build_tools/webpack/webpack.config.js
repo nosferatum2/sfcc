@@ -312,6 +312,17 @@ module.exports = class WebpackConfigurator {
             Util: 'exports-loader?Util!bootstrap/js/src/util'
         };
 
+        if (this.isOption('mode', 'production')) {
+            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static")
+            plugins.push(new CleanWebpackPlugin([
+                `${outputPath}/*/js`,
+                ".cache-loader"
+            ], {
+                root: process.cwd(),
+                verbose: false
+            }));
+        }
+
         plugins.push(new webpack.ProvidePlugin(bootstrapPackages));
         
         plugins.push(new LogCompilerEventsPlugin({
@@ -340,8 +351,7 @@ module.exports = class WebpackConfigurator {
         if (this.isOption('mode', 'production')) {
             const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static")
             plugins.push(new CleanWebpackPlugin([
-                `${outputPath}/*/css`, 
-                `${outputPath}/*/js`, 
+                `${outputPath}/*/css`,
                 ".cache-loader"
             ], {
                 root: process.cwd(),
