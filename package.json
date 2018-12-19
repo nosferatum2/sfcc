@@ -14,10 +14,12 @@
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
-    "compile:dev": "webpack --config build_tools/webpack/compile.js --mode=development",
-    "compile:prod": "webpack --config build_tools/webpack/compile.js --mode=production",
-    "compile:watch": "webpack --config build_tools/webpack/compile.js --mode=development --watch --info-verbosity none",
+    "compile:js:prod": "webpack --config build_tools/webpack/compile.js --mode=production",
+    "compile:scss:prod": "webpack --config build_tools/webpack/compile.js --mode=production",
+    "compile:js": "webpack --config build_tools/webpack/compile.js --mode=development --config-name js",
+    "compile:scss" : "webpack --config build_tools/webpack/compile.js --mode=development --config-name scss",
     "compile:fonts": "node bin/Makefile compileFonts",
+    "watch": "webpack --config build_tools/webpack/compile.js --mode=development --watch --info-verbosity none",
     "lint": "node build_tools/build --lint css && node build_tools/build --lint js",
     "lint:css": "node build_tools/build --lint css",
     "lint:js": "node build_tools/build --lint js",
@@ -148,16 +150,16 @@
       "verbose": "false",
       "cssSourceMaps": "true",
       "cssAutoPrefixer": "false",
-      "jsSourceMaps": "true",
-      "manualFileUpload": "false"
+      "jsSourceMaps": "true", 
+      "notifications": "true"
     },
     "production": {
       "mode": "production",
-      "verbose": "true",
+      "verbose": "false",
       "cssSourceMaps": "false",
       "cssAutoPrefixer": "true",
       "jsSourceMaps": "false",
-      "manualFileUpload": "false"
+      "notifications": "false"
     }
   },
   "deployment": {
