@@ -409,21 +409,12 @@ function activateCodeVersion(uploadArguments) {
  */
 function getCartridges(packageFile) {
     var cartridges = [];
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        if (packageFile.sites[siteIndex].paths) {
-            for (var key in packageFile.sites[siteIndex].paths) {
-                var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                var cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName && cartridges.indexOf(cartridgeName) == -1) {
-                    console.log(chalk.blue('passing in "' + cartridgeName + '"'));
-                    cartridges.push(cartridgeName);
-                } else {
-                    console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
-                }
-
-            }
+    for (let site of packageFile.sites) {
+        for (let cartridge of site.cartridges) {
+            console.log(chalk.blue('passing in "' + cartridge.name + '"'));
+            cartridges.push(cartridge.name);
         }
-    });
+    }
 
     // always add in modules, assume this is a required cartridge
     if (cartridges.indexOf('modules') == -1) {
