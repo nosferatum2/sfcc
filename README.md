@@ -57,9 +57,9 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 
 `npm run lint` - Execute linting for all JavaScript and SCSS files in the project. You should run this command before committing your code.
 
-## Watching for changes and uploading
+## Watching for changes
 
-`npm run watch` - Watches everything and recompiles (if necessary) and uploads to the sandbox. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
+`npm run watch` - Watch and recompile both .js and .scss files on changes (this is more performant than the individual compile scripts).
 
 ## Uploading
 
@@ -130,7 +130,7 @@ verbose | Verbose logging | "true", "false" |
 cssSourceMaps | CSS source mapping | "true", "false" |
 cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
 jsSourceMaps | JS source mapping | "true", "false" |
-manualFileUpload | Toggles automatic upload for the watch functionality ('npm run watch'). This should always be set to "false" for development within VS Code, Eclipse, or any IDE that supports a digital server connection / auto-upload | "true", "false" |
+notifications | Native system notifications for compiler events | "true", "false" |
 
 ### Performance Considerations
 
