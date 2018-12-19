@@ -11,41 +11,51 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
 const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
 
-module.exports = class WebpackConfiguration {
+module.exports = class WebpackConfigurator {
     constructor(site, options) {
         this.site = site;
         this.options = options;
-        
         this.cartridges = site.cartridges;
         this.cartridgesPath = path.resolve(process.cwd(), "cartridges");
         this.siteCartridge = this.cartridges[this.cartridges.findIndex(cartridge => cartridge.alias === 'site')];
     };
 
-    getJsConfiguration() {
-        return {
-            mode    : this.getOption('mode'),
+    create() {
+        return [
+            this.createJsConfiguration(),
+            this.createScssConfiguration()
+        ];
+    };
+
+    createJsConfiguration() {
+        return Object.assign(this.getCommonConfigurationOptions(), {
+            name    : 'js',
             entry   : this.getJsFiles(),
-            output  : this.getOutput(),
             module  : this.handleJsModules(),
             resolve : this.getResolver('js'),
             plugins : this.getJsPlugins(),
-            devtool : this.isOption('jsSourceMaps') ? 'cheap-eval-source-map' : 'none',
-            stats   : this.getStats()
-        }
+            devtool : this.isOption('jsSourceMaps') ? 'cheap-module-source-map' : 'none'
+        });
     };    
 
-    getSassConfiguration() {
-        return {
-            mode    : this.getOption('mode'),
-            entry   : this.getSassFiles(),
-            output  : this.getOutput(),
-            module  : this.handleSassModules(),
+    createScssConfiguration() {
+        return Object.assign(this.getCommonConfigurationOptions(), {
+            name    : 'scss',
+            entry   : this.getScssFiles(),
+            module  : this.handleScssModules(),
             resolve : this.getResolver('scss'),
-            plugins : this.getSassPlugins(),
-            devtool : this.isOption('cssSourceMaps') ? 'cheap-module-source-map' : 'none',
-            stats   : this.getStats()
-        }
-    }
+            plugins : this.getScssPlugins(),
+            devtool : this.isOption('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
+        });
+    };
+
+    getCommonConfigurationOptions() {
+        return {
+            mode   : this.getOption('mode'),
+            output : this.getOutput(),
+            stats  : this.getStats()
+        };
+    };
 
     getOutput() {
         return {
@@ -55,7 +65,8 @@ module.exports = class WebpackConfiguration {
     };
 
     getJsFiles() {
-        const files = {};
+        const files = new Object();
+
         this.cartridges.forEach(cartridge => {
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
             glob.sync(path.resolve(clientPath, "*", "js", "*.js")).forEach(file => {
@@ -68,8 +79,9 @@ module.exports = class WebpackConfiguration {
         return files;
     };
 
-    getSassFiles() {
-        const files = {};
+    getScssFiles() {
+        const files = new Object();
+
         this.cartridges.forEach(cartridge => {
             const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
             glob.sync(path.resolve(clientPath, "*", "scss", "**", "*.scss"))
@@ -81,7 +93,8 @@ module.exports = class WebpackConfiguration {
                     files[key] = file;
                 }
             });
-        })
+        });
+        
         return files;
     };
 
@@ -97,12 +110,12 @@ module.exports = class WebpackConfiguration {
         }
     };
 
-    handleSassModules() {
+    handleScssModules() {
         return {
             rules: [
                 {
                     test: /\.scss$/,
-                    use: this.getSassLoaders()
+                    use: this.getScssLoaders()
                 }
             ]
         }
@@ -110,7 +123,7 @@ module.exports = class WebpackConfiguration {
 
     getJsLoaders() {
         const loaders = new Array();
-        
+
         // Transpile ES6 into a backwards compatible version of JavaScript in current and older browsers or environments
         loaders.unshift({
             loader: 'babel-loader',
@@ -122,21 +135,19 @@ module.exports = class WebpackConfiguration {
                 babelrc: false
             }
         });
-        
+
         if (this.isOption('mode', 'development')) {
             // Caches the result of following loaders on disk (default) or in the database
-            loaders.unshift({ 
-                loader: 'cache-loader' 
-            });
+            loaders.unshift({ loader: 'cache-loader' });
         }
 
         return loaders;
     };
 
-    getSassLoaders() {
+    getScssLoaders() {
         const sourceMap = this.isOption('cssSourceMaps');
         const loaders = new Array();
-         
+
         // Compile Sass to CSS
         loaders.unshift({
             loader: 'sass-loader',
@@ -148,7 +159,7 @@ module.exports = class WebpackConfiguration {
                 ]
             }
         });
-    
+
         // Automatically add vendor prefixes to CSS rules
         // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
         if (this.isOption('cssAutoPrefixer')) {
@@ -177,8 +188,8 @@ module.exports = class WebpackConfiguration {
         // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
         loaders.unshift({ loader: MiniCssExtractPlugin.loader });
     
-        // Caches the result of following loaders on disk (default) or in the database
         if (this.isOption('mode', 'development')) {
+            // Caches the result of following loaders on disk (default) or in the database
             loaders.unshift({ loader: 'cache-loader' });
         }
     
@@ -213,6 +224,7 @@ module.exports = class WebpackConfiguration {
     };
 
     getJsPlugins() {
+        const plugins = new Array();
         const bootstrapPackages = {
             Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
             // Button: 'exports-loader?Button!bootstrap/js/src/button',
@@ -226,19 +238,60 @@ module.exports = class WebpackConfiguration {
             Tooltip: 'exports-loader?Tooltip!bootstrap/js/src/tooltip',
             Util: 'exports-loader?Util!bootstrap/js/src/util'
         };
-        return [
-            new webpack.ProvidePlugin(bootstrapPackages),
-        ];
+
+        plugins.push(new webpack.ProvidePlugin(bootstrapPackages));
+        
+        plugins.push(new LogCompilerEventsPlugin({
+            cartridges: this.cartridges,
+            type: 'js'
+        }))
+        
+        if (this.isOption('notifications')) {
+            plugins.push(new WebpackNotifierPlugin({
+                title: `${this.siteCartridge.name} JS Compiler`,
+                alwaysNotify: true
+            }));
+        }
+
+        return plugins;
     };
 
-    getSassPlugins() {
-        return [
-            new MiniCssExtractPlugin({
-                filename: "[name].css",
-                chunkFilename: "[id].css"
-            }),
-            new MiniCssExtractPluginCleanup(),
-        ];
+    getScssPlugins() {
+        const plugins = new Array();
+
+        if (this.isOption('mode', 'production')) {
+            plugins.push(new CleanWebpackPlugin([
+                `${this.output.path}/*/css`, 
+                `${this.output.path}/*/js`, 
+                ".cache-loader"
+            ], {
+                root: process.cwd(),
+                verbose: false
+            }));
+
+            plugins.push(new OptimizeCssAssetsPlugin());
+        }
+        
+        plugins.push(new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }));
+        
+        plugins.push(new MiniCssExtractPluginCleanup());
+        
+        plugins.push(new LogCompilerEventsPlugin({
+            cartridges: this.cartridges,
+            type: 'scss'
+        }));
+
+        if (this.isOption('notifications')) {
+            plugins.push(new WebpackNotifierPlugin({
+                title: `${this.siteCartridge.name} SCSS Compiler`,
+                alwaysNotify: true
+            }));
+        }
+
+        return plugins;
     };
 
     getStats() {
