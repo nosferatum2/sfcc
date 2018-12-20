@@ -64,7 +64,7 @@ verbose | Verbose logging | "true", "false" |
 cssSourceMaps | CSS source mapping | "true", "false" |
 cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
 jsSourceMaps | JS source mapping | "true", "false" |
-manualFileUpload | Toggles automatic upload for the watch functionality ('npm run watch'). This should always be set to "false" for development within VS Code, Eclipse, or any IDE that supports a digital server connection / auto-upload | "true", "false" |
+notifications | Native system notifications for compiler events | "true", "false" |
 
 ### Performance Considerations
 
