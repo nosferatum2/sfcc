@@ -1,0 +1,10 @@
+/mens p,,,Search-Show,,cgid,mens
+/womens p,,,Search-Show,,cgid,womens
+/kids p,,,Search-Show,,cgid,kids
+/electronics p,,,Search-Show,,cgid,electronics
+/sale p,,,Search-Show,,cgid,sale
+
+**.jpg i s,,,,,/images/imagenotfound.gif
+**.jpeg i s,,,,,/images/imagenotfound.gif
+**.gif i s,,,,,/images/imagenotfound.gif
+**.png i s,,,,,/images/imagenotfound.gif

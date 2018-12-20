@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    This file should be copied and named for each mega-feature or integration.
+
+    For example:
+    
+    `system-objecttype-definitions-cybersource.xml`
+    `system-objecttype-definitions-loyalty.xml`
+    `system-objecttype-definitions-cms.xml`
+
+    For type extensions that are not large enough to warrant a new file,
+    a common convention is to create a file with the name of the site:
+    
+    `system-objecttype-definitions-acmecorp.xml`
+    
+    NOTE:
+    ####
+    Attribute groups for a given type extension (object) should be UNIQUE.
+    Defining an attribute-group with the same group-id accross two different
+    files will lead to overwriting the list attribute-group attributes.
+ -->
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+
+    <!-- The following is an example of a system object type definition for reference purposes -->
+    <!-- <type-extension type-id="Content">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="body">
+                <display-name xml:lang="x-default">Body</display-name>
+                <type>html</type>
+                <localizable-flag>true</localizable-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Content">
+                <display-name xml:lang="x-default">Content</display-name>
+                <attribute attribute-id="body"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension> -->
+
+</metadata>

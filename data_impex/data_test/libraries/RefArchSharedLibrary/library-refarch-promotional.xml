@@ -1,0 +1,2519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    TODO: Prune unneeded content
+
+    This file contains content assets of a promotional nature.
+    Most clients will want to customize the pages where these
+    are used, so these end up getting deleted.
+ -->
+<library xmlns="http://www.demandware.com/xml/impex/library/2006-10-31" library-id="RefArchSharedLibrary">
+    <folder folder-id="root">
+        <online-flag>true</online-flag>
+        <page-attributes>
+            <page-title xml:lang="x-default">RefArch Online Store</page-title>
+            <page-title xml:lang="fr-FR">Boutique en ligne RefArch</page-title>
+            <page-title xml:lang="it-IT">Negozio online RefArch</page-title>
+            <page-title xml:lang="ja-JP">RefArch オンラインストア</page-title>
+            <page-title xml:lang="zh-CN">RefArch 网上商店</page-title>
+            <page-description xml:lang="x-default">Online shopping with the leader in on-demand eCommerce solutions.</page-description>
+            <page-description xml:lang="fr-FR">Achat en ligne avec le leader des solutions e-commerce à la demande.</page-description>
+            <page-description xml:lang="it-IT">Shopping online con il leader delle soluzioni di e-commerce on-demand.</page-description>
+            <page-description xml:lang="ja-JP">オンデマンド eコマースソリューションの最先端プラットフォームでオンラインショッピング。</page-description>
+            <page-description xml:lang="zh-CN">通过按需电子商务 (On-Demand eCommerce) 解决方案的佼佼者来进行网上购物。</page-description>
+            <page-keywords xml:lang="x-default">new arrivals,mens,womens,electronics</page-keywords>
+            <page-keywords xml:lang="fr-FR">nouveautés,hommes,femmes,électronique</page-keywords>
+            <page-keywords xml:lang="it-IT">nuovi arrivi,uomo,donna,elettronica</page-keywords>
+            <page-keywords xml:lang="ja-JP">新着,メンズ,レディース,電子機器</page-keywords>
+            <page-keywords xml:lang="zh-CN">新品、男士、女士、电子</page-keywords>
+        </page-attributes>
+        <refinement-definitions>
+            <refinement-definition type="folder" bucket-type="none">
+                <display-name xml:lang="x-default">Folder</display-name>
+                <display-name xml:lang="fr-FR">Dossier</display-name>
+                <display-name xml:lang="it-IT">Cartella</display-name>
+                <display-name xml:lang="ja-JP">フォルダー</display-name>
+                <display-name xml:lang="zh-CN">文件夹</display-name>
+                <sort-mode>folder-position</sort-mode>
+                <cutoff-threshold>5</cutoff-threshold>
+            </refinement-definition>
+        </refinement-definitions>
+    </folder>
+
+    <folder folder-id="page-includes">
+        <display-name xml:lang="x-default">Content Asset Page Includes</display-name>
+        <display-name xml:lang="fr-FR">La page d'éléments de contenu contient</display-name>
+        <display-name xml:lang="it-IT">La pagina Asset di contenuto include</display-name>
+        <display-name xml:lang="ja-JP">コンテンツアセットページの内容</display-name>
+        <display-name xml:lang="zh-CN">内容素材页面包含</display-name>
+        <description xml:lang="x-default">This folder contains all content assets that are included within the Storefront including home page assets, marketing landing page assets etc.</description>
+        <description xml:lang="fr-FR">Ce dossier contient tous les éléments de contenu qui font partie de la boutique en ligne, notamment les éléments de la page d'accueil, les éléments marketing de la page principale, etc.</description>
+        <description xml:lang="it-IT">Questa cartella contiene tutti gli asset di contenuto inclusi nello storefront, tra questi gli asset della pagina principale, gli asset della pagina di destinazione degli annunci pubblicitari ecc.</description>
+        <description xml:lang="ja-JP">このフォルダーには、ホームページアセット、マーケティングのランディングページアセットなど、ストアフロント内にあるすべてのコンテンツアセットが含まれています。</description>
+        <description xml:lang="zh-CN">此文件夹包括网店中包含的所有内容素材，包括主页素材、营销登录页面素材等。</description>
+        <online-flag>false</online-flag>
+        <parent>root</parent>
+        <position>2.0</position>
+        <page-attributes/>
+    </folder>
+    
+    <folder folder-id="home-page">
+        <display-name xml:lang="x-default">Home Page</display-name>
+        <display-name xml:lang="fr-FR">Page d'accueil</display-name>
+        <display-name xml:lang="it-IT">Pagina principale</display-name>
+        <display-name xml:lang="ja-JP">ホームページ</display-name>
+        <display-name xml:lang="zh-CN">首页</display-name>
+        <online-flag>false</online-flag>
+        <parent>page-includes</parent>
+        <position>1.0</position>
+        <page-attributes/>
+    </folder>
+    
+    <folder folder-id="size-charts">
+        <display-name xml:lang="x-default">Size Charts</display-name>
+        <display-name xml:lang="fr-FR">Guides des tailles</display-name>
+        <display-name xml:lang="it-IT">Tabelle delle taglie</display-name>
+        <display-name xml:lang="ja-JP">サイズ表</display-name>
+        <display-name xml:lang="zh-CN">尺码表</display-name>
+        <online-flag>false</online-flag>
+        <parent>page-includes</parent>
+        <position>16.0</position>
+        <page-attributes/>
+    </folder>
+
+    
+
+    <content content-id="mens-footwear">
+        <display-name xml:lang="x-default">Men's Footwear Size Chart</display-name>
+        <display-name xml:lang="fr-FR">Guide des tailles chaussures homme</display-name>
+        <display-name xml:lang="it-IT">Tabella delle taglie - Calzature uomo</display-name>
+        <display-name xml:lang="ja-JP">メンズフットウェアサイズ表</display-name>
+        <display-name xml:lang="zh-CN">男鞋尺码表</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Men's Footwear&lt;/h2&gt;&#13;
+&lt;p&gt;Find your size, any way you measure it.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Men's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;U.K.&lt;/th&gt;&#13;
+            &lt;th&gt;Europe&lt;/th&gt;&#13;
+            &lt;th&gt;U.S.&lt;/th&gt;&#13;
+            &lt;th&gt;Japan&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;45&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;45.5&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;47&lt;/td&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;47.5&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;48&lt;/td&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;31&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;49&lt;/td&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;31.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;49.5&lt;/td&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;32&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;50&lt;/td&gt;&#13;
+            &lt;td&gt;15&lt;/td&gt;&#13;
+            &lt;td&gt;32.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;15.5&lt;/td&gt;&#13;
+            &lt;td&gt;51&lt;/td&gt;&#13;
+            &lt;td&gt;16&lt;/td&gt;&#13;
+            &lt;td&gt;33&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;16.5&lt;/td&gt;&#13;
+            &lt;td&gt;52&lt;/td&gt;&#13;
+            &lt;td&gt;17&lt;/td&gt;&#13;
+            &lt;td&gt;34&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;17.5&lt;/td&gt;&#13;
+            &lt;td&gt;53&lt;/td&gt;&#13;
+            &lt;td&gt;18&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;18.5&lt;/td&gt;&#13;
+            &lt;td&gt;54&lt;/td&gt;&#13;
+            &lt;td&gt;19&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;19.5&lt;/td&gt;&#13;
+            &lt;td&gt;55&lt;/td&gt;&#13;
+            &lt;td&gt;20&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;Doesn't Fit?&lt;/h2&gt;&#13;
+&lt;p&gt;If it doesn't fit, return it within 28 days, as long as it's unworn, unwashed and unaltered.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;See Returns Policy&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;How do I convert a woman's size to a man's?&lt;/strong&gt; (and vice versa)&lt;/p&gt;&#13;
+&lt;p&gt;Because every foot is different and its measurements are unique, we can't offer a recommendation for converting men's or women's footwear sizes.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'womens-footwear')$"&gt;Women's Size Chart&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Chaussures pour homme&lt;/h2&gt;&#13;
+&lt;p&gt;Trouvez votre pointure, dans toutes les tailles.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Men's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;R.U&lt;/th&gt;&#13;
+            &lt;th&gt;Europe&lt;/th&gt;&#13;
+            &lt;th&gt;É.U.&lt;/th&gt;&#13;
+            &lt;th&gt;Japon&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3,5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;22,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;37,5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;23,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39,5&lt;/td&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;24,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;25,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;41,5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;26,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43,5&lt;/td&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44,5&lt;/td&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;45&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;45,5&lt;/td&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;47&lt;/td&gt;&#13;
+            &lt;td&gt;12,5&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12,5&lt;/td&gt;&#13;
+            &lt;td&gt;47,5&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;48&lt;/td&gt;&#13;
+            &lt;td&gt;13,5&lt;/td&gt;&#13;
+            &lt;td&gt;31&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13,5&lt;/td&gt;&#13;
+            &lt;td&gt;49&lt;/td&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;31,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;49,5&lt;/td&gt;&#13;
+            &lt;td&gt;14,5&lt;/td&gt;&#13;
+            &lt;td&gt;32&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14,5&lt;/td&gt;&#13;
+            &lt;td&gt;50&lt;/td&gt;&#13;
+            &lt;td&gt;15&lt;/td&gt;&#13;
+            &lt;td&gt;32,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;15,5&lt;/td&gt;&#13;
+            &lt;td&gt;51&lt;/td&gt;&#13;
+            &lt;td&gt;16&lt;/td&gt;&#13;
+            &lt;td&gt;33&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;16,5&lt;/td&gt;&#13;
+            &lt;td&gt;52&lt;/td&gt;&#13;
+            &lt;td&gt;17&lt;/td&gt;&#13;
+            &lt;td&gt;34&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;17,5&lt;/td&gt;&#13;
+            &lt;td&gt;53&lt;/td&gt;&#13;
+            &lt;td&gt;18&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;18,5&lt;/td&gt;&#13;
+            &lt;td&gt;54&lt;/td&gt;&#13;
+            &lt;td&gt;19&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;19,5&lt;/td&gt;&#13;
+            &lt;td&gt;55&lt;/td&gt;&#13;
+            &lt;td&gt;20&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;Ce n'est pas la bonne taille ?&lt;/h2&gt;&#13;
+&lt;p&gt;Dans ce cas, vous disposez de 28 jours pour retourner l'article, à condition qu'il n'ait été ni porté, lavé ou abîmé.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;Voir la politique de retour&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;Comment convertir une taille femme en une taille homme ?&lt;/strong&gt; (et inversement)&lt;/p&gt;&#13;
+&lt;p&gt;Chaque pied est par nature différent et sa taille étant unique, nous ne pouvons pas proposer de table de conversion entre les pointures masculines et féminines.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'womens-footwear')$"&gt;Guide des tailles mode femme&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Calzature uomo&lt;/h2&gt;&#13;
+&lt;p&gt;Trova la tua taglia, con qualunque sistema di misura.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Men's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;UK&lt;/th&gt;&#13;
+            &lt;th&gt;Europa&lt;/th&gt;&#13;
+            &lt;th&gt;USA&lt;/th&gt;&#13;
+            &lt;th&gt;Giappone&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3,5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;22,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;37,5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;23,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39,5&lt;/td&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;24,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;25,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;41,5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;26,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43,5&lt;/td&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44,5&lt;/td&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;45&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;45,5&lt;/td&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;47&lt;/td&gt;&#13;
+            &lt;td&gt;12,5&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12,5&lt;/td&gt;&#13;
+            &lt;td&gt;47,5&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;48&lt;/td&gt;&#13;
+            &lt;td&gt;13,5&lt;/td&gt;&#13;
+            &lt;td&gt;31&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13,5&lt;/td&gt;&#13;
+            &lt;td&gt;49&lt;/td&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;31,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;49,5&lt;/td&gt;&#13;
+            &lt;td&gt;14,5&lt;/td&gt;&#13;
+            &lt;td&gt;32&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14,5&lt;/td&gt;&#13;
+            &lt;td&gt;50&lt;/td&gt;&#13;
+            &lt;td&gt;15&lt;/td&gt;&#13;
+            &lt;td&gt;32,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;15,5&lt;/td&gt;&#13;
+            &lt;td&gt;51&lt;/td&gt;&#13;
+            &lt;td&gt;16&lt;/td&gt;&#13;
+            &lt;td&gt;33&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;16,5&lt;/td&gt;&#13;
+            &lt;td&gt;52&lt;/td&gt;&#13;
+            &lt;td&gt;17&lt;/td&gt;&#13;
+            &lt;td&gt;34&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;17,5&lt;/td&gt;&#13;
+            &lt;td&gt;53&lt;/td&gt;&#13;
+            &lt;td&gt;18&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;18,5&lt;/td&gt;&#13;
+            &lt;td&gt;54&lt;/td&gt;&#13;
+            &lt;td&gt;19&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;19,5&lt;/td&gt;&#13;
+            &lt;td&gt;55&lt;/td&gt;&#13;
+            &lt;td&gt;20&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;La taglia non va bene?&lt;/h2&gt;&#13;
+&lt;p&gt;Se la taglia non è corretta, restituisci l'articolo entro 28 giorni, non indossato, non lavato e intatto.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;Leggi la Politica di gestione dei resi&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;Come si converte una taglia da donna in una taglia da uomo?&lt;/strong&gt; (e viceversa)&lt;/p&gt;&#13;
+&lt;p&gt;Poiché ogni piede è diverso dall'altro e i metodi per prendere le misure sono diversi, non siamo in grado di offrire consigli sulla conversione da taglie da donna a taglie da uomo e viceversa.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'womens-footwear')$"&gt;Tabella delle taglie - Donna&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;メンズフットウェア&lt;/h2&gt;&#13;
+&lt;p&gt;どの方法で測定した場合でもサイズがわかります。&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Men's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;英国&lt;/th&gt;&#13;
+            &lt;th&gt;ヨーロッパ&lt;/th&gt;&#13;
+            &lt;th&gt;米国&lt;/th&gt;&#13;
+            &lt;th&gt;日本&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;45&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;45.5&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;47&lt;/td&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;47.5&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;48&lt;/td&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;31&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;49&lt;/td&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;31.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;49.5&lt;/td&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;32&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;50&lt;/td&gt;&#13;
+            &lt;td&gt;15&lt;/td&gt;&#13;
+            &lt;td&gt;32.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;15.5&lt;/td&gt;&#13;
+            &lt;td&gt;51&lt;/td&gt;&#13;
+            &lt;td&gt;16&lt;/td&gt;&#13;
+            &lt;td&gt;33&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;16.5&lt;/td&gt;&#13;
+            &lt;td&gt;52&lt;/td&gt;&#13;
+            &lt;td&gt;17&lt;/td&gt;&#13;
+            &lt;td&gt;34&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;17.5&lt;/td&gt;&#13;
+            &lt;td&gt;53&lt;/td&gt;&#13;
+            &lt;td&gt;18&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;18.5&lt;/td&gt;&#13;
+            &lt;td&gt;54&lt;/td&gt;&#13;
+            &lt;td&gt;19&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;19.5&lt;/td&gt;&#13;
+            &lt;td&gt;55&lt;/td&gt;&#13;
+            &lt;td&gt;20&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;サイズが合わない場合: &lt;/h2&gt;&#13;
+&lt;p&gt;サイズが合わない場合は 28 日以内に、着用、洗濯、寸法などの直しのない状態で返送してください。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;「返品ポリシー」をお読みください。&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;レディースのサイズをメンズに換算する (またはメンズのサイズをレディースに換算する) 方法はありますか? &lt;/strong&gt;&lt;/p&gt;&#13;
+&lt;p&gt;足は人によって異なり、測定値も同じでないため、メンズまたはレディースのフットウェアサイズを換算する方法をお勧めすることはできません。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'womens-footwear')$"&gt;レディースサイズ表&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;男鞋&lt;/h2&gt;&#13;
+&lt;p&gt;以任何方式测量，请找到您的尺码。&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Men's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;英国&lt;/th&gt;&#13;
+            &lt;th&gt;欧洲&lt;/th&gt;&#13;
+            &lt;th&gt;美国&lt;/th&gt;&#13;
+            &lt;th&gt;日本&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;45&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;45.5&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;47&lt;/td&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;12.5&lt;/td&gt;&#13;
+            &lt;td&gt;47.5&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;48&lt;/td&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;31&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;13.5&lt;/td&gt;&#13;
+            &lt;td&gt;49&lt;/td&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;31.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14&lt;/td&gt;&#13;
+            &lt;td&gt;49.5&lt;/td&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;32&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;14.5&lt;/td&gt;&#13;
+            &lt;td&gt;50&lt;/td&gt;&#13;
+            &lt;td&gt;15&lt;/td&gt;&#13;
+            &lt;td&gt;32.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;15.5&lt;/td&gt;&#13;
+            &lt;td&gt;51&lt;/td&gt;&#13;
+            &lt;td&gt;16&lt;/td&gt;&#13;
+            &lt;td&gt;33&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;16.5&lt;/td&gt;&#13;
+            &lt;td&gt;52&lt;/td&gt;&#13;
+            &lt;td&gt;17&lt;/td&gt;&#13;
+            &lt;td&gt;34&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;17.5&lt;/td&gt;&#13;
+            &lt;td&gt;53&lt;/td&gt;&#13;
+            &lt;td&gt;18&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;18.5&lt;/td&gt;&#13;
+            &lt;td&gt;54&lt;/td&gt;&#13;
+            &lt;td&gt;19&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;19.5&lt;/td&gt;&#13;
+            &lt;td&gt;55&lt;/td&gt;&#13;
+            &lt;td&gt;20&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;不合身？&lt;/h2&gt;&#13;
+&lt;p&gt;如果不合身则请在 28 天内退货，但前提是未经磨损、清洗或改动。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;请参阅退货政策&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;如何将女性尺码折算成男性尺码？&lt;/strong&gt;（或者掉过来折算）&lt;/p&gt;&#13;
+&lt;p&gt;由于每只脚存在差异且测量具有唯一性，我们无法提供男性尺码或女性尺码折算方面的建议。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'womens-footwear')$"&gt;女士尺码表&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+        <folder-links>
+            <classification-link folder-id="size-charts"/>
+        </folder-links>
+    </content>
+
+    <content content-id="womens-footwear">
+        <display-name xml:lang="x-default">Women's Footwear Size Chart</display-name>
+        <display-name xml:lang="fr-FR">Guide des tailles des chaussures pour femmes</display-name>
+        <display-name xml:lang="it-IT">Tabella delle taglie - Scarpe donna</display-name>
+        <display-name xml:lang="ja-JP">レディースフットウェアサイズ表</display-name>
+        <display-name xml:lang="zh-CN">女鞋尺码表</display-name>
+        <description xml:lang="x-default">Find your size, any way you measure it.</description>
+        <description xml:lang="fr-FR">Trouvez votre pointure, dans toutes les tailles.</description>
+        <description xml:lang="it-IT">Trova la tua taglia, con qualunque sistema di misura.</description>
+        <description xml:lang="ja-JP">どの方法で測定した場合でもサイズがわかります。</description>
+        <description xml:lang="zh-CN">以任何方式测量，请找到您的尺码。</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Women's Footwear&lt;/h2&gt;&#13;
+&lt;p&gt;Find your size, any way you measure it.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Women's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;U.K.&lt;/th&gt;&#13;
+            &lt;th&gt;Europe&lt;/th&gt;&#13;
+            &lt;th&gt;U.S.&lt;/th&gt;&#13;
+            &lt;th&gt;Japan&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2&lt;/td&gt;&#13;
+            &lt;td&gt;34.5&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;21&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2.5&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;21.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3&lt;/td&gt;&#13;
+            &lt;td&gt;35.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;22&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;Doesn't Fit?&lt;/h2&gt;&#13;
+&lt;p&gt;If it doesn't fit, return it within 28 days, as long as it's unworn, unwashed and unaltered.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;See Returns Policy&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;How do I convert a man's size to a woman's?&lt;/strong&gt; (and vice versa)&lt;/p&gt;&#13;
+&lt;p&gt;Because every foot is different and its measurements are unique, we can't offer a recommendation for converting men's or women's footwear sizes.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid' , 'mens-footwear')$"&gt;Men's Size Chart&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Chaussures Femmes&lt;/h2&gt;&#13;
+&lt;p&gt;Trouvez votre pointure, dans toutes les tailles.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Women's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;R.U&lt;/th&gt;&#13;
+            &lt;th&gt;Europe&lt;/th&gt;&#13;
+            &lt;th&gt;É.U.&lt;/th&gt;&#13;
+            &lt;th&gt;Japon&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2&lt;/td&gt;&#13;
+            &lt;td&gt;34,5&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;21&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2,5&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;21,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3&lt;/td&gt;&#13;
+            &lt;td&gt;35,5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;22&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3,5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;22,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;37,5&lt;/td&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;23,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;24,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39,5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;25,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;41,5&lt;/td&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;26,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;27,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43,5&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;28,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44,5&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;Ce n'est pas la bonne taille ?&lt;/h2&gt;&#13;
+&lt;p&gt;Dans ce cas, vous disposez de 28 jours pour retourner l'article, à condition qu'il n'ait été ni porté, lavé ou abîmé.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;Voir la politique de retour&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;Comment convertir une taille homme en une taille femme ?&lt;/strong&gt; (et inversement)&lt;/p&gt;&#13;
+&lt;p&gt;Chaque pied est par nature différent et sa taille étant unique, nous ne pouvons pas proposer de tableau de conversion entre les pointures masculines et féminines.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid' , 'mens-footwear')$"&gt;Guide des tailles Hommes&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;Scarpe donna&lt;/h2&gt;&#13;
+&lt;p&gt;Trova la tua taglia, con qualunque sistema di misura.&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Women's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;UK&lt;/th&gt;&#13;
+            &lt;th&gt;Europa&lt;/th&gt;&#13;
+            &lt;th&gt;USA&lt;/th&gt;&#13;
+            &lt;th&gt;Giappone&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2&lt;/td&gt;&#13;
+            &lt;td&gt;34,5&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;21&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2,5&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;21,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3&lt;/td&gt;&#13;
+            &lt;td&gt;35,5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;22&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3,5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;22,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4,5&lt;/td&gt;&#13;
+            &lt;td&gt;37,5&lt;/td&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;23,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5,5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;24,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39,5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6,5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;25,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7,5&lt;/td&gt;&#13;
+            &lt;td&gt;41,5&lt;/td&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;26,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8,5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;10,5&lt;/td&gt;&#13;
+            &lt;td&gt;27,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43,5&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9,5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;11,5&lt;/td&gt;&#13;
+            &lt;td&gt;28,5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44,5&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;La taglia non va bene?&lt;/h2&gt;&#13;
+&lt;p&gt;Se la taglia non è corretta, restituisci l'articolo entro 28 giorni, non indossato, non lavato e intatto.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;Leggi la Politica di gestione dei resi&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;Come si converte una taglia da uomo in una taglia da donna?&lt;/strong&gt; (e viceversa)&lt;/p&gt;&#13;
+&lt;p&gt;Poiché ogni piede è diverso dall'altro e i metodi per prendere le misure sono diversi, non siamo in grado di offrire consigli sulla conversione da taglie da donna a taglie da uomo e viceversa.&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid' , 'mens-footwear')$"&gt;Tabella delle taglie - Uomo&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;レディースフットウェア&lt;/h2&gt;&#13;
+&lt;p&gt;どの方法で測定した場合でもサイズがわかります。&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Women's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;英国&lt;/th&gt;&#13;
+            &lt;th&gt;ヨーロッパ&lt;/th&gt;&#13;
+            &lt;th&gt;米国&lt;/th&gt;&#13;
+            &lt;th&gt;日本&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2&lt;/td&gt;&#13;
+            &lt;td&gt;34.5&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;21&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2.5&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;21.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3&lt;/td&gt;&#13;
+            &lt;td&gt;35.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;22&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;サイズが合わない場合: &lt;/h2&gt;&#13;
+&lt;p&gt;サイズが合わない場合は 28 日以内に、着用、洗濯、寸法などの直しのない状態で返送してください。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;「返品ポリシー」をお読みください。&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;メンズのサイズをレディースに換算する (またはレディースのサイズをメンズに換算する) 方法はありますか? &lt;/strong&gt;&lt;/p&gt;&#13;
+&lt;p&gt;足は人によって異なり、測定値も同じでないため、メンズまたはレディースのフットウェアサイズを換算する方法をお勧めすることはできません。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid' , 'mens-footwear')$"&gt;メンズサイズ表&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;div class="sizinginformation"&gt;&#13;
+&lt;h2&gt;女鞋&lt;/h2&gt;&#13;
+&lt;p&gt;以任何方式测量，请找到您的尺码。&lt;/p&gt;&#13;
+&lt;div class="sizechart"&gt;&#13;
+&lt;table class="sizecharttable table table-striped" summary="Women's Footwear Sizing Chart"&gt;&#13;
+    &lt;tbody&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;th&gt;英国&lt;/th&gt;&#13;
+            &lt;th&gt;欧洲&lt;/th&gt;&#13;
+            &lt;th&gt;美国&lt;/th&gt;&#13;
+            &lt;th&gt;日本&lt;/th&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2&lt;/td&gt;&#13;
+            &lt;td&gt;34.5&lt;/td&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;21&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;2.5&lt;/td&gt;&#13;
+            &lt;td&gt;35&lt;/td&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;21.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3&lt;/td&gt;&#13;
+            &lt;td&gt;35.5&lt;/td&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;22&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;3.5&lt;/td&gt;&#13;
+            &lt;td&gt;36&lt;/td&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;22.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4&lt;/td&gt;&#13;
+            &lt;td&gt;37&lt;/td&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;23&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;4.5&lt;/td&gt;&#13;
+            &lt;td&gt;37.5&lt;/td&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;23.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5&lt;/td&gt;&#13;
+            &lt;td&gt;38&lt;/td&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;24&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;5.5&lt;/td&gt;&#13;
+            &lt;td&gt;39&lt;/td&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;24.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6&lt;/td&gt;&#13;
+            &lt;td&gt;39.5&lt;/td&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;25&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;6.5&lt;/td&gt;&#13;
+            &lt;td&gt;40&lt;/td&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;25.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7&lt;/td&gt;&#13;
+            &lt;td&gt;41&lt;/td&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;26&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;7.5&lt;/td&gt;&#13;
+            &lt;td&gt;41.5&lt;/td&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;26.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8&lt;/td&gt;&#13;
+            &lt;td&gt;42&lt;/td&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;27&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;8.5&lt;/td&gt;&#13;
+            &lt;td&gt;43&lt;/td&gt;&#13;
+            &lt;td&gt;10.5&lt;/td&gt;&#13;
+            &lt;td&gt;27.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9&lt;/td&gt;&#13;
+            &lt;td&gt;43.5&lt;/td&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;28&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;9.5&lt;/td&gt;&#13;
+            &lt;td&gt;44&lt;/td&gt;&#13;
+            &lt;td&gt;11.5&lt;/td&gt;&#13;
+            &lt;td&gt;28.5&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;10&lt;/td&gt;&#13;
+            &lt;td&gt;44.5&lt;/td&gt;&#13;
+            &lt;td&gt;12&lt;/td&gt;&#13;
+            &lt;td&gt;29&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+        &lt;tr&gt;&#13;
+            &lt;td&gt;11&lt;/td&gt;&#13;
+            &lt;td&gt;46&lt;/td&gt;&#13;
+            &lt;td&gt;13&lt;/td&gt;&#13;
+            &lt;td&gt;30&lt;/td&gt;&#13;
+        &lt;/tr&gt;&#13;
+    &lt;/tbody&gt;&#13;
+&lt;/table&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;div class="nofit"&gt;&#13;
+&lt;h2&gt;不合身？&lt;/h2&gt;&#13;
+&lt;p&gt;如果不合身则请在 28 天内退货，但前提是未经磨损、清洗或改动。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid', 'returns')$"&gt;请参阅退货政策&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;p&gt;&lt;strong&gt;如何将男性尺码折算成女性尺码？&lt;/strong&gt;（或者掉过来折算）&lt;/p&gt;&#13;
+&lt;p&gt;由于每只脚存在差异且测量具有唯一性，我们无法提供男性尺码或女性尺码折算方面的建议。&lt;br /&gt;&#13;
+&lt;a href="$url('Page-Show', 'cid' , 'mens-footwear')$"&gt;男装尺码表&lt;/a&gt;&lt;/p&gt;&#13;
+&lt;/div&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+        <folder-links>
+            <classification-link folder-id="size-charts"/>
+        </folder-links>
+    </content>
+
+    <content content-id="home-categories">
+        <display-name xml:lang="x-default">Home  Categories</display-name>
+        <display-name xml:lang="fr-FR">Accueil  Catégories</display-name>
+        <display-name xml:lang="it-IT">Categorie pagina principale</display-name>
+        <display-name xml:lang="ja-JP">ホーム カテゴリ</display-name>
+        <display-name xml:lang="zh-CN">主页分类</display-name>
+        <description xml:lang="x-default">Container for Home Page categories slots.</description>
+        <description xml:lang="fr-FR">Conteneur des slots de catégories de la page d'accueil.</description>
+        <description xml:lang="it-IT">Riquadro per slot categorie Pagina principale.</description>
+        <description xml:lang="ja-JP">ホームページのカテゴリスロットのコンテナ</description>
+        <description xml:lang="zh-CN">主页分类动态内容的容器。</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;style&gt;
+@media (max-width: 543px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/small.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/small.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/small.jpg?$staticlink$);
+    }
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/medium.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/medium.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 544px) {
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/large.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/large.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/large.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+
+&lt;div class="col-sm-8"&gt;
+  &lt;div class="row no-gutters"&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;
+        &lt;div class="womens-dresses half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Women's Dresses
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-jewelry')$"&gt;
+        &lt;div class="womens-jewelry half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Women's Jewelry
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-feeling-red')$"&gt;
+        &lt;div class="shop-red half-height category-tile"&gt;
+          &lt;h3 class="hp-promotion-message"&gt;
+            Shop Red
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+  &lt;a href="$url('Search-Show','cgid','mens-clothing-jackets')$"&gt;
+    &lt;div class="mens-jackets full-height category-tile"&gt;
+        &lt;h3 class="hp-category-message"&gt;
+            Men's Jackets
+        &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;style&gt;
+@media (max-width: 543px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/small.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/small.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/small.jpg?$staticlink$);
+    }
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/medium.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/medium.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 544px) {
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/large.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/large.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/large.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+
+&lt;div class="col-sm-8"&gt;
+  &lt;div class="row no-gutters"&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;
+        &lt;div class="womens-dresses half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Robes Femmes
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-jewelry')$"&gt;
+        &lt;div class="womens-jewelry half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Bijoux Femmes
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+      &lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;
+        &lt;div class="shop-red half-height category-tile"&gt;
+          &lt;h3 class="hp-promotion-message"&gt;
+            Acheter des articles rouges
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+  &lt;a href="$url('Search-Show','cgid','mens-clothing-jackets')$"&gt;
+    &lt;div class="mens-jackets full-height category-tile"&gt;
+        &lt;h3 class="hp-category-message"&gt;
+            Vestes Hommes
+        &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;style&gt;
+@media (max-width: 543px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/small.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/small.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/small.jpg?$staticlink$);
+    }
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/medium.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/medium.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 544px) {
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/large.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/large.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/large.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+
+&lt;div class="col-sm-8"&gt;
+  &lt;div class="row no-gutters"&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;
+        &lt;div class="womens-dresses half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Vestiti da donna
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-jewelry')$"&gt;
+        &lt;div class="womens-jewelry half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            Gioielli da donna
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+      &lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;
+        &lt;div class="shop-red half-height category-tile"&gt;
+          &lt;h3 class="hp-promotion-message"&gt;
+            Acquista rosso
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+  &lt;a href="$url('Search-Show','cgid','mens-clothing-jackets')$"&gt;
+    &lt;div class="mens-jackets full-height category-tile"&gt;
+        &lt;h3 class="hp-category-message"&gt;
+            Giacche da uomo
+        &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;style&gt;
+@media (max-width: 543px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/small.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/small.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/small.jpg?$staticlink$);
+    }
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/medium.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/medium.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 544px) {
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/large.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/large.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/large.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+
+&lt;div class="col-sm-8"&gt;
+  &lt;div class="row no-gutters"&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;
+        &lt;div class="womens-dresses half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            レディースワンピース
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-jewelry')$"&gt;
+        &lt;div class="womens-jewelry half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            レディースジュエリー
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+      &lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;
+        &lt;div class="shop-red half-height category-tile"&gt;
+          &lt;h3 class="hp-promotion-message"&gt;
+            レッド系のお買い物
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+  &lt;a href="$url('Search-Show','cgid','mens-clothing-jackets')$"&gt;
+    &lt;div class="mens-jackets full-height category-tile"&gt;
+        &lt;h3 class="hp-category-message"&gt;
+            メンズジャケット
+        &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;style&gt;
+@media (max-width: 543px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/small.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/small.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/small.jpg?$staticlink$);
+    }
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/medium.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/medium.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 544px) {
+    .mens-jackets {
+        background-image: url(images/homepage/homepage-3/large.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .womens-dresses {
+        background-image: url(images/homepage/homepage-5/large.jpg?$staticlink$);
+    }
+    .womens-jewelry {
+        background-image: url(images/homepage/homepage-6/large.jpg?$staticlink$);
+    }
+    .shop-red {
+        background-image: url(images/homepage/homepage-1/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+
+&lt;div class="col-sm-8"&gt;
+  &lt;div class="row no-gutters"&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-clothing-dresses')$"&gt;
+        &lt;div class="womens-dresses half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            女士连衣裙
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class="col-sm-6"&gt;
+      &lt;a href="$url('Search-Show','cgid','womens-jewelry')$"&gt;
+        &lt;div class="womens-jewelry half-height category-tile"&gt;
+          &lt;h3 class="hp-category-message"&gt;
+            女士珠宝
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col"&gt;
+      &lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;
+        &lt;div class="shop-red half-height category-tile"&gt;
+          &lt;h3 class="hp-promotion-message"&gt;
+            购买红色
+          &lt;/h3&gt;
+        &lt;/div&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="col"&gt;
+  &lt;a href="$url('Search-Show','cgid','mens-clothing-jackets')$"&gt;
+    &lt;div class="mens-jackets full-height category-tile"&gt;
+        &lt;h3 class="hp-category-message"&gt;
+            男士夹克
+        &lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+    <content content-id="home-free-shipping-orders-over-150">
+        <display-name xml:lang="x-default">Free ground shipping on orders of $150 or more</display-name>
+        <display-name xml:lang="fr-FR">Transport terrestre gratuit pour les commandes à partir de 150 €</display-name>
+        <display-name xml:lang="it-IT">Spedizione gratuita via terra per ordini pari o superiori a € 150</display-name>
+        <display-name xml:lang="ja-JP">ご注文金額が ¥15,000 を超えると通常配送料が無料</display-name>
+        <display-name xml:lang="zh-CN">金额满 150 美元的订单享受免费陆运</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;img alt="Free Shipping on orders over $150" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Free&lt;/h1&gt;&#13;
+&lt;h2&gt;Ground Shipping&lt;/h2&gt;&#13;
+&lt;h3&gt;on orders of $150 or more&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;img alt="Frais de port gratuits pour les commandes de plus de 150 €" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Transport terrestre&lt;/h1&gt;&#13;
+&lt;h2&gt;gratuit&lt;/h2&gt;&#13;
+&lt;h3&gt;pour les commandes de plus de 150 euros&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;img alt="Spedizione gratuita su ordini superiori a € 150" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;Spedizione gratuita&lt;/h1&gt;&#13;
+&lt;h2&gt;via terra&lt;/h2&gt;&#13;
+&lt;h3&gt;per ordini pari o superiori a € 150&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;img alt="¥15,000 を超える注文で送料無料" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;無料&lt;/h1&gt;&#13;
+&lt;h2&gt;通常配送&lt;/h2&gt;&#13;
+&lt;h3&gt;¥15,000 を超えるご注文&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;img alt="订单满 150 美元即可享免费送货" src="images/homepage/home-promo-free-shipping.png?$staticlink$" /&gt;&#13;
+&lt;div class="home-bottom-center-text"&gt;&#13;
+&lt;h1&gt;免费&lt;/h1&gt;&#13;
+&lt;h2&gt;陆路送货&lt;/h2&gt;&#13;
+&lt;h3&gt;金额达到或超过 150 美元的订单&lt;/h3&gt;&#13;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+    <content content-id="home-main">
+        <display-name xml:lang="x-default">Home Main</display-name>
+        <display-name xml:lang="fr-FR">Accueil principal</display-name>
+        <display-name xml:lang="it-IT">Pagina principale Uomo</display-name>
+        <display-name xml:lang="ja-JP">ホームメイン</display-name>
+        <display-name xml:lang="zh-CN">首页主要</display-name>
+        <description xml:lang="x-default">Container for Home Page main image.</description>
+        <description xml:lang="fr-FR">Conteneur de l'image principale de la page d'accueil.</description>
+        <description xml:lang="it-IT">Riquadro per immagine principale Pagina principale.</description>
+        <description xml:lang="ja-JP">ホームページのメイン画像のコンテナ。</description>
+        <description xml:lang="zh-CN">主页主图片的容器。</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;style&gt;
+@media (max-width: 543px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;div class="hero main-callout"&gt;
+&lt;h1 class="page-title"&gt;Summer Style&lt;/h1&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;style&gt;
+@media (max-width: 543px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;div class="hero main-callout"&gt;
+&lt;h1 class="page-title"&gt;Style estival&lt;/h1&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;style&gt;
+@media (max-width: 543px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;div class="hero main-callout"&gt;
+&lt;h1 class="page-title"&gt;Stile estivo&lt;/h1&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;style&gt;
+@media (max-width: 543px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;div class="hero main-callout"&gt;
+&lt;h1 class="page-title"&gt;夏のスタイル&lt;/h1&gt;
+&lt;/div&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;style&gt;
+@media (max-width: 543px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .main-callout {
+        background-image: url(images/homepage/homepage-4/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;div class="hero main-callout"&gt;
+&lt;h1 class="page-title"&gt;夏装样式&lt;/h1&gt;
+&lt;/div&gt;</custom-attribute>
+        </custom-attributes>
+        <folder-links>
+            <classification-link folder-id="home-page"/>
+        </folder-links>
+    </content>
+
+    <content content-id="home-product-set-content">
+        <display-name xml:lang="x-default">home product set content</display-name>
+        <display-name xml:lang="fr-FR">contenu ensemble des produits de l'accueil</display-name>
+        <display-name xml:lang="it-IT">contenuto set di prodotti della home page</display-name>
+        <display-name xml:lang="ja-JP">ホーム商品セットコンテンツ</display-name>
+        <display-name xml:lang="zh-CN">主页产品组合内容</display-name>
+        <description xml:lang="x-default">Content shown on the homepage that will reveal product tiles of products assigned to the 'home-product-set' slot.</description>
+        <description xml:lang="fr-FR">Contenu affiché sur la page d'accueil qui correspond à une mosaïque des produits associés au slot 'ensemble-produits-accueil'.</description>
+        <description xml:lang="it-IT">Contenuto visualizzato nella home page che mostra i riquadri dei prodotti assegnati allo slot 'home-product-set'.</description>
+        <description xml:lang="ja-JP">ホームページに表示されるコンテンツで、'home-product-set' スロットに割り当てた商品の商品タイルを表示します。</description>
+        <description xml:lang="zh-CN">主页显示的内容（将显示分配给“主页-产品-组”动态内容的产品的产品板块）。</description>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;style&gt;
+@media (max-width: 543px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;a href="$url('Home-Show')$"&gt;
+&lt;div class="hero slant-up"&gt;
+&lt;h1 class="page-title"&gt;Shop the Style&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;style&gt;
+@media (max-width: 543px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;a href="$url('Home-Show')$"&gt;
+&lt;div class="hero slant-up"&gt;
+&lt;h1 class="page-title"&gt;Acheter ce style&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;style&gt;
+@media (max-width: 543px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;a href="$url('Home-Show')$"&gt;
+&lt;div class="hero slant-up"&gt;
+&lt;h1 class="page-title"&gt;Acquista lo stile&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;style&gt;
+@media (max-width: 543px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;a href="$url('Home-Show')$"&gt;
+&lt;div class="hero slant-up"&gt;
+&lt;h1 class="page-title"&gt;お好みのスタイルをチョイス&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;style&gt;
+@media (max-width: 543px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/small.jpg?$staticlink$);
+    }
+}
+@media (max-width: 768px) and (min-width: 544px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/medium.jpg?$staticlink$);
+    }
+}
+@media (min-width: 992px) {
+    .shop-the-style .hero {
+        background-image: url(images/homepage/homepage-2/large.jpg?$staticlink$);
+    }
+}
+&lt;/style&gt;
+&lt;a href="$url('Home-Show')$"&gt;
+&lt;div class="hero slant-up"&gt;
+&lt;h1 class="page-title"&gt;购买款式&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/a&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+
+    <content content-id="home-product-tile-content">
+        <display-name xml:lang="x-default">Home page product tiles</display-name>
+        <display-name xml:lang="fr-FR">Mosaïque de produits de la page d'accueil</display-name>
+        <display-name xml:lang="it-IT">Riquadri dei prodotti della home page</display-name>
+        <display-name xml:lang="ja-JP">ホームページの商品タイル</display-name>
+        <display-name xml:lang="zh-CN">主页产品板块</display-name>
+        <online-flag>true</online-flag>
+        <searchable-flag>false</searchable-flag>
+        <page-attributes/>
+        <custom-attributes>
+            <custom-attribute attribute-id="body" xml:lang="x-default">&lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;&#13;
+&lt;span class="largeText"&gt;Styles to Love&lt;/span&gt;&#13;
+&lt;br /&gt;&#13;
+&lt;span&gt;Only Online&lt;/span&gt;&#13;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;&#13;
+&lt;span class="largeText"&gt;Des styles à adopter&lt;/span&gt;&#13;
+&lt;br /&gt;&#13;
+&lt;span&gt;Uniquement en ligne&lt;/span&gt;&#13;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;&#13;
+&lt;span class="largeText"&gt;Stili da amare&lt;/span&gt;&#13;
+&lt;br /&gt;&#13;
+&lt;span&gt;Solo online&lt;/span&gt;&#13;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;&#13;
+&lt;span class="largeText"&gt;注目のスタイル&lt;/span&gt;&#13;
+&lt;br /&gt;&#13;
+&lt;span&gt;オンラインのみ&lt;/span&gt;&#13;
+&lt;/a&gt;</custom-attribute>
+            <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;a href="$url('Search-Show','cgid','newarrivals')$"&gt;&#13;
+&lt;span class="largeText"&gt;喜爱的款式&lt;/span&gt;&#13;
+&lt;br /&gt;&#13;
+&lt;span&gt;仅在线&lt;/span&gt;&#13;
+&lt;/a&gt;</custom-attribute>
+        </custom-attributes>
+    </content>
+</library>

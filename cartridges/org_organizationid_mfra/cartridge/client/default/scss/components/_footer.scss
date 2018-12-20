@@ -2,7 +2,6 @@
 
 footer {
     background-color: $gray-200;
-    padding-top: 1.25em; /* 20/16 */
     padding-bottom: 1.25em;
 
     h3 {
@@ -143,3 +142,20 @@ footer {
     }
 }
 
+.footer-email-signup {
+    background-color: $gray-400;
+
+    .container {
+        padding-top: 0.625em;
+        padding-bottom: 0.625em;
+    }
+
+    .email-description {
+        padding-top: 0.375em;
+        color: $white;
+    }
+}
+
+.footer-container {
+    padding-top: 1.25em;
+}

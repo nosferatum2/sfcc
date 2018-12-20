@@ -6,9 +6,28 @@ const fs = require('fs');
 const chalk = require('chalk');
 const cwd = process.cwd();
 
+const webpack = require('webpack');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
+
+/**
+ * @name isBuildEnvironment
+ * @description checks whether the build environment flag exists 
+ * and is either equal to true or the passed value
+ * @param {String} key
+ * @param {String} value - optional
+ * @returns {Boolean}
+ */
+function isBuildEnvironment(key, value) {
+    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
+                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
+}
+
 /**
  * @function
  * @desc Creates the aliases for the JS/Sass file directories for each cartridge in the project
+ * https://webpack.js.org/configuration/resolve/#resolve-alias
  * @param {String} packageFile - reference to package.json file for the project
  * @param {String} pwd - reference to working directory of the project
  * @param {Boolean} returnSass - determines if the aliases should be Sass directories instead of JS directories
@@ -21,7 +40,11 @@ const createAliases = (packageFile, pwd, returnSass) => {
         Object.keys(packageFile.paths).forEach(item => {
             if (!aliases[item]) {
                 const cartridge = path.resolve(pwd, packageFile.paths[item]);
-                console.log('Creating aliases for cartridge ' + cartridge);
+                
+                if (isBuildEnvironment('verbose')) {
+                    console.log('Creating aliases for cartridge ' + cartridge);
+                }
+
                 aliases[item] = path.join(cartridge, 'cartridge/client/default/js');
                 const clientFolder = path.join(cartridge, 'cartridge/client');
 
@@ -91,6 +114,14 @@ const createAliases = (packageFile, pwd, returnSass) => {
         });
 
         aliases = cssAliases;
+    }
+
+                    
+    if (isBuildEnvironment('verbose')) {
+        console.log(chalk.black.bgGreen('Generated aliases:'));
+        for (let name in aliases) {
+            console.log(chalk.blue(name) + ' is ' + chalk.gray(aliases[name]));
+        }
     }
 
     return aliases;
@@ -163,22 +194,159 @@ function createScssPath(packageName) {
 }
 
 /**
- * @function
- * @desc Determines if the given build environment variable exists and is set to true
- * @param opt
- * @returns
+ * @name getJsLoaders
+ * @description builds the loaders object for the JS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} loaders
  */
-function isBuildEnvironment(opt) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    return (packageFile.buildEnvironment[opt] && packageFile.buildEnvironment[opt] === 'true');
+function getJsLoaders(mode) {
+    const loaders = new Array();
+
+    // Transpile ES6 into a backwards compatible version of JavaScript in current and older browsers or environments
+    loaders.unshift({
+        loader: 'babel-loader',
+        options: {
+            presets: ['@babel/env'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            cacheDirectory: true
+        }
+    });
+
+    // Caches the result of following loaders on disk (default) or in the database
+    if (mode === 'development') {
+        loaders.unshift({ loader: 'cache-loader' });
+    }
+
+    return loaders;
+}
+
+/**
+ * @name getJsPlugins
+ * @description generates an array of plugins for the JS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} plugins
+ */
+function getJsPlugins(mode) {
+    const bootstrapPackages = {
+        Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
+        // Button: 'exports-loader?Button!bootstrap/js/src/button',
+        Carousel: 'exports-loader?Carousel!bootstrap/js/src/carousel',
+        Collapse: 'exports-loader?Collapse!bootstrap/js/src/collapse',
+        // Dropdown: 'exports-loader?Dropdown!bootstrap/js/src/dropdown',
+        Modal: 'exports-loader?Modal!bootstrap/js/src/modal',
+        // Popover: 'exports-loader?Popover!bootstrap/js/src/popover',
+        Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/src/scrollspy',
+        Tab: 'exports-loader?Tab!bootstrap/js/src/tab',
+        Tooltip: 'exports-loader?Tooltip!bootstrap/js/src/tooltip',
+        Util: 'exports-loader?Util!bootstrap/js/src/util'
+    };
+
+    const plugins = [
+        // Automatically load modules (i.e Boostrap modules) instead of having to import or require them everywhere
+        new webpack.ProvidePlugin(bootstrapPackages)
+    ];
+
+    return plugins;
+}
+
+
+/**
+ * @name getCssLoaders
+ * @description builds the loaders object for the CSS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Object} loaders
+ */
+function getCssLoaders(mode) {
+    const sourceMap = isBuildEnvironment('cssSourceMaps', 'true');
+    const autoPrefixer = isBuildEnvironment('cssAutoPrefixer', 'true');
+    
+    const loaders = new Array();
+     
+    // Compile Sass to CSS
+    loaders.unshift({
+        loader: 'sass-loader',
+        options: {
+            sourceMap: sourceMap,
+            includePaths: [
+                path.resolve('node_modules'),
+                path.resolve('node_modules/flag-icon-css/sass')
+            ]
+        }
+    });
+
+    // Automatically add vendor prefixes to CSS rules
+    // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
+    if (autoPrefixer) {
+        loaders.unshift({
+            loader: 'postcss-loader',
+            options: {
+                sourceMap: sourceMap,
+                plugins: [
+                    require('autoprefixer')()
+                ]
+            }, 
+        });
+    }
+
+    // Intrepret @import and url() like import/require() and will resolve them
+    // This loader converts the CSS to a CommonJS JavaScript module
+    loaders.unshift({
+        loader: 'css-loader',
+        options: {
+            url: false,
+            sourceMap: sourceMap,
+            importLoader: loaders.length
+        }
+    });
+
+    // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
+    loaders.unshift({ loader: MiniCssExtractPlugin.loader });
+
+    // Caches the result of following loaders on disk (default) or in the database
+    if (mode === 'development') {
+        loaders.unshift({ loader: 'cache-loader' });
+    }
+
+    return loaders;
+}  
+
+/**
+ * @name getCssPlugins
+ * @description generates an array of plugins for the CSS Webpack configuration
+ * @param {String} mode - the build mode; 'development or 'production'
+ * @returns {Array} plugins
+ */
+function getCssPlugins(mode) {
+    const plugins = [
+        // Remove generated the unused JS files from our style only entry points
+        new FixStyleOnlyEntriesPlugin({
+            silent: true
+        }),
+        // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
+        // Supports MiniCssExtractPlugin.loader
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        })
+    ];
+
+    if (mode === 'production') {
+        // A Webpack plugin to optimize and minimize CSS assets
+        // Uses cssnano by default for minification
+        plugins.push(new OptimizeCssAssetsPlugin());
+    }
+
+    return plugins;
 }
 
 module.exports = {
-    /** updated packageName as a parameter so we can build multiple sites */
-    createJsPath,
-    /** updated packageName as a parameter so we can build multiple sites */
-    createScssPath,
     isBuildEnvironment,
     createAliases,
+    createJsPath,
+    createScssPath,
+    getCssLoaders,
+    getCssPlugins,
+    getJsLoaders,
+    getJsPlugins   
 };
 
