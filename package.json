@@ -146,7 +146,6 @@
     }
   },
   "deployment": {
-    "instanceRoot": ".evaluation.dw.demandware.net",
     "dataOptions": {
       "archivePath": "../data_impex",
       "lastDeploymentFileName": "lastbuild.properties",
