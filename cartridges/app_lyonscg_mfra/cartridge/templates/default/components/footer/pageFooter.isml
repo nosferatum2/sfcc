@@ -29,3 +29,7 @@
         </div>
     </div>
 </footer>
+<isif condition="${!('pageContext' in this) || empty(pageContext)}">
+	<isscript>pageContext = new Object();</isscript>
+</isif>
+<script>pageContext = <isprint value="${JSON.stringify(pageContext)}" encoding="off"/>;</script>
