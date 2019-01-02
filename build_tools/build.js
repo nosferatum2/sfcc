@@ -10,18 +10,14 @@ const shell = require('shelljs');
 const spawn = require('child_process').spawn;
 const path = require('path');
 const fs = require('fs');
-const css = require('./cssCompile');
-const js = require('./jsCompile');
 const createCartridge = require('./createCartridge');
 const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
 const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./util/webdav');
 const chalk = require('chalk');
-const chokidar = require('chokidar');
 const os = require('os');
 const util = require('util');
-const helpers = require('./helpers');
 const jsonlint = require('jsonlint');
 
 // current working directory is meant to be the root of the project, not build_tools
@@ -63,11 +59,6 @@ const optionator = require('optionator')({
         type: 'Boolean',
         description: 'Run all unittests with coverage report.'
     }, {
-        option: 'compile',
-        type: 'String',
-        description: 'Compile css/js files.',
-        enum: ['css', 'js']
-    }, {
         option: 'lint',
         type: 'String',
         description: 'Lint scss/js files.',
@@ -80,10 +71,6 @@ const optionator = require('optionator')({
         option: 'createCartridge',
         type: 'String',
         description: 'Create new cartridge structure'
-    }, {
-        option: 'watch',
-        type: 'Boolean',
-        description: 'Watch and upload files'
     }, {
         option: 'onlycompile',
         type: 'Boolean',
@@ -196,18 +183,22 @@ const optionator = require('optionator')({
         type: 'String',
         description: 'cartridge name version.properties should be created within',
         required: false
-    }, {
-        option: 'mode',
-        type: 'String', 
-        description: 'A configuration option telling webpack to use its built-in optimizations accordingly.',
-        required: false
-    }, {
-        option: 'buildEnvironment',
-        type: 'String',
-        description: 'Identifies which build environment object to use; "production" or "development"'
     }
     ]
 });
+
+/**
+ * @name isBuildEnvironment
+ * @description checks whether the build environment flag exists 
+ * and is either equal to true or the passed value
+ * @param {String} key
+ * @param {String} value - optional
+ * @returns {Boolean}
+ */
+function isBuildEnvironment(key, value) {
+    return (value) ? (process.env.hasOwnProperty(key) && process.env[key] === value) : 
+                     (process.env.hasOwnProperty(key) && process.env[key] === 'true')
+}
 
 /**
  * @name setBuildEnvironmentFlags
@@ -234,7 +225,7 @@ function checkForDwJson() {
  * Deletes all files in the tmp directory
  */
 function clearTmp() {
-    if (helpers.isBuildEnvironment('verbose')) {
+    if (isBuildEnvironment('verbose')) {
         console.log(chalk.green('build.js:clearTmp()'));
     }
     shell.rm('-rf', TEMP_DIR);
@@ -418,21 +409,12 @@ function activateCodeVersion(uploadArguments) {
  */
 function getCartridges(packageFile) {
     var cartridges = [];
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        if (packageFile.sites[siteIndex].paths) {
-            for (var key in packageFile.sites[siteIndex].paths) {
-                var cartridgePath = packageFile.sites[siteIndex].paths[key];
-                var cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName && cartridges.indexOf(cartridgeName) == -1) {
-                    console.log(chalk.blue('passing in "' + cartridgeName + '"'));
-                    cartridges.push(cartridgeName);
-                } else {
-                    console.log(chalk.yellow('"' + cartridgeName + '" is already included'));
-                }
-
-            }
+    for (let site of packageFile.sites) {
+        for (let cartridge of site.cartridges) {
+            console.log(chalk.blue('passing in "' + cartridge.name + '"'));
+            cartridges.push(cartridge.name);
         }
-    });
+    }
 
     // always add in modules, assume this is a required cartridge
     if (cartridges.indexOf('modules') == -1) {
@@ -463,7 +445,7 @@ function fileSearch(startFile, type) {
            fileSearch(filename,type);
        }
        else if (filename.indexOf(type) >= 0) {
-           if (helpers.isBuildEnvironment('verbose')) {
+           if (isBuildEnvironment('verbose')) {
                console.log('FOUND JSON: ',filename);
 	   }
 	   try {
@@ -572,45 +554,11 @@ if (options.cover) {
     });
 }
 
-// compile static assets
-if (options.compile) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        const site = packageFile.sites[siteIndex];
-        if (site.paths) {
-            const cartridges = site.paths;
-            const aliases = helpers.createAliases(site, pwd, (helpers.isBuildEnvironment('compile', 'css')));
-            for (let cartridge in cartridges) {
-                const cartridgePath = cartridges[cartridge];
-                const cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName) {
-                    if (helpers.isBuildEnvironment('compile', 'css')) {
-                        console.log(chalk.blue('Building css for cartridge ' + cartridgeName));
-                        css(cartridgeName, aliases, false, uploadFiles, code => {
-                            if (code == 1) {
-                              process.exit(code);
-                            }
-                        });
-                    } else {
-                        console.log(chalk.blue('Building client js for Site ' + cartridgeName));
-                        js(cartridgeName, aliases, false, uploadFiles, code => {
-                            if (code == 1) {
-                              process.exit(code);
-                            }
-                        });
-                    }
-                }
-            }
-        }
-    });
-}
-
 if (options.lint) {
     if (options.lint === 'js' || options.lint === 'server-js') {
 
         console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (helpers.isBuildEnvironment('verbose')) {
+        if (isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
             ' .', { stdio: 'inherit', shell: true, cwd: cwd });
         }
@@ -626,7 +574,7 @@ if (options.lint) {
 
     if (options.lint === 'css') {
         console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (helpers.isBuildEnvironment('verbose')) {
+        if (isBuildEnvironment('verbose')) {
             console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
             ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
         }
@@ -652,42 +600,6 @@ if (options.createCartridge) {
     const cartridgeName = options.createCartridge;
     console.log(chalk.green('Creating folders and files for cartridge ' + cartridgeName));
     createCartridge(cartridgeName, cwd);
-}
-
-if (options.watch) {
-    const packageFile = require(path.join(cwd, './package.json'));
-    const cartridgesPath = path.join(cwd, 'cartridges');
-
-    console.log('Watching for file changes...');
-
-    Object.keys(packageFile.sites).forEach(siteIndex => {
-        const site = packageFile.sites[siteIndex];
-        if (site.paths) {
-            const cartridges = site.paths;
-            const cssAliases = helpers.createAliases(site, pwd, true);
-            const jsAliases =  helpers.createAliases(site, pwd, false);
-            for (let cartridge in cartridges) {
-                const cartridgePath = cartridges[cartridge];
-                const cartridgeName = cartridgePath.split(path.sep).pop();
-                if (cartridgeName) {
-                    // SASS Watch
-                    console.log(chalk.blue('init watcher for css for cartridge ' + cartridgeName));
-                    css(cartridgeName, cssAliases, 'css', uploadFiles, code => {
-                        if (code == 1) {
-                            process.exit(code);
-                        }
-                    });
-                    // JS Watch
-                    console.log(chalk.blue('init watcher for js for cartridge ' + cartridgeName));
-                    js(cartridgeName, jsAliases, 'js', uploadFiles, code => {
-                        if (code == 1) {
-                            process.exit(code);
-                        }
-                    });
-                }
-            }
-        }
-    });
 }
 
 if (options.deployData) {
