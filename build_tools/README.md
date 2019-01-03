@@ -1,55 +1,225 @@
-# LYONSCG Build Scripts
+# LYONSCG Build Tools
 
-This repository contains a collection of scrips that are useful for creating a new Reference Architecture overlay cartridge. All of the scripts are executable through CLI.
+## Installation and Usage
 
-## Available commands
+You can install the dependencies for these build tools using the following command in the project root directory:
 
-Please notes all of these commands should be run from the project root directory.
+```sh
+npm install
+```
 
-`node build_tools/build --help` - Generate help message
+In order for all commands to work verify that:
 
-`--upload [path::String]` - Upload a file to a sandbox. Requires dw.json file at the root directory.
+* There is a valid `dw.json` file in the build_tools directory. See the `dw.json.example` in the build_tools directory for an example of a valid file.
+* There is a `cartridges` top level folder that contains your cartridge(s)
+* The "sites" array within the root `package.json` is configured correctly. See [Configuring Sites and the Cartridge Path](#configuration)
+* Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
 
-For example:
-`node build_tools/build --upload cartridges/app_lyonscg_mfra/cartridge/templates/resources/version.properties`
+<br/>
 
-`node build_tools/build --uploadCartridge String` - Upload a cartridge.
+## Upload
 
-For example:
-`node build_tools/build --uploadCartridge app_lyonscg_mfra`
+It is **highly** recommended that you use VS Code's Prophet Debugger extension or Eclipse's Digital Server connection for auto-upload of files; however, these upload scripts can be used if you choose to develop outside of these IDEs. If you'd like information on how to setup VS Code and the Prophet Debugger extension for SFCC development see [Visual Studio Code - SFCC](https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/206670879/Visual+Studio+Code+-+SFCC)
 
-`node build_tools/build --test [path::String]` - Run unittests on specified files/directories.
 
-`node build_tools/build --cover` - Run all unittests with coverage report.
+### Upload a file
 
-`node build_tools/build --compile String` - Compile css/js files. - either: css or js
+```sh
+npm run upload ${filepath}
 
-For example:
-`node build_tools/build --compile css`
+# example
+npm run upload cartridges/app_lyonscg_mfra/cartridge/client/default/js/main.js
+```
 
-`node build_tools/build --lint String` - Lint scss/js files. - either: js server-js css or json
+### Upload a cartridge
 
-For example:
-`node build_tools/build --lint css`
+```sh
+npm run uploadCartridge ${cartridgeName}
 
-`node build_tools/build --createCartridge String` - Create new cartridge structure
+# example
+npm run uploadCartridge app_lyonscg_mfra
+```
 
-For example:
-`node build_tools/build --createCartridge plugin_myplugin`
+### Upload all cartridges
 
-`node build_tools/build --watch` - Watch and upload files
+Upload all cartridges specified in the root package.json's "sites" array.
 
-`node build_tools/build --deployCartridges` - Uploads all cartridges defined in package.json to the SFCC server. Requires dw.json file in build_tools or command line arguments.
+```sh
+npm run deployCartridges
+```
 
-For example:
-`node build_tools/build --deployCartridges --code-version=version1 --activation-hostname=dev01-na01-hostname.demandware.net --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword`
+This script also supports passing dw.json properties as command line arguments (these arguments will only be used if there is not a dw.json in the build_tools directory)
 
-`node build_tools/build --deploy-data`- Deploys data_impex metadata to SFCC server. Requires dw.json file in build_tools or command line arguments.
+```sh
+npm run deployCartridges -- --username=${username} --password=${password} --hostname=${hostname} --activationHostname=${activationHostname} --code-version=${versionname}
 
-For example:
-`node build_tools/build --deploy-data --hostname=dev01-na01-hostname.demandware.net --username=myusername --password=mypassword --data-bundle=core`
+#example
+npm run deployCartridges -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --activationHostname=dev01-na01-hostname.demandware.net --code-version=version01
+```
 
-## Envrionment Variables and Flags
+<br/>
+
+## Data Deployment
+
+```sh
+npm run deploy
+```
+
+This script also supports passing dw.json properties as command line arguments (these arguments will only be used if there is not a dw.json in the build_tools directory)
+
+```sh
+npm run deploy -- --username=${username} --password=${password} --hostname=${hostname} --data-bundle=${bundlename}
+
+#example
+npm run deploy -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --data-bundle=core
+```
+
+<br/>
+
+## Compile
+
+Build environment variables and compilation settings can be set in the root package.json's "buildEnvironment" object. See [Build Envrionment Variables](#buildenvironement)  
+
+### Compiling for Development
+
+#### Scss
+```sh
+npm run compile:scss
+```
+
+##### JS
+```sh
+npm run compile:js
+```
+
+#### Watch
+
+This script will automatically re-compile any changes made to JS or Scss files. Utilizing the watcher significantly reduces compile times; therefore, it is recommended that you run the watcher in the background while working on a front-end development task.
+```sh
+npm run watch
+```
+<br/>
+
+### Compiling for Production
+
+These scripts minify and optimize assets for Production builds.
+
+#### Scss
+```sh
+npm run compile:scss:prod
+```
+
+#### JS
+```sh
+npm run compile:js:prod
+```
+
+<br/>
+
+## Linting
+
+The linting of client-side Js files, server-side Js files, Css files,and JSON files is supported.  
+Type may be equal to any of the following values: js, serverjs, css, and json
+
+```sh
+npm run lint:${type} 
+
+# example 
+npm run lint:js
+```
+
+<br/>
+
+## Unit Tests
+
+### Run Unit Tests
+
+```
+npm run test
+```
+
+### Run Unit Tests with Coverage Report
+
+```sh
+npm run cover
+```
+
+<br/>
+
+## Scaffolding 
+
+### Create a New Cartridge
+
+```sh
+npm run createCartridge ${cartridgeName}
+
+# example 
+npm run createCartridge plugin_myplugin
+```
+
+<br/>
+
+---- 
+
+## Sites and the Cartridge Path Configuration
+
+The compiler and other build tools scripts are dependent on the `sites` array defined in the package.json in the root directory of the project. This `sites` array defines the sites within the project and the cartridge path of each site. 
+
+Following SFCC conventions, cartridges at the beginning of the `cartridges` array take precendence over the cartridges at the end of the array. 
+
+Each cartridge object needs to have an `alias` and `name` property specified. The `name` property must match the cartridge's folder name. The `alias` property may be any short-hand name to represent the cartridge.
+
+Each site needs to have exactly one cartridge with an `alias` set to "site". This determines the output location of the static folder that contains the compiled JS and Css.
+
+An example of this array is provided below:
+
+```json
+{
+  "sites": [
+  {
+    "cartridges": [
+      {
+        "alias": "site",
+        "name": "site_siteid_mfra"
+      },
+      {
+        "alias": "org",
+        "name": "org_organizationid_mfra"
+      },
+      {
+        "alias": "lyonscg",
+        "name": "app_lyonscg_mfra"
+      },
+      {
+        "alias": "base",
+        "name": "app_storefront_base"
+      }
+    ]
+  }
+}
+```
+
+<br/>
+
+## Overriding Client-side SCSS and JS Files
+
+### JS Include Path Example
+The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've pulled main.js into your org_organizationid_mfra cartridge and main.js includes the `util.js` module and the `util.js` module still lives in app_storefront_base, your path would look like this where `base` is the alias defined for app_storefront_base cartridge
+
+```js
+var processInclude = require('base/util');
+```
+
+## SCSS Include Path Example
+SCSS paths will work similar to the JavaScript paths above. If you are importing a file that does not live in the same cartridge as the file you are working on, you will need to set the alias for the cartridge where the file exists. For example, if homePage.scss needs to include the categoryTiles.scss from app_storefront_base, it would look like this where `base` is the alias defined for app_storefront_base cartridge. See a
+
+```scss
+@import "~base/components/categoryTiles";
+```
+
+<br/>
+
+## Build Envrionment Variables <a id="buildenvironement"></a>
 
 Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
 
@@ -73,85 +243,20 @@ notifications | Native system notifications for compiler events | "true", "false
 - **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
 - **jsSourceMaps**: If your development task doesn't require the use of js source maps, consider disabling them. This will significantly reduce compile times.
 
-## Installation and Usage
+<br/>
 
-You can install the dependencies for these build tools using the following command in the project root directory:
+## Help and Troubleshooting
 
-```sh
-npm install
-```
+Running `node build_tools/build --help` from the root of the project with generate help messaging regarding the scripts and allowed arguments.
 
-In order for all commands to work, this script makes a few assumptions:
+### My Js and/or Scss isn't generating compiled files!
 
-* There's a `dw.json` file at the root of your repository, that contains information with the path to your sandbox, as well as username and password. --upload-cartridge will also work with command line arguments
-* There's a `cartridges` top level folder that contains your cartridge
-* `name` property in `package.json` matches the name of your cartridge, or if it doesn't, there's a `packageName` property with the name of the cartridge
-* If this an overlay cartridge, `package.json` contains `paths` property, that's of type `Array` and contains key/value pairs with name/path to all cartridges that will come below yours. For example, if you are creating a cartridge that will be overlayed on top of `app_storefront_base` `paths` property will look something like this: `[{ "base": "../sgmf/cartridges/app_storfront_base"}]`
-* ESLint and Stylelint are dev-dependancies of your cartridge. You have all required plugins and configs installed as well.
-* There's a webpack.config.js in build_tools that specifies how to compile client-side JavaScript files.
-* Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
+- If you manually touched the static folder, it's possible that the compiler's cache was not properly invalidated. Delete the *.cache-loader* folder in the root of the project to empty the cache.
+- Ensure that you have the correct configuration of the "sites" array in the package.json. The compiler is dependent on the cartridge path.
+- SCSS partials (any file that begins with an underscore i.e "_productCard.scss" ) are not compiled to stand-alone CSS files. SCSS partials are meant to be @imported into other non-partial SCSS files.
+- Any JS file placed in a sub-directory of the client/default/js directory (i.e. *app_lyonscg_mfra/cartridge/client/default/js/product/base.js*) are not compiled to stand-alone JS files. These files are meant to be require()'d by files in the *client/default/js* directory.
 
-### Platform-specific File Separator
-
-Please use your OS-specific file separators within the sites propert in package.json.
-
-For example, on Mac/OSX:
-```
-"sites": [
-  {
-    "paths": {
-      "base": "../cartridges/app_storefront_base",
-      "lyonscg": "../cartridges/app_lyonscg_mfra",
-      "org": "../cartridges/org_organizationid_mfra",
-      "site": "../cartridges/site_siteid_mfra"
-    },
-    "packageName": "app_storefront_base"
-  }
-]
-```
-
-For example, on Windows:
-```
-"sites": [
-  {
-    "paths": {
-      "base": "..\\cartridges\\app_storefront_base",
-      "lyonscg": "..\\cartridges\\app_lyonscg_mfra",
-      "org": "..\\cartridges\\org_organizationid_mfra",
-      "site": "..\\cartridges\\site_siteid_mfra"
-    },
-    "packageName": "app_storefront_base"
-  }
-]
-```
-
-# Overriding Client-side SCSS and JS Files
-
-## JS Include Path Example
-The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've pulled main.js into your org_organizationid_mfra cartridge and main.js includes the `util.js` module and the `util.js` module still lives in app_storefront_base, your path would look like this where `base` is the alias defined for app_storefront_base in package.json (see example below):
-
-`var processInclude = require('base/util');` 
-
-## SCSS Include Path Example
-SCSS paths will work similar to the JavaScript paths above. If you are importing a file that does not live in the same cartridge as the file you are working on, you will need to set the alias for the cartridge where the file exists. For example, if homePage.scss needs to include the categoryTiles.scss from app_storefront_base, it would look like this where `base` is the alias defined for app_storefront_base in package.json (see example below):
-
-`@import "~base/components/categoryTiles";`
-
-### Aliases from package.json:
-
-```
-"sites": [
-  {
-    "paths": {
-      "base": "../cartridges/app_storefront_base",
-      "lyonscg": "../cartridges/app_lyonscg_mfra",
-      "org": "../cartridges/org_organizationid_mfra",
-      "site": "../cartridges/site_siteid_mfra"
-    },
-    "packageName": "app_storefront_base"
-  }
-]
-```
+<br/>
 
 # Setting up the deployment project in Jenkins
 
@@ -242,7 +347,7 @@ SCSS paths will work similar to the JavaScript paths above. If you are importing
   Also, the `hostname` property should begin with 'cert' like 'cert.staging.na01.orgname.demandware.net'. The `activationHostname` will **not** use the prefix (ex. 'staging-na01-orgname.demandware.net').
   
   
-##Examples
+### Examples
 
 Uploading individual cartridges to your sandbox/instance
 
@@ -253,6 +358,6 @@ Uploading individual cartridges to your sandbox/instance
 		"cd <path to your build tools>"   Sample -> cd /Users/testuser/git/reference-application-sfra
 		"npm run uploadCartridge"  
 		
-##Notes
+### Notes
 
 The builders.xml Ant task includes the 'run npm install.xml' task that utilizes npm to automatically install the package.json specified node modules. The installation task may install tens of thousands of files and thus, on initial run, may take as long as ten minutes to complete. Subsequent runs are exponentially quicker as npm will only update those modules requiring an update. Additionally, the 'run npm install.xml' Ant task may be run on independently of builders.xml
