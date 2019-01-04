@@ -2,7 +2,7 @@
 
 ## Installation and Usage
 
-You can install the dependencies for these build tools using the following command in the project root directory:
+You can install the dependencies for these build tools using the following command in the project root directory
 
 ```sh
 npm install
@@ -10,16 +10,20 @@ npm install
 
 In order for all commands to work verify that:
 
-* There is a valid `dw.json` file in the build_tools directory. See the `dw.json.example` in the build_tools directory for an example of a valid file.
-* There is a `cartridges` top level folder that contains your cartridge(s)
-* The "sites" array within the root `package.json` is configured correctly. See [Configuring Sites and the Cartridge Path](#configuration)
-* Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting, to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
+* There is a valid `dw.json` file in the `build_tools` directory. See the `dw.json.example` in the `build_tools` directory  
+for an example of a valid file.
+* There is a `cartridges` top level folder that contains your cartridge(s).
+* The `sites` array within the root `package.json` is configured correctly.  
+  See  the **Sites and Cartridge Path Configuration** section below.
+* Your `package.json` file contains `browserslist` key that specifies which browsers you are targeting,  
+  to compile SCSS files with correct prefixes. See https://github.com/ai/browserslist for more details
 
-<br/>
 
 ## Upload
 
-It is **highly** recommended that you use VS Code's Prophet Debugger extension or Eclipse's Digital Server connection for auto-upload of files; however, these upload scripts can be used if you choose to develop outside of these IDEs. If you'd like information on how to setup VS Code and the Prophet Debugger extension for SFCC development see [Visual Studio Code - SFCC](https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/206670879/Visual+Studio+Code+-+SFCC)
+It is **highly** recommended that you use VS Code's Prophet Debugger extension or Eclipse's Digital Server connection  
+for auto-upload of files; however, these upload scripts can be used if you choose to develop outside of these IDEs.  
+If you'd like information on how to setup VS Code and the Prophet Debugger extension for SFCC development see [Visual Studio Code - SFCC](https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/206670879/Visual+Studio+Code+-+SFCC)
 
 
 ### Upload a file
@@ -42,13 +46,14 @@ npm run uploadCartridge app_lyonscg_mfra
 
 ### Upload all cartridges
 
-Upload all cartridges specified in the root package.json's "sites" array.
+Upload all cartridges specified in the `sites` array in the root `package.json`
 
 ```sh
 npm run deployCartridges
 ```
 
-This script also supports passing dw.json properties as command line arguments (these arguments will only be used if there is not a dw.json in the build_tools directory)
+This script also supports passing `dw.json` properties as command line arguments (these arguments will only be used if  
+there is not a `dw.json` in the `build_tools` directory)
 
 ```sh
 npm run deployCartridges -- --username=${username} --password=${password} --hostname=${hostname} --activationHostname=${activationHostname} --code-version=${versionname}
@@ -57,7 +62,6 @@ npm run deployCartridges -- --username=${username} --password=${password} --host
 npm run deployCartridges -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --activationHostname=dev01-na01-hostname.demandware.net --code-version=version01
 ```
 
-<br/>
 
 ## Data Deployment
 
@@ -65,7 +69,8 @@ npm run deployCartridges -- --username=username --password=password --hostname=d
 npm run deploy
 ```
 
-This script also supports passing dw.json properties as command line arguments (these arguments will only be used if there is not a dw.json in the build_tools directory)
+This script also supports passing `dw.json` properties as command line arguments (these arguments will only be used if  
+there is not a `dw.json` in the `build_tools` directory)
 
 ```sh
 npm run deploy -- --username=${username} --password=${password} --hostname=${hostname} --data-bundle=${bundlename}
@@ -74,11 +79,11 @@ npm run deploy -- --username=${username} --password=${password} --hostname=${hos
 npm run deploy -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --data-bundle=core
 ```
 
-<br/>
 
 ## Compile
 
-Build environment variables and compilation settings can be set in the root package.json's "buildEnvironment" object. See [Build Envrionment Variables](#buildenvironement)  
+Build environment variables and compilation settings can be set by the `buildEnvironment` object in root `package.json`.  
+See the **Build Envrionment Variables** section below. 
 
 ### Compiling for Development
 
@@ -94,11 +99,13 @@ npm run compile:js
 
 #### Watch
 
-This script will automatically re-compile any changes made to JS or Scss files. Utilizing the watcher significantly reduces compile times; therefore, it is recommended that you run the watcher in the background while working on a front-end development task.
+This script will automatically re-compile any changes made to JS or Scss files. Utilizing the watcher significantly  
+reduces compile times; therefore, it is recommended that you run the watcher in the background while working on a  
+front-end development task.
 ```sh
 npm run watch
 ```
-<br/>
+
 
 ### Compiling for Production
 
@@ -114,12 +121,11 @@ npm run compile:scss:prod
 npm run compile:js:prod
 ```
 
-<br/>
 
 ## Linting
 
 The linting of client-side Js files, server-side Js files, Css files,and JSON files is supported.  
-Type may be equal to any of the following values: js, serverjs, css, and json
+Accepted values for `type` (seen in the example below) include: js, serverjs, css, and json
 
 ```sh
 npm run lint:${type} 
@@ -128,7 +134,6 @@ npm run lint:${type}
 npm run lint:js
 ```
 
-<br/>
 
 ## Unit Tests
 
@@ -144,7 +149,6 @@ npm run test
 npm run cover
 ```
 
-<br/>
 
 ## Scaffolding 
 
@@ -157,21 +161,22 @@ npm run createCartridge ${cartridgeName}
 npm run createCartridge plugin_myplugin
 ```
 
-<br/>
 
----- 
+## Sites and Cartridge Path Configuration
 
-## Sites and the Cartridge Path Configuration
+The compiler and other build tools scripts are dependent on the `sites` array defined in the root `package.json`.  
+This `sites` array defines the sites within the project and the cartridge path of each site. 
 
-The compiler and other build tools scripts are dependent on the `sites` array defined in the package.json in the root directory of the project. This `sites` array defines the sites within the project and the cartridge path of each site. 
+Following SFCC convention, cartridges at the beginning of the `cartridges` array take precendence over the cartridges   
+at the end of the array. 
 
-Following SFCC conventions, cartridges at the beginning of the `cartridges` array take precendence over the cartridges at the end of the array. 
+Each cartridge object is required to have an `alias` and `name` property specified. The `name` property must match the  
+cartridge's folder name. The `alias` property may be any short-hand name to represent the cartridge.
 
-Each cartridge object needs to have an `alias` and `name` property specified. The `name` property must match the cartridge's folder name. The `alias` property may be any short-hand name to represent the cartridge.
+Each site needs to have exactly one cartridge with an `alias` set to "site". This determines the output location of the  
+static folder that contains the compiled JS and Css.
 
-Each site needs to have exactly one cartridge with an `alias` set to "site". This determines the output location of the static folder that contains the compiled JS and Css.
-
-An example of this array is provided below:
+An example of the `sites` array is provided below:
 
 ```json
 {
@@ -199,33 +204,39 @@ An example of this array is provided below:
 }
 ```
 
-<br/>
 
 ## Overriding Client-side SCSS and JS Files
 
 ### JS Include Path Example
-The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've pulled main.js into your org_organizationid_mfra cartridge and main.js includes the `util.js` module and the `util.js` module still lives in app_storefront_base, your path would look like this where `base` is the alias defined for app_storefront_base cartridge
+The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the  
+correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've  
+pulled `main.js` into your org_organizationid_mfra cartridge and `main.js` includes the `util.js` module and the `util.js`  
+module still lives in app_storefront_base, your path would look like this where `base` is the alias defined for  
+app_storefront_base cartridge
 
 ```js
 var processInclude = require('base/util');
 ```
 
 ## SCSS Include Path Example
-SCSS paths will work similar to the JavaScript paths above. If you are importing a file that does not live in the same cartridge as the file you are working on, you will need to set the alias for the cartridge where the file exists. For example, if homePage.scss needs to include the categoryTiles.scss from app_storefront_base, it would look like this where `base` is the alias defined for app_storefront_base cartridge. See a
+SCSS paths will work similar to the JavaScript paths above. If you are importing a file that does not live in the same  
+cartridge as the file you are working on, you will need to set the alias for the cartridge where the file exists.  
+For example, if `homePage.scss` needs to include the `categoryTiles.scss` from app_storefront_base, it would look like this  
+where `base` is the alias defined for app_storefront_base cartridge.
 
 ```scss
 @import "~base/components/categoryTiles";
 ```
 
-<br/>
 
-## Build Envrionment Variables <a id="buildenvironement"></a>
+## Build Envrionment Variables
 
 Environment variables and flags are located in the "buildEnvironment" object in the root package.json file
 
 The "development" settings object allows developers to change build configuration during development tasks.
 
-The "production" settings object should only be modified by the TA, TL, or other lead developer designated to do production builds on Jenkins.
+The "production" settings object should only be modified by the TA, TL, or other lead developer designated to do  
+production builds on Jenkins.
 
 Name | Description | Accepted Values
 --- | --- | --- | ---
@@ -243,20 +254,22 @@ notifications | Native system notifications for compiler events | "true", "false
 - **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
 - **jsSourceMaps**: If your development task doesn't require the use of js source maps, consider disabling them. This will significantly reduce compile times.
 
-<br/>
 
 ## Help and Troubleshooting
 
 Running `node build_tools/build --help` from the root of the project with generate help messaging regarding the scripts and allowed arguments.
 
-### My Js and/or Scss isn't generating compiled files!
+### My Js and/or Scss isn't generating compiled files
 
-- If you manually touched the static folder, it's possible that the compiler's cache was not properly invalidated. Delete the *.cache-loader* folder in the root of the project to empty the cache.
+- If you manually touched the static folder, it's possible that the compiler's cache was not properly invalidated.  
+  Delete the `.cache-loader` folder in the root of the project to empty the cache.
 - Ensure that you have the correct configuration of the "sites" array in the package.json. The compiler is dependent on the cartridge path.
-- SCSS partials (any file that begins with an underscore i.e "_productCard.scss" ) are not compiled to stand-alone CSS files. SCSS partials are meant to be @imported into other non-partial SCSS files.
-- Any JS file placed in a sub-directory of the client/default/js directory (i.e. *app_lyonscg_mfra/cartridge/client/default/js/product/base.js*) are not compiled to stand-alone JS files. These files are meant to be require()'d by files in the *client/default/js* directory.
+- SCSS partials (any file that begins with an underscore i.e `_productCard.scss` ) are not compiled to stand-alone  
+  CSS files. SCSS partials are meant to be "@imported" into other non-partial SCSS files.
+- Any JS file placed in a sub-directory of the client/default/js directory  
+  (i.e. `app_lyonscg_mfra/cartridge/client/default/js/product/base.js`) are not compiled to stand-alone JS files.  
+  These files are meant to be require()'d by files in the `client/default/js` directory.
 
-<br/>
 
 # Setting up the deployment project in Jenkins
 
