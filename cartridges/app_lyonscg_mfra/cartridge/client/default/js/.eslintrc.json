@@ -2,6 +2,9 @@
     "env": {
         "jquery": true
     },
+    "globals": {
+        "grecaptcha": true
+    },
     "rules": {
         "global-require": "off",
         "no-var": "off",

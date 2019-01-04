@@ -1,4 +1,8 @@
 <isdecorate template="common/layout/page">
+	<isscript>
+	    var assets = require('*/cartridge/scripts/assets.js');
+	    assets.addJs('/js/contactUs.js');
+	</isscript>
     <isif condition="${!empty(pdict.sucess)}">
         <div class="confirmation-message">
             <p>${Resource.msg('contactus.messagesent','forms',null)}</p>
