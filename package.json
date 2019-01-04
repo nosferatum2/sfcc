@@ -26,9 +26,11 @@
     "lint:json": "node build_tools/build --lint json",
     "lint:serverjs": "node build_tools/build --lint server-js",
     "upload": "node build_tools/build --upload",
-    "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --uploadCartridge app_lyonscg_mfra && node build_tools/build --uploadCartridge org_organizationid_mfra && node build_tools/build --uploadCartridge site_siteid_mfra && node build_tools/build --activateCodeVersion",
+    "uploadCartridge": "node build_tools/build --uploadCartridge",
     "release": "node bin/Makefile release --",
-    "deployCartridges": "node build_tools/build --deployCartridges"
+    "deployCartridges": "node build_tools/build --deployCartridges",
+    "createCartridge": "node build_tools/build --createCartridge",
+    "deploy": "node build_tools/build --deploy-data"
   },
   "husky": {
     "hooks": {
