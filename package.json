@@ -1,6 +1,6 @@
 {
   "name": "lyonscg-sfra",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "lcgversion": "1.0.0",
   "description": "LyonsCG maintained version of SFCC SFRA",
   "engines": {
@@ -26,9 +26,16 @@
     "lint:json": "node build_tools/build --lint json",
     "lint:serverjs": "node build_tools/build --lint server-js",
     "upload": "node build_tools/build --upload",
-    "uploadCartridge": "node build_tools/build --uploadCartridge app_storefront_base && node build_tools/build --uploadCartridge modules && node build_tools/build --uploadCartridge app_lyonscg_mfra && node build_tools/build --uploadCartridge org_organizationid_mfra && node build_tools/build --uploadCartridge site_siteid_mfra && node build_tools/build --activateCodeVersion",
+    "uploadCartridge": "node build_tools/build --uploadCartridge",
     "release": "node bin/Makefile release --",
-    "deployCartridges": "node build_tools/build --deployCartridges"
+    "deployCartridges": "node build_tools/build --deployCartridges",
+    "createCartridge": "node build_tools/build --createCartridge",
+    "deploy": "node build_tools/build --deploy-data"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:css && npm run lint:js && npm run lint:json && npm run lint:serverjs"
+    }
   },
   "repository": {
     "type": "git",
@@ -63,6 +70,7 @@
     "folder-zip": "0.0.5",
     "glob": "^7.1.3",
     "globalize": "^1.4.0",
+    "husky": "^1.3.1",
     "imagesloaded": "^4.1.4",
     "istanbul": "^0.4.4",
     "lodash": "^4.14.2",

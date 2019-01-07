@@ -4,8 +4,6 @@ Below is a list of the properties that can be used as part of the build process.
 
 ## Build Settings
 
-> **buildMode** - the build mode to use during the build tasks. Possible options are: 'development' or 'production' (without quotes). This is used to minify to js and css, etc..
-
 > **buildVersion** - the code version to use during deployment. Uses the Jenkins build date by default.
 
 > **versionCartridgeName** - the cartridge name that will contain the version.properies that will be replaced by Jenkins. This prints the build number in the html title tag. Please note that the file is completely overwritten and the only contents are "global.version.number={buildVersion}". You will need to make sure that "global.site.name" is still defined in a cartridge to the left of the cartridge name defined here. For example, set **versionCartridgeName** to "app_lyonscg_mfra" and make sure that "org_organizationid_mfra" has overwritten/contains "global.site.name"
