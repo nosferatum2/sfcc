@@ -5,10 +5,11 @@ const fs = require('fs');
 const glob = require("glob");
 const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const MiniCssExtractPluginCleanup = require("./plugins/MiniCssExtractPluginCleanup");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const WebpackNotifierPlugin = require('webpack-notifier');
+const LintJsPlugin = require('./plugins/LintJsPlugin');
+const LintSassPlugin = require('./plugins/LintSassPlugin');
 const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
 
 /**
@@ -324,18 +325,20 @@ module.exports = class WebpackConfigurator {
         }
 
         plugins.push(new webpack.ProvidePlugin(bootstrapPackages));
+
+        if (this.isOption('jsLinting')) {
+            plugins.push(new LintJsPlugin({
+                cartridges: this.cartridges,
+                siteCartridgeName: this.siteCartridge.name,
+                type: 'js'
+            }));
+        }
         
         plugins.push(new LogCompilerEventsPlugin({
             cartridges: this.cartridges,
-            type: 'js'
+            type: 'js',
+            notifications: this.isOption('notifications')
         }))
-        
-        if (this.isOption('notifications')) {
-            plugins.push(new WebpackNotifierPlugin({
-                title: `${this.siteCartridge.name} JS Compiler`,
-                alwaysNotify: true
-            }));
-        }
 
         return plugins;
     };
@@ -367,18 +370,20 @@ module.exports = class WebpackConfigurator {
         }));
         
         plugins.push(new MiniCssExtractPluginCleanup());
+
+        if (this.isOption('cssLinting')) {
+            plugins.push(new LintSassPlugin({
+                cartridges: this.cartridges,
+                siteCartridgeName: this.siteCartridge.name,
+                type: 'scss'
+            }));
+        }
         
         plugins.push(new LogCompilerEventsPlugin({
             cartridges: this.cartridges,
-            type: 'scss'
+            type: 'scss',
+            notifications: this.isOption('notifications')
         }));
-
-        if (this.isOption('notifications')) {
-            plugins.push(new WebpackNotifierPlugin({
-                title: `${this.siteCartridge.name} SCSS Compiler`,
-                alwaysNotify: true
-            }));
-        }
 
         return plugins;
     };
