@@ -20,3 +20,5 @@ lastbuild.properties
 dw.json
 jsconfig.json
 .cache-loader/
+.stylelintcache
+.eslintcache
