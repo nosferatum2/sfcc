@@ -29,7 +29,7 @@ module.exports = class LintSassPlugin {
         }).then((data) => {
             if (data.errored) {
                 console.log(chalk.yellow(`"${this.siteCartridgeName}" ${this.type} compiler has identified linting issue(s)`));
-                console.log(chalk.yellow(`The following issues should be resolved before committing`));
+                console.log(chalk.yellow(`The following issues need to be resolved prior to committing`));
                 console.log(data.output);
                 compiler.lintingIssues = true;
             }
