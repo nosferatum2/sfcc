@@ -27,7 +27,7 @@ module.exports = class LogCompilerEventsPlugin {
             }
 
             const notifierTitle = `"${this.siteCartridge.name}" ${this.type} compiler`;
-            const notifierMessage = 'Compiled successfully. '.concat((compiler.lintingIssues) ? 'Linting issues found! (see console)': '');
+            const notifierMessage = (stats.compilation.errors.length) ? 'Build FAILED! (see console)' : 'Build successful. '.concat((compiler.lintingIssues) ? 'Linting issues found! (see console)': ''); 
             delete compiler.lintingIssues;
             
             if (this.notifications) {

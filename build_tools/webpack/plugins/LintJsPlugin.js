@@ -27,8 +27,8 @@ module.exports = class LintJsPlugin {
         
         if (issueCount > 0) {
             const formatter = eslint.getFormatter();
-            console.log(chalk.yellow(`"${this.siteCartridgeName}" ${this.type} compiler has identified ${issueCount} linting issue(s)`));
-            console.log(chalk.yellow(`The following issues need to be resolved prior to committing`));
+            console.log(chalk.red(`"${this.siteCartridgeName}" ${this.type} compiler has identified ${issueCount} linting issue(s)`));
+            console.log(chalk.red(`The following issues need to be resolved prior to committing`));
             console.log(formatter(report.results));
             compiler.lintingIssues = true;
         }
