@@ -29,14 +29,6 @@
                  <default-value>{"Account":{"title":"My Account","type":"MyAccount","ns":"account"},"Cart":{"title":"Cart","type":"Cart","ns":"cart"},"Checkout":{"title":"Checkout","type":"checkout","ns":"checkout"},"Error-Start":{"title":"General Error","type":"error","ns":"error"},"Home-Show":{"title":"Storefront","type":"storefront","ns":"storefront"},"Order-Confirmation":{"title":"Order Confirmation","type":"orderconfirmation","ns":"orderconfirmation"},"Product-Show":{"title":"Product Detail","type":"product","ns":"product"},"Search-Show":{"title":"Product Search Results","type":"search","ns":"search"},"Stores-Find":{"title":"Store Locator","type":"StoreLocator","ns":"storelocator"}}
                  </default-value>
             </attribute-definition>
-            <attribute-definition attribute-id="enableStoreDetailsPage">
-                <display-name xml:lang="x-default">Enable store details page</display-name>
-                <description xml:lang="x-default">When true, this enables store details page</description>
-                <type>boolean</type>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-                <default-value>false</default-value>
-            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="LYONSCG Reference Application Storefront Configs">
@@ -44,7 +36,6 @@
                 <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 <attribute attribute-id="siteDisableCommerceFunctionality"/>
             	<attribute attribute-id="pageContextMap"/>
-                <attribute attribute-id="enableStoreDetailsPage"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
