@@ -832,15 +832,36 @@
                 <externally-managed-flag>false</externally-managed-flag>
                <min-length>0</min-length>
             </attribute-definition>
-	    <attribute-definition attribute-id="rateLimiterThreshold">
-		<display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
-		<description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
-		<type>int</type>
-		<mandatory-flag>false</mandatory-flag>
-		<externally-managed-flag>false</externally-managed-flag>
-		<min-value>0.0</min-value>
-		<default-value>5</default-value>
-	    </attribute-definition>
+            <attribute-definition attribute-id="enableGoogleRecaptcha">
+                <display-name xml:lang="x-default">Enable Google Recaptcha</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSiteKey">
+                <display-name xml:lang="x-default">Google Recaptcha Site Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSecretKey">
+                <display-name xml:lang="x-default">Google Recaptcha Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="rateLimiterThreshold">
+                <display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
+                <description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0.0</min-value>
+                <default-value>5</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="slideshoweffect">
                 <display-name xml:lang="x-default">Slide Slow effect</display-name>
                 <description xml:lang="x-default">Please visit http://jquery.malsup.com/cycle/browser.html for complete visual effects</description>
@@ -1019,6 +1040,12 @@
                 <attribute attribute-id="countryCode"/>
                 <attribute attribute-id="customerServiceEmail"/>
                 <attribute attribute-id="mapAPI"/>
+            </attribute-group>
+            <attribute-group group-id="Google Recaptcha">
+                <display-name xml:lang="x-default">Google Recaptcha</display-name>
+                <attribute attribute-id="enableGoogleRecaptcha"/>
+                <attribute attribute-id="googleRecaptchaSiteKey"/>
+                <attribute attribute-id="googleRecaptchaSecretKey"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
