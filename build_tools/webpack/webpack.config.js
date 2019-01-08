@@ -2,12 +2,12 @@
 
 const path = require('path');
 const fs = require('fs');
-const glob = require("glob");
+const glob = require('glob');
 const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const MiniCssExtractPluginCleanup = require("./plugins/MiniCssExtractPluginCleanup");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPluginCleanup = require('./plugins/MiniCssExtractPluginCleanup');
 const LintJsPlugin = require('./plugins/LintJsPlugin');
 const LintSassPlugin = require('./plugins/LintSassPlugin');
 const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
@@ -26,7 +26,7 @@ module.exports = class WebpackConfigurator {
         this.site = site;
         this.options = options;
         this.cartridges = site.cartridges;
-        this.cartridgesPath = path.resolve(process.cwd(), "cartridges");
+        this.cartridgesPath = path.resolve(process.cwd(), 'cartridges');
         this.siteCartridge = this.cartridges[this.cartridges.findIndex(cartridge => cartridge.alias === 'site')];
     };
 
@@ -91,8 +91,8 @@ module.exports = class WebpackConfigurator {
     getOutput() {
         return {
             // Set the path to the static folder of the current "site" cartridge
-            path: path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static"),
-            filename: "[name].js"
+            path: path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static'),
+            filename: '[name].js'
         };
     };
 
@@ -105,9 +105,9 @@ module.exports = class WebpackConfigurator {
         const files = new Object();
 
         for (let cartridge of this.cartridges) {
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
-            glob.sync(path.resolve(clientPath, "*", "js", "*.js")).forEach(file => {
-                const key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, ".js"));
+            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
+            glob.sync(path.resolve(clientPath, '*', 'js', '*.js')).forEach(file => {
+                const key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, '.js'));
                 if (!files.hasOwnProperty(key)) {
                     files[key] = file;
                 }
@@ -126,11 +126,11 @@ module.exports = class WebpackConfigurator {
         const files = new Object();
 
         for (let cartridge of this.cartridges) {
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
-            glob.sync(path.resolve(clientPath, "*", "scss", "**", "*.scss"))
-            .filter(file => !path.basename(file).startsWith("_"))
+            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
+            glob.sync(path.resolve(clientPath, '*', 'scss', '**', '*.scss'))
+            .filter(file => !path.basename(file).startsWith('_'))
             .forEach(file => {
-                let key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, ".scss"));
+                let key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, '.scss'));
                 key = key.replace('scss', 'css');
                 if (!files.hasOwnProperty(key)) {
                     files[key] = file;
@@ -269,7 +269,7 @@ module.exports = class WebpackConfigurator {
         const aliases = new Object();
 
         for (let cartridge of this.cartridges) { 
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, "cartridge/client");
+            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
             aliases[cartridge.alias] = path.join(clientPath, 'default', type);
             
             if (fs.existsSync(clientPath)) {
@@ -287,7 +287,7 @@ module.exports = class WebpackConfigurator {
         }
 
         return {
-            modules: ["node_modules", path.resolve(__dirname, "cartridges")],
+            modules: ['node_modules', path.resolve(__dirname, 'cartridges')],
             alias: aliases,
         };
     };
@@ -314,10 +314,10 @@ module.exports = class WebpackConfigurator {
         };
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static")
+            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static');
             plugins.push(new CleanWebpackPlugin([
                 `${outputPath}/*/js`,
-                ".cache-loader"
+                '.cache-loader'
             ], {
                 root: process.cwd(),
                 verbose: false
@@ -352,10 +352,10 @@ module.exports = class WebpackConfigurator {
         const plugins = new Array();
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, "cartridge/static")
+            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static');
             plugins.push(new CleanWebpackPlugin([
                 `${outputPath}/*/css`,
-                ".cache-loader"
+                '.cache-loader'
             ], {
                 root: process.cwd(),
                 verbose: false
@@ -365,8 +365,8 @@ module.exports = class WebpackConfigurator {
         }
         
         plugins.push(new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: '[name].css',
+            chunkFilename: '[id].css'
         }));
         
         plugins.push(new MiniCssExtractPluginCleanup());
@@ -394,7 +394,7 @@ module.exports = class WebpackConfigurator {
      * @return {string}
      */
     getStats() {
-        return (this.isOption('verbose')) ? "normal" : 'errors-only';
+        return (this.isOption('verbose')) ? 'normal' : 'errors-only';
     }
 
     /**

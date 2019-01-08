@@ -2,8 +2,8 @@
 
 const chalk = require('chalk');
 const path = require('path');
-const glob = require("glob");
-const stylelint = require("stylelint");
+const glob = require('glob');
+const stylelint = require('stylelint');
 
 /**
  * A custom Webpack plugin to lint client-side Sass files
@@ -17,15 +17,15 @@ module.exports = class LintSassPlugin {
 
     lint(compiler) {
         const files = [].concat(...this.cartridges.map(cartridge =>  {
-            return glob.sync(path.resolve(process.cwd(), "cartridges", cartridge.name, "cartridge/client", "*", "scss", "**", "*.scss"))
+            return glob.sync(path.resolve(process.cwd(), 'cartridges', cartridge.name, 'cartridge/client', '*', 'scss', '**', '*.scss'))
         }));
 
         stylelint.lint({
             configFile: path.resolve(process.cwd(), '.stylelintrc.json'),
             cache: true,
             files: files,
-            syntax: "scss", 
-            formatter: "string"
+            syntax: 'scss', 
+            formatter: 'string'
         }).then((data) => {
             if (data.errored) {
                 console.log(chalk.red(`"${this.siteCartridgeName}" ${this.type} compiler has identified linting issue(s)`));

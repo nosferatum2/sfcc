@@ -244,7 +244,7 @@ mode | Set the build / compilation mode | "development", "production" |
 verbose | Verbose logging | "true", "false" |
 cssSourceMaps | CSS source mapping | "true", "false" |
 cssAutoPrefixer | Automatically add vendor prefixes to CSS rules  | "true", "false" |
-csssLinting | Lint client-side Sass files during compilation | "true", "false"
+cssLinting | Lint client-side Scss files during compilation | "true", "false"
 jsSourceMaps | JS source mapping | "true", "false" |
 jsLinting | Lint client-side JS files during compilation | "true", "false"
 notifications | Native system notifications for compiler events | "true", "false" |
