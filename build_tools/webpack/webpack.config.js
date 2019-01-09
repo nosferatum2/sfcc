@@ -150,7 +150,6 @@ module.exports = class WebpackConfigurator {
             rules: [
                 {
                     test: /bootstrap(.)*\.js$/,
-                    exclude: /(node_modules)/,
                     use: this.getJsLoaders()
                 }
             ]
