@@ -50,6 +50,15 @@
                 <externally-managed-flag>false</externally-managed-flag>
                <min-length>0</min-length>
             </attribute-definition>
+            <attribute-definition attribute-id="rateLimiterThreshold">
+                <display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
+                <description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0.0</min-value>
+                <default-value>5</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="LYONSCG Reference Application Storefront Configs">
@@ -57,6 +66,7 @@
                 <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 <attribute attribute-id="siteDisableCommerceFunctionality"/>
             	<attribute attribute-id="pageContextMap"/>
+                <attribute attribute-id="rateLimiterThreshold"/>
             </attribute-group>
             <attribute-group group-id="Google Recaptcha">
                 <display-name xml:lang="x-default">Google Recaptcha</display-name>
