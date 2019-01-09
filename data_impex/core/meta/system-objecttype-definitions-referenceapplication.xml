@@ -29,6 +29,27 @@
                  <default-value>{"Account":{"title":"My Account","type":"MyAccount","ns":"account"},"Cart":{"title":"Cart","type":"Cart","ns":"cart"},"Checkout":{"title":"Checkout","type":"checkout","ns":"checkout"},"Error-Start":{"title":"General Error","type":"error","ns":"error"},"Home-Show":{"title":"Storefront","type":"storefront","ns":"storefront"},"Order-Confirmation":{"title":"Order Confirmation","type":"orderconfirmation","ns":"orderconfirmation"},"Product-Show":{"title":"Product Detail","type":"product","ns":"product"},"Search-Show":{"title":"Product Search Results","type":"search","ns":"search"},"Stores-Find":{"title":"Store Locator","type":"StoreLocator","ns":"storelocator"}}
                  </default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="enableGoogleRecaptcha">
+                <display-name xml:lang="x-default">Enable Google Recaptcha</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSiteKey">
+                <display-name xml:lang="x-default">Google Recaptcha Site Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="googleRecaptchaSecretKey">
+                <display-name xml:lang="x-default">Google Recaptcha Secret Key</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+               <min-length>0</min-length>
+            </attribute-definition>
             <attribute-definition attribute-id="rateLimiterThreshold">
                 <display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
                 <description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
@@ -52,6 +73,14 @@
                 <display-name xml:lang="x-default">LYONSCG Reference Application</display-name>
                 <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 <attribute attribute-id="siteDisableCommerceFunctionality"/>
+            	<attribute attribute-id="pageContextMap"/>
+                <attribute attribute-id="rateLimiterThreshold"/>
+            </attribute-group>
+            <attribute-group group-id="Google Recaptcha">
+                <display-name xml:lang="x-default">Google Recaptcha</display-name>
+                <attribute attribute-id="enableGoogleRecaptcha"/>
+                <attribute attribute-id="googleRecaptchaSiteKey"/>
+                <attribute attribute-id="googleRecaptchaSecretKey"/>
             	<attribute attribute-id="pageContextMap"/>
                 <attribute attribute-id="rateLimiterThreshold"/>
                 <attribute attribute-id="enableStoreDetailsPage"/>
