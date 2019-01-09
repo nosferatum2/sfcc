@@ -29,13 +29,81 @@
                  <default-value>{"Account":{"title":"My Account","type":"MyAccount","ns":"account"},"Cart":{"title":"Cart","type":"Cart","ns":"cart"},"Checkout":{"title":"Checkout","type":"checkout","ns":"checkout"},"Error-Start":{"title":"General Error","type":"error","ns":"error"},"Home-Show":{"title":"Storefront","type":"storefront","ns":"storefront"},"Order-Confirmation":{"title":"Order Confirmation","type":"orderconfirmation","ns":"orderconfirmation"},"Product-Show":{"title":"Product Detail","type":"product","ns":"product"},"Search-Show":{"title":"Product Search Results","type":"search","ns":"search"},"Stores-Find":{"title":"Store Locator","type":"StoreLocator","ns":"storelocator"}}
                  </default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="rateLimiterThreshold">
+                <display-name xml:lang="x-default">Rate Limiter Threshold</display-name>
+                <description xml:lang="x-default">This number indicates the number of times failures for Logins, GiftCert Balances, and Order Tracking requests will be allowed before displaying a CAPTCHA-style pop-up rate limiter</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0.0</min-value>
+                <default-value>5</default-value>
+	        </attribute-definition>
+            <attribute-definition attribute-id="enableStoreDetailsPage">
+                <display-name xml:lang="x-default">Enable store details page</display-name>
+                <description xml:lang="x-default">When true, this enables store details page</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="LYONSCG Reference Application Storefront Configs">
                 <display-name xml:lang="x-default">LYONSCG Reference Application</display-name>
                 <attribute attribute-id="enablePromoCalloutMessagesProductTile"/>
                 <attribute attribute-id="siteDisableCommerceFunctionality"/>
-            	<attribute attributte-id="pageContextMap"/>
+            	<attribute attribute-id="pageContextMap"/>
+                <attribute attribute-id="rateLimiterThreshold"/>
+                <attribute attribute-id="enableStoreDetailsPage"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Store">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="pageTitle">
+                <display-name xml:lang="x-default">Store Detail Page Title</display-name>
+                <description xml:lang="x-default">Store Detail Page Title</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageURL">
+                <display-name xml:lang="x-default">Store Detail Page URL</display-name>
+                <description xml:lang="x-default">Store Detail Page URL</description>
+                <type>html</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageDescription">
+                <display-name xml:lang="x-default">Store Detail Page Description</display-name>
+                <description xml:lang="x-default">Store Detail Page Description</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pageKeywords">
+                <display-name xml:lang="x-default">Store Detail Page Keywords</display-name>
+                <description xml:lang="x-default">Store Detail Page Keywords</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SEO">
+                <display-name xml:lang="x-default">SEO</display-name>
+                <attribute attribute-id="pageTitle" />
+                <attribute attribute-id="pageURL" />
+                <attribute attribute-id="pageDescription" />
+                <attribute attribute-id="pageKeywords"/>
             </attribute-group>
         </group-definitions>
     </type-extension>
