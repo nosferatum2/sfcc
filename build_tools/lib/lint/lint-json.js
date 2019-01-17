@@ -1,8 +1,9 @@
 'use strict';
 
-const fs = require('fs');
-const jsonlint = require('jsonlint');
 const chalk = require('chalk');
+const fs = require('fs');
+const globs = require('../util/globs');
+const jsonlint = require('jsonlint');
 
 /**
  * Lint files using jsonlint
@@ -10,7 +11,7 @@ const chalk = require('chalk');
  * @param {Array} files - an array of files
  * @return {Array} - An array of errors
  */
-exports.lint = (files) => {
+function lint(files) {
     const results = files.reduce((errors, file) => {
         try {
             jsonlint.parse(fs.readFileSync(file, 'utf8'));
@@ -21,14 +22,14 @@ exports.lint = (files) => {
         }
     }, []);
     return results;
-};
+}
 
 /**
  * Format the result of any invalid JSON files
  * @param {Array} errors - An array of errors
  * @return {Object} - formatted results object
  */
-exports.formatResult = (errors) => {
+function formatResult(errors) {
     if (errors.length) {
         let message = `${chalk.red('Linting JSON files failed!\n')}` +
                   'The following issues need to be resolved prior to committing:\n\n';
@@ -48,4 +49,19 @@ exports.formatResult = (errors) => {
         isSuccessful: true,
         message: `${chalk.green('Linted JSON files successfully\n')}`
     };
+}
+
+/**
+ * Lint JSON files
+ * @returns {boolean} isSuccessful
+ */
+exports.lintJsonFiles = () => {
+    console.log('Linting JSON files');
+
+    const files = globs.getJsonFiles();
+    const result = lint(files);
+    const { message, isSuccessful } = formatResult(result);
+    console.log(message);
+
+    return isSuccessful;
 };

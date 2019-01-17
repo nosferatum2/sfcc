@@ -1,8 +1,9 @@
 'use strict';
 
-const path = require('path');
-const stylelint = require('stylelint');
 const chalk = require('chalk');
+const path = require('path');
+const globs = require('../util/globs');
+const stylelint = require('stylelint');
 
 /**
  * Lint files using stylelint
@@ -10,15 +11,15 @@ const chalk = require('chalk');
  * @param {Array} files - an array of files
  * @return {Promise} - stylelint results
  */
-exports.lint = (files) => stylelint.lint(
-    {
+function lint(files) {
+    return stylelint.lint({
         configFile: path.resolve(process.cwd(), '.stylelintrc.json'),
         cache: !process.env.lintNoCache,
         files,
         syntax: 'scss',
         formatter: 'string'
-    }
-);
+    });
+}
 
 /**
  * Format the stylelint result object
@@ -26,7 +27,7 @@ exports.lint = (files) => stylelint.lint(
  * @param {Object} result - stylelint results object
  * @return {Object} - formatted results object
  */
-exports.formatResult = (result) => {
+function formatResult(result) {
     if (result.errored) {
         return {
             isSuccessful: false,
@@ -40,4 +41,19 @@ exports.formatResult = (result) => {
         isSuccessful: true,
         message: `${chalk.green('Linted Scss files successfully\n')}`
     };
+}
+
+/**
+ * Lint Scss files
+ * @returns {boolean} isSuccessful
+ */
+exports.lintScssFiles = async () => {
+    console.log('Linting Scss files');
+
+    const files = globs.getScssFiles();
+    const result = await lint(files);
+    const { message, isSuccessful } = formatResult(result);
+    console.log(message);
+
+    return isSuccessful;
 };

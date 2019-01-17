@@ -1,7 +1,8 @@
 'use strict';
 
-const CLIEngine = require('eslint').CLIEngine;
 const chalk = require('chalk');
+const globs = require('../util/globs');
+const CLIEngine = require('eslint').CLIEngine;
 
 /**
  * Lint files using ESLint
@@ -9,12 +10,12 @@ const chalk = require('chalk');
  * @param {Array} files - an array of files
  * @return {Object} - ESLint results object
  */
-exports.lint = (files) => {
+function lint(files) {
     const eslint = new CLIEngine({
         cache: !process.env.lintNoCache
     });
     return eslint.executeOnFiles(files);
-};
+}
 
 /**
  * Format the ESLint report object
@@ -23,7 +24,7 @@ exports.lint = (files) => {
  * @param {string} fileTypeString - context / type of JS file
  * @return {Object} - formatted results object
  */
-exports.formatResult = (result, fileTypeString) => {
+function formatResult(result, fileTypeString) {
     const formatter = new CLIEngine().getFormatter();
 
     if (result.errorCount) {
@@ -39,4 +40,52 @@ exports.formatResult = (result, fileTypeString) => {
         isSuccessful: true,
         message: `${chalk.green(`Linted ${fileTypeString} successfully\n`)}`
     };
+}
+
+/**
+ * Lint client-side JS files
+ * @returns {boolean} isSuccessful
+ */
+exports.lintClientJsFiles = () => {
+    const fileTypeString = 'client-side JS files';
+    console.log(`Linting ${fileTypeString}`);
+
+    const files = globs.getClientJsFiles();
+    const result = lint(files);
+    const { message, isSuccessful } = formatResult(result, fileTypeString);
+    console.log(message);
+
+    return isSuccessful;
+};
+
+/**
+ * Lint server-side JS files
+ * @returns {boolean} isSuccessful
+ */
+exports.lintServerJsFiles = () => {
+    const fileTypeString = 'server-side JS files';
+    console.log(`Linting ${fileTypeString}`);
+
+    const files = globs.getServerJsFiles();
+    const result = lint(files);
+    const { message, isSuccessful } = formatResult(result, fileTypeString);
+    console.log(message);
+
+    return isSuccessful;
+};
+
+/**
+ * Lint JS files in the build_tools directory
+ * @returns {boolean} isSuccessful
+ */
+exports.lintBuildToolsJSFiles = () => {
+    const fileTypeString = 'Build Tools JS files';
+    console.log(`Linting ${fileTypeString}`);
+
+    const files = globs.getBuildToolsJsFiles();
+    const result = lint(files);
+    const { message, isSuccessful } = formatResult(result, fileTypeString);
+    console.log(message);
+
+    return isSuccessful;
 };

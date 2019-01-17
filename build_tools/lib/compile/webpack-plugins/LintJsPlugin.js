@@ -1,7 +1,7 @@
 'use strict';
 
 const notifier = require('node-notifier');
-const linter = require('../../../tasks/lint');
+const linter = require('../../lint/lint-js');
 
 /**
  * A custom Webpack plugin to lint client-side JS files
