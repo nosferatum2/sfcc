@@ -81,11 +81,11 @@
         <echo level="info">Sass Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='npm run lint:css'/>
+            <arg value='npm run lint scss -- --lint-no-cache'/>
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:css"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint scss -- --lint-no-cache"/>
         </exec>
         <echo level="info">Sass Linter Successful</echo>
         <echo level="info"></echo>
@@ -107,11 +107,11 @@
         <echo level="info">Client JavaScript Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='npm run lint:js'/>
+            <arg value='npm run lint client-js -- --lint-no-cache'/>
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:js"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint client-js -- --lint-no-cache"/>
         </exec>
         <echo level="info">Client JavaScript Linter Successful</echo>
         <echo level="info">
@@ -146,11 +146,11 @@
         <echo level="info">Server JavaScript Linter running...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg value='npm run lint:serverjs'/>
+            <arg value='npm run lint server-js -- --lint-no-cache'/>
         </exec>
         <exec executable="/bin/bash" osfamily="unix" failonerror="true">
             <arg value="-c"/>
-            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint:serverjs"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; npm run lint server-js -- --lint-no-cache"/>
         </exec>
         <echo level="info">Server JavaScript Linter Successful</echo>
     </target>
