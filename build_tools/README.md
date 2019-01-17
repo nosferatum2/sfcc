@@ -128,7 +128,7 @@ The linting of client-side Js files, server-side Js files, Scss files, JSON file
 The script accepts an array of positional arguments. If no arguments are provided, all linting routines will run.  
 The following values for `type` (as seen below) are valid: client-js, server-js, scss, json, build-tools
 ```sh
-npm run lint [${type}, ${type}, ... ]
+npm run lint ${type1} ${type2} ${typeN}
 
 # examples
 npm run lint
