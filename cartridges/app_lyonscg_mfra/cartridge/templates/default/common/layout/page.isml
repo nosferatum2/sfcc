@@ -1,5 +1,7 @@
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
-
+<isscript>
+    var pageContext = pdict.pageContext;
+</isscript>
 <isinclude template="/components/modules" sf-toolkit="off" />
 <isset name="pageStyleGuide" value="${pdict.action == 'StyleGuide-Show' ? 'pt_styleguide' : ''}" scope="page" />
 
@@ -25,6 +27,13 @@
          <!--[if lt IE 10]>
             <isinclude sf-toolkit="off" template="/common/scripts" />
         <![endif]-->
+        <iscomment>
+            hook for Marketing Cloud connector & other integration which need to inject
+            logic at the page end
+            IMPORTANT: Note that this hook will be called to cached as well as uncached pages
+                        which means you need to put privacy information into another remote include
+        </iscomment>
+        ${dw.system.HookMgr.callHook('app.template.afterFooter', 'afterFooter') || ''}
         <isinclude url="${URLUtils.url('ConsentTracking-Check')}"/>
     </body>
 </html>

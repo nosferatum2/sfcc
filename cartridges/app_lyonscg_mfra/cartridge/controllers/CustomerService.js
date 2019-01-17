@@ -30,10 +30,11 @@ function sendConfirmationEmail(contactFormData) {
     confirmationEmail.setFrom('no-reply@salesforce.com');
 
     Object.keys(contactFormData).forEach(function (key) {
-        context.put(key, contactFormData[key]);
+        var value = typeof contactFormData[key] !== 'undefined' ? contactFormData[key] : null;
+        context.put(key, value);
     });
 
-    template = new Template('checkout/confirmation/accountRegisteredEmail');
+    template = new Template('mail/contactUs');
     content = template.render(context).text;
     confirmationEmail.setContent(content, 'text/html', 'UTF-8');
     confirmationEmail.send();

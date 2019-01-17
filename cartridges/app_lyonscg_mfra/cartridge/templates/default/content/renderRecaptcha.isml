@@ -7,6 +7,6 @@
 
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 
-<div class="g-recaptcha" data-sitekey="${googleRecaptchaSiteKey}"></div>
-
+<div id="recaptcha" class="g-recaptcha" data-sitekey="${googleRecaptchaSiteKey}"></div>
+<div class="invalid-feedback">${Resource.msg('captcha.error','forms',null)}</div>
 </isif>

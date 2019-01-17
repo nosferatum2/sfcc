@@ -4,7 +4,8 @@
             <div class="slide">
                 <a class="slide-link ${(product.imagesZoom && product.imagesZoom['hi-res'][loopStatus.index]) ? 'zoom-hires' : 'zoom-disabled'}" 
                     href="${(product.imagesZoom && product.imagesZoom['hi-res'][loopStatus.index]) ? product.imagesZoom['hi-res'][loopStatus.index].url : image.url}" 
-                    title="${image.alt}">
+                    title="${image.alt}"
+                    target="_blank">
                     <img src="${image.url}" class="slide-img" alt="${image.alt}">
                 </a>
             </div>
