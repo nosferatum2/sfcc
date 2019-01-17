@@ -70,6 +70,41 @@ function carouselUnslick() {
 }
 
 /**
+ * Init the product carousel using a predefined slick configuration for bonus item
+ */
+function carouselInitBonus() {
+    var $carouselBonus = $('.bonus-product-item');
+    if ($carouselBonus.length) {
+        $carouselBonus.each(function () {
+            var $carouselBonusDiv = $(this).find('.product-carousel');
+            if ($carouselBonusDiv.length) {
+                imagesloaded($carouselBonusDiv).on('done', function () {
+                    $carouselBonusDiv.on('init', initZoom);
+                    $carouselBonusDiv.on('afterChange', initZoom);
+                    $carouselBonusDiv.not('.slick-initialized').slick(slickConfigs.pdp);
+                });
+            }
+        });
+    }
+}
+
+/**
+ * Deconstruct (unslick) the carousel, removing classes and handlers added on slick initialize.
+ */
+function carouselUnslickBonus() {
+    var $carouselBonus = $('.bonus-product-item');
+    if ($carouselBonus.length) {
+        $carouselBonus.each(function () {
+            var $carouselBonusDiv = $(this).find('.product-carousel');
+            if ($carouselBonusDiv.length && $carouselBonusDiv.hasClass('slick-initialized')) {
+                $carouselBonusDiv.off('init', initZoom);
+                $carouselBonusDiv.off('afterChange', initZoom);
+                $carouselBonusDiv.slick('unslick');
+            }
+        });
+    }
+}
+/**
  * @param  {json} product - Product json
  */
 function updateMainImages(product) {
@@ -95,7 +130,9 @@ function updateMainImages(product) {
 
 var exportBase = $.extend({}, base, {
     carouselInit: carouselInit,
+    carouselInitBonus: carouselInitBonus,
     carouselUnslick: carouselUnslick,
+    carouselUnslickBonus: carouselUnslickBonus,
     updateMainImages: updateMainImages
 });
 

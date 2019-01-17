@@ -8,6 +8,7 @@ base.carouselInit();
 $('body').on('product:beforeAttributeSelect', function () {
     // Unslick the existing images to prepare them for direct js manipulation
     base.carouselUnslick();
+    base.carouselUnslickBonus();
 });
 
 $('body').on('product:afterAttributeSelect', function (e, response) {
@@ -15,8 +16,10 @@ $('body').on('product:afterAttributeSelect', function (e, response) {
     base.carouselInit();
 });
 
-$('body').on('shown.bs.modal', '#editProductModal, #quickViewModal', function () {
+$('body').on('shown.bs.modal', '#editProductModal, #quickViewModal, #chooseBonusProductModal', function () {
     base.carouselInit();
+    base.carouselInitBonus();
 });
+
 
 module.exports = cart;
