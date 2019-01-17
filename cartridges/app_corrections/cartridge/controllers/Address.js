@@ -35,7 +35,7 @@ server.replace('SaveAddress', csrfProtection.validateAjaxRequest, ecommerce.chec
                 var address = req.querystring.addressId
                     ? addressBook.getAddress(req.querystring.addressId)
                     : addressBook.createAddress(formInfo.addressId);
-                if (address && ((req.querystring.addressId === formInfo.addressId) || (addressBook.getAddress(formInfo.addressId) === null))) {
+                if (address && ((req.querystring.addressId === '') || (req.querystring.addressId === formInfo.addressId) || (addressBook.getAddress(formInfo.addressId) === null))) {
                     if (req.querystring.addressId) {
                         address.setID(formInfo.addressId);
                     }
