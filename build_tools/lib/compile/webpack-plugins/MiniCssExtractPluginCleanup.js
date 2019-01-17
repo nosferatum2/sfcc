@@ -1,4 +1,5 @@
-'use strict'
+/* eslint-disable */
+'use strict';
 
 const minimatch = require('minimatch');
 
@@ -18,8 +19,8 @@ module.exports = class MiniCssExtractPluginCleanup {
                 .forEach(asset => {
                     delete compilation.assets[asset];
                 });
-                
+
             callback();
         });
     }
-}
+};

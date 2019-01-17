@@ -5,7 +5,7 @@ const FolderZip = require('folder-zip');
 const path = require('path');
 const promiseRetry = require('promise-retry');
 const Q = require('q');
-const Webdav = require('./util/webdav');
+const Webdav = require('./lib/webdav');
 const pwd = __dirname;
 
 const packageFile = require(path.join(pwd, '../package.json'));
