@@ -202,7 +202,7 @@ module.exports = {
      */
     handleCompareClick: function () {
         $('div.page').on('click', '.compare input[type=checkbox]', function () {
-            //var pid = $(this).attr('id');
+            // var pid = $(this).attr('id');
             var pid = $(this).closest('.grid-tile').data('pid');
             var checked = $(this).is(':checked');
             var imgSrc = $(this).closest('.product-tile')
