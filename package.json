@@ -133,6 +133,18 @@
           "alias": "org",
           "name": "org_organizationid_mfra"
         },
+		{
+          "alias": "productcompare",
+          "name": "plugin_productcompare"
+        },
+		{
+          "alias": "wishlists",
+          "name": "plugin_wishlists"
+        },
+		{
+          "alias": "productlist",
+          "name": "lib_productlist"
+        },
         {
           "alias": "lyonscg",
           "name": "app_lyonscg_mfra"
