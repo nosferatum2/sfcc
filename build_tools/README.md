@@ -124,14 +124,16 @@ npm run compile:js:prod
 
 ## Linting
 
-The linting of client-side Js files, server-side Js files, Css files,and JSON files is supported.  
-Accepted values for `type` (seen in the example below) include: js, serverjs, css, and json
-
+The linting of client-side Js files, server-side Js files, Scss files, JSON files, and build tools JS files is supported.  
+The script accepts an array of positional arguments. If no arguments are provided, all linting routines will run.  
+The following values for `type` (as seen below) are valid: client-js, server-js, scss, json, build-tools
 ```sh
-npm run lint:${type} 
+npm run lint [${type}, ${type}, ... ]
 
-# example 
-npm run lint:js
+# examples
+npm run lint
+
+npm run lint client-js scss json
 ```
 
 
