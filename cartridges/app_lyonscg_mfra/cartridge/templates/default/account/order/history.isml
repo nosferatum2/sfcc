@@ -38,7 +38,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-8 col-md-6 text-center">
-                <a href="${URLUtils.url('Account-Show')}" class="normal">
+                <a href="${URLUtils.url('Account-Show')}" class="back-to-account-link">
                     ${Resource.msg('link.profile.backtomyaccount','account',null)}
                 </a>
             </div>
