@@ -59,7 +59,7 @@
             <div class="col-6">
                 <div class="row">
                     <div class="col text-center">
-                        <a href="${URLUtils.url('Account-Show')}" class="normal">
+                        <a href="${URLUtils.url('Account-Show')}" class="back-to-account-link">
                             ${Resource.msg('link.profile.backtomyaccount','account',null)}
                         </a>
                     </div>
