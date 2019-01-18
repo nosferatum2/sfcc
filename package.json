@@ -138,6 +138,18 @@
           "name": "app_corrections"
         },
         {
+          "alias": "productcompare",
+          "name": "plugin_productcompare"
+        },
+        {
+          "alias": "wishlists",
+          "name": "plugin_wishlists"
+        },
+        {
+          "alias": "productlist",
+          "name": "lib_productlist"
+        },
+        {
           "alias": "base",
           "name": "app_storefront_base"
         }
