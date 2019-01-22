@@ -30,13 +30,6 @@ function getCategoryCompareStatus(productSearch) {
     return compareBooleanValue;
 }
 
-server.append('ShowAjax', function (req, res, next) {
-    var viewData = res.getViewData();
-    viewData.compareEnabled = getCategoryCompareStatus(viewData.productSearch);
-    res.setViewData(viewData);
-    next();
-});
-
 server.append('Show', function (req, res, next) {
     var viewData = res.getViewData();
     viewData.compareEnabled = getCategoryCompareStatus(viewData.productSearch);

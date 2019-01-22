@@ -133,11 +133,7 @@
           "alias": "lyonscg",
           "name": "app_lyonscg_mfra"
         },
-        {
-          "alias": "fixes",
-          "name": "app_corrections"
-        },
-        {
+	    {
           "alias": "productcompare",
           "name": "plugin_productcompare"
         },
@@ -148,6 +144,10 @@
         {
           "alias": "productlist",
           "name": "lib_productlist"
+        },
+        {
+          "alias": "fixes",
+          "name": "app_corrections"
         },
         {
           "alias": "base",
