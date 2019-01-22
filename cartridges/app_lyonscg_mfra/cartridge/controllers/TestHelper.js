@@ -3,6 +3,7 @@
 var server = require('server');
 
 var Resource = require('dw/web/Resource');
+var System = require('dw/system/System');
 
 /**
  * Order Confirmation Test Controller
@@ -19,6 +20,10 @@ server.get(
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
         var Locale = require('dw/util/Locale');
+
+        if (System.getInstanceType() === System.PRODUCTION_SYSTEM) {
+            return next();
+        }
 
         var order = OrderMgr.getOrder(req.querystring.ID);
 
