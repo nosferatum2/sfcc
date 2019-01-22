@@ -1,6 +1,6 @@
 'use strict';
 
-var page = require('app_storefront_base/cartridge/controllers/Search');
+var page = module.superModule;
 var server = require('server');
 
 server.extend(page);
