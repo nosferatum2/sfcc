@@ -1,3 +1,6 @@
+<isscript> 
+	var enableWishlists = dw.system.Site.getCurrent().getCustomPreferenceValue("enableWishlists");
+</isscript>
 <div class="row justify-content-center">
     <div class="col-sm-6">
         <!---Profile--->
@@ -19,11 +22,13 @@
         </isif>
         <!---Payment--->
         <isinclude template="account/paymentCard"/>
-        <isif condition="${pdict.account.wishlist}">
-            <!---Wishlist--->
-            <div class="wishlist-account-card" data-error-msg="${Resource.msg('wishlist.removefromwishlist.failure.msg','wishlist',null)}">
-                <isinclude template="account/wishlist/listCards"/>
-            </div>
+        <isif condition="${!empty(enableWishlists) && enableWishlists}" >
+	        <isif condition="${pdict.account.wishlist}">
+	            <!---Wishlist--->
+	            <div class="wishlist-account-card" data-error-msg="${Resource.msg('wishlist.removefromwishlist.failure.msg','wishlist',null)}">
+	                <isinclude template="account/wishlist/listCards"/>
+	            </div>
+	        </isif>
         </isif>
     </div>
 </div>

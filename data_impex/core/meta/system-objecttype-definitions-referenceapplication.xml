@@ -75,6 +75,14 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="enableWishlists">
+                <display-name xml:lang="x-default">Enable Wishlists</display-name>
+                <description xml:lang="x-default">When true, this enables wishlist feature on storefront</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
         </custom-attribute-definitions>
         <group-definitions>
             <attribute-group group-id="LYONSCG Reference Application Storefront Configs">
@@ -84,6 +92,7 @@
             	<attribute attribute-id="pageContextMap"/>
                 <attribute attribute-id="rateLimiterThreshold"/>
                 <attribute attribute-id="enableProductCompare"/>
+                <attribute attribute-id="enableWishlists"/>
             </attribute-group>
             <attribute-group group-id="Google Recaptcha">
                 <display-name xml:lang="x-default">Google Recaptcha</display-name>

@@ -4,11 +4,12 @@ var server = require('server');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var productListHelper = require('*/cartridge/scripts/productList/productListHelpers');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var wishlist = require('*/cartridge/scripts/middleware/wishlist');
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 var PAGE_SIZE_ITEMS = 15;
 
-server.get('GetListJson', function (req, res, next) {
+server.get('GetListJson', wishlist.checkEnabled, function (req, res, next) {
     var result = {};
     var list = productListHelper.getList(req.currentCustomer.raw, { type: 10 });
     var WishlistModel = require('*/cartridge/models/productList');
@@ -27,7 +28,7 @@ server.get('GetListJson', function (req, res, next) {
     next();
 });
 
-server.get('MoreList', function (req, res, next) {
+server.get('MoreList', wishlist.checkEnabled, function (req, res, next) {
     var publicView = (req.querystring.publicView === 'true') || false;
     var list;
     if (publicView && req.querystring.id) {
@@ -57,7 +58,7 @@ server.get('MoreList', function (req, res, next) {
     next();
 });
 
-server.get('Show', consentTracking.consent, server.middleware.https, csrfProtection.generateToken, function (req, res, next) {
+server.get('Show', consentTracking.consent, server.middleware.https, csrfProtection.generateToken, wishlist.checkEnabled, function (req, res, next) {
     var list = productListHelper.getList(req.currentCustomer.raw, { type: 10 });
     var WishlistModel = require('*/cartridge/models/productList');
     var userName = '';
@@ -116,7 +117,7 @@ server.get('Show', consentTracking.consent, server.middleware.https, csrfProtect
     next();
 });
 
-server.get('ShowOthers', consentTracking.consent, function (req, res, next) {
+server.get('ShowOthers', consentTracking.consent, wishlist.checkEnabled, function (req, res, next) {
     var id = req.querystring.id;
     var productListMgr = require('dw/customer/ProductListMgr');
     var apiList = productListMgr.getProductList(id);
@@ -180,7 +181,7 @@ server.get('ShowOthers', consentTracking.consent, function (req, res, next) {
     next();
 });
 
-server.post('AddProduct', function (req, res, next) {
+server.post('AddProduct', wishlist.checkEnabled, function (req, res, next) {
     var list = productListHelper.getList(req.currentCustomer.raw, { type: 10 });
     var pid = req.form.pid;
     var optionId = req.form.optionId || null;
@@ -213,7 +214,7 @@ server.post('AddProduct', function (req, res, next) {
     next();
 });
 
-server.get('RemoveProduct', function (req, res, next) {
+server.get('RemoveProduct', wishlist.checkEnabled, function (req, res, next) {
     var list = productListHelper.removeItem(req.currentCustomer.raw, req.querystring.pid, { req: req, type: 10 });
     var listIsEmpty = list.prodList.items.empty;
 
@@ -226,7 +227,7 @@ server.get('RemoveProduct', function (req, res, next) {
     next();
 });
 
-server.get('RemoveProductAccount', function (req, res, next) {
+server.get('RemoveProductAccount', wishlist.checkEnabled, function (req, res, next) {
     productListHelper.removeItem(req.currentCustomer.raw, req.querystring.pid, { req: req, type: 10 });
     var wishListAccount = require('*/cartridge/models/account/wishListAccount');
     var productListMgr = require('dw/customer/ProductListMgr');
@@ -241,7 +242,7 @@ server.get('RemoveProductAccount', function (req, res, next) {
     next();
 });
 
-server.get('RemoveList', function (req, res, next) {
+server.get('RemoveList', wishlist.checkEnabled, function (req, res, next) {
     var list = productListHelper.getList(req.currentCustomer.raw, { type: 10 });
     if (list) {
         productListHelper.removeList(req.currentCustomer.raw, list, null);
@@ -252,7 +253,7 @@ server.get('RemoveList', function (req, res, next) {
     next();
 });
 
-server.get('GetProduct', function (req, res, next) {
+server.get('GetProduct', wishlist.checkEnabled, function (req, res, next) {
     var ProductFactory = require('*/cartridge/scripts/factories/product');
 
     var requestUuid = req.querystring.uuid;
@@ -272,7 +273,7 @@ server.get('GetProduct', function (req, res, next) {
     next();
 });
 
-server.post('EditProductListItem', function (req, res, next) {
+server.post('EditProductListItem', wishlist.checkEnabled, function (req, res, next) {
     var ProductMgr = require('dw/catalog/ProductMgr');
     var collections = require('*/cartridge/scripts/util/collections');
     var requestUuid = req.form.uuid;
@@ -327,7 +328,7 @@ server.post('EditProductListItem', function (req, res, next) {
     return next();
 });
 
-server.get('Search', consentTracking.consent, function (req, res, next) {
+server.get('Search', consentTracking.consent, wishlist.checkEnabled, function (req, res, next) {
     var breadcrumbs = [
         {
             htmlValue: Resource.msg('global.home', 'common', null),
@@ -343,7 +344,7 @@ server.get('Search', consentTracking.consent, function (req, res, next) {
     next();
 });
 
-server.get('Results', consentTracking.consent, function (req, res, next) {
+server.get('Results', consentTracking.consent, wishlist.checkEnabled, function (req, res, next) {
     var WishlistSearchModel = require('*/cartridge/models/wishlist/search');
     var breadcrumbs = [
         {
@@ -373,7 +374,7 @@ server.get('Results', consentTracking.consent, function (req, res, next) {
     next();
 });
 
-server.get('MoreResults', function (req, res, next) {
+server.get('MoreResults', wishlist.checkEnabled, function (req, res, next) {
     var WishlistSearchModel = require('*/cartridge/models/wishlist/search');
     var firstName = req.querystring.firstName;
     var lastName = req.querystring.lastName;

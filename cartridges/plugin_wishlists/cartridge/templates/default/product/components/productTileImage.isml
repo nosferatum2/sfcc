@@ -1,3 +1,6 @@
+<isscript> 
+	var enableWishlists = dw.system.Site.getCurrent().getCustomPreferenceValue("enableWishlists");
+</isscript>
 <div class="image-container">
     <a href="${pdict.urls.product}">
         <img class="tile-image"
@@ -6,12 +9,14 @@
              title="${product.images.medium[0].title}"
              itemprop="image"/>
     </a>
-    <a class="wishlistTile" href="${URLUtils.url('Wishlist-AddProduct')}" title="${Resource.msg('wishlist.addto.wishlist.heart', 'wishlist', null)}">
-        <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
-            <i class="fa fa-heart-o fa-stack-1x"></i>
-        </span>
-    </a>
+    <isif condition="${!empty(enableWishlists) && enableWishlists}" >
+	    <a class="wishlistTile" href="${URLUtils.url('Wishlist-AddProduct')}" title="${Resource.msg('wishlist.addto.wishlist.heart', 'wishlist', null)}">
+	        <span class="fa-stack fa-lg">
+	            <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
+	            <i class="fa fa-heart-o fa-stack-1x"></i>
+	        </span>
+	    </a>
+    </isif>
     <isif condition="${pdict.display.showQuickView !== false}">
         <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}" title="${Resource.msg('button.quickview', 'common', null)}">
             <span class="fa-stack fa-lg">
