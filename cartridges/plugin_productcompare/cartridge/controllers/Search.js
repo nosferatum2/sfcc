@@ -3,6 +3,7 @@
 var server = require('server');
 server.extend(module.superModule);
 var CatalogMgr = require('dw/catalog/CatalogMgr');
+var Site = require('dw/system/Site');
 
 /**
  * Climb up the category tree to see if any parents have the enable compare turned on
@@ -12,7 +13,8 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
  */
 function getCategoryCompareStatus(productSearch) {
     var compareBooleanValue = false;
-    if (productSearch && productSearch.category) {
+    var enableProductCompare = Site.getCurrent().getCustomPreferenceValue('enableProductCompare');
+    if (productSearch && productSearch.category && enableProductCompare !== null && enableProductCompare) {
         var currentCategory;
         var selectedCategory;
         compareBooleanValue = true;
