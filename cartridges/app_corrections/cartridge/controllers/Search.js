@@ -1,16 +1,13 @@
 'use strict';
 
-var page = module.superModule;
 var server = require('server');
-
-server.extend(page);
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
-server.replace('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
+server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
@@ -33,7 +30,7 @@ server.replace('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, 
     next();
 });
 
-server.replace('Refinebar', cache.applyDefaultCache, function (req, res, next) {
+server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
@@ -57,7 +54,7 @@ server.replace('Refinebar', cache.applyDefaultCache, function (req, res, next) {
 });
 
 
-server.replace('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var URLUtils = require('dw/web/URLUtils');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
@@ -153,7 +150,7 @@ server.replace('Show', cache.applyShortPromotionSensitiveCache, consentTracking.
     return next();
 }, pageMetaData.computedPageMetaData);
 
-server.replace('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
+server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
     var contentSearch = searchHelper.setupContentSearch(req.querystring);
