@@ -113,7 +113,7 @@
 	                <isif condition="${pdict.addToCartUrl}">
 	                    <isinclude template="product/components/addToCartGlobal" />
 	                <iselse>
-	                    <isinclude template="product/components/updateCartProduct" />
+	                    <isinclude template="product/components/updateProduct" />
 	                </isif>
                 </isif>
             </div>
