@@ -7,7 +7,7 @@ var productFactory = require('*/cartridge/scripts/factories/product');
 var CompareAttributesModel = require('*/cartridge/models/compareAttributes');
 var compare = require('*/cartridge/scripts/middleware/compare');
 
-server.get('Show', cache.applyDefaultCache, wishlist.checkEnabled, function (req, res, next) {
+server.get('Show', cache.applyDefaultCache, compare.checkEnabled, function (req, res, next) {
     var compareProductsForm = req.querystring;
     var category = CatalogMgr.getCategory(compareProductsForm.cgid);
     var pids = Object.keys(compareProductsForm)
