@@ -7,10 +7,10 @@ const webpack = require('webpack');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const MiniCssExtractPluginCleanup = require('./plugins/MiniCssExtractPluginCleanup');
-const LintJsPlugin = require('./plugins/LintJsPlugin');
-const LintSassPlugin = require('./plugins/LintSassPlugin');
-const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
+const MiniCssExtractPluginCleanup = require('./webpack-plugins/MiniCssExtractPluginCleanup');
+const LintJsPlugin = require('./webpack-plugins/LintJsPlugin');
+const LintScssPlugin = require('./webpack-plugins/LintScssPlugin');
+const LogCompilerEventsPlugin = require('./webpack-plugins/LogCompilerEventsPlugin');
 
 /**
  * Class to generate Webpack configurations
@@ -18,17 +18,20 @@ const LogCompilerEventsPlugin = require('./plugins/LogCompilerEventsPlugin');
  */
 module.exports = class WebpackConfigurator {
     /**
-     * Initialize configurator instance with variables to aid in building the configuration object 
-     * @param {Object} Site - A site definition (see the root package.json "sites" array)
-     * @param {Object} options - Additional options to determine configuration object (see the root package.json "buildEnvironment" object)
+     * Initialize configurator instance with variables to aid in building the configuration object
+     * @param {Object} site - A site definition (see the root package.json "sites" array)
+     * @param {Object} options - Additional options to determine configuration object
+     *                           (see the root package.json "buildEnvironment" object)
      */
     constructor(site, options) {
         this.site = site;
         this.options = options;
         this.cartridges = site.cartridges;
         this.cartridgesPath = path.resolve(process.cwd(), 'cartridges');
-        this.siteCartridge = this.cartridges[this.cartridges.findIndex(cartridge => cartridge.alias === 'site')];
-    };
+        this.siteCartridge = this.cartridges[
+            this.cartridges.findIndex(cartridge => cartridge.alias === 'site')
+        ];
+    }
 
     /**
      * Create configuration objects for the given site
@@ -39,54 +42,54 @@ module.exports = class WebpackConfigurator {
             this.createJsConfiguration(),
             this.createScssConfiguration()
         ];
-    };
+    }
 
     /**
      * Create a JS configuration object
-     * @return {Object}
+     * @return {Object} - JS configuration object
      */
     createJsConfiguration() {
         return Object.assign(this.getCommonConfigurationOptions(), {
-            name    : 'js',
-            entry   : this.getJsFiles(),
-            module  : this.handleJsModules(),
-            resolve : this.getResolver('js'),
-            plugins : this.getJsPlugins(),
-            devtool : this.isOption('jsSourceMaps') ? 'cheap-module-source-map' : 'none'
+            name: 'js',
+            entry: this.getJsFiles(),
+            module: this.handleJsModules(),
+            resolve: this.getResolver('js'),
+            plugins: this.getJsPlugins(),
+            devtool: this.isOption('jsSourceMaps') ? 'cheap-module-source-map' : 'none'
         });
-    };    
+    }
 
     /**
      * Create a Scss configuration object
-     * @return {Object}
+     * @return {Object} - Scss configuration object
      */
     createScssConfiguration() {
         return Object.assign(this.getCommonConfigurationOptions(), {
-            name    : 'scss',
-            entry   : this.getScssFiles(),
-            module  : this.handleScssModules(),
-            resolve : this.getResolver('scss'),
-            plugins : this.getScssPlugins(),
-            devtool : this.isOption('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
+            name: 'scss',
+            entry: this.getScssFiles(),
+            module: this.handleScssModules(),
+            resolve: this.getResolver('scss'),
+            plugins: this.getScssPlugins(),
+            devtool: this.isOption('cssSourceMaps') ? 'cheap-module-source-map' : 'none'
         });
-    };
+    }
 
     /**
      * Get configuration options that are independent of asset type
-     * @return {Object}
+     * @return {Object} - An object containing common configuration options
      */
     getCommonConfigurationOptions() {
         return {
-            mode   : this.getOption('mode'),
-            output : this.getOutput(),
-            stats  : this.getStats()
+            mode: this.getOption('mode'),
+            output: this.getOutput(),
+            stats: this.getStats()
         };
-    };
+    }
 
     /**
      * Tell webpack where to emit the bundles and how to name these files
      * https://webpack.js.org/concepts/#output
-     * @return {Object}
+     * @return {Object} - An object for wepback's output property
      */
     getOutput() {
         return {
@@ -94,57 +97,69 @@ module.exports = class WebpackConfigurator {
             path: path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static'),
             filename: '[name].js'
         };
-    };
+    }
 
     /**
-     * Get JS files (as name : 'path/to/file') that webpack should use to build out its internal dependency graph
+     * Get JS files (as name : 'path/to/file') that webpack should use to build out
+     * its internal dependency graph
      * https://webpack.js.org/concepts/#entry
-     * @return {Object}
+     * @return {Object} - An object for webpack's entry property
      */
     getJsFiles() {
-        const files = new Object();
+        const files = {};
 
-        for (let cartridge of this.cartridges) {
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
+        for (const cartridge of this.cartridges) {
+            const clientPath = path.resolve(this.cartridgesPath,
+                                            cartridge.name,
+                                            'cartridge/client');
+
             glob.sync(path.resolve(clientPath, '*', 'js', '*.js')).forEach(file => {
-                const key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, '.js'));
-                if (!files.hasOwnProperty(key)) {
+                const directory = path.dirname(path.relative(clientPath, file));
+                const fileName = path.basename(file, '.js');
+                const key = path.join(directory, fileName);
+                if (!Object.prototype.hasOwnProperty.call(files, key)) {
                     files[key] = file;
                 }
             });
         }
 
         return files;
-    };
+    }
 
     /**
-     * Get Scss files (as name : 'path/to/file') that webpack should use to build out its internal dependency graph
+     * Get Scss files (as name : 'path/to/file') that webpack should use to build out
+     * its internal dependency graph
      * https://webpack.js.org/concepts/#entry
-     * @return {Object}
+     * @return {Object} - An object for webpack's entry property
      */
     getScssFiles() {
-        const files = new Object();
+        const files = {};
 
-        for (let cartridge of this.cartridges) {
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
+        for (const cartridge of this.cartridges) {
+            const clientPath = path.resolve(this.cartridgesPath,
+                                            cartridge.name,
+                                            'cartridge/client');
+
             glob.sync(path.resolve(clientPath, '*', 'scss', '**', '*.scss'))
             .filter(file => !path.basename(file).startsWith('_'))
             .forEach(file => {
-                let key = path.join(path.dirname(path.relative(clientPath, file)), path.basename(file, '.scss'));
+                const directory = path.dirname(path.relative(clientPath, file));
+                const fileName = path.basename(file, '.scss');
+                let key = path.join(directory, fileName);
                 key = key.replace('scss', 'css');
-                if (!files.hasOwnProperty(key)) {
+                if (!Object.prototype.hasOwnProperty.call(files, key)) {
                     files[key] = file;
                 }
             });
         }
 
         return files;
-    };
+    }
 
     /**
      * Build the module option to determine how Webpack should handle JS dependencies
      * https://webpack.js.org/configuration/module/
-     * @return {Object}
+     * @return {Object} - An object for webpack's module property
      */
     handleJsModules() {
         return {
@@ -154,13 +169,13 @@ module.exports = class WebpackConfigurator {
                     use: this.getJsLoaders()
                 }
             ]
-        }
-    };
+        };
+    }
 
     /**
      * Build the module option to determine how Webpack should handle Scss dependencies
      * https://webpack.js.org/configuration/module/
-     * @return {Object}
+     * @return {Object} - An object for webpack's module property
      */
     handleScssModules() {
         return {
@@ -170,18 +185,19 @@ module.exports = class WebpackConfigurator {
                     use: this.getScssLoaders()
                 }
             ]
-        }
-    };
+        };
+    }
 
     /**
      * Build the JS loaders array
      * https://webpack.js.org/concepts/loaders/
-     * @return {Array}
+     * @return {Array} - An array of loaders for webpack's Rule.use property
      */
     getJsLoaders() {
-        const loaders = new Array();
+        const loaders = [];
 
-        // Transpile ES6 into a backwards compatible version of JavaScript in current and older browsers or environments
+        // Transpile ES6 into a backwards compatible version of JavaScript in current
+        // and older browsers or environments
         loaders.unshift({
             loader: 'babel-loader',
             options: {
@@ -199,22 +215,22 @@ module.exports = class WebpackConfigurator {
         }
 
         return loaders;
-    };
+    }
 
     /**
      * Build the Scss loaders array
      * https://webpack.js.org/concepts/loaders/
-     * @return {Array}
+     * @return {Array} - An array of loaders for webpack's Rule.use property
      */
     getScssLoaders() {
         const sourceMap = this.isOption('cssSourceMaps');
-        const loaders = new Array();
+        const loaders = [];
 
         // Compile Sass to CSS
         loaders.unshift({
             loader: 'sass-loader',
             options: {
-                sourceMap: sourceMap,
+                sourceMap,
                 includePaths: [
                     path.resolve('node_modules'),
                     path.resolve('node_modules/flag-icon-css/sass')
@@ -222,82 +238,85 @@ module.exports = class WebpackConfigurator {
             }
         });
 
-        // Automatically add vendor prefixes to CSS rules
-        // This increases build time; thus, we can optionally include this loader with the 'cssAutoPrefixer' flag
         if (this.isOption('cssAutoPrefixer')) {
+            // Automatically add vendor prefixes to CSS rules
             loaders.unshift({
                 loader: 'postcss-loader',
                 options: {
-                    sourceMap: sourceMap,
+                    sourceMap,
                     plugins: [
+                        // eslint-disable-next-line
                         require('autoprefixer')()
                     ]
-                }, 
+                }
             });
         }
-    
+
         // Intrepret @import and url() like import/require() and will resolve them
         // This loader converts the CSS to a CommonJS JavaScript module
         loaders.unshift({
             loader: 'css-loader',
             options: {
                 url: false,
-                sourceMap: sourceMap,
+                sourceMap,
                 importLoader: loaders.length
             }
         });
-    
-        // Extracts CSS from the generated CommonJS JavaScript modules into separate files. 
+
+        // Extracts CSS from the generated CommonJS JavaScript modules into separate files
         loaders.unshift({ loader: MiniCssExtractPlugin.loader });
-    
+
         if (this.isOption('mode', 'development')) {
             // Caches the result of following loaders on disk (default) or in the database
             loaders.unshift({ loader: 'cache-loader' });
         }
-    
+
         return loaders;
-    };
+    }
 
     /**
      * Create aliases for the client Js/Scss directories for each cartridge
      * https://webpack.js.org/configuration/resolve/#resolve-alias
      * @param {string} type - the asset type; 'js or 'scss'
-     * @return {Object}
+     * @return {Object} - An object for webpack's resolve property
      */
     getResolver(type) {
-        const aliases = new Object();
+        const aliases = {};
 
-        for (let cartridge of this.cartridges) { 
-            const clientPath = path.resolve(this.cartridgesPath, cartridge.name, 'cartridge/client');
+        for (const cartridge of this.cartridges) {
+            const clientPath = path.resolve(this.cartridgesPath,
+                                            cartridge.name,
+                                            'cartridge/client');
+
             aliases[cartridge.alias] = path.join(clientPath, 'default', type);
-            
+
             if (fs.existsSync(clientPath)) {
                 const locales = fs.readdirSync(clientPath)
                     .map(name => path.join(clientPath, name))
                     .filter(folder => fs.lstatSync(folder).isDirectory())
                     .filter(folder => folder.charAt(0) !== '.')
-                    .filter(folder => path.basename(folder) !== 'default') // added a filter to block hidden folders, like .DS_Store
-                
-                for (let locale of locales) {
-                    const name = path.basename(locale)
+                    .filter(folder => path.basename(folder) !== 'default');
+
+                for (const locale of locales) {
+                    const name = path.basename(locale);
                     aliases[path.join(cartridge.alias, name)] = path.join(clientPath, name, type);
                 }
-            }   
+            }
         }
 
         return {
             modules: ['node_modules', path.resolve(__dirname, 'cartridges')],
-            alias: aliases,
+            alias: aliases
         };
-    };
+    }
 
     /**
      * Build an array of plugins needed for the JS configuration
      * https://webpack.js.org/concepts/plugins/
-     * @return {Array}
+     * @return {Array} - An array of plugins for webpack's plugins property
      */
     getJsPlugins() {
-        const plugins = new Array();
+        const plugins = [];
         const bootstrapPackages = {
             Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
             // Button: 'exports-loader?Button!bootstrap/js/src/button',
@@ -313,7 +332,10 @@ module.exports = class WebpackConfigurator {
         };
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static');
+            const outputPath = path.resolve(this.cartridgesPath,
+                                            this.siteCartridge.name,
+                                            'cartridge/static');
+
             plugins.push(new CleanWebpackPlugin([
                 `${outputPath}/*/js`,
                 '.cache-loader'
@@ -325,33 +347,34 @@ module.exports = class WebpackConfigurator {
 
         plugins.push(new webpack.ProvidePlugin(bootstrapPackages));
 
-        if (this.isOption('jsLinting')) {
-            plugins.push(new LintJsPlugin({
-                cartridges: this.cartridges,
-                siteCartridgeName: this.siteCartridge.name,
-                type: 'js'
-            }));
-        }
-        
         plugins.push(new LogCompilerEventsPlugin({
             cartridges: this.cartridges,
             type: 'js',
             notifications: this.isOption('notifications')
-        }))
+        }));
+
+        if (this.isOption('jsLinting')) {
+            plugins.push(new LintJsPlugin({
+                notifications: this.isOption('notifications')
+            }));
+        }
 
         return plugins;
-    };
+    }
 
     /**
      * Build an array of plugins needed for the Scss configuration
      * https://webpack.js.org/concepts/plugins/
-     * @return {Array}
+     * @return {Array} - An array of plugins for webpack's plugins property
      */
     getScssPlugins() {
-        const plugins = new Array();
+        const plugins = [];
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static');
+            const outputPath = path.resolve(this.cartridgesPath,
+                                            this.siteCartridge.name,
+                                            'cartridge/static');
+
             plugins.push(new CleanWebpackPlugin([
                 `${outputPath}/*/css`,
                 '.cache-loader'
@@ -362,35 +385,33 @@ module.exports = class WebpackConfigurator {
 
             plugins.push(new OptimizeCssAssetsPlugin());
         }
-        
+
         plugins.push(new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'
         }));
-        
+
         plugins.push(new MiniCssExtractPluginCleanup());
 
-        if (this.isOption('cssLinting')) {
-            plugins.push(new LintSassPlugin({
-                cartridges: this.cartridges,
-                siteCartridgeName: this.siteCartridge.name,
-                type: 'scss'
-            }));
-        }
-        
         plugins.push(new LogCompilerEventsPlugin({
             cartridges: this.cartridges,
             type: 'scss',
             notifications: this.isOption('notifications')
         }));
 
+        if (this.isOption('cssLinting')) {
+            plugins.push(new LintScssPlugin({
+                notifications: this.isOption('notifications')
+            }));
+        }
+
         return plugins;
-    };
+    }
 
     /**
      * Decide the amount of bundle information that is displayed by the compiler
      * https://webpack.js.org/configuration/stats/
-     * @return {string}
+     * @return {string} - a stats preset
      */
     getStats() {
         return (this.isOption('verbose')) ? 'normal' : 'errors-only';
@@ -398,21 +419,22 @@ module.exports = class WebpackConfigurator {
 
     /**
      * Check whether an environmental option exists and is either equal to true or the passed value
-     * @param {string} key
-     * @param {string} value - this is optional
-     * @return {boolean}
+     * @param {string} key - The option's key
+     * @param {string} value - A value to compare (this is optional)
+     * @return {boolean} Does the option exist
      */
     isOption(key, value) {
-        return (value) ? (this.options.hasOwnProperty(key) && this.options[key] === value) :
-                         (this.options.hasOwnProperty(key) && this.options[key] === 'true');
-    };
+        return (value) ?
+        (Object.prototype.hasOwnProperty.call(this.options, key) && this.options[key] === value) :
+        (Object.prototype.hasOwnProperty.call(this.options, key) && this.options[key] === 'true');
+    }
 
     /**
-     * Get the value of an environmental option 
-     * @param {string} key
-     * @return {any}
+     * Get the value of an environmental option
+     * @param {string} key - the option's key
+     * @return {any} - an option's value
      */
     getOption(key) {
         return this.options[key];
-    };
+    }
 };

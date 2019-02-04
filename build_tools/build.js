@@ -14,11 +14,9 @@ const createCartridge = require('./createCartridge');
 const deployData = require('./deployData');
 const generateSystemObjectReports = require('./systemObjectsReport');
 const createVersionPropertiesFile = require('./createVersionPropertiesFile');
-const Webdav = require('./util/webdav');
+const Webdav = require('./lib/webdav');
 const chalk = require('chalk');
 const os = require('os');
-const util = require('util');
-const jsonlint = require('jsonlint');
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -60,14 +58,16 @@ const optionator = require('optionator')({
         description: 'Run all unittests with coverage report.'
     }, {
         option: 'lint',
-        type: 'String',
-        description: 'Lint scss/js files.',
-        enum: ['js', 'server-js', 'css', 'json']
-    }, {
-        option: 'jsonlint',
         type: 'Boolean',
-        description: 'json validator',
-    }, {
+        description: 'Lint scss/js files.'
+    },
+    {
+        option: 'lint-no-cache',
+        type: 'Boolean',
+        description: 'Disables the linters\' caches',
+        required: false
+    },
+    {
         option: 'createCartridge',
         type: 'String',
         description: 'Create new cartridge structure'
@@ -425,38 +425,6 @@ function getCartridges(packageFile) {
     return cartridges;
 }
 
-
-/**
-* recursively search through file structure starting at startFile for any files with the type extension (e.g. '.json')
-* @param {String} startFile - path to starting directory for search
-* @param {String} type - the file extension to search for E.G '.json'
-*/
-function fileSearch(startFile, type) {
-   if (!fs.existsSync(startFile)) {
-     console.error('no directory: ', startFile);
-     return;
-   }
-
-   var files = fs.readdirSync(startFile);
-   for (var i = 0; i < files.length; i++) {
-       var filename = path.join(startFile,files[i]);
-       var stat = fs.lstatSync(filename);
-       if (stat.isDirectory()) {
-           fileSearch(filename,type);
-       }
-       else if (filename.indexOf(type) >= 0) {
-           if (isBuildEnvironment('verbose')) {
-               console.log('FOUND JSON: ',filename);
-	   }
-	   try {
-               jsonlint.parse(fs.readFileSync(filename, 'utf8'));
-	   } catch(e) {
-               console.error(chalk.red('JSON parsing error'), e);
-	   }
-       }
-   }
-}
-
 /**
  * creates version.properties file
  * @param {array} uploadArguments - the current uploadArguments
@@ -555,45 +523,23 @@ if (options.cover) {
 }
 
 if (options.lint) {
-    if (options.lint === 'js' || options.lint === 'server-js') {
+    const linter = require('./tasks/lint');
 
-        console.log(chalk.bgMagenta.black('Running js linting...'));
-        if (isBuildEnvironment('verbose')) {
-            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
-        }
-        const subprocess = spawn(
-            path.resolve(pwd, '../node_modules/.bin/eslint') +
-            ' .', { stdio: 'inherit', shell: true, cwd: cwd });
-
-        subprocess.on('exit', code => {
-            console.log(chalk.magenta('   Finished js linting.'));
-            process.exit(code);
-        });
+    /*
+    The types of linters to run against the code base are passed as positional arguments
+    If no types are given (ex. 'npm run lint'), then all linters are run against the code base
+    */
+    let types = options._;
+    if (!types.length) {
+        types = ['server-js', 'client-js', 'scss', 'json', 'build-tools'];
     }
 
-    if (options.lint === 'css') {
-        console.log(chalk.bgCyan.black('Running scss linting...'));
-        if (isBuildEnvironment('verbose')) {
-            console.log(chalk.bold('Linting Command: ') + path.resolve(pwd, '../node_modules/.bin/stylelint') +
-            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
-        }
-        const subprocess = spawn(
-            path.resolve(pwd, '../node_modules/.bin/stylelint') +
-            ' --syntax scss "../cartridges/**/*.scss"', { stdio: 'inherit', shell: true, cwd: pwd });
+    // Disable the linter's cache git commit and production builds
+    if (options.lintNoCache) {
+        process.env.lintNoCache = true;
+    }
 
-        subprocess.on('exit', code => {
-            console.log(chalk.cyan('    Finished scss linting.'));
-            process.exit(code);
-        });
-    }
-    if (options.lint === 'json') {
-        const packageFile = require(path.join(cwd, './package.json'));
-        var cartridges = getCartridges(packageFile);
-        for (var i = 0; i < cartridges.length; i++) {
-            fileSearch(path.resolve(pwd, '../cartridges', cartridges[i]),'.json');
-        }
-    }
+    linter.run(types);
 }
 
 if (options.createCartridge) {
