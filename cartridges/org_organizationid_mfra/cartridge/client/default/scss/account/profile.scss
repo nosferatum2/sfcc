@@ -2,10 +2,3 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "account";
-
-.profile-back-to-account-link {
-    color: $brand-main;
-    text-decoration: underline;
-    display: block;
-    text-align: center;
-}
