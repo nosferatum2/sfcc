@@ -10,4 +10,5 @@
     </div>
 
     <isinclude template="search/searchResultsNoDecorator" />
+    <isinclude template="product/compareBar" />
 </isdecorate>

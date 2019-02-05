@@ -7,7 +7,7 @@ $(document).ready(function () {
     processInclude(require('base/components/consentTracking'));
     processInclude(require('./components/footer'));
     processInclude(require('./components/backtotop'));
-    processInclude(require('base/components/miniCart'));
+    processInclude(require('wishlists/components/miniCart'));
     processInclude(require('base/components/collapsibleItem'));
     processInclude(require('base/components/search'));
     processInclude(require('./components/clientSideValidation'));

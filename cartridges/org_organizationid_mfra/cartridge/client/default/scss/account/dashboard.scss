@@ -2,6 +2,7 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "account";
+@import "~wishlists/wishlist/dashboard";
 
 .card-footer-border {
     border-top: 1px dashed $horizontal-border-grey;

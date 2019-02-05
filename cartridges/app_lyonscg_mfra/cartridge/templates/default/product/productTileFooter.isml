@@ -2,4 +2,7 @@
     <div class="ratings col-xs-12 col-sm-10">
         <isinclude template="product/components/ratings" />
     </div>
+    <div class="compare col-sm-6 hidden-xs-down">
+        <isinclude template="product/components/compare" />
+    </div>
 </div>
