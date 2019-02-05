@@ -1,6 +1,5 @@
 'use strict';
 
-var URLUtils = require('dw/web/URLUtils');
 var Site = require('dw/system/Site');
 
 /**
@@ -15,10 +14,10 @@ function checkEnabled(req, res, next) {
     if (enableWishlists !== null && enableWishlists) {
         next();
     } else {
-    	next(new Error('Params do not match route'));
+        next(new Error('Params do not match route'));
     }
 }
 
 module.exports = {
-	checkEnabled: checkEnabled
+    checkEnabled: checkEnabled
 };
