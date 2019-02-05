@@ -1,4 +1,4 @@
-<project name="builders" basedir="." default="deploy-install-audit-sonar" xmlns:if="ant:if" xmlns:unless="ant:unless">
+<project name="builders" basedir="." default="deploy-install-audit-sonar-postProjectToSARMS" xmlns:if="ant:if" xmlns:unless="ant:unless">
 
     <!-- Importing sonar and npm audit tasks so they can also be run locally. Otherwise,
          expectation is that npm audit would always be run locally and sonar run only
@@ -8,8 +8,8 @@
     <import file="run npm install.xml"/>
     <import file="run sonar.xml"/>
     <import file="run npm audit.xml"/>
-
-    <target name="deploy-install-audit-sonar" depends="npm-install, deploy, npm-audit, sonar">
+    <import file="run postProjectToSARMS.xml"/>
+    <target name="deploy-install-audit-sonar-postProjectToSARMS" depends="npm-install, deploy, npm-audit, sonar, postProjectToSARMS">
     </target>
 
     <property name="workingCopy" value="deploy/working" />
