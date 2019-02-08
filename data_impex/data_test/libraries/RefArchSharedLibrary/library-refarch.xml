@@ -594,35 +594,35 @@
         <custom-attributes>
             <custom-attribute attribute-id="body" xml:lang="x-default">&lt;h3&gt;&lt;a class="title" href="#"&gt;Customer Service&lt;/a&gt;&lt;/h3&gt;&#13;
                 &lt;ul class="menu-footer content"&gt;&#13;
-                &lt;li&gt;&lt;a href="#" title="Go to Contact Us"&gt;Contact Us&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$httpsURL('CustomerService-ContactUs')$" title="Go to Contact Us"&gt;Contact Us&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Go to Gift Certificates"&gt;Gift Certificates&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Go to Help"&gt;Help&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Go to Site Map"&gt;Site Map&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;/ul&gt;&lt;!-- END: footer_support --&gt;</custom-attribute>
             <custom-attribute attribute-id="body" xml:lang="fr-FR">&lt;h3&gt;&lt;a class="title" href="#"&gt;Service client&lt;/a&gt;&lt;/h3&gt;&#13;
                 &lt;ul class="menu-footer content"&gt;&#13;
-                &lt;li&gt;&lt;a href="#" title="Aller à Contactez-nous"&gt;Contactez-nous&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$httpsURL('CustomerService-ContactUs')$" title="Aller à Contactez-nous"&gt;Contactez-nous&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="$#('GiftCert-Purchase')$" title="Aller à Chèques-cadeaux"&gt;Chèques-cadeaux&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Aller à Aide"&gt;Aide&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Aller à Plan du site"&gt;Plan du site&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;/ul&gt;&lt;!-- END: footer_support --&gt;</custom-attribute>
             <custom-attribute attribute-id="body" xml:lang="it-IT">&lt;h3&gt;&lt;a class="title" href="#"&gt;Servizio clienti&lt;/a&gt;&lt;/h3&gt;&#13;
                 &lt;ul class="menu-footer content"&gt;&#13;
-                &lt;li&gt;&lt;a href="#" title="Vai a Contattaci"&gt;Contattaci&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$httpsURL('CustomerService-ContactUs')$" title="Vai a Contattaci"&gt;Contattaci&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Vai a Certificati regalo"&gt;Certificati regalo&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Vai a Guida"&gt;Guida&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="Vai a Mappa del sito"&gt;Mappa del sito&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;/ul&gt;&lt;!-- END: footer_support --&gt;</custom-attribute>
             <custom-attribute attribute-id="body" xml:lang="ja-JP">&lt;h3&gt;&lt;a class="title" href="#"&gt;カスタマーサービス&lt;/a&gt;&lt;/h3&gt;&#13;
                 &lt;ul class="menu-footer content"&gt;&#13;
-                &lt;li&gt;&lt;a href="#" title="「お問い合わせ」に移動する"&gt;お問い合わせ&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$httpsURL('CustomerService-ContactUs')$" title="「お問い合わせ」に移動する"&gt;お問い合わせ&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="「ギフト券」に移動する"&gt;ギフト券&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="「ヘルプ」に移動する"&gt;ヘルプ&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="「サイトマップ」に移動する"&gt;サイトマップ&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;/ul&gt;&lt;!-- END: footer_support --&gt;</custom-attribute>
             <custom-attribute attribute-id="body" xml:lang="zh-CN">&lt;h3&gt;&lt;a class="title" href="#"&gt;客户服务&lt;/a&gt;&lt;/h3&gt;&#13;
                 &lt;ul class="menu-footer content"&gt;&#13;
-                &lt;li&gt;&lt;a href="#" title="前往联系我们"&gt;联系我们&lt;/a&gt;&lt;/li&gt;&#13;
+                &lt;li&gt;&lt;a href="$httpsURL('CustomerService-ContactUs')$" title="前往联系我们"&gt;联系我们&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="前往礼券"&gt;礼券&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="前往帮助"&gt;寻求帮助&lt;/a&gt;&lt;/li&gt;&#13;
                 &lt;li&gt;&lt;a href="#" title="前往站点地图"&gt;站点地图&lt;/a&gt;&lt;/li&gt;&#13;
