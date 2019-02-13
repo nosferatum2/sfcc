@@ -1,6 +1,10 @@
 {
     "env": {
-        "jquery": true
+        "jquery": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 8
     },
     "globals": {
         "grecaptcha": true

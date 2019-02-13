@@ -165,7 +165,7 @@ module.exports = class WebpackConfigurator {
         return {
             rules: [
                 {
-                    test: /bootstrap(.)*\.js$/,
+                    test: /(.)*\.js$/,
                     use: this.getJsLoaders()
                 }
             ]
@@ -201,18 +201,12 @@ module.exports = class WebpackConfigurator {
         loaders.unshift({
             loader: 'babel-loader',
             options: {
-                presets: ['@babel/env'],
+                presets: ['@babel/preset-env'],
                 plugins: ['@babel/plugin-proposal-object-rest-spread'],
                 cacheDirectory: true,
-                compact: false,
-                babelrc: false
+                compact: false
             }
         });
-
-        if (this.isOption('mode', 'development')) {
-            // Caches the result of following loaders on disk (default) or in the database
-            loaders.unshift({ loader: 'cache-loader' });
-        }
 
         return loaders;
     }

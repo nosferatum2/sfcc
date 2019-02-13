@@ -45,11 +45,11 @@
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.51",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.51",
-    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/preset-env": "^7.3.1",
     "@tridnguyen/config": "^2.3.1",
-    "babel-loader": "^8.0.0-beta.3",
+    "babel-loader": "^8.0.5",
     "cache-loader": "^1.2.5",
     "chai": "^3.5.0",
     "chai-subset": "^1.5.0",
@@ -104,6 +104,7 @@
     "xml2js": "^0.4.17"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "audit": "0.0.6",
     "bootstrap": "4.2.1",
     "cleave.js": "^1.4.2",

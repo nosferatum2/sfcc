@@ -1,3 +1,4 @@
+require('@babel/polyfill');
 window.jQuery = window.$ = require('jquery');
 var processInclude = require('base/util');
 
