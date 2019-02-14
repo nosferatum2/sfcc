@@ -1,0 +1,50 @@
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+<iscache type="relative" hour="24" />
+
+<nav class="navbar navbar-expand-md bg-inverse col-12">
+    <div class="close-menu clearfix d-lg-none">
+        <div class="back pull-left">
+            <a href="${'#'}" role="button">
+                <span class="caret-left"></span>
+                ${Resource.msg('link.header.menu.back', 'common', null)}
+            </a>
+        </div>
+        <div class="close-button pull-right">
+            <a href="${'#'}" role="button">
+                ${Resource.msg('link.header.menu.close', 'common', null)}
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-group" aria-label="Main menu" role="navigation">
+        <ul class="nav navbar-nav" role="menu">
+            <isif condition="${!empty(pdict.Navigation)}">
+                <isloop items="${pdict.Navigation}" var="category">
+                    <isif condition="${!empty(category.columns)}">
+                        <li class="nav-item dropdown" role="menuitem">
+                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
+                            <div class="dropdown-menu" role="menu" aria-hidden="true">
+                                <div class="menu-row">
+                                    <isloop items="${category.columns}" var="column">
+                                        <div class="menu-column">
+                                            <isset name="menuItems" value="${column}" scope="page" />
+                                            <isinclude template="components/header/menuItem" />
+                                        </div>
+                                    </isloop>
+                                </div>
+                            </div>
+                        </li>
+                    <iselse/>
+                        <li class="nav-item" role="menuitem">
+                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" role="button" class="nav-link">${category.name}</a>
+                        </li>
+                    </isif>
+                </isloop>
+            </isif>
+
+            <isinclude url="${URLUtils.url('Account-Header', 'mobile', true)}" />
+            <isinclude url="${URLUtils.url('Page-Locale', 'mobile', true)}" />
+        </ul>
+    </div>
+</nav>

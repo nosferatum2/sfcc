@@ -152,6 +152,10 @@
           "name": "app_corrections"
         },
         {
+          "alias": "nav",
+          "name": "ui_nav"
+        },
+        {
           "alias": "base",
           "name": "app_storefront_base"
         }

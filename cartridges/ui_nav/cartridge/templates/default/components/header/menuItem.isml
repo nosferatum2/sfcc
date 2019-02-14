@@ -1,0 +1,15 @@
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+
+<ul class="menu-list">
+    <isloop items="${menuItems}" var="category">
+        <li class="dropdown-item" role="menuitem">
+            <isif condition="${!empty(category.items)}">
+                <a href="${category.url}" role="button" class="dropdown-link">${category.name}</a>
+                <isset name="menuItems" value="${category.items}" scope="page" />
+                <isinclude template="components/header/menuItem" />
+            <iselse/>
+                <a href="${category.url}" role="button" class="dropdown-link">${category.name}</a>
+            </isif>
+        </li>
+    </isloop>
+</ul>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+
+    <type-extension type-id="Category">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="navColumnLength">
+                <display-name xml:lang="x-default">Navigation Column Length</display-name>
+                <description xml:lang="x-default">Length of the columns in the mega-menu of the main navigation for this category.  Defaults to 5.</description>
+                <type>int</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="showInMenu">
+                <display-name xml:lang="x-default">Show in Menu Navigation</display-name>
+                <description xml:lang="x-default">Used to indicate that a link to a category will display in the navigation. A category link only shows if the parent category also has this setting enabled.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="showNavViewAll">
+                <display-name xml:lang="x-default">Show View All In Nav</display-name>
+                <description xml:lang="x-default">Shows the "View All" link in the main navigation below the list of child links.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Navigation">
+                <display-name xml:lang="x-default">Navigation</display-name>
+                <attribute attribute-id="navColumnLength"/>
+                <attribute attribute-id="showNavViewAll"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="Content">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="showInMenu">
+                <display-name xml:lang="x-default">Show in Menu Navigation</display-name>
+                <description xml:lang="x-default">Used to indicate that a link to a content asset will display in the navigation. A content asset link only shows if  the parent folder also has this setting enabled.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Navigation">
+                <display-name xml:lang="x-default">Navigation</display-name>
+                <attribute attribute-id="showInMenu"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+    <type-extension type-id="Folder">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="defaultContentAssetID">
+                <display-name xml:lang="x-default">Default Content Asset ID</display-name>
+                <description xml:lang="x-default">The ID of the content asset that is linked to when a folder is displayed in the main navigation. If this is not provided the navigation will link to the folder's default page URL instead.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="navColumnLength">
+                <display-name xml:lang="x-default">Navigation Column Length</display-name>
+                <description xml:lang="x-default">Length of the columns in the mega-menu of the main navigation for this folder.  Defaults to 5.</description>
+                <type>int</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="showInMenu">
+                <display-name xml:lang="x-default">Show in Menu Navigation</display-name>
+                <description xml:lang="x-default">Used to indicate that a link to a folder will display in the navigation. A folder link only shows if the parent folder also has this setting enabled.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="showNavViewAll">
+                <display-name xml:lang="x-default">Show View All In Nav</display-name>
+                <description xml:lang="x-default">Shows the "View All" link in the main navigation below the list of child links.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Navigation">
+                <display-name xml:lang="x-default">Navigation</display-name>
+                <attribute attribute-id="defaultContentAssetID"/>
+                <attribute attribute-id="navColumnLength"/>
+                <attribute attribute-id="showInMenu"/>
+                <attribute attribute-id="showNavViewAll"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+
+</metadata>
