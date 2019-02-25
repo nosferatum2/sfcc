@@ -47,6 +47,9 @@
                     <isinclude template="product/components/pidRating" />
 
                     <div class="row justify-content-center">
+                        <div class="product-number  pull-left hidden-sm-up">
+                            <isinclude template="product/components/productNumber" />
+                        </div>
                         <!-- Attributes and Quantity -->
                         <div class="col-md-10 col-12">
                             <isinclude template="product/components/mainAttributes" />
@@ -91,7 +94,7 @@
                         </div>
 
                         <div class="col-md-10 col-12">
-                            <hr>
+                            <hr/>
                         </div>
 
                         <div class="col-12 prices-add-to-cart-actions">

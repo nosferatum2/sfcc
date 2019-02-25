@@ -43,6 +43,15 @@ label.color ~ a:hover {
     }
 }
 
+.product-number {
+    &.hidden-sm-up {
+        display: none;
+        @include media-breakpoint-down(xs) {
+            display: block;
+        }
+    }
+}
+
 .wishlist-social {
     padding-top: 0.9375em;
     text-align: center;
