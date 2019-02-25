@@ -93,3 +93,9 @@
 .product-line-item-details {
     overflow-y: auto;
 }
+
+.minicart {
+    .product-line-item-details {
+        overflow-y: hidden;
+    }
+}
