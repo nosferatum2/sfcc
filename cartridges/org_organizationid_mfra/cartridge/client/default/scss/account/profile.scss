@@ -2,3 +2,9 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "account";
+
+span.tracking-consent {
+    color: $brand-main;
+    text-decoration: underline;
+    cursor: pointer;
+}

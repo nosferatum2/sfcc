@@ -26,6 +26,11 @@ server.prepend('SubmitRegistration', ecommerce.checkEcommerceEnabled, function (
 });
 
 server.prepend('EditProfile', ecommerce.checkEcommerceEnabled, function (req, res, next) {
+    var ContentMgr = require('dw/content/ContentMgr');
+    var content = ContentMgr.getContent('tracking_hint');
+    var viewData = res.getViewData();
+    viewData.caOnline = content.online;
+    res.setViewData(viewData);
     next();
 });
 
