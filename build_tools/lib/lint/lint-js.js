@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const chalk = require('chalk');
 const globs = require('../util/globs');
 const CLIEngine = require('eslint').CLIEngine;
@@ -12,7 +13,8 @@ const CLIEngine = require('eslint').CLIEngine;
  */
 function lint(files) {
     const eslint = new CLIEngine({
-        cache: !process.env.lintNoCache
+        cache: !process.env.lintNoCache,
+        cacheLocation: path.resolve(process.cwd(), 'build_tools/.cache/eslint')
     });
     return eslint.executeOnFiles(files);
 }

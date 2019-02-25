@@ -19,6 +19,4 @@ lastbuild.properties
 .tern-project
 dw.json
 jsconfig.json
-.cache-loader/
-.stylelintcache
-.eslintcache
+build_tools/.cache/

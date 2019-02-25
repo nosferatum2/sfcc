@@ -15,6 +15,7 @@ function lint(files) {
     return stylelint.lint({
         configFile: path.resolve(process.cwd(), '.stylelintrc.json'),
         cache: !process.env.lintNoCache,
+        cacheLocation: path.resolve(process.cwd(), 'build_tools/.cache/stylelint'),
         files,
         syntax: 'scss',
         formatter: 'string'

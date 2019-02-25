@@ -26,7 +26,8 @@
     "release": "node bin/Makefile release --",
     "deployCartridges": "node build_tools/build --deployCartridges",
     "createCartridge": "node build_tools/build --createCartridge",
-    "deploy": "node build_tools/build --deploy-data"
+    "deploy": "node build_tools/build --deploy-data",
+    "clean": "node build_tools/build --clean"
   },
   "husky": {
     "hooks": {
@@ -58,6 +59,7 @@
     "cldr-data": "^31.0.2",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.0",
+    "del": "^3.0.0",
     "dwupload": "^3.8.0",
     "eslint": "^3.2.2",
     "eslint-config-airbnb-base": "^5.0.1",

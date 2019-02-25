@@ -31,6 +31,8 @@ module.exports = class WebpackConfigurator {
         this.siteCartridge = this.cartridges[
             this.cartridges.findIndex(cartridge => cartridge.alias === 'site')
         ];
+        this.staticDirectory = path.join(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static');
+        this.cacheDirectory = path.join(process.cwd(), 'build_tools/.cache');
     }
 
     /**
@@ -94,7 +96,7 @@ module.exports = class WebpackConfigurator {
     getOutput() {
         return {
             // Set the path to the static folder of the current "site" cartridge
-            path: path.resolve(this.cartridgesPath, this.siteCartridge.name, 'cartridge/static'),
+            path: this.staticDirectory,
             filename: '[name].js'
         };
     }
@@ -203,7 +205,7 @@ module.exports = class WebpackConfigurator {
             options: {
                 presets: ['@babel/preset-env'],
                 plugins: ['@babel/plugin-proposal-object-rest-spread'],
-                cacheDirectory: true,
+                cacheDirectory: (this.isOption('mode', 'development')) ? path.join(this.cacheDirectory, 'js') : false,
                 compact: false
             }
         });
@@ -261,8 +263,13 @@ module.exports = class WebpackConfigurator {
         loaders.unshift({ loader: MiniCssExtractPlugin.loader });
 
         if (this.isOption('mode', 'development')) {
-            // Caches the result of following loaders on disk (default) or in the database
-            loaders.unshift({ loader: 'cache-loader' });
+            // Caches the result of following loaders in the cache folder
+            loaders.unshift({
+                loader: 'cache-loader',
+                options: {
+                    cacheDirectory: path.join(this.cacheDirectory, 'css')
+                }
+            });
         }
 
         return loaders;
@@ -299,7 +306,7 @@ module.exports = class WebpackConfigurator {
         }
 
         return {
-            modules: ['node_modules', path.resolve(__dirname, 'cartridges')],
+            modules: ['node_modules', this.cartridgesPath],
             alias: aliases
         };
     }
@@ -326,13 +333,12 @@ module.exports = class WebpackConfigurator {
         };
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath,
-                                            this.siteCartridge.name,
-                                            'cartridge/static');
+            const staticJsDirectory = path.join(this.staticDirectory, '*/js');
+            const jsCacheDirectory = path.join(this.cacheDirectory, 'js');
 
             plugins.push(new CleanWebpackPlugin([
-                `${outputPath}/*/js`,
-                '.cache-loader'
+                staticJsDirectory,
+                jsCacheDirectory
             ], {
                 root: process.cwd(),
                 verbose: false
@@ -365,13 +371,12 @@ module.exports = class WebpackConfigurator {
         const plugins = [];
 
         if (this.isOption('mode', 'production')) {
-            const outputPath = path.resolve(this.cartridgesPath,
-                                            this.siteCartridge.name,
-                                            'cartridge/static');
+            const staticCssDirectory = path.join(this.staticDirectory, '*/css');
+            const cssCacheDirectory = path.join(this.cacheDirectory, 'css');
 
             plugins.push(new CleanWebpackPlugin([
-                `${outputPath}/*/css`,
-                '.cache-loader'
+                staticCssDirectory,
+                cssCacheDirectory
             ], {
                 root: process.cwd(),
                 verbose: false

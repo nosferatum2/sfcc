@@ -17,6 +17,7 @@
         "prefer-template": "off",
         "no-console": "off",
         "comma-dangle": ["error", "never"],
-        "new-cap": "off"
+        "new-cap": "off",
+        "max-len": ["error", { "code": 120 }]
     }
 }

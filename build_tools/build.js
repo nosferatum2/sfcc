@@ -17,6 +17,7 @@ const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./lib/webdav');
 const chalk = require('chalk');
 const os = require('os');
+const clean = require('./tasks/clean');
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -182,6 +183,11 @@ const optionator = require('optionator')({
         option: 'version-cartridge-name',
         type: 'String',
         description: 'cartridge name version.properties should be created within',
+        required: false
+    }, {
+        option: 'clean',
+        type: 'Boolean',
+        description: 'Clean project of all build artifacts',
         required: false
     }
     ]
@@ -634,4 +640,8 @@ if (options.deployCartridges) {
 if (options.activateCodeVersion) {
     const uploadArguments = getUploadOptions();
     activateCodeVersion(uploadArguments);
+}
+
+if (options.clean) {
+    clean();
 }

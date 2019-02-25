@@ -163,6 +163,16 @@ npm run createCartridge ${cartridgeName}
 npm run createCartridge plugin_myplugin
 ```
 
+## Clean
+
+Clean the project of untracked build artifact files (caches, compiled assets, etc). This can be useful to reset  
+the project to a blank slate if you experience any compilation or upload issues. 
+
+```sh
+npm run clean
+```
+
+
 
 ## Sites and Cartridge Path Configuration
 
