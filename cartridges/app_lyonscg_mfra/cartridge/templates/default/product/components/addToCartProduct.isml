@@ -1,0 +1,20 @@
+<div class="row cart-and-ipay  justify-content-center">
+    
+        <div class="col-12">
+            <input type="hidden" class="add-to-cart-url" value="${pdict.addToCartUrl}">
+            <button class="add-to-cart btn btn-primary btn-block"
+                data-pid="${product.id}"
+                ${!product.readyToOrder || !product.available ? "disabled" : ""}>
+                    <i class="fa fa-shopping-bag"></i>
+                    ${Resource.msg('button.addtocart', 'common', null)}
+            </button>
+        </div>
+        <div class="col-12">
+            <isif condition="${!empty(enableWishlists) && enableWishlists}" >
+                
+                <isinclude template="wishlist/components/addToWishListButton" />
+                
+            </isif>
+        </div>
+    
+</div>
