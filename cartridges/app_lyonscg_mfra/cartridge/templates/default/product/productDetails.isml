@@ -6,8 +6,10 @@
         assets.addCss('/css/product/detail.css');
 
         var siteDisableCommerceFunctionality = dw.system.Site.getCurrent().getCustomPreferenceValue('siteDisableCommerceFunctionality');
+        var recProducts = pdict.product.raw.recommendations;
     </isscript>
 
+    <isinclude template="components/modules" />
     <isset name="product" value="${pdict.product}" scope="page" />
     <isset name="isQuickView" value="${false}" scope="page" />
     <isset name="isProductSet" value="${pdict.product.productType === 'set'}" scope="page" />
@@ -121,6 +123,14 @@
             <div class="recommendations">
                 <isslot id="product-recommendations-m" description="Recommended products" context="global" />
             </div>
+
+            <isif condition="${recProducts.size() > 0}">
+                <div class="recommendations-selected">
+                    <isproductrec title="${Resource.msg('recommendation.rectype1.title', 'product', null)}" subtitle="${Resource.msg('recommendation.rectype1.subtitle', 'product', null)}"/>
+                    <isproductrec recommendationType="2" title="${Resource.msg('recommendation.rectype2.title', 'product', null)}" subtitle="${Resource.msg('recommendation.rectype2.subtitle', 'product', null)}" />
+                    <isproductrec recommendationType="3" title="${Resource.msg('recommendation.rectype3.title', 'product', null)}" subtitle="${Resource.msg('recommendation.rectype3.subtitle', 'product', null)}" />
+                </div>
+            </isif>
         </div>
     </isobject>
 </isdecorate>

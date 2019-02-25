@@ -1,0 +1,22 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+
+<iscomment>
+    Insert a content asset into the page
+</iscomment>
+<ismodule template="/components/content/contentAsset"
+    name="contentasset"
+    attribute="aid"
+/>
+
+<iscomment>
+    Insert orderable product recommendation carousel based on recommendation type
+    recommendationType (integer) : Specify Recommendation Type to display - Default is Cross-sell(1)
+    title (string) : Title of the carousel
+    subtitle (string) : Subtitle of the carousel
+</iscomment>
+<ismodule template="product/components/recommendations"
+    name="productrec"
+    attribute="recommendationType"
+    attribute="title"
+    attribute="subtitle"
+/>
