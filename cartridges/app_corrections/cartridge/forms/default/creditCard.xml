@@ -47,7 +47,7 @@
     </field>
 
     <field formid="securityCode" label="profile.securitycode" type="integer" mandatory="true" binding="securityCode"
-           max-length="4" missing-error="error.card.info.missing.securityCode" />
+           max-length="4" missing-error="error.card.info.missing.securityCode" parse-error="error.message.parse.securityCode" regexp="[0-9]{4}" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
            max-length="254" missing-error="error.card.info.missing.email" parse-error="error.message.parse.email.profile.form" regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" />

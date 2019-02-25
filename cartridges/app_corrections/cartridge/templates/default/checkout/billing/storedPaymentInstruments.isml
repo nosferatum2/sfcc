@@ -11,7 +11,7 @@
                     <span class="icon" data-toggle="tooltip" data-placement="top" title="${Resource.msg('tooltip.security.code','creditCard',null)}">i</span>
                 </span>
 
-                <input type="text" class="form-control saved-payment-security-code" id="saved-payment-security-code" maxlength="4">
+                <input type="text" class="form-control saved-payment-security-code" id="saved-payment-security-code" maxlength="4" <isprint value=${pdict.forms.billingForm.creditCardFields.securityCode.attributes} encoding="off" />>
                 <div class="invalid-feedback">${Resource.msg('error.message.security.code.required', 'checkout', null)}</div>
             </div>
         </div>

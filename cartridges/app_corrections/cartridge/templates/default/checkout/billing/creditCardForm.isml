@@ -82,7 +82,7 @@
             </span>
 
             <input type="text" class="form-control securityCode" id="securityCode"
-                <isprint value=${creditFields.securityCode.attributes} encoding="off"/> >
+                <isprint value=${creditFields.securityCode.attributes} encoding="off"/> maxlength="4">
             <div class="invalid-feedback"></div>
         </div>
     </div>
