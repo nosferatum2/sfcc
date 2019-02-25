@@ -108,6 +108,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         .bg-inverse {
             background-color: white !important;
             color: $gray-100;
+
+            .user-message,
+            .fa-sign-in,
+            .dropdown-toggle::after {
+                color: $link-color;
+            }
         }
     }
 
