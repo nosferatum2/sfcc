@@ -131,6 +131,13 @@ footer {
 
     h3 {
         cursor: pointer;
+
+        @include media-breakpoint-up(sm) {
+            &:nth-last-child(-n+3) {
+                pointer-events: none;
+                cursor: default;
+            }
+        }
     }
 }
 
