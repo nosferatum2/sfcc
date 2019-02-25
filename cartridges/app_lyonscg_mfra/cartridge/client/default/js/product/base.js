@@ -49,6 +49,11 @@ function carouselInit() {
 
     if ($carousel.length) {
         imagesloaded($carousel).on('done', function () {
+            if ($carousel.hasClass('slick-initialized')) {
+                $carousel.off('init', initZoom);
+                $carousel.off('afterChange', initZoom);
+                $carousel.slick('unslick');
+            }
             $carousel.on('init', initZoom);
             $carousel.on('afterChange', initZoom);
             $carousel.not('.slick-initialized').slick(slickConfigs.pdp);
@@ -109,23 +114,32 @@ function carouselUnslickBonus() {
  */
 function updateMainImages(product) {
     var images = product.images;
+    var productID = product.id;
     var imagesZoom = product.imagesZoom['hi-res'];
     var htmlString = '<!-- Product Image slides -->';
 
     images.large.forEach(function (image, idx) {
         var zoomImage = imagesZoom[idx] ? imagesZoom[idx] : image;
         var zoomClass = imagesZoom[idx] ? 'zoom-hires' : 'zoom-disabled';
-
         var htmlSlide = '<div class="slide">'
-            + '<a href="' + zoomImage.url + '" class="slide-link ' + zoomClass + '" title="' + zoomImage.title + '">'
+            + '<div class="slide-link ' + zoomClass + '" title="' + zoomImage.title + '">'
                 + '<img src="' + image.url + '" class="slide-img" alt="' + image.alt + '" />'
-            + '</a>'
+            + '</div>'
         + '</div>';
 
         htmlString += htmlSlide;
     });
+    var $varName = $('.product-detail .set-items');
+    var $carouselImage;
+    var $tempDiv;
 
-    $('.product-carousel').html(htmlString);
+    if ($varName.length) {
+        $tempDiv = $('div.set-items').find('div[data-pid="' + productID + '"]');
+        $carouselImage = $tempDiv.find('.product-carousel');
+    } else {
+        $carouselImage = $('.product-carousel');
+    }
+    $carouselImage.html(htmlString);
 }
 
 var exportBase = $.extend({}, base, {
