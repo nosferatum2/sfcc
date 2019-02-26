@@ -14,6 +14,10 @@ server.extend(page);
 var ecommerce = require('*/cartridge/scripts/middleware/ecommerce');
 
 server.prepend('Show', ecommerce.checkEcommerceEnabled, function (req, res, next) {
+    var Site = require('dw/system/Site');
+    var viewData = res.getViewData();
+    viewData.enablePDPLink = Site.getCurrent().getPreferences().getCustom().enableCartProductLineItemPdpLink;
+    res.setViewData(viewData);
     next();
 });
 
