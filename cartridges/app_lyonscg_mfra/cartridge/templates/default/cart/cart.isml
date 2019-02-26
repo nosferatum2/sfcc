@@ -28,6 +28,11 @@
                     ${Resource.msg('link.continue.shopping','cart',null)}
                 </a>
             </div>
+            <div class="col-sm-3 text-center d-sm-none">
+                <a class="continue-shopping-link" href="${URLUtils.url('Home-Show')}" title="${Resource.msg('link.continue.shopping','cart',null)}">
+                    ${Resource.msg('link.continue.shopping','cart',null)}
+                </a>
+            </div>
             <div class="col-sm-3 text-center">
                  <div class="text-center d-sm-none">
                     <iscontentasset aid="need-help-text" />

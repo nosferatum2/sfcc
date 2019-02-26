@@ -28,7 +28,7 @@ server.replace(
 
         // verify billing form data
         billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
-        
+
         // verify credit card form data
         creditCardErrors = COHelpers.validateCreditCard(paymentForm);
 
@@ -90,7 +90,7 @@ server.replace(
             };
 
             if (req.form.storedPaymentUUID) {
-                //COHelpers.validateCreditCard(req.form.storedPaymentUUID);
+                // COHelpers.validateCreditCard(req.form.storedPaymentUUID);
                 viewData.storedPaymentUUID = req.form.storedPaymentUUID;
             }
 
