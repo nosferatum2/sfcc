@@ -1,7 +1,7 @@
 {
   "name": "lyonscg-sfra",
   "version": "3.3.0",
-  "lcgversion": "1.0.0",
+  "lcgversion": "1.1.1",
   "description": "LyonsCG maintained version of SFCC SFRA",
   "engines": {
     "node": "8.9.0"
@@ -40,11 +40,12 @@
   },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
+    "Davis DeVries <ddevries@lyonscg.com>",
     "Ryan Walter <rwalter@lyonscg.com>",
-    "Dave Haas <dhaas@lyonscg.com>",
-    "Sandra Golden <sgolden@lyonscg.com>"
+    "Sandra Golden <sgolden@lyonscg.com>",
+    "Dave Haas <dhaas@lyonscg.com>"
   ],
-  "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-mobile-first#readme",
+  "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-sfra",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.1",

@@ -17,7 +17,7 @@ const createVersionPropertiesFile = require('./createVersionPropertiesFile');
 const Webdav = require('./lib/webdav');
 const chalk = require('chalk');
 const os = require('os');
-const clean = require('./tasks/clean');
+
 
 // current working directory is meant to be the root of the project, not build_tools
 var cwd = process.cwd();
@@ -643,5 +643,6 @@ if (options.activateCodeVersion) {
 }
 
 if (options.clean) {
+    const clean = require('./tasks/clean');
     clean();
 }
