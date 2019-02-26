@@ -5,6 +5,12 @@
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
 
+footer {
+    @include media-breakpoint-down(sm) {
+        margin-bottom: 130px;
+    }
+}
+
 .product-detail .swatch-circle {
     // $white will be replaced by color image background in ISML
     @include swatch(2.5em, $white);
