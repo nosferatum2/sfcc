@@ -17,7 +17,7 @@
                     </a>
                 <iselse/>
                     <span>
-                        <a href="${pdict.urls.product}">...</a>
+                        <a class="swatch-ellipsis" href="${pdict.urls.product}">...</a>
                     </span>
                     <isbreak>
                 </isif>
