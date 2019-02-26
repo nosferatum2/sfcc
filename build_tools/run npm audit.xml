@@ -1,10 +1,17 @@
 <project name="npm-audit" default="npm-audit" basedir="." >
 
+  <!-- Set the location of the node_modules folder since Jenkins starts from the root -->
+  <condition property="node-modules-loc" value=".${file.separator}node_modules${file.separator}" else="..${file.separator}node_modules${file.separator}">
+    <and>
+      <isset property="env.BUILD_NUMBER" />
+    </and>
+  </condition>
+  
   <!-- This build task exists to allow you to run 'npm audit' locally separate from the 
        gulp_builder build. It is also included in the builders.xml file for automation. -->
   <condition property="have-npm-audit" else="false">
     <and>
-      <available file="${basedir}/../node_modules/audit" type="dir"/>
+      <available file="${node-modules-loc}audit" type="dir"/>
     </and>
   </condition>
 

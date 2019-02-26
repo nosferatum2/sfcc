@@ -75,13 +75,20 @@
     </and>
   </condition> 
   
+  <!-- Set the location of the root folder since Jenkins starts from the root -->
+  <condition property="root-folder-loc" value="." else="..">
+    <and>
+      <isset property="env.BUILD_NUMBER" />
+    </and>
+  </condition>
+	
   <!-- Check that the npm audit command and other modules required by postProjectToSARMS.js exist in this install -->
   <condition property="have-npm-modules" else="false">
     <and>
-      <available file="..${file.separator}node_modules${file.separator}audit" type="dir"/>
-      <available file="..${file.separator}node_modules${file.separator}request" type="dir"/> 
-      <available file="..${file.separator}node_modules${file.separator}request-promise" type="dir"/>
-      <available file="..${file.separator}package-lock.json" type="file"/>
+      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}audit" type="dir"/>
+      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}request" type="dir"/> 
+      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}request-promise" type="dir"/>
+      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}package-lock.json" type="file"/>
     </and>
   </condition>
 
@@ -137,26 +144,25 @@
   <target name="postProjectToSARMS" depends="check-SARMS-properties, check-npm-modules, check-SARMS-reachable" if="${have-SARMS-prereqs}">
     <exec executable="cmd" osfamily="windows" failonerror="true">
         <arg value="/c"/>
-        <arg value='node util${file.separator}sarms${file.separator}postProjectToSARMS  
-                      --api-credentials-path util${file.separator}sarms${file.separator}api_credentials.json
+        <arg value='node ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}postProjectToSARMS  
+                      --api-credentials-path ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}api_credentials.json
                       --sarms-server-url ${sarmsUrl} 
         	            --client-name ${repo.name} 
                       --platform-name "Salesforce Commerce Cloud SFRA" 
                       --platform-news "https://xchange.demandware.com/community/developer/security-notifications"
-                      --package-file ..${file.separator}package.json' 
+                      --package-file ${root-folder-loc}${file.separator}package.json' 
         />
     </exec>
     <exec executable="/bin/bash" osfamily="unix" failonerror="true">
         <arg value="-c"/>
         <arg value='export PATH=/usr/local/bin:$PATH; 
-                    cd "${basedir}"; 
-                    node util${file.separator}sarms${file.separator}postProjectToSARMS 
-                      --api-credentials-path util${file.separator}sarms${file.separator}api_credentials.json
+                    node ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}postProjectToSARMS 
+                      --api-credentials-path ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}api_credentials.json
                       --sarms-server-url ${sarmsUrl} 
                       --client-name ${repo.name} 
                       --platform-name "Salesforce Commerce Cloud SFRA" 
                       --platform-news "https://xchange.demandware.com/community/developer/security-notifications"
-                      --package-file ..${file.separator}package.json' 
+                      --package-file ${root-folder-loc}${file.separator}package.json' 
         />
     </exec>
   </target>

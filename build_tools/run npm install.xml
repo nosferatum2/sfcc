@@ -13,10 +13,17 @@
     <target name="npm-install" if="${has_package}" depends="check-has-package, get-package-json, local-node-version, version-compare, check-node-match, run-npm-install">
     </target>
 
+    <!-- Set the location of the root folder since Jenkins starts from the root -->
+    <condition property="root-folder-loc" value="." else="..">
+      <and>
+        <isset property="env.BUILD_NUMBER" />
+      </and>
+    </condition>
+  
     <!-- Verify presence of package.json file -->
     <condition property="has_package" else="false">
         <and>
-            <available file="${basedir}/../package.json" type="file"/>
+            <available file="${root-folder-loc}/package.json" type="file"/>
         </and>
     </condition>
 
@@ -28,7 +35,7 @@
 
     <!-- Save the package.json file contents to packageJSON variable and assign the node version to pkg_node_v property -->
     <target name="get-package-json" if="${has_package}">
-        <loadfile property="packageJSON" srcFile="${basedir}/../package.json" />
+        <loadfile property="packageJSON" srcFile="${root-folder-loc}/package.json" />
         <script language="javascript">
             var package_node = JSON.parse(packageJSON).engines.node;
             project.setProperty('pkg_node_v', package_node.match(/[^.]/));
