@@ -25,6 +25,31 @@ server.prepend('SubmitRegistration', ecommerce.checkEcommerceEnabled, function (
     next();
 });
 
+server.append('SubmitRegistration', ecommerce.checkEcommerceEnabled, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Resource = require('dw/web/Resource');
+    var formErrors = require('*/cartridge/scripts/formErrors');
+    var registrationForm = server.forms.getForm('profile');
+    if (!CustomerMgr.isAcceptablePassword(registrationForm.login.password.value)) {
+        registrationForm.login.password.valid = false;
+        registrationForm.login.password.error =
+            Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+        registrationForm.valid = false;
+    }
+    if (!CustomerMgr.isAcceptablePassword(registrationForm.login.passwordconfirm.value)) {
+        registrationForm.login.passwordconfirm.valid = false;
+        registrationForm.login.passwordconfirm.error =
+            Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+        registrationForm.valid = false;
+    }
+    if (!registrationForm.valid) {
+        res.json({
+            fields: formErrors.getFormErrors(registrationForm)
+        });
+    }
+    return next();
+});
+
 server.prepend('EditProfile', ecommerce.checkEcommerceEnabled, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var content = ContentMgr.getContent('tracking_hint');
