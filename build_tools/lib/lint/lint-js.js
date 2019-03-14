@@ -9,7 +9,7 @@ const CLIEngine = require('eslint').CLIEngine;
  * Lint files using ESLint
  * https://eslint.org/docs/developer-guide/nodejs-api#cliengineexecuteonfiles
  * @param {Array} files - an array of files
- * @return {Object} - ESLint results object
+ * @return {Object} - ESLint report object
  */
 function lint(files) {
     const eslint = new CLIEngine({
@@ -22,19 +22,20 @@ function lint(files) {
 /**
  * Format the ESLint report object
  * https://eslint.org/docs/developer-guide/nodejs-api#cliengineexecuteonfiles
- * @param {Object} result - ESLint results object
+ * @param {Object} report - ESLint report object
  * @param {string} fileTypeString - context / type of JS file
  * @return {Object} - formatted results object
  */
-function formatResult(result, fileTypeString) {
+function formatResult(report, fileTypeString) {
     const formatter = new CLIEngine().getFormatter();
+    const errorReport = CLIEngine.getErrorResults(report.results);
 
-    if (result.errorCount) {
+    if (report.errorCount) {
         return {
             isSuccessful: false,
             message: chalk.red('Linting issues were found!\n') +
                               'The following issues need to be resolved prior to committing\n' +
-                              `${formatter(result.results)}`
+                              `${formatter(errorReport)}`
         };
     }
 
