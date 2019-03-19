@@ -29,9 +29,10 @@ server.replace(
         // verify billing form data
         billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
 
-        // verify credit card form data
-        creditCardErrors = COHelpers.validateCreditCard(paymentForm);
-
+        if (!req.form.storedPaymentUUID) {
+            // verify credit card form data
+            creditCardErrors = COHelpers.validateCreditCard(paymentForm);
+        }
 
         if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
             // respond with form data and errors
