@@ -1,57 +1,32 @@
 # Storefront Reference Architecture (SFRA)
 
-This is a repository for the Storefront Reference Architecture reference application.
+This is a repository for the customized LyonsCG version of the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
-Storefront Reference Architecture supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
 
-Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
+Please refer to our Confluence documentation for information and best practices regarding the new archtecture and how to override/extend server side and client side code.
 
+SFRA Essentials Guide - https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/637372481/SFRA+Essentials+Guide+Draft
+
+Client Side JavaScript Stack - https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/646985985/Client+Side+JavaScript+Stack+SFRA+Draft
+
+
+The functional requrements for our LyonsCG version of SFRA are being maintained here - https://lyonscg.atlassian.net/wiki/spaces/SRV/pages/513802942/Functional+Requirements
 
 # What's New
 
-The latest version of SFRA is 3.0.0, which contains the following updates:
+We keep our SFRA copy periodically updated with whatever version Salesforce considers "released". That version number is in our package.json file. You will see a "version" attribute near the top that indicates the Salesforce release we are in sync with, and an "lcgversion" which is our LyonsCG release number that will correspond with the list of tickets in the CHANGES.md file.
 
-* Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
-* Fraud Detection Hook: a hook has been added that supports customized fraud detection.
-* Localization: several properties file resources were updated for French, Italian, Japanese, and Simplified Chinese.
-* SFRA and SGJC Data: a single sandbox can now simultaneously include sites for both SiteGenesis Javascript Controllers (SGJC) and Storefront Reference Architecture (SFRA) without any resulting data conflicts.
+The CHANGES.md file offers an itemized list of internal ticket numbers that have been worked on for any particular release.
+
+New features that we've added get a high level discription and are maintained here - https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/568494465/SFRA+Finish+Grades+Features+Roadmap
 
 # Getting Started
 
-1 Clone this repository.
+SFRA Setup Guide - https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/647171135/SFCC+Setup+Guide+SFRA+Under+Review
 
-2 Run `npm install` to install all of the local dependencies (node version 8.x or current LTS release recommended)
-
-3 Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
-
-4 Create `dw.json` file in the root of the project:
-```json
-{
-    "hostname": "your-sandbox-hostname.demandware.net",
-    "username": "yourlogin",
-    "password": "yourpwd",
-    "code-version": "version_to_upload_to"
-}
-```
-
-5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
-
-6 Run `node build_tools/build --deploy-data --data-bundle=core-config-data-static` to initialize data on your sandbox. Visit https://bitbucket.org/lyonsconsultinggroup/sfra-storefront-data/ if you need a full set of static content (images), as that was omitted from this repository.
-
-7 Add the `app_storefront_base` cartridge to your cartridge path.
-
-8 You should now be ready to navigate to and use your site.
-
-
-# NPM scripts
-Use the provided NPM scripts to compile and upload changes to your Sandbox.
-
-## Compiling your application
-
-* `npm run compile:scss` - Compiles all .scss files into CSS.
-* `npm run compile:js` - Compiles all .js files and aggregates them.
-* `npm run compile:fonts` - Copies all needed font files. Usually, this only has to be run once.
+# Node version
+The package.json file now specifies which version of node you should be running for installing our build tools.
 
 ## Linting your code
 
@@ -86,9 +61,7 @@ In the case of an **_emergency_**, you can bypass a git hook by passing the `--n
 
 ## Uploading
 
-`npm run uploadCartridge` - Will upload both `app_storefront_base` and `modules` to the server. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
-
-`npm run upload <filepath>` - Will upload a given file to the server. Requires a valid dw.json file.
+It is highly reccomended that you use your IDE tools to handle the cartridge uploading. VSCode's Prophet Debugger and the Eclipse server connection are going to be way more efficient at uploading code to your sandbox. The various upload commands included with our build tools are intended for a Jenkins server to be able to deploy code.
 
 #Testing
 ## Running unit tests
@@ -162,7 +135,3 @@ notifications | Native system notifications for compiler events | "true", "false
 - **cssAutoPrefixer**: Adding vendor prefixes for CSS rules to ensure stable browser support may not be needed while in development. Disabling this will reduce compile times.
 - **jsSourceMaps**: If your development task doesn't require the use of js source maps, consider disabling them. This will significantly reduce compile times.
   
-
-# [Contributing to MFRA](./CONTRIBUTING.md)
-
-
