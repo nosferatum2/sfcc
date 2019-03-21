@@ -4,7 +4,7 @@
     This build task exists to allow you to run the postProjectToSARMS
     script locally separate from the builders.xml file. It is referenced 
     in the builders.xml file using <import file="filename"/> so that it will 
-    automatically run after a successful build. 
+    run as part of the build. 
     
     Normally, this task would be run only on Jenkins, but if you want to run 
     locally, you will need:
@@ -66,55 +66,15 @@
   
   <basename property="repo.name" file="${git.repo.name}"/>
   
-  <!-- If BUILD_NUMBER env var not defined, will be silent about errors as 
-       this script normally runs only on Jenkins 
-   -->
-  <condition property="show-SARMS-config-errors" else="false">
-    <and>
-      <isset property="env.BUILD_NUMBER" />
-    </and>
-  </condition> 
-  
-  <!-- Set the location of the root folder since Jenkins starts from the root -->
-  <condition property="root-folder-loc" value="." else="..">
-    <and>
-      <isset property="env.BUILD_NUMBER" />
-    </and>
-  </condition>
-	
-  <!-- Check that the npm audit command and other modules required by postProjectToSARMS.js exist in this install -->
-  <condition property="have-npm-modules" else="false">
-    <and>
-      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}audit" type="dir"/>
-      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}request" type="dir"/> 
-      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}request-promise" type="dir"/>
-      <available file="${root-folder-loc}${file.separator}node_modules${file.separator}package-lock.json" type="file"/>
-    </and>
-  </condition>
-
   <!-- Report any errors in configuration -->
-  
-  <target name="check-SARMS-properties" if="${show-SARMS-config-errors}" unless="${have-SARMS-props}">
-    <echo error="info">Neither the ant.git.work.tree variable nor the GIT_URL variable is defined </echo>
-    <echo error="info">which is required to determine the name of the project for the SARMS system. </echo>
-    <echo error="info">Normally, the GIT_URL environment variable is defined on the server for the </echo>
-    <echo error="info">Jenkins build. To run locally, the ant.git.work.tree variable should be </echo>
-    <echo error="info">defined as ${git_work_tree}. In Eclipse, this is done using </echo>
-    <echo error="info">Window - Preferences - Ant - Runtime.</echo>
-    <fail message="Missing ant.git.work.tree variable or GIT_URL definition is required."/>
-  </target>
-
-  <target name="check-npm-modules" if="${show-SARMS-config-errors}" unless="${have-npm-modules}">
-    <echo level="error">One or more of the following npm modules were not found but are</echo>
-    <echo level="error">are required for this step: </echo>
-  	<echo level="error">  audit</echo>
-    <echo level="error">  request</echo>
-    <echo level="error">  request-promise</echo>
-    <echo level="error">Use 'npm install' to install the missing ones. Need to upgrade</echo>
-    <echo level="error">to npm v6.1.0 or higher to run 'npm install audit'. The other</echo>
-    <echo level="error">root cause could be a missing package-lock.json file which can</echo>
-    <echo level="error">be resolved by running 'npm i --package-lock-only'.</echo>
-    <fail message="One or more required npm modules not found for this step or package-lock.json file was missing."/>
+  <target name="check-SARMS-properties" unless="${have-SARMS-props}">
+    <echo level="info">Neither the ant.git.work.tree variable nor the GIT_URL variable is defined </echo>
+    <echo level="info">which is required to determine the name of the project for the SARMS system. </echo>
+    <echo level="info">Normally, the GIT_URL environment variable is defined on the server for the </echo>
+    <echo level="info">Jenkins build. To run locally, the ant.git.work.tree variable should be </echo>
+    <echo level="info">defined as ${git_work_tree}. In Eclipse, this is done using </echo>
+    <echo level="info">Window - Preferences - Ant - Runtime.</echo>
+    <fail message="Missing ant.git.work.tree variable or GIT_URL definition which is required for this step."/>
   </target>
 
   <!-- Check that the SARMS server is reachable (since VPN is required to be active when running locally) -->
@@ -122,47 +82,36 @@
     <http url="${sarmsUrl}"/> 
   </condition> 
 
-  <target name="check-SARMS-reachable" if="${show-SARMS-config-errors}" unless="${SARMS-reachable}">
+  <target name="check-SARMS-reachable" unless="${SARMS-reachable}">
     <echo level="info">The SARMS server at ${sarmsUrl} is not reachable so the postProjectToSARMS step was skipped.</echo>
     <echo level="info">To run locally, VPN is required but this step is normally run only on the Jenkins server.</echo>
   </target>
 
 
-  <!-- Check that all dependencies are satisfied -->
-  <condition property="have-SARMS-prereqs" value="true" else="false">
-    <and>
-      <!-- Effectively forces this task to run only on Jenkins where env.BUILD_NUMBER is defined. -->
-      <!-- If the variable is not defined, the step will be silently skipped -->
-      <istrue value="${show-SARMS-config-errors}" />
-      <istrue value="${have-SARMS-props}" />
-      <istrue value="${have-npm-modules}" />
-      <istrue value="${SARMS-reachable}" />
-    </and>
-  </condition>
-
   <!-- Define target to run postProjectToSARMS script -->
-  <target name="postProjectToSARMS" depends="check-SARMS-properties, check-npm-modules, check-SARMS-reachable" if="${have-SARMS-prereqs}">
+  <target name="postProjectToSARMS" depends="check-SARMS-properties, check-SARMS-reachable">
     <exec executable="cmd" osfamily="windows" failonerror="true">
         <arg value="/c"/>
-        <arg value='node ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}postProjectToSARMS  
-                      --api-credentials-path ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}api_credentials.json
+        <arg value='node util${file.separator}sarms${file.separator}postProjectToSARMS  
+                      --api-credentials-path util${file.separator}sarms${file.separator}api_credentials.json
                       --sarms-server-url ${sarmsUrl} 
         	            --client-name ${repo.name} 
                       --platform-name "Salesforce Commerce Cloud SFRA" 
                       --platform-news "https://xchange.demandware.com/community/developer/security-notifications"
-                      --package-file ${root-folder-loc}${file.separator}package.json' 
+                      --package-file ..${file.separator}package.json' 
         />
     </exec>
     <exec executable="/bin/bash" osfamily="unix" failonerror="true">
         <arg value="-c"/>
         <arg value='export PATH=/usr/local/bin:$PATH; 
-                    node ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}postProjectToSARMS 
-                      --api-credentials-path ${root-folder-loc}${file.separator}build_tools${file.separator}util${file.separator}sarms${file.separator}api_credentials.json
+                    cd "${basedir}"; 
+                    node util${file.separator}sarms${file.separator}postProjectToSARMS 
+                      --api-credentials-path util${file.separator}sarms${file.separator}api_credentials.json
                       --sarms-server-url ${sarmsUrl} 
                       --client-name ${repo.name} 
                       --platform-name "Salesforce Commerce Cloud SFRA" 
                       --platform-news "https://xchange.demandware.com/community/developer/security-notifications"
-                      --package-file ${root-folder-loc}${file.separator}package.json' 
+                      --package-file ..${file.separator}package.json' 
         />
     </exec>
   </target>
