@@ -16,7 +16,8 @@
       1. The GIT_URL environment variable defined to contain the git url for 
          the project. This is set up by default for our Jenkins servers.
   -->
-  <property name="sarmsUrl" value="http://10.0.1.220:1337" />
+
+	<property name="sarmsUrl" value="https://sarms.lcgosc.com" />
 
   <!-- This just defines a prefix for accessing system environment variables -->
   <property environment="env" />
@@ -78,18 +79,17 @@
   </target>
 
   <!-- Check that the SARMS server is reachable (since VPN is required to be active when running locally) -->
-  <condition property="SARMS-reachable" else="false"> 
-    <http url="${sarmsUrl}"/> 
+  <condition property="SARMS-reachable" value="true" else="false"> 
+  	<isreachable url="${sarmsUrl}"/>
   </condition> 
-
+  	
   <target name="check-SARMS-reachable" unless="${SARMS-reachable}">
     <echo level="info">The SARMS server at ${sarmsUrl} is not reachable so the postProjectToSARMS step was skipped.</echo>
     <echo level="info">To run locally, VPN is required but this step is normally run only on the Jenkins server.</echo>
   </target>
 
-
   <!-- Define target to run postProjectToSARMS script -->
-  <target name="postProjectToSARMS" depends="check-SARMS-properties, check-SARMS-reachable">
+  <target name="postProjectToSARMS" depends="check-SARMS-properties, check-SARMS-reachable" if="${SARMS-reachable}">
     <exec executable="cmd" osfamily="windows" failonerror="true">
         <arg value="/c"/>
         <arg value='node util${file.separator}sarms${file.separator}postProjectToSARMS  
