@@ -78,18 +78,8 @@
     <fail message="Missing ant.git.work.tree variable or GIT_URL definition which is required for this step."/>
   </target>
 
-  <!-- Check that the SARMS server is reachable (since VPN is required to be active when running locally) -->
-  <condition property="SARMS-reachable" value="true" else="false"> 
-  	<isreachable url="${sarmsUrl}"/>
-  </condition> 
-  	
-  <target name="check-SARMS-reachable" unless="${SARMS-reachable}">
-    <echo level="info">The SARMS server at ${sarmsUrl} is not reachable so the postProjectToSARMS step was skipped.</echo>
-    <echo level="info">To run locally, VPN is required but this step is normally run only on the Jenkins server.</echo>
-  </target>
-
   <!-- Define target to run postProjectToSARMS script -->
-  <target name="postProjectToSARMS" depends="check-SARMS-properties, check-SARMS-reachable" if="${SARMS-reachable}">
+  <target name="postProjectToSARMS" depends="check-SARMS-properties">
     <exec executable="cmd" osfamily="windows" failonerror="true">
         <arg value="/c"/>
         <arg value='node util${file.separator}sarms${file.separator}postProjectToSARMS  

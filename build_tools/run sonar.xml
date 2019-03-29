@@ -136,26 +136,15 @@
     <fail message="Missing ant.git.work.tree variable definition required to run SonarQube"/>
   </target>
 
-  <!-- Check that SonarQube server is reachable (since VPN is required to be active when running locally) -->
-  <condition property="sonar-reachable" else="false"> 
-    <http url="${sonar.host.url}"/> 
-  </condition> 
-
-  <target name="check-sonar-reachable" if="${show-sonar-config-errors}" unless="${sonar-reachable}">
-    <echo level="info">The SonarQube server at ${sonar.host.url} is not reachable so this step was skipped.</echo>
-    <echo level="info">To run SonarQube locally, VPN is required but SonarQube is normally run only on the Jenkins server.</echo>
-  </target>
-
-  <!-- Check that the SonarQube properties are defined and the server is reachable -->
+  <!-- Check that the SonarQube properties are defined -->
   <condition property="have-sonar" value="true" else="false">
     <and>
       <istrue value="${have-sonar-props}" />
-      <istrue value="${sonar-reachable}" />
     </and>
   </condition>
 
   <!-- Define SonarQube Scanner for Ant Target -->
-  <target name="sonar" depends="check-sonar-properties,check-sonar-reachable" if="${have-sonar}">
+  <target name="sonar" depends="check-sonar-properties" if="${have-sonar}">
 	  <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
 	     <!-- Can leave the classpath line out if the "sonarqube-ant-task-*.jar" file is added as an external jar file -->
 	  </taskdef>
