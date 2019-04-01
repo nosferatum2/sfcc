@@ -1,0 +1,13 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addJs('/js/search.js');
+        assets.addCss('/css/search.css');
+    </isscript>
+
+    <h1 class="header page-title">
+        ${pdict.contentSearch.folder.displayName}
+    </h1>
+
+    <isinclude template="search/contentGrid" />
+</isdecorate>

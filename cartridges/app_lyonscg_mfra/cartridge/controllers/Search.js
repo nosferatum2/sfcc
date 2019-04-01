@@ -7,6 +7,7 @@
 
 var page = module.superModule;
 var server = require('server');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
 server.extend(page);
 
@@ -40,6 +41,18 @@ server.append('Show', function (req, res, next) {
         viewData.breadcrumbs = breadcrumbs;
         res.setViewData(viewData);
     }
+    next();
+});
+
+server.get('ShowContent', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
+
+    var contentSearch = searchHelper.setupContentFolderSearch(req.querystring);
+
+    res.render(contentSearch.template, {
+        contentSearch: contentSearch
+    });
+
     next();
 });
 
