@@ -315,9 +315,9 @@ var formHelpers = require('base/checkout/formErrors');
                 //
                 $(plugin).on('click', '.next-step-button button', function (e) {
                     if (!e.detail || e.detail === 1) {
-                      members.nextStage();
+                        members.nextStage();
                     }
-                    });
+                });
 
                 //
                 // Handle Edit buttons on shipping and payment summary cards
