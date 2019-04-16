@@ -1,5 +1,6 @@
 <iscontent type="text/html" charset="UTF-8" compact="true" />
 <iscache type="relative" hour="24" />
+<isinclude template="/components/modules" />
 
 <nav class="navbar navbar-expand-md bg-inverse col-12">
     <div class="close-menu clearfix d-lg-none">
@@ -17,15 +18,16 @@
         </div>
     </div>
 
-    <div class="menu-group" aria-label="Main menu" role="navigation">
+    <div class="menu-group text-md-center" aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav" role="menu">
             <isif condition="${!empty(pdict.Navigation)}">
                 <isloop items="${pdict.Navigation}" var="category">
+                	<isset name="categoryAssetId" value ="${category.categoryMenuAssetId}" scope="page"/>
                     <isif condition="${!empty(category.columns)}">
-                        <li class="nav-item dropdown" role="menuitem">
+                        <li class="nav-item dropdown position-static" role="menuitem">
                             <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
                             <div class="dropdown-menu" role="menu" aria-hidden="true">
-                                <div class="menu-row">
+                                <div class="menu-row col-md-9 pull-left position-sm-static">
                                     <isloop items="${category.columns}" var="column">
                                         <div class="menu-column">
                                             <isset name="menuItems" value="${column}" scope="page" />
@@ -33,6 +35,11 @@
                                         </div>
                                     </isloop>
                                 </div>
+                                <isif condition="${!empty(categoryAssetId)}">
+                                    <div class="col-md-3 pull-right d-none d-md-block">
+                                        <iscontentasset aid="${categoryAssetId}" />
+                                    </div>
+                                </isif>
                             </div>
                         </li>
                     <iselse/>

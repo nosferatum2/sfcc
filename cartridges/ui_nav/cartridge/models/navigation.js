@@ -203,6 +203,7 @@ NavigationModel.prototype.buildItemObject = function (obj) {
     var navListObj = {
         object: obj,
         name: this.getDisplayName(obj),
+        categoryMenuAssetId: this.getCategoryAssetId(obj),
         url: this.getURL(obj)
     };
 
@@ -286,6 +287,20 @@ NavigationModel.prototype.getDisplayName = function (obj) {
     } else if (obj instanceof Content) {
         var content = obj;
         return content.getName();
+    }
+
+    return '';
+};
+
+/**
+ * Returns content asset Id for provided object otherwise empty string.
+ * @param {Object} obj navigation object
+ * @returns {string} returns content asset Id for provided object otherwise empty string
+ */
+NavigationModel.prototype.getCategoryAssetId = function (obj) {
+    if (obj instanceof Category) {
+        var category = obj;
+        return category.custom.categoryAssetID;
     }
 
     return '';

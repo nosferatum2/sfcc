@@ -3,6 +3,15 @@
 
     <type-extension type-id="Category">
         <custom-attribute-definitions>
+            <attribute-definition attribute-id="categoryAssetID">
+                <display-name xml:lang="x-default">Navigation Content Asset ID</display-name>
+                <description xml:lang="x-default">The ID of the content asset that is displayed in the main navigation for this category.</description>
+                <type>string</type>
+                <localizable-flag>false</localizable-flag>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
             <attribute-definition attribute-id="navColumnLength">
                 <display-name xml:lang="x-default">Navigation Column Length</display-name>
                 <description xml:lang="x-default">Length of the columns in the mega-menu of the main navigation for this category.  Defaults to 5.</description>

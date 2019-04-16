@@ -4,7 +4,7 @@
     <isloop items="${menuItems}" var="category">
         <li class="dropdown-item" role="menuitem">
             <isif condition="${!empty(category.items)}">
-                <a href="${category.url}" role="button" class="dropdown-link">${category.name}</a>
+                <a href="${category.url}" role="button" class="dropdown-link has-sub-cat">${category.name}<span class="d-md-none caret-icon caret-right"></span></a>
                 <isset name="menuItems" value="${category.items}" scope="page" />
                 <isinclude template="components/header/menuItem" />
             <iselse/>
