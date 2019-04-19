@@ -3,8 +3,9 @@
 const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
+const uploadUtils = require('../lib/util/upload-utils');
 
-const pwd = __dirname;
+const pwd = path.join(__dirname, '..');
 const packageFile = require(path.join(pwd, '../package.json'));
 const dataOptions = packageFile.deployment.dataOptions;
 const dataBundles = packageFile.deployment.dataBundles;
@@ -64,7 +65,8 @@ function writeAttributesRow(outputStream, classification, attributes, attributeT
     });
 }
 
-function generateSystemObjectReports (options) {
+function generateSystemObjectReports (cliArgs) {
+    const options = uploadUtils.mergeUploadProperties(cliArgs);
     const dataBundle = dataBundles[options.dataBundle],
 
         // set up parser and convert XML file to JS

@@ -1,5 +1,7 @@
 # LYONSCG Build Tools
 
+This README provides documentation on all NPM scripts, environment settings, and Jenkin setup.
+
 ## Installation and Usage
 
 You can install the dependencies for these build tools using the following command in the project root directory
@@ -8,9 +10,9 @@ You can install the dependencies for these build tools using the following comma
 npm install
 ```
 
-In order for all commands to work verify that:
+In order for all npm commands to work verify that:
 
-* There is a valid `dw.json` file in the `build_tools` directory. See the `dw.json.example` in the `build_tools` directory  
+* There is a valid [dw.json](./dw.json) file in the `build_tools` directory. See the [dw.json.example](./dw.json.example)
 for an example of a valid file.
 * There is a `cartridges` top level folder that contains your cartridge(s).
 * The `sites` array within the root `package.json` is configured correctly.  
@@ -22,63 +24,75 @@ for an example of a valid file.
 ## Upload
 
 It is **highly** recommended that you use VS Code's Prophet Debugger extension or Eclipse's Digital Server connection  
-for auto-upload of files; however, these upload scripts can be used if you choose to develop outside of these IDEs.  
+for auto-upload of files; however, the deployCartridges script or [dwupload](https://www.npmjs.com/package/dwupload) can be used if you choose to develop outside of these IDEs.
+
 If you'd like information on how to setup VS Code and the Prophet Debugger extension for SFCC development see [Visual Studio Code - SFCC](https://lyonscg.atlassian.net/wiki/spaces/Intranet/pages/206670879/Visual+Studio+Code+-+SFCC)
 
+### Upload Cartridges
 
-### Upload a file
-
-```sh
-npm run upload ${filepath}
-
-# example
-npm run upload cartridges/app_lyonscg_mfra/cartridge/client/default/js/main.js
-```
-
-### Upload a cartridge
-
-```sh
-npm run uploadCartridge ${cartridgeName}
-
-# example
-npm run uploadCartridge app_lyonscg_mfra
-```
-
-### Upload all cartridges
-
-Upload all cartridges specified in the `sites` array in the root `package.json`
+Uploads all cartridge (folders) within the `sfra-reference-application/cartridges` directory to the specified Commerce Cloud instance.
 
 ```sh
 npm run deployCartridges
 ```
 
-This script also supports passing `dw.json` properties as command line arguments (these arguments will only be used if  
-there is not a `dw.json` in the `build_tools` directory)
-
+This script also supports passing `dw.json` properties as command line arguments (arguments passed via the CLI  take precendence over dw.json properties).
 ```sh
-npm run deployCartridges -- --username=${username} --password=${password} --hostname=${hostname} --activationHostname=${activationHostname} --code-version=${versionname}
+npm run deployCartridges -- --client-id=${clientId} --client-secret=${clientSecret} --hostname=${hostname}  --activationHostname=${activationHostname} --code-version=${versionname}
 
 #example
-npm run deployCartridges -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --activationHostname=dev01-na01-hostname.demandware.net --code-version=version01
+npm run deployCartridges -- --client-id=myClientId --client-secret=myClientSecret --hostname=dev01-na01-hostname.demandware.net --activationHostname=dev01-na01-hostname.demandware.net --code-version=version01
 ```
 
+
+## Code Activation
+
+Activate a code version.
+
+```sh
+npm run activateCodeVersion
+```
+
+This script also supports passing `dw.json` properties as command line arguments (arguments passed via the CLI take precendence over dw.json properties).
+```sh
+npm run activateCodeVersion -- --code-version=${versionname}
+
+#example
+npm run activateCodeVersion -- --code-version=version01
+
+#example
+npm run activateCodeVersion -- --code-version=version01 --client-id=myClientId --client-secret=myClientSecret --activation-hostname=dev01-na01-hostname.demandware.net
+```
 
 ## Data Deployment
 
+Deploy a data bundle. Data bundles are defined by the `"dataBundles"` property in the [package.json]('../package.json).
+
 ```sh
-npm run deploy
+npm run deployData
 ```
 
-This script also supports passing `dw.json` properties as command line arguments (these arguments will only be used if  
-there is not a `dw.json` in the `build_tools` directory)
-
+This script also supports passing `dw.json` properties as command line arguments (arguments passed via the CLI take precendence over dw.json properties).
 ```sh
-npm run deploy -- --username=${username} --password=${password} --hostname=${hostname} --data-bundle=${bundlename}
+npm run deployData -- --client-id=${clientId} --client-secret=${clientSecret} --hostname=${hostname} --data-bundle=${bundlename}
 
 #example
-npm run deploy -- --username=username --password=password --hostname=dev01-na01-hostname.demandware.net --data-bundle=core
+npm run deployData -- --client-id=${clientId} --client-secret=${clientSecret} --hostname=dev01-na01-hostname.demandware.net --data-bundle=core
 ```
 
+> Note: the latest version of the build tools uses OCAPI to trigger data deploys instead of BM Pipelines (the legacy method). As such, you will **not** see the Site Imports in Business Manager's "Site Imports & Exports" module. You will see real-time feedback provided by the build tools as to the import log for that data deployment, and whether there were any critical errors.
+
+```
+Last Deployment Timestamp: Thu Apr 04 2019 18:13:31 GMT-0400 (EDT)
+✔ Authenticated
+✔ Data compressed
+✔ Data uploaded
+✔ Data imported
+✔ Deleted temporary data archives
+
+Instance dev03-eu01-merchant.demandware.net imported data bundles:
+  core - https://dev03-eu01-merchant.demandware.net/on/demandware.servlet/webdav/Sites/Impex/log/Job-sfcc-site-archive-import-20190404230012202.log
+```
 
 ## Compile
 
@@ -105,7 +119,6 @@ front-end development task.
 ```sh
 npm run watch
 ```
-
 
 ### Compiling for Production
 
@@ -137,20 +150,54 @@ npm run lint client-js scss json
 ```
 
 
-## Unit Tests
+# Testing
 
-### Run Unit Tests
+## Running unit tests
+
+You can run `npm test` to execute all unit tests in the project. Run `npm run cover` to get coverage information. Coverage will be available in `coverage` folder under root directory.
+
+* UNIT test code coverage:
+1. Open a terminal and navigate to the root directory of the mfsg repository.
+2. Enter the command: `npm run cover`.
+3. Examine the report that is generated. For example: `Writing coverage reports at [/Users/yourusername/SCC/sfra/coverage]`
+4. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report.
+
+## Running integration tests
+Integration tests are located in the `sfra/test/integration` directory.
+
+To run all integration tests you can use the following command:
 
 ```
-npm run test
+npm run test:integration
 ```
 
-### Run Unit Tests with Coverage Report
+**Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
+sample dw.json file (this file needs to be in the root of your project)
+{
+    "hostname": "dev03-automation02-qa.demandware.net"
+}
 
-```sh
-npm run cover
+```
+npm run test:integration test/integration/storeLocator
 ```
 
+You can also supply URL of the sandbox on the command line:
+
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-RefArch-Site/en_US
+```
+
+To run individual tests, such as the `test1.js` in the `storeLocator` subsuite:
+
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-RefArch-Site/en_US test/integration/storeLocator/test1.js
+```
+
+To run tests in a subsuite, such as the storeLocator subsuite:
+
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-RefArch-Site/en_US test/integration/storeLocator
+```
 
 ## Scaffolding 
 
@@ -171,7 +218,6 @@ the project to a blank slate if you experience any compilation or upload issues.
 ```sh
 npm run clean
 ```
-
 
 
 ## Sites and Cartridge Path Configuration
@@ -271,12 +317,11 @@ notifications | Native system notifications for compiler events | "true", "false
 
 ## Help and Troubleshooting
 
-Running `node build_tools/build --help` from the root of the project with generate help messaging regarding the scripts and allowed arguments.
+Running `npm run help` will generate  help messaging regarding the scripts and allowed arguments.
 
 ### My Js and/or Scss isn't generating compiled files
 
-- If you manually touched the static folder, it's possible that the compiler's cache was not properly invalidated.  
-  Delete the `.cache-loader` folder in the root of the project to empty the cache.
+- If you manually touched the static folder, it's possible that the compiler's cache was not properly invalidated. Run `npm run clean`.
 - Ensure that you have the correct configuration of the "sites" array in the package.json. The compiler is dependent on the cartridge path.
 - SCSS partials (any file that begins with an underscore i.e `_productCard.scss` ) are not compiled to stand-alone  
   CSS files. SCSS partials are meant to be "@imported" into other non-partial SCSS files.
@@ -284,14 +329,121 @@ Running `node build_tools/build --help` from the root of the project with genera
   (i.e. `app_lyonscg_mfra/cartridge/client/default/js/product/base.js`) are not compiled to stand-alone JS files.  
   These files are meant to be require()'d by files in the `client/default/js` directory.
 
+# Setting up environments for Continuous Integration
+
+## Provisioning API Clients
+
+The recommended setup is to create three API Clients for:
+
+* Staging
+* Development
+* Sandboxes
+
+To provision an API Client:
+
+1. Go to https://account.demandware.com
+2. Click API Client
+3. Click Add API Client
+
+Fill out the resulting form and take note of your configuration.
+
+1. Select your corresponding Organization
+2. Access Control should be Enabled
+3. In Default Scopes:
+
+```
+roles
+tenantFilter
+profile
+```
+
+4. In Redirect URIs:
+
+```
+http://localhost:8080
+```
+
+5. All other values left default.
+
+![Account Manager][account-manager]
+
+[account-manager]: images/account-manager.png
+
+## Business Manager Configurations
+
+### OCAPI
+
+On each environment, we need to ensure we have the correct OCAPI configurations.
+
+1. Go to Administration >  Site Development >  Open Commerce API Settings 
+2. Select type Data and context Global
+3. Paste in the following configuration, making sure to replace <client_id> with the client ID you've designated for that environment.
+
+```
+{
+    "_v": "18.1",
+    "clients": [{
+        "client_id": "<client_id>",
+        "resources": [{
+            "methods": ["get"],
+            "read_attributes": "(**)",
+            "write_attributes": "(**)",
+            "resource_id": "/code_versions"
+        }, {
+            "methods": ["patch"],
+            "read_attributes": "(**)",
+            "write_attributes": "(**)",
+            "resource_id": "/code_versions/*"
+        }, {
+            "methods": ["post"],
+            "read_attributes": "(**)",
+            "write_attributes": "(**)",
+            "resource_id": "/jobs/*/executions"
+        }, {
+            "methods": ["get"],
+            "read_attributes": "(**)",
+            "write_attributes": "(**)",
+            "resource_id": "/jobs/*/executions/*"
+        }]
+    }]
+}
+```
+
+> Tip: instead of manually configuring this on all sandboxes, you can set it up on one and export a Global Site Export that can be imported to each environment
+
+### WebDav Permissions
+
+On each environment, we need to ensure we have the correct WebDav configurations.
+
+1. Go to Administration >  Organization >  WebDAV Client Permissions
+2. Paste in the following configuration, making sure to replace <client_id> with the client ID you've designated for that environment.
+
+```
+{
+    "clients": [{
+        "client_id": "<client_id>",
+        "permissions": [{
+            "path": "/impex",
+            "operations": ["read_write"]
+        }, {
+            "path": "/cartridges",
+            "operations": ["read_write"]
+        }]
+    }]
+}
+```
+
+> Tip: instead of manually configuring this on all sandboxes, you can set it up on one and export a Global Site Export that can be imported to each environment
 
 # Setting up the deployment project in Jenkins
 
-## Note: This guide assumes that the Jenkins server has already been set up by the OSC team
+> Note: This guide assumes that the Jenkins server has already been set up by the OSC team. 
 
-### Add the new project to the Jenkins server
+> The `sfcc-ci` node package is hosted in bitbucket so the OSC team will need to install an SSH key for your Jenkins to be able to pull it in.
 
-  On the Jenkins server, you will start at the dash board and it should look something like this:
+## Add the new project to the Jenkins server
+
+  On the Jenkins server, you will start at the dashboard and it should look something like this:
 
   ![Jenkins Dashboard][jenkins-dashboard]
 
@@ -313,11 +465,11 @@ Running `node build_tools/build --help` from the root of the project with genera
 
   [jenkins-project-config]: images/jenkins-project-config.png
 
-  To continue the setup please choose either the "Multiple SCMs" option for Git repositories or the "Subversion" option for SVN repositories.
+  To continue the setup please choose either the "Git" option for Git repositories or the "Subversion" option for SVN repositories. Older Jenkins servers may have "Multiple SCMs" as an option here, which can also be used for Git repositories.
 
   If you are setting up Git repositories please read the following instructions. If not please skip below to the section on Subversion.
 
-### Git Repository Setup
+## Git Repository Setup
 
   To setup a Git repositories in Jenkins for use with our build script please choose the "Git" option under "Source Code Management"
 
@@ -333,7 +485,7 @@ Running `node build_tools/build --help` from the root of the project with genera
 
   In the field "Branch Specifier (blank for 'any')" specify the branch name if you decide to use one other than master (e.g. */develop, */release, etc.)
 
-### Build Options Setup
+## Build Options Setup
 
   To setup the build options to allow for deployment to the servers scroll to the bottom of the Jenkin's project settings. There is a section called "Build" where the final part of the setup will occur.
 
@@ -361,7 +513,7 @@ Running `node build_tools/build --help` from the root of the project with genera
 
   To test out the build, scroll to the top of the configuration and click the "Build Now" option in the upper left. If everything was setup correctly the build should complete successfully.
   
-#### Staging build options
+### Staging build options
 
   In addition to the other properties above, there are 2 additional options for the Staging build to support 2-factor authentication:
   
@@ -372,19 +524,9 @@ Running `node build_tools/build --help` from the root of the project with genera
   These can be set after generating and uploading the p12 file to Jenkins.
   
   Also, the `hostname` property should begin with 'cert' like 'cert.staging.na01.orgname.demandware.net'. The `activationHostname` will **not** use the prefix (ex. 'staging-na01-orgname.demandware.net').
-  
-  
-### Examples
-
-Uploading individual cartridges to your sandbox/instance
-
-1. Configure dw.json file with your username, password, activation instance (sandbox URL) and currently active code version
-2. Configure the package.json file at the root directory level for the cartridges you want to upload (see "uploadCartridge")
-3. Navigate to the command line tool (CMD for Windows, Terminal for OSX)
-4. OSX/MAC
-		"cd <path to your build tools>"   Sample -> cd /Users/testuser/git/reference-application-sfra
-		"npm run uploadCartridge"  
 		
-### Notes
+## Jenkins Dependencies
+
+### NPM Modules
 
 The builders.xml Ant task includes the 'run npm install.xml' task that utilizes npm to automatically install the package.json specified node modules. The installation task may install tens of thousands of files and thus, on initial run, may take as long as ten minutes to complete. Subsequent runs are exponentially quicker as npm will only update those modules requiring an update. Additionally, the 'run npm install.xml' Ant task may be run on independently of builders.xml

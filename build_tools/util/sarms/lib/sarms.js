@@ -93,44 +93,56 @@ function createComponentVulnerabilityDescriptions(bomDependencyComponents, packa
  */
 function buildListOfComponentsFromPackage(dependencies, dependenciesKeys, platformName, categoryName, tempNpmReportPath) {
   var re = /(\d+\.)(\d+)(\..*)?/g,
+      versionString = '',
       bomDependencyComponents = {},
       moduleInfo = {};
 
   for (let dependencyKey of dependenciesKeys) {
+    versionString = dependencies[dependencyKey].match(re);
+    versionString == null ? versionString = '' : versionString = versionString[0] + ''; 
     bomDependencyComponents[dependencyKey] = {
-        "name" : dependencyKey,
-        "version" : ((dependencies[dependencyKey]).match(re)).join(""),
-        "platform" : 'NodeJS',
-        "category" : categoryName,
+      "name" : dependencyKey,
+      "version" : versionString,
+      "platform" : 'NodeJS',
+      "category" : categoryName,
     }
-    if (shell.exec('npm view ' 
-                    + bomDependencyComponents[dependencyKey].name 
-                    + '@' + bomDependencyComponents[dependencyKey].version
-                    + ' name description homepage repository bugs license gitHead _id --json > '
-                    + tempNpmReportPath).code == 0) {
-      try {
-        moduleInfo = fileUtils.readJSONFromFile(tempNpmReportPath);
-      } catch (e) {
-        eh.errorHandler('error', e);
+    // If the version in the package.json is not in the semver format (e.g. bitbucket:lyonsconsultinggroup/sfcc-ci.git#master)
+    // but appears to look like a url (contains :// or bitbucket:), treat the string like a repo url and set a default version string
+    if (versionString == '') {
+      bomDependencyComponents[dependencyKey].version = 'not specified';
+      if ((dependencies[dependencyKey].search(/^.+:\/\//) >= 0) || (dependencies[dependencyKey].search(/^bitbucket:/) >= 0)) {
+        bomDependencyComponents[dependencyKey].repository = fixRepoUrl.fixRepoUrl(dependencies[dependencyKey]);
       }
-      
-      fs.unlinkSync(tempNpmReportPath);
-      bomDependencyComponents[dependencyKey].description = moduleInfo.description
-      if (typeof moduleInfo.bugs != 'undefined') {
-        bomDependencyComponents[dependencyKey].description += '\n\nBugs:' + moduleInfo.bugs.url;
+    } else
+      // Otherwise, try to get the details using npm view
+      if (shell.exec('npm view ' 
+                      + bomDependencyComponents[dependencyKey].name 
+                      + '@' + bomDependencyComponents[dependencyKey].version
+                      + ' name description homepage repository bugs license gitHead _id --json > '
+                      + tempNpmReportPath).code == 0) {
+        try {
+          moduleInfo = fileUtils.readJSONFromFile(tempNpmReportPath);
+        } catch (e) {
+          eh.errorHandler('error', e);
+        }
+        
+        fs.unlinkSync(tempNpmReportPath);
+        bomDependencyComponents[dependencyKey].description = moduleInfo.description
+        if (typeof moduleInfo.bugs != 'undefined') {
+          bomDependencyComponents[dependencyKey].description += '\n\nBugs:' + moduleInfo.bugs.url;
+        }
+        if (typeof moduleInfo.gitHead != 'undefined') {
+          bomDependencyComponents[dependencyKey].description += '\n\ngitHead:' + moduleInfo.gitHead;
+        }
+        if (typeof moduleInfo.repository != 'undefined') {
+          bomDependencyComponents[dependencyKey].repository = fixRepoUrl.fixRepoUrl(moduleInfo.repository.url);
+        }
+        if (typeof moduleInfo.homepage != 'undefined') {
+          bomDependencyComponents[dependencyKey].news = moduleInfo.homepage;
+        }
+      } else {
+          eh.errorHandler('warn', 'Unable to execute the ‘npm view’ command for the \'' + dependencyKey + '\' module.');
       }
-      if (typeof moduleInfo.gitHead != 'undefined') {
-        bomDependencyComponents[dependencyKey].description += '\n\ngitHead:' + moduleInfo.gitHead;
-      }
-      if (typeof moduleInfo.repository != 'undefined') {
-        bomDependencyComponents[dependencyKey].repository = fixRepoUrl.fixRepoUrl(moduleInfo.repository.url);
-      }
-      if (typeof moduleInfo.homepage != 'undefined') {
-        bomDependencyComponents[dependencyKey].news = moduleInfo.homepage;
-      }
-    } else {
-        eh.errorHandler('warn', 'Unable to execute the ‘npm view’ command for the \'' + dependencyKey + '\' module.');
-    }
   }
 
   return bomDependencyComponents;

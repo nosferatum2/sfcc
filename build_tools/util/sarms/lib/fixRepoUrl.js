@@ -20,11 +20,16 @@ exports.fixRepoUrl = function fixRepoUrl(urlString) {
         result = urlString.substr(pos + 1);
         result = 'https://' + result.replace(':', '/');
       } else {
-          // Contains // but not http
+          // Handle if it contains // but not http
           pos = urlString.indexOf('//');
           if (pos >= 0) {
             result = 'https:' + urlString.substr(pos);
-          } 
+          } else {
+            // Check for a bitbucket: link
+            if (urlString.search(/^bitbucket:/) >= 0) {
+              result = urlString.replace('bitbucket:', 'https://bitbucket.org/')
+            }
+          }
       }
   }
   return result;

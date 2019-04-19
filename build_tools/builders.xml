@@ -48,8 +48,8 @@
             <arg line='node build --deployCartridges' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
-            <arg value='--username="${user}"' if:set="user" />
-            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--client-id=${clientId}' if:set="clientId" />
+            <arg value='--client-secret=${clientSecret}' if:set="clientSecret" />
             <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
@@ -59,19 +59,19 @@
             <arg value='--version-cartridge-name="${versionCartridgeName}"' if:set="versionCartridgeName" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
-            <arg value='build'/>
-            <arg value='--deployCartridges' />
-            <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
-            <arg value='--cartridge=${cartridge}' if:set="cartridge" />
-            <arg value='--username=${user}' if:set="user" />
-            <arg value='--password=${password}' if:set="password" />
-            <arg value='--self-signed=${selfSigned}' if:set="selfSigned" />
-            <arg value='--p12=${twoFactorp12}' if:set="twoFactorp12" />
-            <arg value='--passphrase=${twoFactorPassword}' if:set="twoFactorPassword" />
-            <arg value='--hostname=${hostname}' if:set="hostname" />
-            <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
-            <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
-            <arg value='--version-cartridge-name=${versionCartridgeName}' if:set="versionCartridgeName" />
+            <arg value="build"/>
+            <arg value="--deployCartridges" />
+            <arg value="--code-version=${buildVersion}" if:set="buildVersion" />
+            <arg value="--cartridge=${cartridge}" if:set="cartridge" />
+            <arg value="--client-id=${clientId}" if:set="clientId" />
+            <arg value="--client-secret=${clientSecret}" if:set="clientSecret" />
+            <arg value="--self-signed=${selfSigned}" if:set="selfSigned" />
+            <arg value="--p12=${twoFactorp12}" if:set="twoFactorp12" />
+            <arg value="--passphrase=${twoFactorPassword}" if:set="twoFactorPassword" />
+            <arg value="--hostname=${hostname}" if:set="hostname" />
+            <arg value="--cert-hostname=${certHostname}" if:set="certHostname" />
+            <arg value="--activation-hostname=${activationHostname}" if:set="activationHostname" />
+            <arg value="--version-cartridge-name=${versionCartridgeName}" if:set="versionCartridgeName" />
         </exec>
         <echo level="info">Upload complete!</echo>
     </target>
@@ -175,8 +175,8 @@
             <arg line='node build --deploy-data' />
             <arg value='--code-version="${buildVersion}"' if:set="buildVersion" />
             <arg value='--cartridge="${cartridge}"' if:set="cartridge" />
-            <arg value='--username="${user}"' if:set="user" />
-            <arg value='--password="${password}"' if:set="password" />
+            <arg value='--client-id=${clientId}' if:set="clientId" />
+            <arg value='--client-secret=${clientSecret}' if:set="clientSecret" />
             <arg value='--self-signed="${selfSigned}"' if:set="selfSigned" />
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
@@ -186,19 +186,19 @@
             <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
-            <arg value='build'/>
-            <arg value='--deploy-data' />
-            <arg value='--code-version=${buildVersion}' if:set="buildVersion" />
-            <arg value='--cartridge=${cartridge}' if:set="cartridge" />
-            <arg value='--username=${user}' if:set="user" />
-            <arg value='--password=${password}' if:set="password" />
-            <arg value='--self-signed=${selfSigned}' if:set="selfSigned" />
-            <arg value='--p12=${twoFactorp12}' if:set="twoFactorp12" />
-            <arg value='--passphrase=${twoFactorPassword}' if:set="twoFactorPassword" />
-            <arg value='--hostname=${hostname}' if:set="hostname" />
-            <arg value='--cert-hostname=${certHostname}' if:set="certHostname" />
-            <arg value='--activation-hostname=${activationHostname}' if:set="activationHostname" />
-            <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
+            <arg value="build"/>
+            <arg value="--deploy-data" />
+            <arg value="--code-version=${buildVersion}" if:set="buildVersion" />
+            <arg value="--cartridge=${cartridge}" if:set="cartridge" />
+            <arg value="--client-id=${clientId}" if:set="clientId" />
+            <arg value="--client-secret=${clientSecret}" if:set="clientSecret" />
+            <arg value="--self-signed=${selfSigned}" if:set="selfSigned" />
+            <arg value="--p12=${twoFactorp12}" if:set="twoFactorp12" />
+            <arg value="--passphrase=${twoFactorPassword}" if:set="twoFactorPassword" />
+            <arg value="--hostname=${hostname}" if:set="hostname" />
+            <arg value="--cert-hostname=${certHostname}" if:set="certHostname" />
+            <arg value="--activation-hostname=${activationHostname}" if:set="activationHostname" />
+            <arg value="--data-bundle=${dataBundle}" if:set="dataBundle" />
         </exec>
         <echo level="info">Data deployment complete!</echo>
     </target>

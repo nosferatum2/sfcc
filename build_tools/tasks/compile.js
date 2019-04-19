@@ -4,9 +4,9 @@
 const path = require('path');
 const chalk = require('chalk');
 const WebpackConfigurator = require('../lib/compile/webpack.config');
+const packageFile = require('../../package.json');
 
 module.exports = (env, argv) => {
-    const packageFile = require(path.join(process.cwd(), './package.json'));
     const options = (argv.mode === 'development') ? packageFile.buildEnvironment.development :
                                                     packageFile.buildEnvironment.production;
 

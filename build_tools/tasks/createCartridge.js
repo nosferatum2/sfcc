@@ -2,10 +2,8 @@
 
 const shell = require('shelljs');
 const path = require('path');
-const packageTemplate = require('./cartridgeTemplates/package');
-const dw = require('./cartridgeTemplates/dw');
-const dotProject = require('./cartridgeTemplates/dotProject');
-const projectProperties = require('./cartridgeTemplates/projectProperties');
+const dotProject = require('../lib/scaffold/templates/dotProject');
+const projectProperties = require('../lib/scaffold/templates/projectProperties');
 
 module.exports = (cartridgeName, cwd) => {
     // create folder structure

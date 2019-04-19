@@ -14,9 +14,14 @@ storefrontdata/
 test/appium/webdriver/config.json
 build_tools/artifacts
 build_tools/*.zip
+build_tools/tmp/*
 data_impex/*.zip
 lastbuild.properties
 .tern-project
 dw.json
 jsconfig.json
+.cache-loader/
+.stylelintcache
+.eslintcache
+build_tools/temp
 build_tools/.cache/
