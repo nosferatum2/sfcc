@@ -115,11 +115,6 @@ module.exports = {
         description: 'The data bundle that will be deployed. Data bundles are defined in package.json',
         required: false
     }, {
-        option: 'generate-object-report',
-        type: 'Boolean',
-        description: 'Generates a text file that contains HTML with a table of system objects',
-        required: false
-    }, {
         option: 'deployCartridges',
         type: 'Boolean',
         description: 'Deploys cartridges specified in the package.json file to the server',
@@ -149,5 +144,52 @@ module.exports = {
         type: 'String',
         description: '',
         required: false
+    }, {
+        option: 'system-object-report',
+        type: 'Boolean',
+        description: 'Generates a text file that contains HTML with a table of system objects',
+        required: false
+    }, {
+        option: 'build-report',
+        type: 'Boolean',
+        description: 'Generates a text file that contains HTML with a table of system objects',
+        required: false
+    }, {
+        option: 'atlassian-username',
+        type: 'String',
+        description: 'A valid Atlassian user name. (used for reports)',
+        required: false
+    }, {
+        option: 'atlassian-api-key',
+        type: 'String',
+        description: 'A valid Atlassian API key. (used for reports)',
+        required: false
+    }, {
+        option: 'confluence-space-key',
+        type: 'String',
+        description: 'A valid Confluence Space Key. (used for reports)',
+        required: false
+    }, {
+        option: 'confluence-system-objects-page',
+        type: 'String',
+        description: 'A valid Confluence Page Title for the System Object Reports.',
+        required: false
+    }, {
+        option: 'confluence-build-reports-page',
+        type: 'String',
+        description: 'A valid Confluence Page Title for the Build Reports',
+        required: false
+    }, {
+        option: 'confluence-base-url',
+        type: 'String',
+        description: 'The base URL for the Confluence Space where reports will be posted.',
+        required: false,
+        default: 'https://lyonscg.atlassian.net/wiki'
+    }, {
+        option: 'confluence-expand-macro-id',
+        type: 'String',
+        description: 'A valid macro ID for the "expand" macro in Confluence. This is used in the Build Reports.',
+        required: false,
+        default: 'fdf003e7-3808-4493-9455-9252b3a56b4c'
     }]
 };

@@ -12,6 +12,7 @@ const deployCartridges = require('./tasks/deployCartridges');
 const deployData = require('./tasks/deployData');
 const activateCodeVersion = require('./tasks/activateCodeVersion');
 const linter = require('./tasks/lint');
+const generateBuildReports = require('./tasks/buildReport');
 const generateSystemObjectReports = require('./tasks/systemObjectsReport');
 const createCartridge = require('./tasks/createCartridge');
 
@@ -94,10 +95,16 @@ if (options.cover) {
     });
 }
 
-/* Generate Object Report */
-if (options.generateObjectReport) {
-    console.log(chalk.green('Generating Object Report'));
+/* Generate System Object Report */
+if (options.systemObjectReport) {
+    console.log(chalk.green('Generating System Objects Report'));
     generateSystemObjectReports(options);
+}
+
+/* Generate Build Report */
+if (options.buildReport) {
+    console.log(chalk.green('Generating Build Report'));
+    generateBuildReports(options);
 }
 
 /* Create Cartridge */

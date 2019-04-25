@@ -203,19 +203,54 @@
         <echo level="info">Data deployment complete!</echo>
     </target>
 
-    <target name="system-object-reports">
-        <echo level="info">Creating system object reports...</echo>
+    <target name="system-object-report">
+        <echo level="info">Creating system object report...</echo>
         <exec executable="cmd" osfamily="windows" failonerror="true">
             <arg value="/c"/>
-            <arg line='node build --generate-object-report' />
+            <arg line='node build --system-object-report' />
             <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
+            <arg value='--atlassian-username="${atlassianUsername}"' if:set="atlassianUsername" />
+            <arg value='--atlassian-api-key="${atlassianApiKey}"' if:set="atlassianApiKey" />
+            <arg value='--confluence-base-url="${confluenceBaseUrl}"' if:set="confluenceBaseUrl" />
+            <arg value='--confluence-space-key="${confluenceSpaceKey}"' if:set="confluenceSpaceKey" />
+            <arg value='--confluence-system-objects-page="${confluenceSystemObjectsPage}"' if:set="confluenceSystemObjectsPage" />
         </exec>
         <exec executable="node" osfamily="unix" failonerror="true">
             <arg value='build'/>
-            <arg value='--generate-object-report' />
+            <arg value='--system-object-report' />
             <arg value='--data-bundle=${dataBundle}' if:set="dataBundle" />
+            <arg value='--atlassian-username=${atlassianUsername}' if:set="atlassianUsername" />
+            <arg value='--atlassian-api-key=${atlassianApiKey}' if:set="atlassianApiKey" />
+            <arg value='--confluence-base-url=${confluenceBaseUrl}' if:set="confluenceBaseUrl" />
+            <arg value='--confluence-space-key=${confluenceSpaceKey}' if:set="confluenceSpaceKey" />
+            <arg value='--confluence-system-objects-page=${confluenceSystemObjectsPage}' if:set="confluenceSystemObjectsPage" />
         </exec>
         <echo level="info">System object reports created!</echo>
+    </target>
+
+    <target name="build-report">
+        <echo level="info">Creating build report...</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg line='node build --build-report' />
+            <arg value='--atlassian-username="${atlassianUsername}"' if:set="atlassianUsername" />
+            <arg value='--atlassian-api-key="${atlassianApiKey}"' if:set="atlassianApiKey" />
+            <arg value='--confluence-base-url="${confluenceBaseUrl}"' if:set="confluenceBaseUrl" />
+            <arg value='--confluence-space-key="${confluenceSpaceKey}"' if:set="confluenceSpaceKey" />
+            <arg value='--confluence-build-reports-page="${confluenceBuildReportsPage}"' if:set="confluenceBuildReportsPage" />
+            <arg value='--confluence-expand-macro-id="${confluenceExpandMacroId}"' if:set="confluenceExpandMacroId" />
+        </exec>
+        <exec executable="node" osfamily="unix" failonerror="true">
+            <arg value='build'/>
+            <arg value='--build-report' />
+            <arg value='--atlassian-username=${atlassianUsername}' if:set="atlassianUsername" />
+            <arg value='--atlassian-api-key=${atlassianApiKey}' if:set="atlassianApiKey" />
+            <arg value='--confluence-base-url=${confluenceBaseUrl}' if:set="confluenceBaseUrl" />
+            <arg value='--confluence-space-key=${confluenceSpaceKey}' if:set="confluenceSpaceKey" />
+            <arg value='--confluence-build-reports-page=${confluenceBuildReportsPage}' if:set="confluenceBuildReportsPage" />
+            <arg value='--confluence-expand-macro-id=${confluenceExpandMacroId}' if:set="confluenceExpandMacroId" />
+        </exec>
+        <echo level="info">Build reports updated!</echo>
     </target>
 
 </project>
