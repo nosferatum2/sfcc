@@ -10,7 +10,7 @@ $(document).ready(function () {
     processInclude(require('./components/backtotop'));
     processInclude(require('wishlists/components/miniCart'));
     processInclude(require('base/components/collapsibleItem'));
-    processInclude(require('base/components/search'));
+    processInclude(require('./components/search'));
     processInclude(require('./components/clientSideValidation'));
     processInclude(require('base/components/countrySelector'));
     processInclude(require('./components/carousels'));
