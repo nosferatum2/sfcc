@@ -410,6 +410,8 @@ the cartridge path.
 
 ### Provisioning API Clients
 
+> Note: This guide assumes that you have Administrator access to your client's organization. If you do not, please work with your TA and PM to get this access, or to have them set the API Clients up.
+
 The recommended setup is to create three API Clients for:
 
 * Staging
@@ -423,6 +425,8 @@ To provision an API Client:
 3. Click Add API Client
 
 Fill out the resulting form and take note of your configuration.
+
+> Note: the API "password" you enter in Account Manager is referenced as the Client Secret in the rest of this guide, and elsewhere.
 
 1. Select your corresponding Organization
 2. Access Control should be Enabled
@@ -606,7 +610,7 @@ everything was setup correctly the build should complete successfully.
 
 ### Staging build options
 
-In addition to the other properties above, there are 2 additional options for the Staging build to support 2-factor
+In addition to the other properties above, there are 3 additional options for the Staging build to support 2-factor
 authentication:
 
 `twoFactorp12=/var/lib/jenkins/keys/jenkins.p12`
@@ -615,8 +619,10 @@ authentication:
 
 These can be set after generating and uploading the p12 file to Jenkins.
 
-Also, the `hostname` property should begin with `cert` like `cert.staging.na01.orgname.demandware.net`. The
-`activationHostname` will **not** use the prefix (ex. `staging-na01-orgname.demandware.net`).
+`certHostname=cert.staging.na01.orgname.demandware.net`
+
+Also, the `certHostname` property should begin with `cert` like `cert.staging.na01.orgname.demandware.net`. The
+`activationHostname` and `hostname` properies will **not** use the prefix (ex. they will use: `staging-na01-orgname.demandware.net`).
 
 ### Jenkins Dependencies
 
