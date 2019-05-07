@@ -191,5 +191,10 @@ module.exports = {
         description: 'A valid macro ID for the "expand" macro in Confluence. This is used in the Build Reports.',
         required: false,
         default: 'fdf003e7-3808-4493-9455-9252b3a56b4c'
+    }, {
+        option: 'clean',
+        type: 'Boolean',
+        description: 'Clean project of all build artifacts',
+        required: false
     }]
 };
