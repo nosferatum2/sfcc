@@ -16,10 +16,14 @@ const spinner = new ora({ spinner: cliSpinners.simpleDotsScrolling });
  */
 module.exports = async (cliArgs) => {
     // Gather upload properties
-    const {
+    let {
         clientId, clientSecret,
         activationHostname, codeVersion
     } = uploadUtils.mergeUploadProperties(cliArgs);
+
+     if (!Array.isArray(activationHostname)) {
+         activationHostname = activationHostname.split(',');
+     }
 
     try {
         // Authenticate

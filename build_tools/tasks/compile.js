@@ -4,7 +4,8 @@
 const path = require('path');
 const chalk = require('chalk');
 const WebpackConfigurator = require('../lib/compile/webpack.config');
-const packageFile = require('../../package.json');
+const uploadUtils = require('../lib/util/upload-utils');
+const packageFile = uploadUtils.getPackageJson();
 
 module.exports = (env, argv) => {
     const options = (argv.mode === 'development') ? packageFile.buildEnvironment.development :

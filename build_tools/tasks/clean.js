@@ -2,8 +2,8 @@
 
 const path = require('path');
 const del = require('del');
-
-const packageFile = require(path.join(process.cwd(), 'package.json'));
+const uploadUtils = require('../lib/util/upload-utils');
+const packageFile = uploadUtils.getPackageJson();
 
 module.exports = () => {
     // Delete compiled JS and Css assets

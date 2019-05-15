@@ -11,8 +11,8 @@ var chalk = require('chalk'),
     shell = require('shelljs');
 
 function getSandboxUrl() {
-    if (test('-f', path.join(process.cwd(), 'build_tools', 'dw.json'))) {
-        var config = cat(path.join(process.cwd(), 'build_tools', 'dw.json'));
+    if (test('-f', path.join(process.cwd(), 'dw.json'))) {
+        var config = cat(path.join(process.cwd(), 'dw.json'));
         var parsedConfig = JSON.parse(config);
         let hostname = parsedConfig.hostname;
         console.log("HOSTNAME", hostname);

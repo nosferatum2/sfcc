@@ -9,7 +9,7 @@ module.exports = {
     }, {
         option: 'upload',
         type: '[path::String]',
-        description: 'Upload a file to a sandbox. Requires dw.json file in the build_tools directory.'
+        description: 'Upload a file to a sandbox. Requires dw.json file in the root directory.'
     }, {
         option: 'test',
         type: '[path::String]',
@@ -55,18 +55,23 @@ module.exports = {
         required: false
     }, {
         option: 'hostname',
-        type: '[String]',
-        description: 'Sandbox URL(s) (without the "https://" prefix)',
+        type: 'String',
+        description: 'A Single Sandbox URL (without the "https://" prefix)',
+        required: false
+    }, {
+        option: 'deploy-hostname',
+        type: '[String] | String',
+        description: 'Array or Comma-delimited String of Sandbox URL(s) (without the "https://" prefix)',
         required: false
     }, {
         option: 'cert-hostname',
-        type: '[String]',
-        description: 'Certificate Sandbox URL(s) (without the "https://" prefix)',
+        type: '[String] | String',
+        description: 'Certificate Sandbox URL (without the "https://" prefix)',
         required: false
     }, {
         option: 'activation-hostname',
-        type: '[String]',
-        description: 'Activation Sandbox URL(s) (without the "https://" prefix)',
+        type: '[String] | String',
+        description: 'Array or Comma-delimited String of Sandbox URL(s) (without the "https://" prefix)',
         required: false
     }, {
         option: 'skip-upload',

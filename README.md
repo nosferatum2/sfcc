@@ -88,8 +88,12 @@ The dw.json setup of the "username" and "password" depends on whether your envir
 
 - `"clientId"`: A valid Commerce Cloud API key which will be administered by the TA, TL, or lead developer. This is **required** for code-activation and site-import scripts; however, it is not required to upload code via VS Code's prophet debugger, Eclipse's digital server connection, or dwupload.
 - `"clientSecret"`: A valid Commerce Cloud API secret which will be administered by the TA, TL, or lead developer. This is **required** for code-activation and site-import scripts; however, it is not required to upload code via VS Code's prophet debugger, Eclipse's digital server connection, or dwupload.
-- `"hostname"`: An array of hostnames to the instances you are assigned. Code and data deployment scripts use this property.
-- `"activationHostname"`: An array of hostnames to the instances you are assigned. Code version activation scripts use this property.
+- `"hostname"`: An string hostname to the instance you are assigned. Code and data deployment scripts use this property 
+    unless `deployHostname` has been set.
+- `"deployHostname"`: An array of hostnames to the instances you want to deploy to. Code and data deployment scripts
+    use this property first, if set, otherwise they will fall back to `hostname`. Can also be specified as a
+    comma-delimited string.
+- `"activationHostname"`: An array of hostnames to the instances you are assigned. Code version activation scripts use this property. Can also be specified as a comma-delimited string.
 - `"code-version"`: The code version to deploy and activate code on.
 - `"dataBundle"`: The data bundle(s) to deploy
 

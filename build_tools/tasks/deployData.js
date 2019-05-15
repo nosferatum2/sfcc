@@ -5,12 +5,13 @@ const chalk = require('chalk');
 const cliSpinners = require('cli-spinners');
 const ora = require('ora');
 
-const packageFile = require('../../package.json');
 const authenticate = require('../lib/deploy/authenticate');
 const zipData = require('../lib/deploy/zip-data');
 const deployData = require('../lib/deploy/deploy-data');
 const importData = require('../lib/deploy/import-data');
 const uploadUtils = require('../lib/util/upload-utils');
+
+const packageFile = uploadUtils.getPackageJson();
 const spinner = new ora({ spinner: cliSpinners.simpleDotsScrolling });
 
 /**
@@ -19,11 +20,28 @@ const spinner = new ora({ spinner: cliSpinners.simpleDotsScrolling });
  */
 module.exports = async (cliArgs) => {
     // Gather upload properties
-    const {
+    let {
         clientId, clientSecret,
-        hostname, dataBundle,
+        hostname, deployHostname, dataBundle,
         certHostname = null, p12 = null, passphrase = null, selfSigned = null
     } = uploadUtils.mergeUploadProperties(cliArgs);
+
+    // use deployHostname if set, else fall back to hostname
+    if (deployHostname) {
+        if (!Array.isArray(deployHostname)) {
+            hostname = deployHostname.split(',');
+        } else {
+            hostname = deployHostname;
+        }
+    } else {
+        if (!Array.isArray(hostname)) {
+            hostname = [].concat(hostname);
+        }
+    }
+
+     if (certHostname && !Array.isArray(certHostname)) {
+         certHostname = [].concat(certHostname);
+     }
 
     try {
         // Log the last time of a data deployment

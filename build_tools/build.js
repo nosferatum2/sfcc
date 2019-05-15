@@ -7,6 +7,7 @@ const path = require('path');
 const chalk = require('chalk');
 const optionatorConfig = require('./lib/util/optionator');
 const stringUtils = require('./lib/util/string-utils');
+const uploadUtils = require('./lib/util/upload-utils');
 const optionator = require('optionator')(optionatorConfig);
 const deployCartridges = require('./tasks/deployCartridges');
 const deployData = require('./tasks/deployData');
@@ -24,7 +25,7 @@ if (folderName === 'build_tools') {
 }
 
 const options = optionator.parse(process.argv);
-const packageFile = require(path.join(cwd, 'package.json'));
+const packageFile = uploadUtils.getPackageJson();
 
 console.log(chalk.bgYellow.black.bold(`Starting LyonsCG Build Script v${packageFile.lcgversion} ` +
                                       `for SFRA v${packageFile.version}`));

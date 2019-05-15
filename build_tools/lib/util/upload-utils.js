@@ -9,8 +9,32 @@ const chalk = require('chalk');
 
 const stringUtils = require('./string-utils');
 const versionProperties = require('../scaffold/templates/versionProperties');
-const packageFile = require('../../../package.json');
+
+const packageFile = getPackageJson();
 const LAST_DEPLOYMENT_FILE_NAME = packageFile.deployment.dataOptions.lastDeploymentFileName;
+
+/**
+ * Retrieves the package.json file in the root directory if it exists.
+ * @returns {JSON} - A package.json object. It will be empty if the package.json file can't be found.
+ */
+function getPackageJson() {
+    let cwd = process.cwd();
+    const folderName = cwd.split(path.sep).pop();
+
+    if (folderName === 'build_tools') {
+        process.chdir('../');
+        cwd = process.cwd();
+    }
+
+    const packageFile = path.join(cwd, 'package.json');
+
+    if (!fs.existsSync(packageFile)) {
+        console.error('A package.json file was not found in the root directory!');
+        return undefined;
+    }
+
+    return require(packageFile);
+}
 
 function getOptions(instance, webdavPath, token, options, method, simple) {
     // the endpoint including the relative path on the instance's file system to upload to
@@ -55,8 +79,10 @@ exports.environment = {
     WEBDAV_BASE: '/on/demandware.servlet/webdav/Sites',
     WEBDAV_INSTANCE_IMPEX: '/impex/src/instance',
     WEBDAV_CODE: '/cartridges',
-    TEMP_DIR: path.join(__dirname, '..', '..', 'temp')
+    TEMP_DIR: path.join(process.cwd(), 'build_tools', 'temp')
 };
+
+exports.getPackageJson = getPackageJson;
 
 exports.check2FA = (hostnames, certHostnames, p12, passphrase) => {
     for (const hostname of hostnames) {
@@ -118,17 +144,27 @@ exports.getCartridges = () => {
 };
 
 /**
- * Retrieves the dw.json file in the build_tools directory if it exists.
+ * Retrieves the dw.json file in the root directory if it exists.
  * @returns {JSON} - A dw.json object. It will be empty if the dw.json file can't be found.
  */
 exports.getDwJson = () => {
-    if (!fs.existsSync(path.join(process.cwd(), 'build_tools', 'dw.json'))) {
-        console.error('A dw.json file was not found in build_tools directory!');
+    let cwd = process.cwd();
+    const folderName = cwd.split(path.sep).pop();
+
+    if (folderName === 'build_tools') {
+        process.chdir('../');
+        cwd = process.cwd();
+    }
+
+    const dwJsonFile = path.join(cwd, 'dw.json');
+
+    if (!fs.existsSync(dwJsonFile)) {
+        console.error('A dw.json file was not found in the root directory!');
         console.error('Only arguments passed via the CLI  will be used\n');
         return undefined;
     }
 
-    return require(path.join(process.cwd(), 'build_tools', 'dw.json'));
+    return require(dwJsonFile);
 };
 
 /**
@@ -147,7 +183,7 @@ exports.mergeUploadProperties = (cliOptions) => {
         Object.keys(dwJson).forEach(key => {
             dwOptions[stringUtils.camelCase(key)] = dwJson[key];
         });
-        
+
         return Object.assign(defaultOptions, dwOptions, cliOptions);
     }
 

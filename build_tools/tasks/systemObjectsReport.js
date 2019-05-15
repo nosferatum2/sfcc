@@ -7,8 +7,9 @@ const xml2js = require('xml2js');
 const Confluence = require('confluence-api');
 const entities = require('entities');
 const uploadUtils = require('../lib/util/upload-utils');
+
 const pwd = path.join(__dirname, '..');
-const packageFile = require(path.join(pwd, '../package.json'));
+const packageFile = uploadUtils.getPackageJson();
 const dataOptions = packageFile.deployment.dataOptions;
 const dataBundles = packageFile.deployment.dataBundles;
 

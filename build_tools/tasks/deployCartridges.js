@@ -18,12 +18,33 @@ const spinner = new ora({ spinner: cliSpinners.simpleDotsScrolling });
  */
 module.exports = async (cliArgs) => {
     // Gather upload properties
-    const {
+    let {
         clientId, clientSecret,
-        hostname, activationHostname, codeVersion,
-        versionCartridgeName = null,
+        hostname, deployHostname, activationHostname,
+        codeVersion, versionCartridgeName = null,
         certHostname = null, p12 = null, passphrase = null, selfSigned = null
     } = uploadUtils.mergeUploadProperties(cliArgs);
+
+    // use deployHostname if set, else fall back to hostname
+    if (deployHostname) {
+        if (!Array.isArray(deployHostname)) {
+            hostname = deployHostname.split(',');
+        } else {
+            hostname = deployHostname;
+        }
+    } else {
+        if (!Array.isArray(hostname)) {
+            hostname = [].concat(hostname);
+        }
+    }
+
+    if (!Array.isArray(activationHostname)) {
+        activationHostname = activationHostname.split(',');
+    }
+
+    if (certHostname && !Array.isArray(certHostname)) {
+        certHostname = [].concat(certHostname);
+    }
 
     try {
         // Check if 2FA is required

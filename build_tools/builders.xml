@@ -54,6 +54,7 @@
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
             <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg value='--deploy-hostname="${deployHostname}"' if:set="deployHostname" />
             <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
             <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
             <arg value='--version-cartridge-name="${versionCartridgeName}"' if:set="versionCartridgeName" />
@@ -69,6 +70,7 @@
             <arg value="--p12=${twoFactorp12}" if:set="twoFactorp12" />
             <arg value="--passphrase=${twoFactorPassword}" if:set="twoFactorPassword" />
             <arg value="--hostname=${hostname}" if:set="hostname" />
+            <arg value='--deploy-hostname="${deployHostname}"' if:set="deployHostname" />
             <arg value="--cert-hostname=${certHostname}" if:set="certHostname" />
             <arg value="--activation-hostname=${activationHostname}" if:set="activationHostname" />
             <arg value="--version-cartridge-name=${versionCartridgeName}" if:set="versionCartridgeName" />
@@ -181,6 +183,7 @@
             <arg value='--p12="${twoFactorp12}"' if:set="twoFactorp12" />
             <arg value='--passphrase="${twoFactorPassword}"' if:set="twoFactorPassword" />
             <arg value='--hostname="${hostname}"' if:set="hostname" />
+            <arg value='--deploy-hostname="${deployHostname}"' if:set="deployHostname" />
             <arg value='--cert-hostname="${certHostname}"' if:set="certHostname" />
             <arg value='--activation-hostname="${activationHostname}"' if:set="activationHostname" />
             <arg value='--data-bundle="${dataBundle}"' if:set="dataBundle" />
@@ -196,6 +199,7 @@
             <arg value="--p12=${twoFactorp12}" if:set="twoFactorp12" />
             <arg value="--passphrase=${twoFactorPassword}" if:set="twoFactorPassword" />
             <arg value="--hostname=${hostname}" if:set="hostname" />
+            <arg value='--deploy-hostname="${deployHostname}"' if:set="deployHostname" />
             <arg value="--cert-hostname=${certHostname}" if:set="certHostname" />
             <arg value="--activation-hostname=${activationHostname}" if:set="activationHostname" />
             <arg value="--data-bundle=${dataBundle}" if:set="dataBundle" />

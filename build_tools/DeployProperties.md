@@ -22,9 +22,15 @@ Below is a list of the properties that can be used as part of the build process.
 
 **password** - password used to log into the B2C Commerce instances. ( **Required** )
 
-**hostname** - comma separated list of instances to upload the code to (e.g. lyons1.evaluation.dw.demandware.net,lyons2.evaluation.dw.demandware.net). ( **Required** )
+**hostname** - string reference to a single instance to upload the code or data to
+(e.g. `lyons1.evaluation.dw.demandware.net`). ( **Required, unless `deployHostname` is set** )
 
-**activationHostname** - comma separated list of instances to activate the code on (e.g. lyons1.evaluation.dw.demandware.net,lyons2.evaluation.dw.demandware.net). ( **Required** )
+**deployHostname** - An array of hostnames to the instances you want to deploy to. Code and data deployment scripts
+use this property first, if set, otherwise they will fall back to `hostname`. Can also be specified as a comma-delimited
+string. (e.g. `['lyons1.evaluation.dw.demandware.net','lyons2.evaluation.dw.demandware.net']` or `lyons1.evaluation.dw.demandware.net,lyons2.evaluation.dw.demandware.net`).
+
+**activationHostname** - An array of hostnames to the instances to activate the code on. Can also be specified as a
+comma-delimited string. (e.g. `['lyons1.evaluation.dw.demandware.net','lyons2.evaluation.dw.demandware.net']` or `lyons1.evaluation.dw.demandware.net,lyons2.evaluation.dw.demandware.net`).
 
 ## Data Deploy
 

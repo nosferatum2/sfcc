@@ -12,7 +12,7 @@ npm install
 
 In order for all npm commands to work verify that:
 
-* There is a valid [dw.json](./dw.json) file in the `build_tools` directory. See the [dw.json.example](./dw.json.example)
+* There is a valid [dw.json](../dw.json) file in the root directory. See the [dw.json.example](../dw.json.example)
 for an example of a valid file.
 * There is a `cartridges` top level folder that contains your cartridge(s).
 * The `sites` array within the root `package.json` is configured correctly. See the **Sites and Cartridge Path
@@ -191,7 +191,7 @@ npm run test:integration
 **Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file
 in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
 
-Sample dw.json file (this file needs to be in the build_tools directory):
+Sample dw.json file (this file needs to be in the root directory):
 
 ```json
 {
@@ -622,7 +622,7 @@ These can be set after generating and uploading the p12 file to Jenkins.
 `certHostname=cert.staging.na01.orgname.demandware.net`
 
 Also, the `certHostname` property should begin with `cert` like `cert.staging.na01.orgname.demandware.net`. The
-`activationHostname` and `hostname` properies will **not** use the prefix (ex. they will use: `staging-na01-orgname.demandware.net`).
+`activationHostname`, `deployHostname` and `hostname` properties will **not** use the prefix (ex. they will use: `staging-na01-orgname.demandware.net`).
 
 ### Jenkins Dependencies
 
