@@ -1,7 +1,7 @@
 {
   "name": "lyonscg-sfra",
   "version": "4.0.0",
-  "lcgversion": "1.1.2",
+  "lcgversion": "1.2.0",
   "description": "LyonsCG maintained version of SFCC SFRA",
   "engines": {
     "node": "8.9.0"
@@ -42,9 +42,11 @@
   "contributors": [
     "Davis DeVries <davis.devries@capgemini.com>",
     "Gabe Freiberg <gabe.freiberg@capgemini.com>",
-    "Ryan Walter <rwalter@lyonscg.com>",
-    "Sandra Golden <sgolden@lyonscg.com>",
-    "Dave Haas <dhaas@lyonscg.com>"
+    "Matt Rose <matt.j.rose@capgemini.com>",
+    "Ryan Walter <ryan.walter@capgemini.com>",
+    "Sandra Golden <sandra.golden@capgemini.com>",
+    "Tom VandenBerge <tom.vanden-berge@capgemini.com>",
+    "Dave Haas <dave.haas@capgemini.com>"
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-sfra",
   "devDependencies": {
