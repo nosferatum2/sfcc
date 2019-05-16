@@ -37,13 +37,13 @@
                  <div class="text-center d-sm-none">
                     <iscontentasset aid="need-help-text" />
                 </div>
-                <h5 class="number-of-items">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.numItems)}</h5>
+                <h2 class="number-of-items">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.numItems)}</h2>
             </div>
             <div class="col-sm-5 text-right hidden-xs-down">
                 <div class="text-center">
                     <iscontentasset aid="need-help-text" />
                 </div>
-               
+
             </div>
         </div>
         <hr class="no-margin-top">
@@ -89,8 +89,10 @@
                     <br/>
                 </div>
             </div>
+
+            <isinclude template="cart/cartRemoveProductModal"/>
         </div>
-        <isinclude template="cart/cartRemoveProductModal"/>
+
         <isinclude template="cart/cartRemoveCouponModal"/>
     </isif>
     <div class="container">

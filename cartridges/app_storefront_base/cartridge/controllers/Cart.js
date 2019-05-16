@@ -99,7 +99,7 @@ server.post('AddProduct', function (req, res, next) {
             previousBonusDiscountLineItems,
             urlObject,
             result.uuid
-    );
+        );
     if (newBonusDiscountLineItem) {
         var allLineItems = currentBasket.allProductLineItems;
         var collections = require('*/cartridge/scripts/util/collections');
@@ -119,7 +119,8 @@ server.post('AddProduct', function (req, res, next) {
         cart: cartModel,
         newBonusDiscountLineItem: newBonusDiscountLineItem || {},
         error: result.error,
-        pliUUID: result.uuid
+        pliUUID: result.uuid,
+        minicartCountOfItems: Resource.msgf('minicart.count', 'common', null, quantityTotal)
     });
 
     next();
@@ -619,13 +620,15 @@ server.post('AddBonusProducts', function (req, res, next) {
                     var product = ProductMgr.getProduct(bonusProduct.pid);
                     var selectedOptions = bonusProduct.options;
                     var optionModel = productHelper.getCurrentOptionModel(
-                            product.optionModel,
-                            selectedOptions);
+                        product.optionModel,
+                        selectedOptions
+                    );
                     pli = currentBasket.createBonusProductLineItem(
-                            bonusDiscountLineItem,
-                            product,
-                            optionModel,
-                            null);
+                        bonusDiscountLineItem,
+                        product,
+                        optionModel,
+                        null
+                    );
                     pli.setQuantityValue(bonusProduct.qty);
                     pli.custom.bonusProductLineItemUUID = pliUUID;
                 });
@@ -697,9 +700,9 @@ server.get('GetProduct', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var collections = require('*/cartridge/scripts/util/collections');
     var ProductFactory = require('*/cartridge/scripts/factories/product');
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 
     var requestUuid = req.querystring.uuid;
-
 
     var requestPLI = collections.find(BasketMgr.getCurrentBasket().allProductLineItems, function (item) {
         return item.UUID === requestUuid;
@@ -712,12 +715,24 @@ server.get('GetProduct', function (req, res, next) {
         quantity: requestQuantity
     };
 
-    res.render('product/quickView.isml', {
+    var context = {
         product: ProductFactory.get(pliProduct),
         selectedQuantity: requestQuantity,
         uuid: requestUuid,
-        resources: Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability'),
-        updateCartUrl: URLUtils.url('Cart-EditProductLineItem')
+        updateCartUrl: URLUtils.url('Cart-EditProductLineItem'),
+        closeButtonText: Resource.msg('link.editProduct.close', 'cart', null),
+        enterDialogMessage: Resource.msg('msg.enter.edit.product', 'cart', null),
+        template: 'product/quickView.isml'
+    };
+
+    res.setViewData(context);
+
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var viewData = res.getViewData();
+
+        res.json({
+            renderedTemplate: renderTemplateHelper.getRenderedHtml(viewData, viewData.template)
+        });
     });
 
     next();

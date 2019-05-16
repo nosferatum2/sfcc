@@ -1,7 +1,7 @@
 @import "~org/variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "~base/components/categoryTiles";
+@import "~org/components/categoryTiles";
 
 .page {
     .hero {
@@ -144,6 +144,20 @@
             color: $primary;
             text-decoration: none;
         }
+    }
+}
+
+.home-email-signup {
+    background-color: $gray-500;
+
+    > .container {
+        padding-top: 0.625em;
+        padding-bottom: 0.625em;
+    }
+
+    .email-description {
+        padding-top: 0.375em;
+        color: $white;
     }
 }
 

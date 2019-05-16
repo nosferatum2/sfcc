@@ -1,7 +1,10 @@
 .category-tile {
     position: relative;
 
+    h1,
+    h2,
     h3 {
+        font-size: 1.75rem;
         position: absolute;
         bottom: 1.875rem;
         left: 1.875rem;

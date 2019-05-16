@@ -1,6 +1,7 @@
 'use strict';
 
-var base = require('lyonscg/product/base');
+var base = require('../product/base');
+var focusHelper = require('../components/focus');
 
 /**
  * appends params to a url
@@ -41,6 +42,10 @@ function validateBasket(data) {
             );
             $('.number-of-items').empty().append(data.resources.numberOfItems);
             $('.minicart-quantity').empty().append(data.numItems);
+            $('.minicart-link').attr({
+                'aria-label': data.resources.minicartCountOfItems,
+                title: data.resources.minicartCountOfItems
+            });
             $('.minicart .popover').empty();
             $('.minicart .popover').removeClass('show');
         }
@@ -62,7 +67,10 @@ function updateCartTotals(data) {
     $('.grand-total').empty().append(data.totals.grandTotal);
     $('.sub-total').empty().append(data.totals.subTotal);
     $('.minicart-quantity').empty().append(data.numItems);
-
+    $('.minicart-link').attr({
+        'aria-label': data.resources.minicartCountOfItems,
+        title: data.resources.minicartCountOfItems
+    });
     if (data.totals.orderLevelDiscountTotal.value > 0) {
         $('.order-discount').removeClass('hide-order-discount');
         $('.order-discount-total').empty()
@@ -228,13 +236,15 @@ function getModalHtmlElement() {
         $('#editProductModal').remove();
     }
     var htmlString = '<!-- Modal -->'
-        + '<div class="modal fade" id="editProductModal" role="dialog">'
+        + '<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">'
+        + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        &times;'
+        + '        <span aria-hidden="true">&times;</span>'
+        + '        <span class="sr-only"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -269,13 +279,15 @@ function fillModalElement(editProductUrl) {
     $.ajax({
         url: editProductUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (data) {
+            var parsedHtml = parseHtml(data.renderedTemplate);
 
             $('#editProductModal .modal-body').empty();
             $('#editProductModal .modal-body').html(parsedHtml.body);
             $('#editProductModal .modal-footer').html(parsedHtml.footer);
+            $('#editProductModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#editProductModal .enter-message').text(data.enterDialogMessage);
             $('#editProductModal').modal('show');
             $.spinner().stop();
         },
@@ -354,6 +366,10 @@ module.exports = function () {
                     );
                     $('.number-of-items').empty().append(data.basket.resources.numberOfItems);
                     $('.minicart-quantity').empty().append(data.basket.numItems);
+                    $('.minicart-link').attr({
+                        'aria-label': data.basket.resources.minicartCountOfItems,
+                        title: data.basket.resources.minicartCountOfItems
+                    });
                     $('.minicart .popover').empty();
                     $('.minicart .popover').removeClass('show');
                     $('body').removeClass('modal-open');
@@ -374,6 +390,9 @@ module.exports = function () {
                     $('body').trigger('setShippingMethodSelection', data.basket);
                     validateBasket(data.basket);
                 }
+
+                $('body').trigger('cart:update');
+
                 $.spinner().stop();
             },
             error: function (err) {
@@ -416,6 +435,9 @@ module.exports = function () {
                 updateAvailability(data, uuid);
                 validateBasket(data);
                 $(this).data('pre-select-qty', quantity);
+
+                $('body').trigger('cart:update');
+
                 $.spinner().stop();
                 if ($(this).parents('.product-info').hasClass('bonus-product-line-item') && $('.cart-page').length) {
                     location.reload();
@@ -475,6 +497,7 @@ module.exports = function () {
         $('.coupon-error-message').empty();
         if (!$('.coupon-code-field').val()) {
             $('.promo-code-form .form-control').addClass('is-invalid');
+            $('.promo-code-form .form-control').attr('aria-describedby', 'missingCouponCode');
             $('.coupon-missing-error').show();
             $.spinner().stop();
             return false;
@@ -491,6 +514,7 @@ module.exports = function () {
             success: function (data) {
                 if (data.error) {
                     $('.promo-code-form .form-control').addClass('is-invalid');
+                    $('.promo-code-form .form-control').attr('aria-describedby', 'invalidCouponCode');
                     $('.coupon-error-message').empty().append(data.errorMessage);
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
@@ -566,6 +590,7 @@ module.exports = function () {
     });
     $('body').on('click', '.cart-page .bonus-product-button', function () {
         $.spinner().start();
+        $(this).addClass('launched-modal');
         $.ajax({
             url: $(this).data('url'),
             method: 'GET',
@@ -579,12 +604,46 @@ module.exports = function () {
             }
         });
     });
+
+    $('body').on('hidden.bs.modal', '#chooseBonusProductModal', function () {
+        $('#chooseBonusProductModal').remove();
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+
+        if ($('.cart-page').length) {
+            $('.launched-modal .btn-outline-primary').trigger('focus');
+            $('.launched-modal').removeClass('launched-modal');
+        } else {
+            $('.product-detail .add-to-cart').focus();
+        }
+    });
+
     $('body').on('click', '.cart-page .product-edit .edit, .cart-page .bundle-edit .edit', function (e) {
         e.preventDefault();
 
         var editProductUrl = $(this).attr('href');
         getModalHtmlElement();
         fillModalElement(editProductUrl);
+    });
+
+    $('body').on('shown.bs.modal', '#editProductModal', function () {
+        $('#editProductModal').siblings().attr('aria-hidden', 'true');
+        $('#editProductModal .close').focus();
+    });
+
+    $('body').on('hidden.bs.modal', '#editProductModal', function () {
+        $('#editProductModal').siblings().attr('aria-hidden', 'false');
+    });
+
+    $('body').on('keydown', '#editProductModal', function (e) {
+        var focusParams = {
+            event: e,
+            containerSelector: '#editProductModal',
+            firstElementSelector: '.close',
+            lastElementSelector: '.update-cart-product-global',
+            nextToLastElementSelector: '.modal-footer .quantity-select'
+        };
+        focusHelper.setTabNextFocus(focusParams);
     });
 
     $('body').on('product:updateAddToCart', function (e, response) {
@@ -672,9 +731,7 @@ module.exports = function () {
                 data: form,
                 dataType: 'json',
                 success: function (data) {
-                    $('#editProductModal').remove();
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
+                    $('#editProductModal').modal('hide');
 
                     $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
                     updateCartTotals(data.cartModel);
@@ -687,6 +744,8 @@ module.exports = function () {
                     }
 
                     validateBasket(data.cartModel);
+
+                    $('body').trigger('cart:update');
 
                     $.spinner().stop();
                 },
@@ -702,7 +761,6 @@ module.exports = function () {
         }
     });
 
-
     base.selectAttribute();
     base.colorAttribute();
     base.removeBonusProduct();
@@ -710,4 +768,7 @@ module.exports = function () {
     base.enableBonusProductSelection();
     base.showMoreBonusProducts();
     base.addBonusProductsToCart();
+    base.focusChooseBonusProductModal();
+    base.trapChooseBonusProductModalFocus();
+    base.onClosingChooseBonusProductModal();
 };

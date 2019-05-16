@@ -1,7 +1,7 @@
+@import "~base/components/toastMessage";
+
 .attribute {
     margin-top: 0.938em;
-    margin-right: 25%;
-    padding-right: 1em;
 
     label {
         display: block;
@@ -30,9 +30,8 @@
     left: 0;
 
     @include media-breakpoint-down(xs) {
-        div {
-            background-color: $white;
-        }
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     @include media-breakpoint-up(sm) {
@@ -47,13 +46,8 @@
 
 .prices {
     padding-bottom: 0.5em;
+    padding-top: 0.5em;
     text-align: center;
-}
-
-div.quantity {
-    float: right;
-    padding: 0;
-    width: 25%;
 }
 
 .cart-and-ipay {
@@ -71,10 +65,7 @@ div.quantity {
 }
 
 .add-to-cart-messages {
-    transform: translate(-50%, -50%);
-    position: fixed;
-    top: 15%;
-    left: 50%;
+    @include toast-message();
 }
 
 .add-to-wish-list {
@@ -82,19 +73,7 @@ div.quantity {
 }
 
 .add-to-basket-alert {
-    animation: fade 5s linear forwards;
-    box-shadow: 1px 1px 5px grey;
-
-    @keyframes fade {
-        0% { opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; }
-    }
-
-    &.show {
-        display: block;
-    }
+    @include toast-alert();
 }
 
 .simple-quantity {
@@ -125,6 +104,11 @@ div.availability {
 .container.product-detail {
     margin-top: 2em;
     margin-bottom: 2em;
+
+    @include media-breakpoint-only(xs) {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
 
 .product-option:not(:first-child) {

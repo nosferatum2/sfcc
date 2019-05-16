@@ -92,6 +92,13 @@ $menu-item-margin: 0.625em;
 
 .main-menu {
     background-color: $gray-400;
+
+    .navbar .close-menu button,
+    .navbar .close-button button {
+        background-color: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
 }
 
 .header-banner {
@@ -101,7 +108,6 @@ $menu-item-margin: 0.625em;
 
     .close-button {
         width: 1.5em + $banner-padding * 2;
-        height: 100%;
 
         .close {
             opacity: 1;

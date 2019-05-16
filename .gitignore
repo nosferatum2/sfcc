@@ -1,3 +1,5 @@
+# SFRA Patterns
+
 node_modules/
 cartridges/**/cartridge/static/**/css/
 cartridges/**/cartridge/static/**/js/
@@ -6,22 +8,29 @@ coverage/
 npm-debug.log
 cartridges.zip
 .idea/
-.vscode/
+dw.json
 sitegenesisdata/
 mobilefirstdata/
 storefrontdata/
 .DS_Store
 test/appium/webdriver/config.json
+.vscode
+.history
+*.iml
+.idea
+
+# LRA Patterns
+
+lastbuild.properties
+.tern-project
+jsconfig.json
+.stylelintcache
+.eslintcache
+.cache-loader/
 build_tools/artifacts
 build_tools/*.zip
 build_tools/tmp/*
-data_impex/*.zip
-lastbuild.properties
-.tern-project
-dw.json
-jsconfig.json
-.cache-loader/
-.stylelintcache
-.eslintcache
 build_tools/temp
 build_tools/.cache/
+data_impex/*.zip
+

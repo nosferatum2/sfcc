@@ -1,6 +1,6 @@
 {
   "name": "lyonscg-sfra",
-  "version": "3.3.0",
+  "version": "4.0.0",
   "lcgversion": "1.1.2",
   "description": "LyonsCG maintained version of SFCC SFRA",
   "engines": {
@@ -10,7 +10,6 @@
     "test": "node build_tools/build --test ./test/unit/**/*.js",
     "test:appium": "node bin/Makefile functional -- appium -- ",
     "cover": "node build_tools/build --cover",
-    "test:integration": "node bin/Makefile integration -- ",
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
@@ -117,7 +116,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "audit": "0.0.6",
-    "bootstrap": "4.2.1",
+    "bootstrap": "4.3.1",
     "cleave.js": "^1.4.2",
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",
@@ -178,7 +177,7 @@
       "mode": "development",
       "verbose": "false",
       "cssSourceMaps": "true",
-      "cssAutoPrefixer": "false",
+      "cssAutoPrefixer": "true",
       "cssLinting": "true",
       "jsSourceMaps": "true",
       "jsLinting": "true",

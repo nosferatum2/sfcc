@@ -14,21 +14,11 @@
     <isif condition="${!lineItem.isBonusProductLineItem}"/>
         <div class="remove-line-item d-lg-none">
             <button type="button" class="remove-btn remove-product btn btn-light" data-toggle="modal"
-                    data-target="#removeProductModal" data-pid="${lineItem.id}"
+                    data-target=".cart.cart-page #removeProductModal" data-pid="${lineItem.id}"
                     data-name="${lineItem.productName}"
                     data-action="${pdict.actionUrls.removeProductLineItemUrl}"
                     data-uuid="${lineItem.UUID}"
-                    aria-label="remove">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="hidden-md-down">
-            <button type="button" class="remove-btn-lg remove-product btn btn-light" data-toggle="modal"
-                    data-target="#removeProductModal" data-pid="${lineItem.id}"
-                    data-name="${lineItem.productName}"
-                    data-action="${pdict.actionUrls.removeProductLineItemUrl}"
-                    data-uuid="${lineItem.UUID}"
-                    aria-label="remove">
+                    aria-label="${Resource.msgf('text.remove.line.item','cart', null, lineItem.productName)}">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
