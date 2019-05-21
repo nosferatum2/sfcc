@@ -5,7 +5,7 @@
             ${item.name}
         </div>
         <!--- remove wishlist icon--->
-        <div class="col-2 hidden-xs-down"> <!---hide xs--->
+        <div class="col-2">
             <button type="button" class="remove-btn remove-from-wishlist btn btn-light"
                 data-url="${URLUtils.url('Wishlist-RemoveProductAccount','pid', item.pid)}"
                 aria-label="remove">
