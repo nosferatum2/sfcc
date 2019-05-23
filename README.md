@@ -178,6 +178,9 @@ npm run compile:js
 
 # Compile client-side Scss files
 npm run compile:scss
+
+# Compile the SVG sprite file
+npm run compile:svg
 ```
 
 You can verify the compilation of the Js and Css files by navigating to `cartridges/site_siteid_mfra/cartridge/static/default`

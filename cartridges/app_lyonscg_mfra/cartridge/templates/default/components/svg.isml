@@ -1,0 +1,20 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<!--- TEMPLATENAME: svg.isml --->
+
+<iscomment>
+    SVG Helper Module
+
+    Purpose: this module outputs the SVG markup used for the icons
+</iscomment>
+
+<isif condition="${!empty(pdict.showBackground) && pdict.showBackground}">
+    <span class="icon-background">
+</isif>
+
+<svg class="icon icon-${pdict.icon} icon-${pdict.icon}-dims ${pdict.classes || ''}" <isif condition="${pdict.hidden === 'true'}">aria-hidden="true"</isif>>
+    <use xlink:href="${URLUtils.staticURL('images/compiled/sprites.svg') + '#' + pdict.icon}"/>
+</svg>
+
+<isif condition="${!empty(pdict.showBackground) && pdict.showBackground}">
+    </span>
+</isif>

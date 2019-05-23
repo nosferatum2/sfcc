@@ -149,6 +149,16 @@ npm run compile:scss:prod
 npm run compile:js:prod
 ```
 
+### Compiling for Production and Development
+
+These scripts are run in production and development.
+
+#### SVG Builder
+
+```sh
+npm run compile:svg
+```
+
 ## Linting
 
 The linting of client-side Js files, server-side Js files, Scss files, JSON files, and build tools JS files is

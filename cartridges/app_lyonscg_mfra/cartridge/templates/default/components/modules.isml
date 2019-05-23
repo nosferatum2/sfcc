@@ -20,3 +20,17 @@
     attribute="title"
     attribute="subtitle"
 />
+
+<iscomment>
+    Render the svg icon HTML based on the given name and other options
+    icon (string) : Icon file name (without the extension) to display
+    hidden (boolean) : Hides the icon from screen readers using aria-hidden
+    showBackground (boolean) : Adds a wrapper around the icon that can be used to show a background
+</iscomment>
+
+<ismodule template="components/svg"
+    name="svg"
+    attribute="icon"
+    attribute="hidden"
+    attribute="showBackground"
+/>

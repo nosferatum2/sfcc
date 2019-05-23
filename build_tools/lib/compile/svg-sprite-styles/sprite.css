@@ -1,0 +1,11 @@
+{{#shapes}}{{#selector.dimensions}}{{expression}}{{^last}},
+{{/last}}{{/selector.dimensions}} {
+    width: {{width.outer}}px;
+    height: {{height.outer}}px;
+}
+
+.icon-{{name}}-bg {
+	background: url("{{{sprite}}}#{{name}}-view") no-repeat;
+}
+
+{{/shapes}}

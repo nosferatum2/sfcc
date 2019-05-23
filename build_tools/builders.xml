@@ -9,18 +9,17 @@
     <import file="run sonar.xml"/>
     <import file="run npm audit.xml"/>
     <import file="run postProjectToSARMS.xml"/>
-    <target name="deploy-install-audit-sonar-postProjectToSARMS" depends="npm-install, deploy, npm-audit, sonar, postProjectToSARMS">
-    </target>
+    <target name="deploy-install-audit-sonar-postProjectToSARMS" depends="npm-install, deploy, npm-audit, sonar, postProjectToSARMS"></target>
 
     <property name="workingCopy" value="deploy/working" />
     <property name="zipfile" value="deploy/output/${env.BUILD_NUMBER}.zip" />
     <property name="buildMode" value="development" />
 
-  <condition property="have-node" else="false">
-     <and>
-       <available file="${basedir}/../node_modules" type="dir"/>
-     </and>
-  </condition>
+    <condition property="have-node" else="false">
+        <and>
+            <available file="${basedir}/../node_modules" type="dir"/>
+        </and>
+    </condition>
 
     <target name="core-modification-warning">
         <echo>WARNING: A core cartridge has been modified. Typically this is not correct and the modifications should be made in a site or organization cartridge.</echo>
@@ -37,7 +36,7 @@
         <fail message="The directory 'node_modules' is missing."/>
     </target>
 
-    <target name="deploy" depends="cover,css,js,fonts,upload">
+    <target name="deploy" depends="cover,svg,css,js,fonts,upload">
         <echo level="info">Deployment complete!</echo>
     </target>
 
@@ -257,4 +256,16 @@
         <echo level="info">Build reports updated!</echo>
     </target>
 
+    <target name="svg">
+        <echo level="info">Running gulp build task for ${os.name} in ${basedir}</echo>
+        <exec executable="cmd" osfamily="windows" failonerror="true">
+            <arg value="/c"/>
+            <arg value='npm run compile:svg'/>
+        </exec>
+        <exec executable="/bin/bash" osfamily="unix" failonerror="true">
+            <arg value="-c"/>
+            <arg value="export PATH=/usr/local/bin:$PATH; cd ${basedir}; npm run compile:svg"/>
+        </exec>
+        <echo level="info">SVG build done!</echo>
+    </target>
 </project>
