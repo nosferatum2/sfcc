@@ -19,6 +19,7 @@ server.replace('SaveAddress', csrfProtection.validateAjaxRequest, ecommerce.chec
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var formErrors = require('*/cartridge/scripts/formErrors');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();
@@ -64,6 +65,9 @@ server.replace('SaveAddress', csrfProtection.validateAjaxRequest, ecommerce.chec
                     address.setSuffix(formInfo.suffix || '');
                     address.setSuite(formInfo.suite || '');
                     address.setJobTitle(formInfo.title || '');
+
+                    // Send account edited email
+                    accountHelpers.sendAccountEditedEmail(customer.profile);
 
                     res.json({
                         success: true,

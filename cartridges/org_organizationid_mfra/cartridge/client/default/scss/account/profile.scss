@@ -3,8 +3,15 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "account";
 
-span.tracking-consent {
-    color: $brand-main;
+.profile-back-to-account-link {
+    color: $primary;
+    text-decoration: underline;
+    display: block;
+    text-align: center;
+}
+
+.tracking-consent {
+    color: $blue;
     text-decoration: underline;
     cursor: pointer;
 }

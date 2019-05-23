@@ -81,35 +81,3 @@ a.skip:hover {
     margin-bottom: 0;
 }
 
-// Contact Us Page
-.registration {
-    display: flex;
-    flex-wrap: wrap;
-
-    .form-group {
-        flex: 1 0 100%;
-
-        @include media-breakpoint-up(sm) {
-            flex: 1 0 50%;
-            padding: 0 10px;
-        }
-    }
-
-    .recaptch-content {
-        flex: 1 0 100%;
-        margin-bottom: 3rem;
-
-        @include media-breakpoint-up(sm) {
-            padding-left: 10px;
-        }
-    }
-
-    .contant-us {
-        margin-bottom: 3rem;
-
-        @include media-breakpoint-up(sm) {
-            margin-left: 10px;
-            width: auto;
-        }
-    }
-}

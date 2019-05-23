@@ -2,13 +2,14 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "account";
-@import "../utilities/delete-card-button";
+@import "../utilities/deleteCardButton";
+@import "../components/creditCardField";
 
 .back-to-account-link {
     margin-bottom: 0;
 }
 
-.card-block-positioning {
+.card-body-positioning {
     position: relative;
 }
 

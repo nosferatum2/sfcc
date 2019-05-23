@@ -151,3 +151,7 @@
         width: 0.8em;
     }
 }
+
+input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}

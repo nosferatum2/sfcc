@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('base/components/miniCart');
+var base = require('lyonscg/components/miniCart');
 
 /**
  * appends params to a url

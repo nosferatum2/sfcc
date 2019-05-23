@@ -18,7 +18,7 @@ function validateResponse(req, res, next) {
         if (googleRecaptchaSecretKey !== null) {
             var googleRecaptchaResponse = req.form['g-recaptcha-response'];
             if (googleRecaptchaResponse !== null) {
-				// ToDo : Refactor the recpatcha verification POST service call as per Lyons Service Framework Design
+                // ToDo : Refactor the recpatcha verification POST service call as per Lyons Service Framework Design
                 var postData = '';
                 postData += ('secret=' + encodeURIComponent(googleRecaptchaSecretKey));
                 postData += ('&response=' + encodeURIComponent(googleRecaptchaResponse));
@@ -34,9 +34,9 @@ function validateResponse(req, res, next) {
                     if (respose != null && respose.success != null && respose.success === true) {
                         return next();
                     }
-                    res.redirect(URLUtils.url('CustomerService-ContactUs'));
+                    res.redirect(URLUtils.url('ContactUs-Landing'));
                 } else {
-                    res.redirect(URLUtils.url('CustomerService-ContactUs'));
+                    res.redirect(URLUtils.url('ContactUs-Landing'));
                 }
             }
         }

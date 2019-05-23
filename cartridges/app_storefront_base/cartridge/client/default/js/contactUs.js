@@ -1,6 +1,6 @@
 'use strict';
 
-var processInclude = require('base/util');
+var processInclude = require('./util');
 
 $(document).ready(function () {
     processInclude(require('./contactUs/contactUs'));

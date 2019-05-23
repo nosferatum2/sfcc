@@ -2,12 +2,7 @@
 
 @import "variables";
 @import "bootstrap/scss/bootstrap";
-@import "bootstrapOverrides/buttons";
-@import "bootstrapOverrides/forms";
-@import "bootstrapOverrides/reboot";
-@import "bootstrapOverrides/card";
-@import "bootstrapOverrides/modal";
-@import "bootstrapOverrides/tables";
+@import "bootstrapOverrides";
 @import "slick";
 @import "slick_theme";
 @import "utilities/responsiveUtils";
@@ -21,13 +16,12 @@
 @import "components/notification";
 @import url(https://fonts.googleapis.com/css?family=Dosis&subset=latin-ext);
 @import "components/pricing";
-@import "~base/components/productTiles";
+@import "components/productTiles";
 @import "components/tabs";
 @import "components/breadcrumb";
 @import "components/spinner";
 @import "miniCart";
 @import "components/tooltip";
 @import "components/headerSearch";
-@import "components/productTiles";
 @import "components/formFields";
 @import "~wishlists/components/wishlistGlobal";

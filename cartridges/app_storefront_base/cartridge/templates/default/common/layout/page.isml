@@ -1,7 +1,6 @@
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
 
 <isinclude template="/components/modules" sf-toolkit="off" />
-<isset name="pageStyleGuide" value="${pdict.action == 'StyleGuide-Show' ? 'pt_styleguide' : ''}" scope="page" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +16,7 @@
         <isinclude template="/components/schema" />
     </head>
     <body>
-        <div class="page ${pageStyleGuide}" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
+        <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
             <isinclude template="/components/header/pageHeader" />
             <div role="main" id="maincontent">
                 <isreplace/>

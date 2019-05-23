@@ -13,6 +13,10 @@
     color: $gray-100;
 }
 
+.nav-tabs .nav-link.active {
+    background-color: transparent;
+}
+
 @include media-breakpoint-up(lg) {
     .form-nav .nav-item > .nav-link {
         color: $gray-100;

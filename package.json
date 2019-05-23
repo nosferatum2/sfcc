@@ -1,6 +1,6 @@
 {
   "name": "lyonscg-sfra",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "lcgversion": "1.2.0",
   "description": "LyonsCG maintained version of SFCC SFRA",
   "engines": {

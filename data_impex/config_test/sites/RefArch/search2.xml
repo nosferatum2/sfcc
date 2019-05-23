@@ -97,7 +97,7 @@
         <redirect>
             <keywords xml:lang="en-US">contact, contact us</keywords>
             <online-flag>true</online-flag>
-            <pipeline-redirect pipeline-name="CustomerService-ContactUs"/>
+            <pipeline-redirect pipeline-name="ContactUs-Landing"/>
         </redirect>
         <redirect>
             <keywords xml:lang="en-US">customer service, help, order status</keywords>
