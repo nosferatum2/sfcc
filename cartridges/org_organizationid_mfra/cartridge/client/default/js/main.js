@@ -17,7 +17,7 @@ $(document).ready(function () {
     processInclude(require('lyonscg/components/tooltips'));
 });
 
-require('base/thirdParty/bootstrap');
+require('lyonscg/thirdParty/bootstrap');
 require('base/components/spinner');
 require('svg4everybody');
 require('slick-carousel');
