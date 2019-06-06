@@ -16,6 +16,8 @@ Below is a list of the properties that can be used as part of the build process.
 
 **selfSigned** - allows for two factor auth to work with self-signed cert. Possible options are: 'true' or 'false' (without quotes).
 
+**certHostname** - the cert-qualified hostname used for two factor auth deployments (e.g. cert.staging.na01.orgname.demandware.net).
+
 ## B2C Commerce Settings
 
 **user** - username used to log into the B2C Commerce instances. ( **Required** )

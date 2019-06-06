@@ -55,7 +55,7 @@ npm install
 
 ### 3. Configure Upload Settings
 
-Open [the dw.json example file](./build_tools/dw.json.example)
+Open [the dw.json example file](./dw.json.example)
 
 You should see this JSON object:
 ```json
@@ -70,7 +70,7 @@ You should see this JSON object:
   "dataBundle": "core"
 }
 ```
-Create a new dw.json file in the build_tools directory by copying this example file.
+Create a new dw.json file in the root directory by copying this example file.
 
 The dw.json setup of the "username" and "password" depends on whether your environment has **Unified Authentication** enabled or not.
 
