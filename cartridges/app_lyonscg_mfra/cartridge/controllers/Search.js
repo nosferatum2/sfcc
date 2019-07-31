@@ -8,6 +8,8 @@
 var page = module.superModule;
 var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 server.extend(page);
 
@@ -33,6 +35,32 @@ function getAllBreadcrumbs(cgid, breadcrumbs) {
     }
     return breadcrumbs;
 }
+
+server.replace('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
+
+    var result = searchHelper.search(req, res);
+    var template = 'search/searchResultsNoDecorator';
+
+    if (result.searchRedirect) {
+        res.redirect(result.searchRedirect);
+        return next();
+    }
+
+    if (result.category && result.categoryTemplate) {
+        template = result.categoryTemplate;
+    }
+
+    res.render(template, {
+        productSearch: result.productSearch,
+        category: result.category ? result.category : null,
+        maxSlots: result.maxSlots,
+        reportingURLs: result.reportingURLs,
+        refineurl: result.refineurl
+    });
+
+    return next();
+}, pageMetaData.computedPageMetaData);
 
 server.append('Show', function (req, res, next) {
     if (req.querystring.cgid) {
