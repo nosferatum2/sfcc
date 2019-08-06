@@ -162,21 +162,4 @@
             </attribute-group>
         </group-definitions>
     </type-extension>
-    <type-extension type-id="Category">
-        <custom-attribute-definitions>
-            <attribute-definition attribute-id="slotBannerImage">
-                <display-name xml:lang="x-default">Category Landing Slot Image</display-name>
-                <description xml:lang="x-default">Image used on either the top or bottom slot on the category landing pages.                    </description>
-                <type>image</type>
-                <localizable-flag>false</localizable-flag>
-                <mandatory-flag>false</mandatory-flag>
-                <externally-managed-flag>false</externally-managed-flag>
-            </attribute-definition>
-        </custom-attribute-definitions>
-        <group-definitions>
-            <attribute-group group-id="customAttributes">
-                <attribute attribute-id="slotBannerImage"/>
-            </attribute-group>
-        </group-definitions>
-    </type-extension>
 </metadata>
