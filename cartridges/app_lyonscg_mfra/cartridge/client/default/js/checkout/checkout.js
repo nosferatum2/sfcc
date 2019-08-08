@@ -168,6 +168,11 @@ var scrollAnimate = require('base/components/scrollAnimate');
                     // Submit the Billing Address Form
                     //
 
+                    // Disable payment button on submit
+                    $('.submit-payment').attr('disabled', 'disabled');
+                    // Start Spinner
+                    $.spinner().start();
+
                     formHelpers.clearPreviousErrors('.payment-form');
 
                     var billingAddressForm = $('#dwfrm_billing .billing-address-block').serialize();
@@ -431,9 +436,18 @@ var scrollAnimate = require('base/components/scrollAnimate');
                 promise.done(function () {
                     // Update UI with new stage
                     members.handleNextStage(true);
+                    // Enable payment button after payment step is complete
+                    $('.submit-payment').removeAttr('disabled');
+                    // Stop Spinner
+                    $.spinner().stop();
                 });
 
                 promise.fail(function (data) {
+                    // Enable payment button after payment step is complete
+                    $('.submit-payment').removeAttr('disabled');
+                    // Stop Spinner
+                    $.spinner().stop();
+
                     // show errors
                     if (data) {
                         if (data.errorStage) {
