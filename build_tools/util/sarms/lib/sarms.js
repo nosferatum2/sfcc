@@ -183,3 +183,27 @@ function getComponentsFromPackage(packagePath, platformName, tempNpmReportPath) 
   return bomDependencyComponents;
 }
 
+/**
+ * @function Array filter test function used to deduplicate component objects in an array
+ * 
+ * @param {Object} value - componentType object with name and version attributes
+ * @param {integer} index - index in the self array for the current element
+ * @param {Array} self - array of componentType objects or at minimum objects with .name and .version attributes
+ * @return {Boolean} true if current element (valaue) is unique in the array, else false
+ *
+ */
+// Considered converting the array to a set and back to make the elements unique but that won't work
+// for objects as it would use reference to the objects and not the values of the objects. This algorithm
+// is decently performant and runs in .228 seconds on an array of 509 objects.
+exports.uniqueComponents =
+function uniqueComponents(value, index, self) { 
+  var found = false;
+  var idx = 0;
+  // Search for a matching value in the array
+  while ((found == false) && (index < self.length)) {
+    ((value.name == self[idx].name) && (value.version == self[idx].version)) ? found = true : idx++;
+  }
+  // If the index where it was found (idx) is not the same as the current element object's index in the array
+  // it must be a duplicate. Returning false will cause the filter method to remove it from the array
+  return idx === index;
+}

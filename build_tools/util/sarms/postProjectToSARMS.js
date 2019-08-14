@@ -27,7 +27,7 @@ function initOptions() {
   var appConfig = {}
 
   // The values below are used as defaults in optionator and are placed here for convenience and easier maintenance
-  appConfig.appVersion = 'Version 2.1.0';
+  appConfig.appVersion = 'Version 2.1.1';
   
   var defaultPlatform = 'Salesforce Commerce Cloud';
   var defaultCategory = 'SFCC cartridge';
@@ -390,10 +390,14 @@ function createProjectBOM_SFCC(clientName, platformName, versionFilePath, config
       projectDependencies = sarms.getComponentsFromPackage(packagePath, platformName, APP_CONFIG.options.tempNpmReportPath),
       components = bomObject.components;
 
-  //Adding project dependencies to components array
+  // Add project dependencies to components array
   for (let key in projectDependencies) {
     components.push(projectDependencies[key]);
   }
+
+  // Ensure that the list of components is unique by filtering out those that have the same name and version
+  bomObject.components = components.filter(sarms.uniqueComponents);
+
   return bomObject;
 }
 
