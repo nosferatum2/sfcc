@@ -118,3 +118,9 @@ div.availability {
 .slide-link {
     display: block;
 }
+
+.slide-link {
+    &.zoom-hires {
+        cursor: crosshair;
+    }
+}
