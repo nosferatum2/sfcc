@@ -21,6 +21,13 @@
     attribute="subtitle"
 />
 
+<ismodule template="util/quantitySelector"
+    name="quantityselector"
+    attribute="selectedqty"
+    attribute="minqty"
+    attribute="maxqty"
+/>
+
 <iscomment>
     Render the svg icon HTML based on the given name and other options
     icon (string) : Icon file name (without the extension) to display

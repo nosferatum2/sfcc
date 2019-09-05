@@ -45,7 +45,7 @@
                                 <isinclude template="components/header/search" />
                             </div>
                             <isif condition="${empty(siteDisableCommerceFunctionality) || !siteDisableCommerceFunctionality}" >
-                                <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
+                                <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}" data-enableQuantitySelector="${dw.system.Site.current.preferences.custom.enableQuantitySelector}">
                                     <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
                                 </div>
                             </isif>

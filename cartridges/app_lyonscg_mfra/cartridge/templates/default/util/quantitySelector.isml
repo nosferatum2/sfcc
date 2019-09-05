@@ -1,0 +1,24 @@
+<iscomment>
+    This module renders the +/- quantity selector widget.
+    It REQUIRES the calling template to contain its own <select> element, and for that <select> plus this module
+    to both be wrapped in a div with class="quantity-module".
+</iscomment>
+
+<isset name="selectedqty" value="${pdict.selectedqty}" scope="page"/>
+<isset name="minqty" value="${pdict.minqty}" scope="page"/>
+<isset name="maxqty" value="${pdict.maxqty}" scope="page"/>
+
+<div class="input-group">
+    <div class="input-group-prepend">
+        <button class="btn input-group-text quantity-decrease ${minqty === selectedqty ? 'disabled' : ''}" type="button">
+            &minus;
+        </button>
+    </div>
+    <input type="number" id="qtyselectid1" name="Quantity" class="input-text quantity quantity-input" data-uuid="${lineItem.UUID}" maxlength="${maxqty.toString().length}"
+        min="${minqty.toString()}" max="${maxqty.toString()}" value="${selectedqty.toString()}" data-previous-value="${selectedqty.toString()}" autocomplete="nope"/>
+    <div class="input-group-append">
+        <button class="btn input-group-text quantity-increase ${maxqty <= selectedqty ? 'disabled' : ''}" type="button">
+            &plus;
+        </button>
+    </div>
+</div>

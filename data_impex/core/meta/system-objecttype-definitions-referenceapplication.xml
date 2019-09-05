@@ -13,6 +13,13 @@
                 <externally-managed-flag>false</externally-managed-flag>
                 <default-value>false</default-value>
             </attribute-definition>
+            <attribute-definition attribute-id="enableQuantitySelector">
+                <display-name xml:lang="x-default">Enable Quantity Selector</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
             <attribute-definition attribute-id="siteDisableCommerceFunctionality">
                 <display-name xml:lang="x-default">Disable Commerce Functionality</display-name>
                 <description xml:lang="x-default">When true, this disables commerce functionality across the site.</description>
