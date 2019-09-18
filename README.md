@@ -3,6 +3,7 @@
 This is a repository for the customized LyonsCG version of the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
+Storefront Reference Architecture supplies an [plugin_applepay](https://github.com/SalesforceCommerceCloud/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
 
 Please refer to our Confluence documentation for information and best practices regarding the new archtecture and how to override/extend server side and client side code.
 
@@ -263,3 +264,5 @@ When adding a LINK Cartridge (or other 3rd party cartridge) to the codebase: if 
 
 See the [ESLint user-guide](https://eslint.org/docs/user-guide/configuring) for more info.
 
+#Page Designer Components for Storefront Reference Architecture
+See: [Page Desinger Components](./page-designer-components.md)

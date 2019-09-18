@@ -53,7 +53,10 @@ server.get('MoreList', wishlist.checkEnabled, function (req, res, next) {
 
     res.render('/wishlist/components/list', {
         wishlist: wishlistModel,
-        publicOption: publicOption
+        publicOption: publicOption,
+        actionUrls: {
+            updateQuantityUrl: ''
+        }
     });
     next();
 });
@@ -105,6 +108,9 @@ server.get('Show', consentTracking.consent, server.middleware.https, csrfProtect
         rememberMe: rememberMe,
         userName: userName,
         actionUrl: actionUrl,
+        actionUrls: {
+            updateQuantityUrl: ''
+        },
         profileForm: profileForm,
         breadcrumbs: breadcrumbs,
         oAuthReentryEndpoint: 1,
@@ -255,6 +261,7 @@ server.get('RemoveList', wishlist.checkEnabled, function (req, res, next) {
 
 server.get('GetProduct', wishlist.checkEnabled, function (req, res, next) {
     var ProductFactory = require('*/cartridge/scripts/factories/product');
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 
     var requestUuid = req.querystring.uuid;
     var requestPid = req.querystring.pid;
@@ -263,11 +270,23 @@ server.get('GetProduct', wishlist.checkEnabled, function (req, res, next) {
         pid: requestPid
     };
 
-    res.render('product/quickView.isml', {
+    var context = {
         product: ProductFactory.get(product),
         uuid: requestUuid,
-        resources: Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability'),
-        updateWishlistUrl: URLUtils.url('Wishlist-EditProductListItem')
+        closeButtonText: Resource.msg('link.editProduct.close', 'wishlist', null),
+        enterDialogMessage: Resource.msg('msg.enter.edit.wishlist.product', 'wishlist', null),
+        updateWishlistUrl: URLUtils.url('Wishlist-EditProductListItem'),
+        template: 'product/quickView.isml'
+    };
+
+    res.setViewData(context);
+
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var viewData = res.getViewData();
+
+        res.json({
+            renderedTemplate: renderTemplateHelper.getRenderedHtml(viewData, viewData.template)
+        });
     });
 
     next();

@@ -12,12 +12,15 @@ dw.json
 sitegenesisdata/
 mobilefirstdata/
 storefrontdata/
+demo_data_sfra/
+demo_data_sfra.zip
 .DS_Store
 test/appium/webdriver/config.json
 .vscode
 .history
 *.iml
 .idea
+test/acceptance/report
 
 # LRA Patterns
 
@@ -33,4 +36,5 @@ build_tools/tmp/*
 build_tools/temp
 build_tools/.cache/
 data_impex/*.zip
+
 

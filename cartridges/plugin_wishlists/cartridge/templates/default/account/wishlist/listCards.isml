@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header clearfix">
-        <h4 class="pull-left">${Resource.msg('label.wishlist','account',null)}</h4>
+        <h2 class="pull-left">${Resource.msg('label.wishlist','account',null)}</h2>
         <isif condition="${pdict.account.wishlist && pdict.account.wishlist.length > 0}">
             <a href="${URLUtils.url('Wishlist-Show')}" class="pull-right">${Resource.msg('link.viewall','account',null)}</a>
         </isif>

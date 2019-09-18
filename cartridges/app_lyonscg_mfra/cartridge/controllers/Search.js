@@ -2,6 +2,7 @@
 
 /**
  * Search base controller overridden to show breadcrumbs on product listing page
+ * Also overriden to display custom category rendering templates
  *
  */
 

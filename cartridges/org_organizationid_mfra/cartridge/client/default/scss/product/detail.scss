@@ -145,16 +145,20 @@ label.availability {
 .promotions {
     font-weight: normal;
     text-align: center;
-    color: $brand-danger;
     height: 85%;
 
-    .callout {
+    div.collapsible-xl button.callout {
         font-size: 1.25em;
         padding-bottom: 1.25rem;
         padding-top: 1.25rem;
+        color: $brand-danger;
 
         @include media-breakpoint-up(sm) {
             font-size: 1.375em;
+        }
+
+        &::after {
+            color: $black;
         }
     }
 }

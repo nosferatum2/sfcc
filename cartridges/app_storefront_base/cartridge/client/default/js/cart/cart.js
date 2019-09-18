@@ -88,8 +88,12 @@ function updateCartTotals(data) {
     }
 
     data.items.forEach(function (item) {
-        $('.item-' + item.UUID).empty().append(item.renderedPromotions);
-        $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+        if (item.renderedPromotions) {
+            $('.item-' + item.UUID).empty().append(item.renderedPromotions);
+        }
+        if (item.priceTotal && item.priceTotal.renderedPrice) {
+            $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+        }
     });
 }
 
@@ -208,6 +212,13 @@ function updateProductDetails(data, uuid) {
         $(imageSelector).attr('src', lineItem.images.small[0].url);
         $(imageSelector).attr('alt', lineItem.images.small[0].alt);
         $(imageSelector).attr('title', lineItem.images.small[0].title);
+    }
+
+    if (lineItem.options && lineItem.options.length) {
+        var option = lineItem.options[0];
+        var optSelector = '.lineItem-options-values[data-option-id="' + option.optionId + '"]';
+        $(optSelector).data('value-id', option.selectedValueId);
+        $(optSelector + ' .line-item-attributes').text(option.displayName);
     }
 
     var qtySelector = '.quantity[data-uuid="' + uuid + '"]';
@@ -709,17 +720,24 @@ module.exports = function () {
         $('.modal.show .update-cart-url').data('selected-quantity', selectedQuantity);
     });
 
+    $('body').on('change', '.options-select', function () {
+        var selectedOptionValueId = $(this).children('option:selected').data('value-id');
+        $('.modal.show .update-cart-url').data('selected-option', selectedOptionValueId);
+    });
+
     $('body').on('click', '.update-cart-product-global', function (e) {
         e.preventDefault();
 
         var updateProductUrl = $(this).closest('.cart-and-ipay').find('.update-cart-url').val();
         var selectedQuantity = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('selected-quantity');
+        var selectedOptionValueId = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('selected-option');
         var uuid = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('uuid');
 
         var form = {
             uuid: uuid,
             pid: base.getPidValue($(this)),
-            quantity: selectedQuantity
+            quantity: selectedQuantity,
+            selectedOptionValueId: selectedOptionValueId
         };
 
         $(this).parents('.card').spinner().start();

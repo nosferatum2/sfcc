@@ -130,6 +130,7 @@ server.post(
             var BasketMgr = require('dw/order/BasketMgr');
             var HookMgr = require('dw/system/HookMgr');
             var PaymentMgr = require('dw/order/PaymentMgr');
+            var PaymentInstrument = require('dw/order/PaymentInstrument');
             var Transaction = require('dw/system/Transaction');
             var AccountModel = require('*/cartridge/models/account');
             var OrderModel = require('*/cartridge/models/order');
@@ -137,11 +138,14 @@ server.post(
             var Locale = require('dw/util/Locale');
             var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
             var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+            var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
             var currentBasket = BasketMgr.getCurrentBasket();
+            var validatedProducts = validationHelpers.validateProducts(currentBasket);
+
             var billingData = res.getViewData();
 
-            if (!currentBasket) {
+            if (!currentBasket || validatedProducts.error) {
                 delete billingData.paymentInformation;
 
                 res.json({
@@ -200,6 +204,29 @@ server.post(
                     form: billingForm,
                     fieldErrors: [noPaymentMethod],
                     serverErrors: [],
+                    error: true
+                });
+                return;
+            }
+
+            // Validate payment instrument
+            var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
+            var paymentCard = PaymentMgr.getPaymentCard(billingData.paymentInformation.cardType.value);
+
+            var applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
+                req.currentCustomer.raw,
+                req.geolocation.countryCode,
+                null
+            );
+
+            if (!applicablePaymentCards.contains(paymentCard)) {
+                // Invalid Payment Instrument
+                var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+                delete billingData.paymentInformation;
+                res.json({
+                    form: billingForm,
+                    fieldErrors: [],
+                    serverErrors: [invalidPaymentMethod],
                     error: true
                 });
                 return;
@@ -316,10 +343,13 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+    var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
+    var addressHelpers = require('*/cartridge/scripts/helpers/addressHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
+    var validatedProducts = validationHelpers.validateProducts(currentBasket);
 
-    if (!currentBasket) {
+    if (!currentBasket || validatedProducts.error) {
         res.json({
             error: true,
             cartError: true,
@@ -450,6 +480,16 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
             errorMessage: Resource.msg('error.technical', 'checkout', null)
         });
         return next();
+    }
+
+    if (req.currentCustomer.addressBook) {
+        // save all used shipping addresses to address book of the logged in customer
+        var allAddresses = addressHelpers.gatherShippingAddresses(order);
+        allAddresses.forEach(function (address) {
+            if (!addressHelpers.checkIfAddressStored(address, req.currentCustomer.addressBook.addresses)) {
+                addressHelpers.saveAddress(address, req.currentCustomer, addressHelpers.generateAddressName(address));
+            }
+        });
     }
 
     COHelpers.sendConfirmationEmail(order, req.locale.id);

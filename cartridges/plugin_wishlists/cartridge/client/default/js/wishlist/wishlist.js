@@ -1,6 +1,7 @@
 'use strict';
 
 var base = require('base/product/base');
+var focusHelper = require('base/components/focus');
 
 /**
  * Updates the Mini-Cart quantity value after the customer has pressed the "Add to Cart" button
@@ -36,13 +37,15 @@ function getModalHtmlElement() {
         $('#editProductModal').remove();
     }
     var htmlString = '<!-- Modal -->'
-        + '<div class="modal fade" id="editWishlistProductModal" role="dialog">'
+        + '<div class="modal fade" id="editWishlistProductModal" tabindex="-1" role="dialog">'
+        + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        &times;'
+        + '        <span aria-hidden="true">&times;</span>'
+        + '        <span class="sr-only"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -78,13 +81,15 @@ function fillModalElement(editProductUrl) {
     $.ajax({
         url: editProductUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (data) {
+            var parsedHtml = parseHtml(data.renderedTemplate);
 
             $('#editWishlistProductModal .modal-body').empty();
             $('#editWishlistProductModal .modal-body').html(parsedHtml.body);
             $('#editWishlistProductModal .modal-footer').html(parsedHtml.footer);
+            $('#editWishlistProductModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#editWishlistProductModal .enter-message').text(data.enterDialogMessage);
             $('#editWishlistProductModal').modal('show');
             $.spinner().stop();
         },
@@ -173,8 +178,9 @@ function displayErrorMessage($elementAppendTo, msg) {
  * renders the list up to a given page number
  * @param {number} pageNumber - current page number
  * @param {boolean} spinner - if the spinner has already started
+ * @param {string} focusElementSelector - selector of the element to focus on
  */
-function renderNewPageOfItems(pageNumber, spinner) {
+function renderNewPageOfItems(pageNumber, spinner, focusElementSelector) {
     var publicView = $('.wishlistItemCardsData').data('public-view');
     var listUUID = $('.wishlistItemCardsData').data('uuid');
     var url = $('.wishlistItemCardsData').data('href');
@@ -194,7 +200,12 @@ function renderNewPageOfItems(pageNumber, spinner) {
     }).done(function (data) {
         $('.wishlistItemCards').empty();
         $('body .wishlistItemCards').append(data);
-        document.documentElement.scrollTop = scrollPosition;
+
+        if (focusElementSelector) {
+            $(focusElementSelector).focus();
+        } else {
+            document.documentElement.scrollTop = scrollPosition;
+        }
     }).fail(function () {
         $('.more-wl-items').remove();
     });
@@ -271,6 +282,36 @@ module.exports = {
         });
     },
 
+    focusEditWishlistProductModal: function () {
+        $('body').on('shown.bs.modal', '#editWishlistProductModal', function () {
+            $('#editWishlistProductModal').siblings().attr('aria-hidden', 'true');
+            $('#editWishlistProductModal .close').focus();
+        });
+    },
+
+    onClosingEditWishlistProductModal: function () {
+        $('body').on('hidden.bs.modal', '#editWishlistProductModal', function () {
+            $('#editWishlistProductModal').remove();
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+
+            $('#editWishlistProductModal').siblings().attr('aria-hidden', 'false');
+        });
+    },
+
+    trapEditWishlistProductModalFocus: function () {
+        $('body').on('keydown', '#editWishlistProductModal', function (e) {
+            var focusParams = {
+                event: e,
+                containerSelector: '#editWishlistProductModal',
+                firstElementSelector: '.close',
+                lastElementSelector: '.btn-update-wishlist-product',
+                nextToLastElementSelector: '.select-size'
+            };
+            focusHelper.setTabNextFocus(focusParams);
+        });
+    },
+
     updateWishlistUpdateButton: function () {
         $('body').on('product:updateAddToCart', function (e, response) {
             response.$productContainer.find('.btn-update-wishlist-product').attr('disabled', !response.product.readyToOrder || !response.product.available);
@@ -305,7 +346,7 @@ module.exports = {
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                     var pageNumber = $('.wishlistItemCardsData').data('page-number') - 1;
-                    renderNewPageOfItems(pageNumber, false);
+                    renderNewPageOfItems(pageNumber, false, '.product-info .edit-add-to-wishlist .edit:first');
                 },
                 error: function () {
                     var msg = $('.btn-update-wishlist-product').data('error-msg');

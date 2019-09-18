@@ -175,7 +175,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
 
                     formHelpers.clearPreviousErrors('.payment-form');
 
-                    var billingAddressForm = $('#dwfrm_billing .billing-address-block').serialize();
+                    var billingAddressForm = $('#dwfrm_billing .billing-address-block :input').serialize();
 
                     $('body').trigger('checkout:serializeBilling', {
                         form: $('#dwfrm_billing .billing-address-block'),
@@ -187,7 +187,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                         }
                     });
 
-                    var contactInfoForm = $('#dwfrm_billing .contact-info-block').serialize();
+                    var contactInfoForm = $('#dwfrm_billing .contact-info-block :input').serialize();
 
                     $('body').trigger('checkout:serializeBilling', {
                         form: $('#dwfrm_billing .contact-info-block'),
@@ -200,7 +200,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                     });
 
                     var activeTabId = $('.tab-pane.active').attr('id');
-                    var paymentInfoSelector = '#dwfrm_billing .' + activeTabId + ' .payment-form-fields';
+                    var paymentInfoSelector = '#dwfrm_billing .' + activeTabId + ' .payment-form-fields :input';
                     var paymentInfoForm = $(paymentInfoSelector).serialize();
 
                     $('body').trigger('checkout:serializeBilling', {

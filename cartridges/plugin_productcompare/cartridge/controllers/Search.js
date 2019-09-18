@@ -32,10 +32,25 @@ function getCategoryCompareStatus(productSearch) {
     return compareBooleanValue;
 }
 
-server.append('Show', function (req, res, next) {
+server.append('ShowAjax', function (req, res, next) {
     var viewData = res.getViewData();
     viewData.compareEnabled = getCategoryCompareStatus(viewData.productSearch);
     res.setViewData(viewData);
+    next();
+});
+
+server.append('Show', function (req, res, next) {
+    var oldHandler = this.listeners('route:BeforeComplete'); // eslint-disable-line no-shadow
+    this.off('route:BeforeComplete');
+
+    this.on('route:BeforeComplete', (function (req, res) { // eslint-disable-line no-shadow
+        if (oldHandler[0]) {
+            oldHandler[0].call(this, req, res);
+            var viewData = res.getViewData();
+            viewData.compareEnabled = getCategoryCompareStatus(viewData.productSearch);
+            res.setViewData(viewData);
+        }
+    }).bind(this));
     next();
 });
 

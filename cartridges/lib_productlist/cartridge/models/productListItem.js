@@ -6,6 +6,7 @@ var availability = require('*/cartridge/models/product/decorators/availability')
 var readyToOrder = require('*/cartridge/models/product/decorators/readyToOrder');
 var variationAttributes = require('*/cartridge/models/product/decorators/variationAttributes');
 
+var preferences = require('*/cartridge/config/preferences');
 /**
  * returns an array of listItemobjects bundled into an array
  * @param {dw.customer.ProductListItem} listItem - productlist Item
@@ -67,6 +68,21 @@ function getSelectedOptions(options) {
 }
 
 /**
+ * Restrict the qty select drop down on wish list product card page to a minimum of total instock qty or default value
+ * returns max orderable qty for item on a wish list
+ * @param {dw.customer.ProductListItem} productListItemObject - Item in a product list
+ * @returns {number} quantity - Number of max orderable items for this product- Default value is 10
+ */
+function getMaxOrderQty(productListItemObject) {
+    var DEFAULT_MAX_ORDER_QUANTITY = preferences.maxOrderQty || 10;
+    var availableToSell;
+    if (productListItemObject.product.availabilityModel.inventoryRecord) {
+        availableToSell = productListItemObject.product.availabilityModel.inventoryRecord.ATS.value;
+    }
+    return Math.min(availableToSell, DEFAULT_MAX_ORDER_QUANTITY);
+}
+
+/**
  * creates a plain object that contains product list item information
  * @param {dw.customer.ProductListItem} productListItemObject - productlist Item
  * @returns {Object} an object that contains information about the users address
@@ -74,7 +90,6 @@ function getSelectedOptions(options) {
 function createProductListItemObject(productListItemObject) {
     var result = {};
     var promotions;
-    var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
     if (productListItemObject) {
         promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(productListItemObject.product);
@@ -85,7 +100,7 @@ function createProductListItemObject(productListItemObject) {
             id: productListItemObject.ID,
             name: productListItemObject.product.name,
             minOrderQuantity: productListItemObject.product.minOrderQuantity.value || 1,
-            maxOrderQuantity: DEFAULT_MAX_ORDER_QUANTITY,
+            maxOrderQuantity: getMaxOrderQty(productListItemObject),
             qty: productListItemObject.quantityValue,
             lastModified: productListItemObject.getLastModified().getTime(),
             creationDate: productListItemObject.getCreationDate().getTime(),

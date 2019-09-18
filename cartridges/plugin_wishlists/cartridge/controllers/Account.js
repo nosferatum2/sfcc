@@ -45,9 +45,12 @@ server.append('SubmitRegistration', function (req, res, next) {
 
 server.append('Show', function (req, res, next) {
     var wishListAccount = require('*/cartridge/models/account/wishListAccount');
-    var productListMgr = require('dw/customer/ProductListMgr');
+    var wishListType = require('dw/customer/ProductList').TYPE_WISH_LIST;
     var viewData = res.getViewData();
-    var apiWishList = productListMgr.getProductLists(req.currentCustomer.raw, '10')[0];
+    var apiWishList = productListHelper.getList(req.currentCustomer.raw, {
+        type: wishListType
+    });
+
     wishListAccount(viewData.account, apiWishList);
     var wishlist = {
         UUID: apiWishList.ID

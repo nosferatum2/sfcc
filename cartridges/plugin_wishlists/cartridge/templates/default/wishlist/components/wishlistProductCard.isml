@@ -28,7 +28,10 @@
                         <isinclude template="wishlist/components/wishlistProductCardAvailability" />
                         <isif condition=${!pdict.wishlist.publicView}>
                             <div class="edit-add-to-wishlist">
-                                <a href="${URLUtils.url('Wishlist-GetProduct', 'uuid', item.UUID, 'pid', item.pid)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+                                <a href="${URLUtils.url('Wishlist-GetProduct', 'uuid', item.UUID, 'pid', item.pid)}" class="edit"
+                                   data-toggle="modal" data-target="#editWishlistProductModal"
+                                   title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}
+                                </a>
                             </div>
                         </isif>
                     </div>

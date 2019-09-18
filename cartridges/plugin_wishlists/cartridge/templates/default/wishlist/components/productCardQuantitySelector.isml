@@ -3,7 +3,6 @@
     <select class="form-control quantity custom-select"
             data-uuid="${item.UUID}"
             data-pid="${item.pid}"
-            data-action="${pdict.actionUrls.updateQuantityUrl}"
             data-pre-select-qty="${item.qty}"
             id="quantity"
             name="quantity">
