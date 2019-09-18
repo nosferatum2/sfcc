@@ -8,7 +8,7 @@ $(document).ready(function () {
     processInclude(require('base/components/consentTracking'));
     processInclude(require('lyonscg/components/footer'));
     processInclude(require('lyonscg/components/backtotop'));
-    processInclude(require('wishlists/components/miniCart'));
+    processInclude(require('lyonscg/components/miniCart'));
     processInclude(require('base/components/collapsibleItem'));
     processInclude(require('base/components/search'));
     processInclude(require('lyonscg/components/clientSideValidation'));

@@ -1,6 +1,7 @@
 'use strict';
 
 var cart = require('../cart/cart');
+var wishlistCart = require('wishlists/components/miniCart');
 
 var updateMiniCart = true;
 
@@ -65,4 +66,7 @@ module.exports = function () {
     $('body').on('cart:update', function () {
         updateMiniCart = true;
     });
+
+    wishlistCart.base();
+    wishlistCart.moveToWishlist();
 };
