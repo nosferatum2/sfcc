@@ -184,7 +184,7 @@ npm run compile:scss
 npm run compile:svg
 ```
 
-You can verify the compilation of the Js and Css files by navigating to `cartridges/site_siteid_mfra/cartridge/static/default`
+You can verify the compilation of the Js and Css files by navigating to `cartridges/site_siteid/cartridge/static/default`
 
 #### Pro front-end development tip: use the watcher!
 

@@ -325,15 +325,15 @@ An example of the `sites` array is provided below:
     "cartridges": [
       {
         "alias": "site",
-        "name": "site_siteid_mfra"
+        "name": "site_siteid"
       },
       {
         "alias": "org",
-        "name": "org_organizationid_mfra"
+        "name": "org_organizationid"
       },
       {
         "alias": "lyonscg",
-        "name": "app_lyonscg_mfra"
+        "name": "app_lyonscg"
       },
       {
         "alias": "base",
@@ -350,7 +350,7 @@ An example of the `sites` array is provided below:
 
 The SFRA builders work differently than LYONSCG Gulp builders. When overriding JS files, you will need to include the
 correct path to JS module(s) if the module is not in the same cartridge as the overriden file. For example if you've
-pulled `main.js` into your org_organizationid_mfra cartridge and `main.js` includes the `util.js` module and the
+pulled `main.js` into your org_organizationid cartridge and `main.js` includes the `util.js` module and the
 `util.js` module still lives in app_storefront_base, your path would look like this where `base` is the alias defined
 for app_storefront_base cartridge
 
@@ -413,7 +413,7 @@ the cartridge path.
 * SCSS partials (any file that begins with an underscore i.e `_productCard.scss` ) are not compiled to stand-alone
   CSS files. SCSS partials are meant to be "@imported" into other non-partial SCSS files.
 * Any JS file placed in a sub-directory of the client/default/js directory
-  (i.e. `app_lyonscg_mfra/cartridge/client/default/js/product/base.js`) are not compiled to stand-alone JS files.
+  (i.e. `app_lyonscg/cartridge/client/default/js/product/base.js`) are not compiled to stand-alone JS files.
   These files are meant to be require()'d by files in the `client/default/js` directory.
 
 ## Setting up environments for Continuous Integration

@@ -8,7 +8,7 @@
     <currency>USD</currency>
     <taxation>net</taxation>
     <!-- Site cartridge path -->
-    <custom-cartridges>site_siteid_mfra:org_organizationid_mfra:ui_nav:app_lyonscg_mfra:plugin_productcompare:plugin_wishlists:lib_productlist:app_corrections:app_storefront_base</custom-cartridges>
+    <custom-cartridges>site_siteid:org_organizationid:ui_nav:app_lyonscg:plugin_productcompare:plugin_wishlists:lib_productlist:app_corrections:app_storefront_base</custom-cartridges>
     <!-- TODO: add a simple storefront password. This should be added to project documentation home -->
     <!-- <storefront-status>protected</storefront-status> -->
     <!-- <storefront-password>sg</storefront-password> -->

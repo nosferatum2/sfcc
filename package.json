@@ -158,15 +158,15 @@
       "cartridges": [
         {
           "alias": "site",
-          "name": "site_siteid_mfra"
+          "name": "site_siteid"
         },
         {
           "alias": "org",
-          "name": "org_organizationid_mfra"
+          "name": "org_organizationid"
         },
         {
           "alias": "lyonscg",
-          "name": "app_lyonscg_mfra"
+          "name": "app_lyonscg"
         },
         {
           "alias": "productcompare",
