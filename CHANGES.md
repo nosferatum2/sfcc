@@ -1,3 +1,22 @@
+## 1.3.0  9/27/2019
+
+- LRA-382 Removed all references to "mfra"
+- LRA-381 Updated Wishlist plugin
+- LRA-378 Merged code with Salesforce SFRA version 4.3.0
+- LRA-311 Optional quantity selector +/- controls
+- LRA-372 Header Banner fix
+- LRA-231 Confirm Email should not be required if Email is unchanged
+- LRA-303 PDP Image Zoom fix
+- LRA-374 Sitemap fix
+- IEI-386 SARMS bug fix for duplicate components in multi-site project
+- LRA-235 Source Code redirect added
+- LRA-337 Fix to prevent skipping through checkout
+- LRA-350 Sub category rendering template fix
+- LRA-334 Tooltip fix
+- LRA-332 SVG Builder added
+- LRA-334 Merged code with Salesforce SFRA version 4.1.0
+- LRA-293 Wishlist fix for mobile users
+
 ## 1.2.0  5/15/2019
 
 - LRA-291	Updated LRA with Salesforce Releases 4.0.0, 3.6.0, 3.5.0, 3.4.0 - https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/releases
