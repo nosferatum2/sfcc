@@ -278,6 +278,8 @@ function postSystemObjectsHTML(options, htmlString) {
             if (htmlString === pageBody) {
                 console.log(`No changes needed to the ${pageTitle} Confluence page.`);
             } else {
+                // encode ampersands
+                htmlString = htmlString.replace(/&(?!amp;)/g, '&amp;');
                 confluence.putContent(spaceKey, pageID, newVersionNumber, pageTitle, htmlString, (err) => {
                     if (!err) {
                         console.log(`${pageTitle} Confluence page updated.`);
