@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="showShippingSurcharge">
+                <display-name xml:lang="x-default">Display shipping surcharge</display-name>
+                <description xml:lang="x-default">When true, this displays the shipping surcharge amount in checkout.
+                </description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="Shipping Configs">
+                <display-name xml:lang="x-default">Shipping Configurations</display-name>
+                <attribute attribute-id="showShippingSurcharge"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
