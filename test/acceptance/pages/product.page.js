@@ -5,9 +5,11 @@ module.exports = {
         button: 'button',
         selectSize: '.select-size',
         selectQuantity: '.quantity-select',
+        selectColor: '.color-attribute',
         addToCartButton: '.add-to-cart',
         addToCartButtonEnabled: '.add-to-cart:not(:disabled)',
         miniCartIcon: '.minicart-icon.fa.fa-shopping-bag',
+        miniCartCheckoutButton: '.checkout-btn',
         cartHeader: '.cart-header',
         productImage: '.carousel-item.active > img',
         navigationCrumbs: '.product-breadcrumb:not(.d-md-none) .breadcrumb-item a',
@@ -24,12 +26,13 @@ module.exports = {
         productDescription: '.description-and-detail .description .content',
         productDetails: '.description-and-detail .details .content',
         copyLinkMsgVisible: '.copy-link-message:not(.d-none)',
-        miniCartQuantity: '.minicart-quantity',
         addToCartSuccess: '.add-to-cart-messages .alert-success',
         addToCartFailure: '.add-to-cart-messages .alert-danger',
         filterColor: '.swatch-circle-',
         filterSize: 'span.null',
         filterPrice: 'span',
+        filterOption: '.custom-select',
+        filterPDP: '.pdp-link a.link',
         productTotals: '.result-count.text-center',
         qv_ProductBtn: '.quickview.hidden-sm-down',
         qv_ColorBtn: '.color-attribute',
@@ -42,18 +45,26 @@ module.exports = {
         I.selectOption(this.locators.selectSize, size);
     },
     selectQuantity(quantity) {
-        I.wait(1);
         I.waitForElement(this.locators.selectQuantity);
         I.selectOption(this.locators.selectQuantity, quantity);
     },
+    selectColor(color) {
+        let locator = locate(this.locators.selectColor)
+            .withAttr({ 'aria-label': 'Select Color ' + color });
+        I.waitForElement(locator);
+        I.click(locator);
+    },
     addToCart() {
-        I.scrollTo(this.locators.addToCartButton);
         I.waitForEnabled(this.locators.addToCartButton);
         I.click(this.locators.addToCartButton);
     },
+    addProductToMiniCart(product) {
+        this.selectSize(product.size);
+        this.selectColor(product.color);
+        this.selectQuantity(product.originalQuantity);
+        this.addToCart();
+    },
     viewCart() {
-        I.scrollPageToTop();
-        I.wait(1);
         I.click(this.locators.miniCartIcon);
         I.waitForElement(this.locators.cartHeader);
     },
@@ -64,7 +75,6 @@ module.exports = {
     filterProductColor(color) {
         I.waitForElement(this.locators.filterColor + color);
         I.click(this.locators.filterColor + color);
-        I.wait(1);
     },
     filterProductSize(filterSizeTotal) {
         let locator = locate(this.locators.filterSize)
@@ -72,7 +82,6 @@ module.exports = {
             .withText(filterSizeTotal);
         I.waitForElement(locator);
         I.click(locator);
-        I.wait(1);
     },
     filterProductPrice(filterPriceTotal) {
         let locator = locate(this.locators.filterPrice)
@@ -80,7 +89,18 @@ module.exports = {
             .withText(filterPriceTotal);
         I.waitForElement(locator);
         I.click(locator);
-        I.wait(1);
+    },
+    filterProductOption(filterOption, firstProductName) {
+        let locatorOption = locate(this.locators.filterOption)
+            .withAttr({ 'aria-label': 'Sort By' });
+        I.waitForElement(locatorOption);
+        I.scrollTo(locatorOption);
+        I.selectOption(locatorOption, filterOption);
+        I.wait(1.5);
+
+        let locatorProduct = locate(this.locators.filterPDP).first();
+        I.waitForElement(locatorProduct);
+        I.see(firstProductName, locatorProduct);
     },
     verifyProductTotals(totalItems) {
         let locator = locate(this.locators.productTotals)
@@ -108,5 +128,9 @@ module.exports = {
     addToCartQuickView() {
         I.waitForElement(this.locators.qv_AddToCart);
         I.click(this.locators.qv_AddToCart);
+    },
+    clickCheckoutBtnOnMiniCart() {
+        I.waitForElement(this.locators.miniCartCheckoutButton);
+        I.click(this.locators.miniCartCheckoutButton);
     }
 };
