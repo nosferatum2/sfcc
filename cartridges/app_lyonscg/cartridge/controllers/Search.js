@@ -11,6 +11,8 @@ var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
+var CatalogMgr = require('dw/catalog/CatalogMgr');
+var Site = require('dw/system/Site');
 
 server.extend(page);
 
@@ -24,7 +26,6 @@ function getAllBreadcrumbs(cgid, breadcrumbs) {
     var category;
     if (cgid) {
         var URLUtils = require('dw/web/URLUtils');
-        var CatalogMgr = require('dw/catalog/CatalogMgr');
         category = CatalogMgr.getCategory(cgid);
         breadcrumbs.push({
             htmlValue: category.displayName,
@@ -37,11 +38,39 @@ function getAllBreadcrumbs(cgid, breadcrumbs) {
     return breadcrumbs;
 }
 
+/**
+ * Climb up the category tree to see if any parents have the enable compare turned on
+ *
+ * @param {Object} productSearch - product search result model
+ * @return {boolean} - boolean to determine if the template should display the compare checkbox
+ */
+function getCategoryCompareStatus(productSearch) {
+    var compareBooleanValue = false;
+    var enableProductCompare = Site.getCurrent().getCustomPreferenceValue('enableProductCompare');
+    if (productSearch && productSearch.category && enableProductCompare !== null && enableProductCompare) {
+        var currentCategory;
+        var selectedCategory;
+        compareBooleanValue = true;
+        selectedCategory = CatalogMgr.getCategory(productSearch.category.id);
+        compareBooleanValue = selectedCategory.custom.enableCompare;
+
+        if (selectedCategory.parent) {
+            currentCategory = selectedCategory.parent;
+            while (currentCategory.ID !== 'root') {
+                compareBooleanValue = compareBooleanValue || currentCategory.custom.enableCompare;
+                currentCategory = currentCategory.parent;
+            }
+        }
+    }
+    return compareBooleanValue;
+}
+
 server.replace('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
     var result = searchHelper.search(req, res);
     var template = 'search/searchResultsNoDecorator';
+    var enableProductCompare = getCategoryCompareStatus(result.productSearch);
 
     if (result.searchRedirect) {
         res.redirect(result.searchRedirect);
@@ -57,7 +86,8 @@ server.replace('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTrack
         category: result.category ? result.category : null,
         maxSlots: result.maxSlots,
         reportingURLs: result.reportingURLs,
-        refineurl: result.refineurl
+        refineurl: result.refineurl,
+        compareEnabled: enableProductCompare
     });
 
     return next();
