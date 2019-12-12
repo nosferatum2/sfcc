@@ -1,0 +1,12 @@
+<body>
+    <h1>${Resource.msg('email.subject.locked', 'email', null)}</h1>
+    
+    <p>${Resource.msg('email.msg.locked.dear', 'email', null)}</p>
+
+    <p>${Resource.msg('email.msg.locked.body1', 'email', null)}</p>
+
+    <p><a href="${pdict.url}">${pdict.url}</a></p> 
+
+    <p>${Resource.msg('email.msg.locked.body2', 'email', null)}</p>
+
+</body>
