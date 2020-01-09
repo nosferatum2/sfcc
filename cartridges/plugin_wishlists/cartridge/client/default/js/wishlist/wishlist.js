@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('base/product/base');
+var base = require('lyonscg/product/base');
 var focusHelper = require('base/components/focus');
 
 /**
@@ -286,6 +286,12 @@ module.exports = {
         $('body').on('shown.bs.modal', '#editWishlistProductModal', function () {
             $('#editWishlistProductModal').siblings().attr('aria-hidden', 'true');
             $('#editWishlistProductModal .close').focus();
+        });
+    },
+
+    initEditWishlistProductModal: function () {
+        $('body').on('focus', '#editWishlistProductModal', function () {
+            base.carouselInit();
         });
     },
 
