@@ -71,7 +71,7 @@ function getSystemObjectsData(files) {
 
                             // add any system attributes to data structure
                             if (xmlSystemObject['system-attribute-definitions'] && xmlSystemObject['system-attribute-definitions'][0]) {
-                                addSystemObjectAttributesData(systemObjectsData[systemObjectTypeID], xmlSystemObject['custom-attribute-definitions'][0]['attribute-definition']);
+                                addSystemObjectAttributesData(systemObjectsData[systemObjectTypeID], xmlSystemObject['system-attribute-definitions'][0]['attribute-definition']);
                             }
                         });
                     }
