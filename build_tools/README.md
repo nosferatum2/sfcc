@@ -606,7 +606,11 @@ This section will allow you to enter the build file and the properties for the b
 
 In the "Targets" field, enter all Ant targets you wish to use (e.g. deploy, deploy-data, system-object-report).
 
-It is reccomended for a Staging build that you use the Ant target deploy-install-audit-sonar-postProjectToSARMS. This target will handle everything the traditional "deploy" target does, in addition to installing/refreshing the npm module install and reporting the project to our Sonar Qube and SARMS systems. To see the mapping of Ant targets to our various node scripts, see the builders.xml file.
+For Staging builds, use the Ant target: 
+
+`deploy-install-audit-sonar-postProjectToSARMS`
+
+This target will handle everything the traditional "deploy" target does, in addition to installing/refreshing the npm module install and reporting the project to our Sonar Qube and SARMS systems. To see the mapping of Ant targets to our various node scripts, see the builders.xml file.
 
 If your build is failing and you don't see a node_modules folder in your build "Workspace" in Jenkins, you will likely want to add the Ant target "npm-install" as the first Ant target in the list.
 
