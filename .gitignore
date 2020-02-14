@@ -18,6 +18,7 @@ test/appium/webdriver/config.json
 *.iml
 .idea
 test/acceptance/report
+test/integration/config.json
 
 # LRA Patterns
 cartridges/app_storefront_base/cartridge/static/**/fonts/

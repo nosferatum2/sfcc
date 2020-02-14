@@ -109,6 +109,15 @@ describe('route', function () {
         assert.equal(route.chain.length, 3);
     });
     it('should set error object on the response', function () {
+        var RouteStaging = proxyquire('../../../../cartridges/modules/server/route', {
+            'dw/system/System': {
+                getInstanceType: function () {
+                    return false;
+                },
+                'PRODUCTION_SYSTEM': true
+            }
+        });
+
         function tempFunc(req, res, next) {
             next();
         }
@@ -117,9 +126,44 @@ describe('route', function () {
             querystring: mockReq.querystring,
             locale: mockReq.locale
         };
-        var route = new Route('test', [tempFunc], req, mockRes);
-        route.getRoute()({ ErrorText: 'hello' });
+        var route = new RouteStaging('test', [tempFunc], req, mockRes);
+        route.getRoute()({
+            ErrorText: 'hello',
+            ControllerName: 'Foo',
+            CurrentStartNodeName: 'Bar'
+        });
         assert.isNotNull(req.error);
         assert.equal(req.error.errorText, 'hello');
+        assert.equal(req.error.controllerName, 'Foo');
+        assert.equal(req.error.startNodeName, 'Bar');
+    });
+    it('should set error object on the response to empty string if on production', function () {
+        var RouteProduction = proxyquire('../../../../cartridges/modules/server/route', {
+            'dw/system/System': {
+                getInstanceType: function () {
+                    return true;
+                },
+                'PRODUCTION_SYSTEM': true
+            }
+        });
+
+        function tempFunc(req, res, next) {
+            next();
+        }
+        var req = {
+            path: mockReq.path,
+            querystring: mockReq.querystring,
+            locale: mockReq.locale
+        };
+        var route = new RouteProduction('test', [tempFunc], req, mockRes);
+        route.getRoute()({
+            ErrorText: 'hello',
+            ControllerName: 'Foo',
+            CurrentStartNodeName: 'Bar'
+        });
+        assert.isNotNull(req.error);
+        assert.equal(req.error.errorText, '');
+        assert.equal(req.error.controllerName, '');
+        assert.equal(req.error.startNodeName, '');
     });
 });

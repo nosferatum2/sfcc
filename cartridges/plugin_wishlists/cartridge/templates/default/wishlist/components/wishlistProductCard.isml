@@ -1,4 +1,4 @@
-<div class="card product-info uuid-${item.UUID}">
+<div class="card product-info uuid-${item.UUID} pid-${item.pid}">
      <isinclude template="wishlist/components/wishlistProductCardHeader">
     <!--- image, attributes, availability --->
     <div class="row">

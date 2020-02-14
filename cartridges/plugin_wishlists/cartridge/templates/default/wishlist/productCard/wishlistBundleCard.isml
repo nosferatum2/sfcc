@@ -1,4 +1,4 @@
-<div class="card product-info uuid-${item.UUID}">
+<div class="card product-info uuid-${item.UUID} pid-${item.pid}">
     <!--- name and remove buttons --->
     <isinclude template="wishlist/components/wishlistProductCardHeader" />
 

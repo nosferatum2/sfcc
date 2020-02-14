@@ -264,5 +264,25 @@ When adding a LINK Cartridge (or other 3rd party cartridge) to the codebase: if 
 
 See the [ESLint user-guide](https://eslint.org/docs/user-guide/configuring) for more info.
 
+## Running integration tests
+Integration tests are located in the `storefront-reference-architecture/test/integration` directory.
+
+To run integration tests you can use the following command:
+
+**Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
+sample `dw.json` file (this file needs to be in the root of your project)
+{
+    "hostname": "devxx-sitegenesis-dw.demandware.net"
+}
+
+You can also supply URL of the sandbox on the command line:
+
+```
+npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
+```
+
+
+# [Contributing to SFRA](./CONTRIBUTING.md)
+
 #Page Designer Components for Storefront Reference Architecture
-See: [Page Desinger Components](./page-designer-components.md)
+See: [Page Designer Components](./page-designer-components.md)

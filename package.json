@@ -1,7 +1,7 @@
 {
   "name": "lyonscg-sfra",
-  "version": "4.4.0",
-  "lcgversion": "1.3.0",
+  "version": "4.4.1",
+  "lcgversion": "1.4.0",
   "description": "Capgemini maintained version of SFCC SFRA",
   "engines": {
     "node": "8.9.0"
@@ -59,7 +59,8 @@
     "Ryan Walter <ryan.walter@capgemini.com>",
     "Sandra Golden <sandra.golden@capgemini.com>",
     "Tom VandenBerge <tom.vanden-berge@capgemini.com>",
-    "Dave Haas <dave.haas@capgemini.com>"
+    "Dave Haas <dave.haas@capgemini.com>",
+    "Chris Connell <chris.connell@capgemini.com"
   ],
   "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-sfra",
   "devDependencies": {
@@ -79,7 +80,7 @@
     "babel-preset-env": "^1.7.0",
     "cache-loader": "^1.2.5",
     "chai": "^3.5.0",
-    "chai-subset": "^1.5.0",
+    "chai-subset": "^1.6.0",
     "chalk": "^1.1.3",
     "cheerio": "0.22.0",
     "cldr-data": "^32.0.1",
@@ -137,6 +138,7 @@
     "shelljs": "^0.8.3",
     "should": "^13.2.3",
     "sinon": "^1.17.7",
+    "style-loader": "^0.21.0",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-scss": "^2.5.0",

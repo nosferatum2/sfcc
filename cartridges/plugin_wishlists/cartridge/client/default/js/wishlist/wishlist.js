@@ -431,6 +431,7 @@ module.exports = {
                         handlePostCartAdd(data);
                         $('body').trigger('product:afterAddToCart', data);
                         $.spinner().stop();
+                        base.miniCartReportingUrl(data.reportingURL, data.error);
                     },
                     error: function () {
                         $.spinner().stop();
