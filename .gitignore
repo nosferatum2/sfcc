@@ -1,9 +1,6 @@
 # SFRA Patterns
 
 node_modules/
-cartridges/**/cartridge/static/**/css/
-cartridges/**/cartridge/static/**/js/
-cartridges/**/cartridge/static/**/fonts/
 coverage/
 npm-debug.log
 cartridges.zip
@@ -21,9 +18,13 @@ test/appium/webdriver/config.json
 *.iml
 .idea
 test/acceptance/report
+test/integration/config.json
 
 # LRA Patterns
-
+cartridges/app_storefront_base/cartridge/static/**/fonts/
+cartridges/site_siteid/cartridge/static/**/css/
+cartridges/site_siteid/cartridge/static/**/js/
+cartridges/site_siteid/cartridge/static/**/fonts/
 lastbuild.properties
 .tern-project
 jsconfig.json

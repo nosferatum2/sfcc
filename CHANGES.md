@@ -1,3 +1,17 @@
+## 1.4.0 2/11/2020
+
+- LRA-395 Update LRA with Salesforce SFRA version 4.4.1
+- LRA-390 Add wishlist heart icon add/remove toggle behavior
+- LRA-296 Fix image stacking on PDP quickview modal
+- LRA-343 Add Account Locked Out handling and email template
+- LRA-352 Add id with value prensentationID to link for custom search refinements
+- LRA-387 Fix the sorting rule box to show the rule actually being applied
+- LRA-349 Fix product compare checkbox on refinement reload
+- LRA-389 Fix Page Context injection for replaced routes
+- LRA-386 Merge changes in Salesforce SFRA 4.4
+- LRA-385 Add PictureFill Support for IE
+- LRA-242 Add Shipping Surcharge to Order Summary
+
 ## 1.3.0  9/27/2019
 
 - LRA-382 Removed all references to "mfra"

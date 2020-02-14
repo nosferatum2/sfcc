@@ -71,7 +71,7 @@ function getSystemObjectsData(files) {
 
                             // add any system attributes to data structure
                             if (xmlSystemObject['system-attribute-definitions'] && xmlSystemObject['system-attribute-definitions'][0]) {
-                                addSystemObjectAttributesData(systemObjectsData[systemObjectTypeID], xmlSystemObject['custom-attribute-definitions'][0]['attribute-definition']);
+                                addSystemObjectAttributesData(systemObjectsData[systemObjectTypeID], xmlSystemObject['system-attribute-definitions'][0]['attribute-definition']);
                             }
                         });
                     }
@@ -278,6 +278,8 @@ function postSystemObjectsHTML(options, htmlString) {
             if (htmlString === pageBody) {
                 console.log(`No changes needed to the ${pageTitle} Confluence page.`);
             } else {
+                // encode ampersands
+                htmlString = htmlString.replace(/&(?!amp;)/g, '&amp;');
                 confluence.putContent(spaceKey, pageID, newVersionNumber, pageTitle, htmlString, (err) => {
                     if (!err) {
                         console.log(`${pageTitle} Confluence page updated.`);

@@ -21,3 +21,4 @@ require('lyonscg/thirdParty/bootstrap');
 require('base/components/spinner');
 require('svg4everybody');
 require('slick-carousel');
+require('picturefill');

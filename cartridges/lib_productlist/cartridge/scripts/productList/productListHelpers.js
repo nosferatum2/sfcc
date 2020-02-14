@@ -160,7 +160,7 @@ function updateWishlistPrivacyCache(customer, req, config) {
     var listOfIds = collections.map(list.items, function (item) {
         return item.productID;
     });
-    req.session.privacyCache.set('wishlist', listOfIds);
+    req.session.privacyCache.set('wishlist', listOfIds.toString());
 }
 
 /**

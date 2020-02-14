@@ -5,7 +5,6 @@ var PromotionMgr = require('dw/campaign/PromotionMgr');
 var availability = require('*/cartridge/models/product/decorators/availability');
 var readyToOrder = require('*/cartridge/models/product/decorators/readyToOrder');
 var variationAttributes = require('*/cartridge/models/product/decorators/variationAttributes');
-
 var preferences = require('*/cartridge/config/preferences');
 /**
  * returns an array of listItemobjects bundled into an array
@@ -135,5 +134,6 @@ function createProductListItemObject(productListItemObject) {
 function productListItem(productListItemObject) {
     this.productListItem = createProductListItemObject(productListItemObject);
 }
+
 
 module.exports = productListItem;

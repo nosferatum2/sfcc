@@ -160,9 +160,6 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                     // Send account edited email
                     accountHelpers.sendAccountEditedEmail(customer.profile);
 
-                    // Send account edited email
-                    accountHelpers.sendAccountEditedEmail(customer.profile);
-
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Address-List').toString()

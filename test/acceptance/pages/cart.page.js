@@ -15,44 +15,72 @@ module.exports = {
         removeProductBtn: '.remove-btn-lg.remove-product.btn.btn-light',
         removeProductModal: '.modal-content',
         removeProductModalConfirm: '.btn.btn-primary.cart-delete-confirmation-btn',
-        editQuantitySelector: '.form-control.quantity.custom-select'
+        editQuantitySelector: '.form-control.quantity.custom-select',
+        miniCartEditQty: 'select[data-pid="<pid>"]',
+        lineItemName: '.line-item-name',
+        miniCartLineItemName: '.line-item-name > span',
+        lineItemAttributes: '.item-attributes .line-item-attributes',
+        subTotal: '.text-right.sub-total',
+        removeProductButton: '.remove-btn.remove-product',
+        removeFromMiniCartButton: 'button[data-pid="<pid>"]',
+        miniCartQuantity: '.minicart-quantity',
+        miniCartPopover: '.popover.popover-bottom.show'
     },
     verifyCart(totalQuantity, itemPrice, totalItemPrice, shipping, tax, estimatedTotal) {
-        I.waitForElement(this.locators.lineItemQuantity);
-        I.waitForText(totalQuantity, this.locators.lineItemQuantity);
-        I.waitForElement(this.locators.lineItemPriceTotal);
-        I.waitForText(itemPrice, this.locators.lineItemPriceTotal);
-        I.waitForElement(this.locators.totalItemPrice);
-        I.waitForText(totalItemPrice, this.locators.totalItemPrice);
-        I.waitForElement(this.locators.shippingCost);
-        I.waitForText(shipping, this.locators.shippingCost);
-        I.waitForElement(this.locators.taxTotal);
-        I.waitForText(tax, this.locators.taxTotal);
-        I.waitForElement(this.locators.estimatedTotal);
-        I.waitForText(estimatedTotal, this.locators.estimatedTotal);
+        I.see(totalQuantity, this.locators.lineItemQuantity);
+        I.see(itemPrice, this.locators.lineItemPriceTotal);
+        I.see(totalItemPrice, this.locators.totalItemPrice);
+        I.see(shipping, this.locators.shippingCost);
+        I.see(tax, this.locators.taxTotal);
+        I.see(estimatedTotal, this.locators.estimatedTotal);
     },
     verifyCartQuantity(totalQuantity) {
-        I.waitForElement(this.locators.totalItemQuantity);
-        I.waitForText(totalQuantity + ' Items', this.locators.totalItemQuantity);
+        I.see(totalQuantity + ' Items', this.locators.totalItemQuantity);
+    },
+    verifyMiniCartOriginal(product) {
+        I.scrollPageToTop();
+        I.executeScript(function (el) { $(el).trigger('touchstart'); }, this.locators.cartIcon);
+        this.verifyMiniCart(product);
+        I.see(product.originalQuantity, this.locators.lineItemQuantity);
+        I.see(product.originalPrice, this.locators.subTotal);
+    },
+    verifyMiniCartUpdated(product) {
+        this.verifyMiniCart(product);
+        I.see(product.finalQuantity, this.locators.lineItemQuantity);
+        I.see(product.finalPrice, this.locators.subTotal);
+    },
+    verifyMiniCart(product) {
+        I.see(product.name, this.locators.miniCartLineItemName);
+        I.see(product.colorAttribute, this.locators.lineItemAttributes);
+        I.see(product.sizeAttribute, this.locators.lineItemAttributes);
+        I.see(product.availability, this.locators.lineItemAttributes);
+    },
+    removeProductFromMiniCart(product) {
+        I.scrollPageToTop();
+        I.executeScript(function (el) { $(el).trigger('touchstart'); }, this.locators.cartIcon);
+        I.click(this.locators.removeFromMiniCartButton.replace('<pid>', product.pid));
+        // Confirm remove product
+        within(this.locators.removeProductModal, () => {
+            I.click(this.locators.removeProductModalConfirm);
+        });
     },
     removeProduct(productName) {
         // Click x to remove product
         let locator = locate(this.locators.removeProductBox)
             .find(this.locators.removeProductBtn)
             .withAttr({ 'data-name': productName });
-        I.waitForElement(locator);
         I.click(locator);
         // Confirm remove product
-        I.waitForElement(this.locators.removeProductModal);
         within(this.locators.removeProductModal, () => {
-            I.waitForElement(this.locators.removeProductModalConfirm);
-            I.wait(1);
             I.click(this.locators.removeProductModalConfirm);
         });
     },
     editQuantity(quantity) {
-        I.wait(1);
-        I.waitForElement(this.locators.editQuantitySelector);
         I.selectOption(this.locators.editQuantitySelector, quantity);
+    },
+    editMiniCartQuantity(product) {
+        within(this.locators.miniCartPopover, () => {
+            I.selectOption(this.locators.miniCartEditQty.replace('<pid>', product.pid), product.editQuantity);
+        });
     }
 };

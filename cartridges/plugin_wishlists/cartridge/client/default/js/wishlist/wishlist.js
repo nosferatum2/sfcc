@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('base/product/base');
+var base = require('lyonscg/product/base');
 var focusHelper = require('base/components/focus');
 
 /**
@@ -289,6 +289,12 @@ module.exports = {
         });
     },
 
+    initEditWishlistProductModal: function () {
+        $('body').on('focus', '#editWishlistProductModal', function () {
+            base.carouselInit();
+        });
+    },
+
     onClosingEditWishlistProductModal: function () {
         $('body').on('hidden.bs.modal', '#editWishlistProductModal', function () {
             $('#editWishlistProductModal').remove();
@@ -425,6 +431,7 @@ module.exports = {
                         handlePostCartAdd(data);
                         $('body').trigger('product:afterAddToCart', data);
                         $.spinner().stop();
+                        base.miniCartReportingUrl(data.reportingURL, data.error);
                     },
                     error: function () {
                         $.spinner().stop();

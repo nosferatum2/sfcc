@@ -3,7 +3,7 @@
 var addressHelpers = require('base/checkout/address');
 var shippingHelpers = require('base/checkout/shipping');
 var billingHelpers = require('base/checkout/billing');
-var summaryHelpers = require('base/checkout/summary');
+var summaryHelpers = require('lyonscg/checkout/summary');
 var formHelpers = require('base/checkout/formErrors');
 var scrollAnimate = require('base/components/scrollAnimate');
 
@@ -111,7 +111,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                     $('body').trigger('checkout:updateCheckoutView',
                                         { order: data.order, customer: data.customer });
                                     defer.resolve();
-                                } else if ($('.shipping-error .alert-danger').length < 1) {
+                                } else if (data.message && $('.shipping-error .alert-danger').length < 1) {
                                     var errorMsg = data.message;
                                     var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
                                         'fade show" role="alert">' +
@@ -121,6 +121,8 @@ var scrollAnimate = require('base/components/scrollAnimate');
                                     $('.shipping-error').append(errorHtml);
                                     scrollAnimate($('.shipping-error'));
                                     defer.reject();
+                                } else if (data.redirectUrl) {
+                                    window.location.href = data.redirectUrl;
                                 }
                             },
                             error: function () {
@@ -147,7 +149,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                             type: 'post',
                             data: shippingFormData,
                             success: function (data) {
-                                 // enable the next:Payment button here
+                                // enable the next:Payment button here
                                 $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 shippingHelpers.methods.shippingFormResponse(defer, data);
                             },
@@ -243,7 +245,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                             }
                         }
                     }
-                     // disable the next:Place Order button here
+                    // disable the next:Place Order button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
 
                     $.ajax({
@@ -251,7 +253,7 @@ var scrollAnimate = require('base/components/scrollAnimate');
                         method: 'POST',
                         data: paymentForm,
                         success: function (data) {
-                             // enable the next:Place Order button here
+                            // enable the next:Place Order button here
                             $('body').trigger('checkout:enableButton', '.next-step-button button');
                             // look for field validation errors
                             if (data.error) {
