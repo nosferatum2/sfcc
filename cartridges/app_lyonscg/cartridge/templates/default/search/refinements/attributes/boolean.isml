@@ -1,5 +1,6 @@
 <li class="col-sm-4 col-md-12 ${!refinementValue.selectable ? 'disabled' : ''}">
-    <a href="${refinementValue.url}" id="${refinementValue.presentationID}" class="${(!refinementValue.selectable ? 'disabled' : '') + refinementValue.id}" <isif condition="${!refinementValue.selectable}">disabled</isif>
+    <button data-href="${refinementValue.url}" class="${!refinementValue.selectable ? 'disabled' : ''}" <isif condition="${!refinementValue.selectable}">disabled</isif>>
+
         <iscomment>Checkbox</iscomment>
         <isif condition="${refinementValue.selected && refinementValue.selectable}">
             <i class="fa fa-check-square"></i>

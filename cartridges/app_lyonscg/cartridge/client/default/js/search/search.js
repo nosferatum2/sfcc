@@ -3,6 +3,28 @@
 var base = require('base/search/search');
 
 /**
+ * Update the Show More / Show Less buttons
+ *
+ */
+function expandCollapse() {
+    $('.refinements .card-header').on('click', function () {
+        $(this).toggleClass('collapsed');
+        $(this).parent().find('.collapse').slideToggle();
+        $(this).parent().find('h2').toggleClass('collapsed');
+    });
+}
+
+/**
+ * Close the refinements window
+ *
+ */
+function applyRefinements() {
+    $('.apply-refinements').on('click', function () {
+        base.closeRefinements();
+    });
+}
+
+/**
  * Update DOM elements with Ajax results
  *
  * @param {Object} $results - jQuery DOM element
@@ -12,6 +34,7 @@ var base = require('base/search/search');
 function updateDom($results, selector) {
     var $updates = $results.find(selector);
     $(selector).empty().html($updates.html());
+    expandCollapse();
 }
 
 /**
@@ -27,8 +50,15 @@ function handleRefinements($results) {
         activeDiv.addClass('active');
         activeDiv.find('button.title').attr('aria-expanded', 'true');
     });
-
+    // when loading the refinment selections, scroll to top of results container for a better UI
+    $('html, body').animate({
+        scrollTop: $('#product-search-results').offset().top
+    }, 1000);
     updateDom($results, '.refinements');
+    // when loading the refinement selections, scroll to top of results container for a better UI
+    $('html, body').animate({
+        scrollTop: $('#product-search-results').offset().top
+    }, 1000);
 }
 
 /**
@@ -62,6 +92,35 @@ function parseResults(response) {
 }
 
 module.exports = $.extend(base, {
+    filter: function () {
+        // Display refinements bar when Menu icon clicked
+        $('.container').on('click', 'button.filter-results', function () {
+            $('.modal-background').show();
+            $('.refinement-bar').addClass('show');
+            $('.refinement-bar').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.row').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.tab-pane.active').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.container.search-results').siblings().attr('aria-hidden', true);
+            $('.refinement-bar .pull-right.close').focus();
+            $('body').addClass('fixed');
+            window.console.log('hello world');
+        });
+    },
+
+    closeRefinements: function () {
+        // Refinements close button
+        $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
+            $('.modal-background').hide();
+            $('.refinement-bar').removeClass('show');
+            $('.refinement-bar').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.row').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.tab-pane.active').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.container.search-results').siblings().attr('aria-hidden', false);
+            $('.btn.filter-results').focus();
+            $('body').removeClass('fixed');
+        });
+    },
+
     applyFilter: function () {
         // Handle refinement value selection and reset click
         $('.container').on(
@@ -113,5 +172,9 @@ module.exports = $.extend(base, {
             $($productContainer).find('.image-container > a:not(.quickview)').attr('href', swatchUrl);
             $($productContainer).find('.swatch-ellipsis').attr('href', swatchUrl);
         });
+    },
+    showMoreLess: function () {
+        expandCollapse();
+        applyRefinements();
     }
 });

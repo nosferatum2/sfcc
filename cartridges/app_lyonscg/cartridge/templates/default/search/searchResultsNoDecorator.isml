@@ -75,6 +75,11 @@
                     <div class="row">
                         <div class="refinement-bar col-md-3">
                             <isinclude url="${pdict.refineurl}"/>
+                            <div class="filter-footer">
+                                <button class="close btn btn-block btn-outline-primary">
+                                    ${Resource.msg('button.search.apply', 'search', null)}
+                                </button>
+                            </div>
                         </div>
 
                         <div class="col-sm-12 col-md-9">

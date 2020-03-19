@@ -9,20 +9,33 @@
 
                 &::after {
                     float: right;
-                    content: "\f078";
+                    content: "\f068";
                     font-family: "FontAwesome";
+                }
+            }
+
+            .collapse,
+            .collapsed {
+                .title::after {
+                    content: "\f067";
                 }
             }
 
             .content,
             .card-body {
-                display: none;
+                //display: none;
             }
 
             &.active {
                 .title::after {
-                    content: "\f077";
+                    content: "\f068";
                     margin-top: -0.125em; /* 2/16 */
+                }
+
+                .collapsed {
+                    .title::after {
+                        content: "\f067";
+                    }
                 }
 
                 .content,

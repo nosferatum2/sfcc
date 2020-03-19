@@ -6,8 +6,19 @@
 @import "components/categoryTiles";
 @import "~productcompare/product/comparison";
 
+.fixed {
+    position: fixed;
+}
+
 .refinement-bar {
     overflow: auto;
+
+    &.show {
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+    }
 
     ul {
         padding-left: 0;
@@ -37,10 +48,37 @@
 .filter-header {
     margin-left: $grid-gutter-width / 2 * -1;
     margin-right: $grid-gutter-width / 2 * -1;
+
+    .pull-right {
+        &.close {
+            span {
+                display: none;
+            }
+
+            .fa-times-circle {
+                font-size: 2rem;
+            }
+        }
+    }
+}
+
+.filter-footer {
+    button.close {
+        border: 1px solid #1976d3;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0 3rem;
+
+        @include media-breakpoint-up(md) {
+            display: none;
+        }
+    }
 }
 
 .header-bar {
-    background-color: $gray-400;
+    background-color: $white;
     border-bottom: 0.063em solid $gray-400;
 
     button.close {
@@ -88,8 +126,16 @@
             button {
                 border: none;
                 cursor: pointer;
-                color: $blue;
+                color: $grey4;
                 background-color: transparent;
+
+                &:hover {
+                    color: $black;
+                }
+
+                .fa-check-circle {
+                    color: $black;
+                }
             }
         }
     }
@@ -103,12 +149,43 @@
             padding-left: 0;
 
             button {
-                padding: 0;
+                border: 1px solid $white;
+                border-radius: 1.5em;
+                color: $white;
+                padding: 1px;
+
+                &:hover {
+                    border-color: $black;
+                }
+
+                span {
+                    height: 2rem;
+                    width: 2rem;
+
+                    &.swatch-mark.color-value.selected {
+                        ::after {
+                            left: 0.26em;
+                            top: 0.27em;
+                        }
+                    }
+                }
             }
         }
 
         &.disabled {
             opacity: 0.5;
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                border-top: 2px solid $red;
+                width: 32px;
+                transform: rotate(45deg);
+                transform-origin: 0% 0%;
+                left: 8px;
+                top: 6px;
+            }
         }
     }
 
@@ -116,11 +193,49 @@
         padding: 0;
     }
 
+    .card-body {
+        padding: 0;
+
+        li {
+            margin-bottom: 0.5rem;
+
+            span {
+                &:not(.checkbox) {
+                    color: $grey4;
+
+                    &:hover {
+                        color: $black;
+                    }
+                }
+
+                &.selected {
+                    color: $black;
+                }
+            }
+        }
+    }
+
     .card-header h2 {
         font-family: inherit;
         font-size: inherit;
         font-weight: inherit;
         margin-bottom: 0;
+
+        &::after {
+            float: right;
+            font-family: "FontAwesome";
+            content: "\F068";
+        }
+    }
+
+    .card-header {
+        &.collapsed {
+            h2 {
+                &::after {
+                    content: "\F067";
+                }
+            }
+        }
     }
 }
 
@@ -135,6 +250,10 @@
 
         @include media-breakpoint-down(sm) {
             float: right;
+        }
+
+        &:hover {
+            color: $white;
         }
     }
 
@@ -214,6 +333,48 @@
 
         > ul > li {
             margin-left: 0;
+        }
+    }
+
+    &.refinement-color {
+        ul {
+            padding: 0.35rem;
+
+            &.moreRefinements {
+                li:first-of-type {
+                    padding-left: 0.35rem;
+                }
+
+                @include media-breakpoint-only(xl) {
+                    li:nth-of-type(7n) {
+                        padding-left: 0.35rem;
+                    }
+                }
+
+                @include media-breakpoint-only(lg) {
+                    li:nth-of-type(6n) {
+                        padding-left: 0.35rem;
+                    }
+                }
+
+                @include media-breakpoint-only(md) {
+                    li:nth-of-type(3n +4) {
+                        padding-left: 0.35rem;
+                    }
+                }
+            }
+        }
+
+        .viewMore {
+            margin-top: -1.5rem;
+        }
+    }
+
+    &.refinement-size {
+        li {
+            display: inline-block;
+            padding-right: 0;
+            width: 32%;
         }
     }
 }
@@ -353,6 +514,13 @@
 
     .nav-link:focus {
         background-color: $gray-500;
+    }
+}
+
+.swatch-mark.color-value.selected {
+    &::after {
+        left: 0.26em;
+        top: 0.27em;
     }
 }
 
