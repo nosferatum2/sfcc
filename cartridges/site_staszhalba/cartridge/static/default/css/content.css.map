@@ -1,0 +1,1 @@
+{"version":3,"file":"default/css/content.css","sources":["webpack:///./cartridges/org_staszhalba/cartridge/client/default/scss/content.scss"],"sourcesContent":[".content-page-image {\n    background-image: url(../../images/account.jpg);\n}\n"],"mappings":"AAAA;;","sourceRoot":""}
