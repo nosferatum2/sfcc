@@ -47,10 +47,6 @@
       "pre-commit": "npm run lint -- --lint-no-cache"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@bitbucket.org:lyonsconsultinggroup/reference-application-sfra.git"
-  },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
     "Davis DeVries <davis.devries@capgemini.com>",
@@ -62,7 +58,6 @@
     "Dave Haas <dave.haas@capgemini.com>",
     "Chris Connell <chris.connell@capgemini.com"
   ],
-  "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-sfra",
   "devDependencies": {
     "@babel/core": "^7.6.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
@@ -73,7 +68,7 @@
     "@wdio/selenium-standalone-service": "^5.13.2",
     "allure-commandline": "^2.13.0",
     "appium": "^1.15.0",
-    "archiver": "^3.1.1",
+    "archiver": "^4.0.2",
     "autoprefixer": "^9.6.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
@@ -133,7 +128,7 @@
     "request-promise-native": "^1.0.5",
     "sass-loader": "^7.3.1",
     "selenium-standalone": "^6.16.0",
-    "sfcc-ci": "bitbucket:lyonsconsultinggroup/sfcc-ci#master",
+    "sfcc-ci": "file:../sfcc-ci",
     "sgmf-scripts": "^2.3.0",
     "shelljs": "^0.8.3",
     "should": "^13.2.3",
@@ -175,7 +170,7 @@
       "cartridges": [
         {
           "alias": "site",
-          "name": "site_siteid"
+          "name": "app_igorgalchenko"
         },
         {
           "alias": "org",
