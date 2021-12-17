@@ -20,8 +20,15 @@ test/appium/webdriver/config.json
 test/acceptance/report
 test/integration/config.json
 
+.gitkeep
+.project
+.eslintrc.json
+
 # LRA Patterns
 cartridges/app_storefront_base/cartridge/static/**/fonts/
+cartridges/app_igorgalchenko/cartridge/static/**/css/
+cartridges/app_igorgalchenko/cartridge/static/**/js/
+cartridges/app_igorgalchenko/cartridge/static/**/fonts/
 cartridges/site_siteid/cartridge/static/**/css/
 cartridges/site_siteid/cartridge/static/**/js/
 cartridges/site_siteid/cartridge/static/**/fonts/
