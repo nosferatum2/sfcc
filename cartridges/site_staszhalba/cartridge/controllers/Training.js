@@ -1,3 +1,5 @@
+'use strict';
+
 var server = require('server');
 
 server.get('IsmlTags', function (req, res, next) {
@@ -8,7 +10,7 @@ server.get('IsmlTags', function (req, res, next) {
         objectToIterate: {
             name: 'John',
             surname: 'Doe',
-            phone: 1111111111
+            phone: '11111111'
         }
     };
 
@@ -23,7 +25,7 @@ server.get('Decorate', function (req, res, next) {
         objectToIterate: {
             name: 'John',
             surname: 'Doe',
-            phone: 1111111111
+            phone: '1111111111'
         }
     };
 
