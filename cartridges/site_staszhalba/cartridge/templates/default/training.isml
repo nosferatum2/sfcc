@@ -1,22 +1,16 @@
 <iscontent type="text/html" charset="UTF-8" compact="true"/>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>${Resource.msg('training.title','training',null)}</title>
-</head>
-<body>
-    <div class="container">
-        <h1>${Resource.msg('training.title', 'training', null)}</h1>
-        <isif condition="${pdict.booleanFlag}">
-            <h3>${Resource.msg('training.array', 'training', null)}</h3>
-            <isloop items="${pdict.arrayToIterate}" alias="item">
-                <div>${item}</div>
-            </isloop>
-        <iselse/>
-            <h3>${Resource.msg('training.object', 'training', null)}</h3>
-            <isloop items="${Object.keys(pdict.objectToIterate)}" alias="item">
-                <div>${item}: ${pdict.objectToIterate[item]}</div>
-            </isloop>
-        </isif>
-    </div>
-</body>
+
+<h1>${Resource.msg('training.title', 'training', null)}</h1>
+<isif condition="${pdict.booleanFlag}">
+    <h3>${Resource.msg('training.array', 'training', null)}</h3>
+    <h3>${Resource.msgf('training.count', 'training', null, pdict.arrayToIterate.length)}</h3>
+    <isloop items="${pdict.arrayToIterate}" alias="item">
+        <div class="col">${item}</div>
+    </isloop>
+<iselse/>
+    <h3>${Resource.msg('training.object', 'training', null)}</h3>
+    <h3>${Resource.msgf('training.count', 'training', null, Object.keys(pdict.objectToIterate).length)}</h3>
+    <isloop items="${Object.keys(pdict.objectToIterate)}" alias="item">
+        <div class="col">${item}: ${pdict.objectToIterate[item]}</div>
+    </isloop>
+</isif>

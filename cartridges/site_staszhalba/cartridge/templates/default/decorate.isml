@@ -1,0 +1,3 @@
+<isdecorate template="decorate-layout">
+    <isinclude template="training"/>
+</isdecorate>

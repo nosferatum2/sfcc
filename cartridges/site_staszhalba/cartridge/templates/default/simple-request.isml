@@ -1,0 +1,3 @@
+<isdecorate template="decorate-layout">
+    <h2>${Resource.msgf('training.query.myparam', 'training', null, pdict.queryMyParam)}</h2>
+</isdecorate>

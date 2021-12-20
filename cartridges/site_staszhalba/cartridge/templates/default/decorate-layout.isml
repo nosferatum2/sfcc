@@ -1,0 +1,12 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${Resource.msg('training.title','training',null)}</title>
+</head>
+<body>
+    <div class="container">
+        <isreplace/>
+    </div>
+</body>
+  
