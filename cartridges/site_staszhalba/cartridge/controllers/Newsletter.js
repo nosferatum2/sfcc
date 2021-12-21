@@ -4,7 +4,7 @@ var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
 
 server.get('Show', function (req, res, next) {
-    var actionUrl = URLUtils.url('Newsletter-Subscribe');
+    var actionUrl = URLUtils.url('Newsletter-SubscribeAjax');
     var newsletterForm = server.forms.getForm('newsletter');
     newsletterForm.clear();
 
@@ -20,20 +20,52 @@ server.get('Error', function (req, res, next) {
     next();
 });
 
-server.post('Subscribe', function (req, res, next) {
+/**
+ * Creates a list of address model for the logged in user
+ * @param {string} email - Email
+ * @param {string} firstName - First name
+ * @param {string} lastName - Last name
+ */
+function addNewsletterCustomObject(email, firstName, lastName) {
     var CustomObjectMrg = require('dw/object/CustomObjectMgr');
     var Transaction = require('dw/system/Transaction');
 
+    Transaction.wrap(function () {
+        var CustomObject = CustomObjectMrg.createCustomObject('NewsletterSubscriptionStasZhalba', email);
+        CustomObject.custom.firstName = firstName;
+        CustomObject.custom.lastName = lastName;
+    });
+}
+
+server.post('Subscribe', function (req, res, next) {
     try {
-        Transaction.wrap(function () {
-            var CustomObject = CustomObjectMrg.createCustomObject('NewsletterSubscriptionStasZhalba', req.form.email);
-            CustomObject.custom.firstName = req.form.firstName;
-            CustomObject.custom.lastName = req.form.lastName;
-            res.redirect(URLUtils.url('Home-Show'));
-        });
+        addNewsletterCustomObject(req.form.email, req.form.fistName, req.form.lastName);
+
+        res.redirect(URLUtils.url('Home-Show'));
     } catch (error) {
         res.redirect(URLUtils.url('Newsletter-Error'));
     }
+    next();
+});
+
+server.post('SubscribeAjax', function (req, res, next) {
+    var Resource = require('dw/web/Resource');
+
+    try {
+        addNewsletterCustomObject(req.form.email, req.form.fistName, req.form.lastName);
+
+        res.json({
+            success: true,
+            msg: Resource.msg('success.subscribed', 'newsletter', null)
+        });
+    } catch (error) {
+        res.setStatusCode(500);
+        res.json({
+            success: false,
+            msg: Resource.msg('error.something.went.wrong', 'newsletter', null)
+        });
+    }
+
     next();
 });
 
