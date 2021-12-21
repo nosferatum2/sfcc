@@ -1,0 +1,8 @@
+<isdecorate template="common/layout/trainingDecorator">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addCss('css/training.css');
+    </isscript>
+
+    <isinclude template="training" />
+</isdecorate>

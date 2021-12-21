@@ -1,0 +1,17 @@
+<div class="container top-bottom-indents">
+    <isif condition="${pdict.booleanFlag}">
+        <h3>${Resource.msg('training.array', 'training', null)}</h3>
+        <ul>
+            <isloop items="${pdict.arrayToIterate}" alias="item">
+                <li>${(item)}</li>
+            </isloop>
+        </ul>
+    <iselse/>
+        <h3>${Resource.msg('training.object', 'training', null)}</h3>
+        <ul>
+            <isloop items="${Object.keys(pdict.objectToIterate)}" alias="item">
+                <li>${item} - ${pdict.objectToIterate[item]}</li>
+            </isloop>
+        </ul>
+    </isif>
+</div>

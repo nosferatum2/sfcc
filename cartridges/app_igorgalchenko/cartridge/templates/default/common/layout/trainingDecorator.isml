@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <isinclude template="/common/htmlHead" />
+</head>
+
+<body>
+    <isinclude template="components/header/headerLogo" />
+
+    <isreplace/>
+</body>
+
+</html>
