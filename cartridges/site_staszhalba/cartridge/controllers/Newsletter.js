@@ -50,13 +50,23 @@ server.post('Subscribe', function (req, res, next) {
 
 server.post('SubscribeAjax', function (req, res, next) {
     var Resource = require('dw/web/Resource');
+    var formErrors = require('*/cartridge/scripts/formErrors');
+    var newsletterForm = server.forms.getForm('newsletter');
 
     try {
+        if (!newsletterForm.valid) {
+            res.json({
+                success: false,
+                fields: formErrors.getFormErrors(newsletterForm)
+            });
+        }
+
         addNewsletterCustomObject(req.form.email, req.form.fistName, req.form.lastName);
 
         res.json({
             success: true,
-            msg: Resource.msg('success.subscribed', 'newsletter', null)
+            msg: Resource.msg('success.subscribed', 'newsletter', null),
+            redirectUrl: URLUtils.url('Home-Show').toString()
         });
     } catch (error) {
         res.setStatusCode(500);

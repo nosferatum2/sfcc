@@ -142,7 +142,7 @@ $(document).ready(function () {
 /**
  * Display the returned message.
  * @param {string} data - data returned from the server's ajax call
- * @param {Object} button - button that was clicked for contact us sign-up
+ * @param {Object} button - button that was clicked for newsletter
  */
 
 function displayMessage(data, button) {
@@ -185,6 +185,10 @@ module.exports = {
 
           if (data.success) {
             $('.newsletter').trigger('reset');
+
+            if (data.redirectUrl) {
+              window.location.href = data.redirectUrl;
+            }
           }
         },
         error: function error(err) {

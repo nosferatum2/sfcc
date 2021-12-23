@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
-<field formid="firstname" label="First name" type="string" mandatory="true" max-length="50"/>
-<field formid="lastname" label="Last name" type="string" mandatory="true" max-length="50"/>
-<field formid="email" label="Email" type="string" mandatory="true" max-length="50"/>
+<field formid="firstName" label="label.newsletter.firstname" type="string" mandatory="true" max-length="50"
+       missing-error="newsletter.missing.firstname" range-error="error.message.lessthan50"/>
+<field formid="lastName" label="label.newsletter.lastname" type="string" mandatory="true" max-length="50"
+       missing-error="newsletter.missing.lastname" range-error="error.message.lessthan50"/>/>
+<field formid="email" label="label.newsletter.email" type="string" mandatory="true" max-length="50" 
+       regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" missing-error="newsletter.missing.email"
+       parse-error="error.message.parse.email.newsletter.form" range-error="error.message.lessthan50"/>
 </form>
