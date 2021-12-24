@@ -1,0 +1,84 @@
+<isdecorate template="common/layout/page">
+    <div class="container">
+        <div class="row mt-2">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <form action="${pdict.actionUrl}" class="newsletter-form" method="POST" <isprint
+                    value=${pdict.newsletterForm.attributes} encoding="off" />
+                >
+
+                <div class="form-group row mb-2 ${pdict.newsletterForm.firstName.mandatory === true ? 'required' : ''}">
+
+                    <label for="${pdict.newsletterForm.firstName.htmlName}" class="form-label">
+                        <isprint value="${pdict.newsletterForm.firstName.label}" encoding="htmlcontent" />
+                        ${pdict.newsletterForm.firstName.mandatory === true ? '*' : ''}
+                    </label>
+
+                    <input type="text" class="form-control" autocomplete="off"
+                        id="${pdict.newsletterForm.firstName.htmlName}"
+                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                        data-range-error="${Resource.msg('error.message.lessthan50', 'forms', null)}"
+                        aria-describedby="form-newsletter-fname-error" <isprint
+                        value=${pdict.newsletterForm.firstName.attributes} encoding="off" />/>
+
+                    <div class="invalid-feedback" id="form-newsletter-fname-error"></div>
+
+                </div>
+
+                <div class="form-group row mb-2 ${pdict.newsletterForm.lastName.mandatory === true ? 'required' : ''}">
+
+                    <label for="${pdict.newsletterForm.lastName.htmlName}" class="form-label">
+                        <isprint value="${pdict.newsletterForm.lastName.label}" encoding="htmlcontent" />
+                        ${pdict.newsletterForm.lastName.mandatory === true ? '*' : ''}
+                    </label>
+
+                    <input type="text" class="form-control" autocomplete="off"
+                        id="${pdict.newsletterForm.lastName.htmlName}"
+                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                        data-range-error="${Resource.msg('error.message.lessthan50', 'forms', null)}"
+                        aria-describedby="form-newsletter-lname-error" <isprint
+                        value=${pdict.newsletterForm.lastName.attributes} encoding="off" />/>
+
+                    <div class="invalid-feedback" id="form-newsletter-lname-error"></div>
+
+                </div>
+
+                <div class="form-group row mb-2 ${pdict.newsletterForm.email.mandatory === true ? 'required' : ''}">
+
+                    <label for="${pdict.newsletterForm.email.htmlName}" class="form-label">
+                        <isprint value="${pdict.newsletterForm.email.label}" encoding="htmlcontent" />
+                        ${pdict.newsletterForm.email.mandatory === true ? '*' : ''}
+                    </label>
+
+                    <input type="text" class="form-control" autocomplete="off"
+                        id="${pdict.newsletterForm.email.htmlName}"
+                        data-range-error="${Resource.msg('error.message.lessthan50', 'forms', null)}"
+                        data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                        data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form', 'forms', null)}"
+                        aria-describedby="form-newsletter-email-error" <isprint
+                        value=${pdict.newsletterForm.email.attributes} encoding="off" />/>
+
+                    <div class="invalid-feedback" id="form-newsletter-email-error"></div>
+
+                </div>
+
+                <div class="row justify-content-center mb-2">
+                    <button type="submit" class="btn btn-primary" <isprint
+                        value=${pdict.newsletterForm.subscribe.attributes} encoding="off" />>
+                    <isprint value="${Resource.msg(pdict.newsletterForm.subscribe.label, 'forms', null)}"
+                        encoding="htmlcontent" />
+                    </button>
+
+                </div>
+
+                <div class="row justify-content-left mb-2">
+                    <isprint value="${Resource.msg('training.requiredField', 'training', null)}"
+                        encoding="htmlcontent" />
+                </div>
+
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+</isdecorate>
