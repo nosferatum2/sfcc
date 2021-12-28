@@ -11,7 +11,8 @@ server.get('Show', function (req, res, next) {
 
     res.render('newsletter', {
         actionUrl: actionUrl,
-        newsletterForm: newsletterForm
+        newsletterForm: newsletterForm,
+        formCssClass: 'newsletter-form'
     });
 
     next();

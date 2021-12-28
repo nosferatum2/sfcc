@@ -1,9 +1,14 @@
 <isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addJs('/js/newsletter.js');
+    </isscript>
+
     <div class="container">
         <div class="row mt-2">
             <div class="col-4"></div>
             <div class="col-4">
-                <form action="${pdict.actionUrl}" class="newsletter-form" method="POST" <isprint
+                <form action="${pdict.actionUrl}" class="${pdict.formCssClass}" method="POST" <isprint
                     value=${pdict.newsletterForm.attributes} encoding="off" />
                 >
 
@@ -63,7 +68,7 @@
                 </div>
 
                 <div class="row justify-content-center mb-2">
-                    <button type="submit" class="btn btn-primary" <isprint
+                    <button type="submit" class="btn btn-primary newsletter-submit-btn" <isprint
                         value=${pdict.newsletterForm.subscribe.attributes} encoding="off" />>
                     <isprint value="${Resource.msg(pdict.newsletterForm.subscribe.label, 'forms', null)}"
                         encoding="htmlcontent" />
