@@ -1,0 +1,49 @@
+{
+    "step-types":
+    {
+      "script-module-step":
+      [
+        {
+          "@type-id":"custom.newsletterzhalba",
+          "@supports-parallel-execution":"true",
+          "@supports-site-context":"true",
+          "@supports-organization-context":"false",
+          "description":"This job queries all newsletter subscriptions for the last [Hours] hours, and sends a simple email to them",
+          "module":"org_staszhalba/cartridge/scripts/steps/newsletterSendEmail.js",
+          "function":"execute",
+          "transactional":"false",
+          "timeout-in-seconds":"900",
+          "parameters":
+          {
+            "parameter":
+            [
+              {
+                "@name":"Hours",
+                "@type":"double",
+                "@required":"true",
+                "description":"All newsletter subscriptions for last Hours"
+              }
+            ]
+          },
+          "status-codes": 
+          {
+                    "status": 
+            [
+                        {
+                            "@code": "ERROR",
+                            "description": "Used when the step failed with an error."
+                        },
+                        {
+                            "@code": "FINISHED",
+                "description": "Used when the step finished successfully."
+                        },
+                        {
+                            "@code": "FINISHED_WITH_WARNINGS",
+                "description": "Used when the step finished with warnings."
+                        }
+                    ]
+                }
+        }
+      ]
+    }
+  }
