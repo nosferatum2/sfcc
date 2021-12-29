@@ -39,7 +39,7 @@ function addNewsletterCustomObject(email, firstName, lastName) {
 
 server.post('Subscribe', function (req, res, next) {
     try {
-        addNewsletterCustomObject(req.form.email, req.form.fistName, req.form.lastName);
+        addNewsletterCustomObject(req.form.email, req.form.firstName, req.form.lastName);
 
         res.redirect(URLUtils.url('Home-Show'));
     } catch (error) {
@@ -61,7 +61,7 @@ server.post('SubscribeAjax', function (req, res, next) {
             });
         }
 
-        addNewsletterCustomObject(req.form.email, req.form.fistName, req.form.lastName);
+        addNewsletterCustomObject(req.form.email, req.form.firstName, req.form.lastName);
 
         res.json({
             success: true,
