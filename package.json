@@ -173,6 +173,10 @@
           "name": "app_igorgalchenko"
         },
         {
+          "alias": "org_site",
+          "name": "app_igorgalchenko"
+        },
+        {
           "alias": "org",
           "name": "org_organizationid"
         },

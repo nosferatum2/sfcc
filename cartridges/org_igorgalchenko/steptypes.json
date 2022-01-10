@@ -1,0 +1,41 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.IgorGalchenkoNewsletterSubscription",
+                "@supports-parallel-execution": "true",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "This job queries all newsletter subscriptions for last [input_param] hours, and sends a simple email to them.",
+                "module": "org_igorgalchenko/cartridge/scripts/steps/emailSender.js",
+                "function": "send",
+                "transactional": "false",
+                "timeout-in-seconds": "900",
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "Hours",
+                            "@type": "long",
+                            "@required": "true",
+                            "description": "Number of hours. Must be greater than 0",
+                            "default-value": "0",
+                            "min-value": "0"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished successfully."
+                        },
+                        {
+                            "@code": "WARNING",
+                            "description": "Step finished with warnings."
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
