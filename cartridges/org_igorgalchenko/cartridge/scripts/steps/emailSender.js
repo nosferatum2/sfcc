@@ -29,6 +29,7 @@ function send(args) {
             sendEmail.send();
 
             try {
+                // eslint-disable-next-line no-loop-func
                 txn.wrap(function () {
                     ns.custom.isEmailSent = true;
                 });
