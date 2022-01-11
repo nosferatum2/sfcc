@@ -41,6 +41,8 @@ function send(args) {
         }
     }
 
+    newsletterSubscriptions.close();
+
     return new system.Status(system.Status.OK);
 }
 
