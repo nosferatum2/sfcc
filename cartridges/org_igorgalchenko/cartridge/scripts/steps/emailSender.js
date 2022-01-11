@@ -36,6 +36,8 @@ function send(args) {
             } catch (err) {
                 var errorMessage = Resource.msgf('errorIsEmailSentFlag', 'jobs', null, ns.custom.email);
 
+                newsletterSubscriptions.close();
+
                 return new system.Status(system.Status.ERROR, 'ERROR', errorMessage);
             }
         }
