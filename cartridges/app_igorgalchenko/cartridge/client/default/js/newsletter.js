@@ -2,7 +2,6 @@
 
 var formValidation = require('base/components/formValidation');
 var emailSignupT = null;
-var redirectT = null;
 
 /**
  * Display message
@@ -33,20 +32,6 @@ function displayMessage(data, button) {
     }, 5000);
 }
 
-/**
- * Make a timeout for redirect
- * @param {string} url - redirect url
- * @param {number} duration - timeout duration
- * @returns {void}
- */
-function redirectWithTimeout(url, duration) {
-    clearTimeout(redirectT);
-
-    redirectT = setTimeout(function () {
-        window.location.href = url;
-    }, duration);
-}
-
 $('form.newsletter-form-ajax').submit(function (e) {
     e.preventDefault();
 
@@ -69,16 +54,12 @@ $('form.newsletter-form-ajax').submit(function (e) {
             }
 
             displayMessage(data, $submitBtn);
-            redirectWithTimeout(data.redirectUrl, 4000);
         },
         error: function (err) {
             $form.spinner().stop();
             if (err.responseJSON) {
                 if (err.responseJSON.message) {
                     displayMessage({ success: false, msg: err.responseJSON.message }, $submitBtn);
-                }
-                if (err.responseJSON.redirectUrl) {
-                    redirectWithTimeout(err.responseJSON.redirectUrl, 4000);
                 }
             }
             $form.spinner().stop();

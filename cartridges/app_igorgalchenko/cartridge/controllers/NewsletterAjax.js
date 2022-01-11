@@ -28,16 +28,13 @@ server.post('Subscribe', function (req, res, next) {
         var CO_TYPE = 'NewsletterSubscriptionIgorGalchenko';
 
         var newsletterForm = server.forms.getForm('newsletter');
-        var successUrl = URLUtils.url('Home-Show').toString();
-        var errorUrl = URLUtils.url('Error-Start').toString();
         var isSuccess = false;
-        var redirectUrl = errorUrl;
-        var fields = null;
-        var errorMsg;
+        var errorFields = null;
+        var msg;
 
         if (!newsletterForm.valid) {
-            fields = formErrors.getFormErrors(newsletterForm);
-            errorMsg = Resource.msg('newsletter.error.message.form.invalid', 'forms', null);
+            errorFields = formErrors.getFormErrors(newsletterForm);
+            msg = Resource.msg('newsletter.error.message.form.invalid', 'forms', null);
         } else {
             try {
                 txn.wrap(function () {
@@ -48,20 +45,17 @@ server.post('Subscribe', function (req, res, next) {
                 });
 
                 isSuccess = true;
-                redirectUrl = successUrl;
-                errorMsg = (Resource.msg('newsletter.error.message.form.submit.success', 'forms', null));
+                msg = (Resource.msg('newsletter.error.message.form.submit.success', 'forms', null));
             } catch (err) {
                 isSuccess = false;
-                redirectUrl = errorUrl;
-                errorMsg = (Resource.msg('error.message.custom.object.creation', 'training', null));
+                msg = (Resource.msg('error.message.custom.object.creation', 'training', null));
             }
         }
 
         res.json({
             success: isSuccess,
-            fields: fields,
-            redirectUrl: redirectUrl,
-            msg: errorMsg
+            fields: errorFields,
+            msg: msg
         });
     });
 
