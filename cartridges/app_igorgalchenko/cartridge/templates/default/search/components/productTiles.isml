@@ -1,0 +1,14 @@
+<isloop items="${pdict.productSearch.productIds}" var="product" status="status">
+    <div class="col-6 col-sm-4">
+        <isif condition="${(pdict.productSearch.pageSize * pdict.productSearch.pageNumber) + status.count === pdict.category.custom
+                         .igorGalchenkoSlotTileNumber}">
+            <isslot id="categoryStotIgorGalchenko" description="Category Stot" context="category"
+                context-object="${pdict.category}" />
+        <iselse/>
+            <isobject object="${product.productSearchHit}" view="searchhit">
+                <isinclude
+                    url="${URLUtils.url('Tile-Show', 'pid', product.productID, 'swatches', true, 'ratings', true)}" />
+            </isobject>
+        </isif>
+    </div>
+</isloop>
