@@ -47,10 +47,6 @@ module.exports = {
                     displayMessage(data, button);
                     if (data.success) {
                         $('.newsletter').trigger('reset');
-
-                        if (data.redirectUrl) {
-                            window.location.href = data.redirectUrl;
-                        }
                     }
                 },
                 error: function (err) {

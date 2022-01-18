@@ -185,10 +185,6 @@ module.exports = {
 
           if (data.success) {
             $('.newsletter').trigger('reset');
-
-            if (data.redirectUrl) {
-              window.location.href = data.redirectUrl;
-            }
           }
         },
         error: function error(err) {

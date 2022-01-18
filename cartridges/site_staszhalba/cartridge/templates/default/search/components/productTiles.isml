@@ -1,0 +1,16 @@
+<isloop items="${pdict.productSearch.productIds}" var="product" status="loopState">
+    
+    <div class="col-6 col-sm-4">
+        <isscript>
+            var totalProductSearch = (pdict.productSearch.pageSize * pdict.productSearch.pageNumber) + loopState.count;
+        </isscript>
+        <isif condition="${totalProductSearch === pdict.productSearch.category.slotTileOrder}">
+            <isslot id="staszhalba-category-slot" context="category" description="Stas Zhalba category slot" context-object="${pdict.category}"/>
+        <iselse/>
+            <isobject object="${product.productSearchHit}" view="searchhit">
+                <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.productID, 'swatches', true, 'ratings', true)}" />
+            </isobject>
+        </isif>
+    </div>
+</isloop>
+

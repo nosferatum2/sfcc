@@ -65,8 +65,7 @@ server.post('SubscribeAjax', function (req, res, next) {
 
         res.json({
             success: true,
-            msg: Resource.msg('success.subscribed', 'newsletter', null),
-            redirectUrl: URLUtils.url('Home-Show').toString()
+            msg: Resource.msg('success.subscribed', 'newsletter', null)
         });
     } catch (error) {
         res.setStatusCode(500);
