@@ -6,6 +6,18 @@ var dadJokeAPIService = LocalServiceRegistry.createService('MagicCartridge.Dad.S
         svc.addHeader('Accept', 'application/json');
         return params;
     },
+    /*
+    executeOverride: true,
+    execute: function (service, request) {
+        var httpClient = service.getClient();
+
+        httpClient.open(service.getRequestMethod(), service.getURL());
+        httpClient.setTimeout(service.getConfiguration().getProfile().getTimeoutMillis());
+        httpClient.send();
+
+        return httpClient;
+    },
+    */
     parseResponse: function (svc, httpClient) {
         var result;
 
