@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header clearfix">
+        <h2 class="pull-left profile-header">${Resource.msg('label.gitHub', 'account', null)}</h2>
+    </div>
+    <div class="card-body">
+        <isif condition="${!pdict.userGitHub.isUserGitHubSet}">
+            <div class="alert alert-danger" role="alert">${Resource.msg('error.gitHub.unable.set.fields', 'account', null)}</div>
+        </isif>
+        <dl>
+            <dt>${Resource.msg('label.gitHub.gitHubID', 'account', null)}</dt>
+            <dd>${pdict.userGitHub.gitHubID ? pdict.userGitHub.gitHubID : '-'}</dd>
+        </dl>
+        <dl>
+            <dt>${Resource.msg('label.gitHub.gitHubLogin', 'account', null)}</dt>
+            <dd>${pdict.userGitHub.gitHubLogin ? pdict.userGitHub.gitHubLogin : '-'}</dd>
+        </dl>
+    </div>
+</div>
