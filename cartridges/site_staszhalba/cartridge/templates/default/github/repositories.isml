@@ -1,0 +1,36 @@
+<isdecorate template="common/layout/page">
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/github.js');
+</isscript>
+
+<div class="container">
+    <div class="row my-2">
+        <div class="col-12">
+            <form method="get" id="github-repositories" action="${URLUtils.url('Github-Search')}">
+                <div class="row">
+                    <isloop items="${pdict.languages}" var="language">
+                        <div class="custom-control custom-radio my-auto mx-1">
+                            <input type="radio" id="radio-${language}" name="programmingLanguage" class="custom-control-input" value="${language}" required>
+                            <label class="custom-control-label" for="radio-${language}">${language}</label>
+                        </div>
+                    </isloop>
+                    <div class="col-2 my-auto">
+                        <button button type="submit" class="btn btn-primary">${Resource.msg('form.submit.label', 'githubRepositories', null)}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row col-12 font-weight-bold">
+            <div class="col-3">${Resource.msg('grid.name.label', 'githubRepositories', null)}</div>
+            <div class="col-3">${Resource.msg('grid.fullname.label', 'githubRepositories', null)}</div>
+            <div class="col-3">${Resource.msg('grid.description.label', 'githubRepositories', null)}</div>
+            <div class="col-3">${Resource.msg('grid.owner.label', 'githubRepositories', null)}</div>
+        </div>
+    <div class="row repository-grid">
+        
+        <div class="grid-footer"></div>
+    </div>
+</div>
+</isdecorate>

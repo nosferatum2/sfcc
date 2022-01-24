@@ -1,0 +1,25 @@
+<isloop items="${pdict.repositoriesSearch.repositories}" var="repository">
+    <div class="row col-12">
+        <div class="col-3"><a href="${repository.url}">${repository.name}</a></div>
+        <div class="col-3">${repository.fullName}</div>
+        <div class="col-3">${repository.description}</div>
+        <div class="col-3"><a href="${repository.owner.url}">${repository.owner.login}</a></div>
+    </div>
+</isloop>
+
+<div class="col-12 grid-footer"
+     data-page-size="${pdict.repositoriesSearch.pageSize}"
+     data-page-number="${pdict.repositoriesSearch.pageNumber}"
+>
+    <isif condition="${pdict.repositoriesSearch.showMoreUrl !== ''}">
+        <div class="show-more m-2">
+            <div class="text-center">
+                <button class="btn btn-outline-primary col-12 col-sm-4"
+                        data-url="${pdict.repositoriesSearch.showMoreUrl}"
+                >
+                    ${Resource.msg('button.more', 'search', null)}
+                </button>
+            </div>
+        </div>
+    </isif>
+</div>

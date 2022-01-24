@@ -36,3 +36,28 @@ exports.githubService = LocalServiceRegistry.createService('github-staszhalba-g1
         };
     }
 });
+
+exports.githubRepositoriesService = LocalServiceRegistry.createService('github-repositories-staszhalba-g1', {
+    createRequest: function (svc, params) {
+        svc.setRequestMethod('GET');
+        var urlQuery = '?q=language:' + params.lang;
+
+        urlQuery = urlQuery + '&page=' + params.page + '&per_page=' + params.perPage;
+        svc.setURL(svc.getURL() + urlQuery);
+    },
+    parseResponse: function (svc, response) {
+        return JSON.parse(response.getText()).items.map(function (el) {
+            return {
+                name: el.name,
+                fullName: el.full_name,
+                url: el.html_url,
+                description: el.description,
+                owner: {
+                    login: el.owner.login,
+                    url: el.owner.html_url
+                }
+            };
+        });
+    }
+});
+
