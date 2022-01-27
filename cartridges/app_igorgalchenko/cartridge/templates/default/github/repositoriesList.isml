@@ -1,0 +1,8 @@
+<isloop items="${pdict.repositories}" alias="repository">
+    <a href="${repository.html_url}" class="repository list-group-item list-group-item-action text-dark" target="_blank">
+        <div><span class="font-weight-bold">Id: </span>${repository.id}</div>
+        <div><span class="font-weight-bold">Name: </span>${repository.name}</div>
+        <div><span class="font-weight-bold">Description: </span>${repository.description}</div>
+        <div><span class="font-weight-bold">Language: </span>${repository.language}</div>
+    </a>
+</isloop>

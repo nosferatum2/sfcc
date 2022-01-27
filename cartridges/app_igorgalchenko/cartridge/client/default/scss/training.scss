@@ -6,3 +6,19 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.languages {
+    .custom-radio {
+        .custom-control-label {
+            cursor: pointer;
+        }
+    }
+
+    .repository {
+        overflow: auto;
+    }
+
+    .show-more {
+        display: none;
+    }
+}
