@@ -5,26 +5,31 @@ var server = require('server');
 
 server.extend(page);
 
-function isAddedToProgram() {
-    return 'addToProgram' in session.custom ? session.custom.addToProgram : false; 
+/**
+ * Checks if session has custom attribute 'addToProgram'(boolean) and return it's value or false
+ * @param {dw.system.Session} session - global session object
+ * @returns {boolean} value of attribute 'addToProgram'(boolean) or false
+ */
+function isAddedToProgram(session) {
+    return 'addToProgram' in session.custom ? session.custom.addToProgram : false;
 }
 
 server.append('Show', function (req, res, next) {
-    res.setViewData({isAddedToProgram: isAddedToProgram()});
-    
+    res.setViewData({ isAddedToProgram: isAddedToProgram(req.session.raw) });
+
     next();
 });
 
 server.append('MiniCartShow', function (req, res, next) {
-    res.setViewData({isAddedToProgram: isAddedToProgram()});
-    
+    res.setViewData({ isAddedToProgram: isAddedToProgram(req.session.raw) });
+
     next();
 });
 
 server.get('AddToProgram', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
 
-    session.custom.addToProgram = true;
+    req.session.raw.custom.addToProgram = true;
 
     res.redirect(URLUtils.url('Cart-Show'));
 
