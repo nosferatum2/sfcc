@@ -1,6 +1,6 @@
 <isinclude template="/components/modules" sf-toolkit="off" />
 
-<div class="minicart-total hide-link-med">
+<div class="minicart-total hide-link-med test-card">
     <a class="minicart-link" href="${URLUtils.https('Cart-Show')}" title="${Resource.msgf('minicart.count','common',null, pdict.quantityTotal)}" aria-label="${Resource.msgf('minicart.count','common',null, pdict.quantityTotal)}" aria-haspopup="true">
         <i class="minicart-icon fa fa-shopping-bag"></i>
         <span class="minicart-quantity">

@@ -1,0 +1,21 @@
+<isif condition="${!pdict.isCustomerAddedToProgram}">
+    <div class="mb-sm-3">
+        <form action="${URLUtils.https('Cart-AddToProgramAjax')}" class="add-to-program-form" method="POST" name="add-to-program-code">
+            <input type="hidden" name="${dw.web.CSRFProtection.getTokenName()}" value="${dw.web.CSRFProtection.generateToken()}"/>
+            <button type="submit" class="btn btn-primary btn-block">
+                ${Resource.msg('button.add.to.program', 'cart', null)}
+            </button>
+        </form>
+        <iscomment> <a href="${URLUtils.https('Cart-AddToProgramAjax')}"
+            class="btn btn-primary btn-block add-to-program-btn ${pdict.valid.error ? 'disabled' : ''}" role="button">
+            ${Resource.msg('button.add.to.program', 'cart', null)}
+        </a> </iscomment>
+    </div>
+</isif>
+
+<div class="mb-sm-3">
+    <a href="${URLUtils.https('Checkout-Login')}"
+        class="btn btn-primary btn-block checkout-btn ${pdict.valid.error ? 'disabled' : ''}" role="button">
+        ${Resource.msg('button.checkout', 'cart', null)}
+    </a>
+</div>
