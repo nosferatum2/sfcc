@@ -2,9 +2,9 @@
   "name": "lyonscg-sfra",
   "version": "4.4.1",
   "lcgversion": "1.4.0",
-  "description": "Capgemini maintained version of SFCC SFRA",
+  "description": "SFCC SFRA training Avoshchanikin",
   "engines": {
-    "node": "8.9.0"
+    "node": "11.5.0"
   },
   "scripts": {
     "test": "node build_tools/build --test ./test/unit/**/*.js",
@@ -49,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org:lyonsconsultinggroup/reference-application-sfra.git"
+    "url": "ssh://git@gitlab.speroteck.com/avoshchanikin/sfcc-avoshchanikin.git"
   },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "contributors": [
@@ -62,7 +62,7 @@
     "Dave Haas <dave.haas@capgemini.com>",
     "Chris Connell <chris.connell@capgemini.com"
   ],
-  "homepage": "https://bitbucket.org/lyonsconsultinggroup/reference-application-sfra",
+  "homepage": "",
   "devDependencies": {
     "@babel/core": "^7.6.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
@@ -133,7 +133,7 @@
     "request-promise-native": "^1.0.5",
     "sass-loader": "^7.3.1",
     "selenium-standalone": "^6.16.0",
-    "sfcc-ci": "bitbucket:lyonsconsultinggroup/sfcc-ci#master",
+    "sfcc-ci": "file:../sfcc-ci",
     "sgmf-scripts": "^2.3.0",
     "shelljs": "^0.8.3",
     "should": "^13.2.3",
