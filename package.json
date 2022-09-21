@@ -175,11 +175,11 @@
       "cartridges": [
         {
           "alias": "site",
-          "name": "site_siteid"
+          "name": "site_avoshchanikin"
         },
         {
           "alias": "org",
-          "name": "org_organizationid"
+          "name": "org_avoshchanikin"
         },
         {
           "alias": "lyonscg",
