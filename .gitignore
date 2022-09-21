@@ -25,6 +25,9 @@ cartridges/app_storefront_base/cartridge/static/**/fonts/
 cartridges/site_siteid/cartridge/static/**/css/
 cartridges/site_siteid/cartridge/static/**/js/
 cartridges/site_siteid/cartridge/static/**/fonts/
+cartridges/site_avoshchanikin/cartridge/static/**/css/
+cartridges/site_avoshchanikin/cartridge/static/**/js/
+cartridges/site_avoshchanikin/cartridge/static/**/fonts/
 lastbuild.properties
 .tern-project
 jsconfig.json
