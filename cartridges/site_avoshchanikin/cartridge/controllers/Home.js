@@ -30,20 +30,20 @@ server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     next();
 });
 
-server.replace('Show', cache.applyCustomCache, function (req, res, next) {
-    var viewData = res.getViewData();
-    var appendParam = 'This is from append';
-    var replaceParam = 'This is from replace';
-    var queryparam = req.querystring.param ? req.querystring.param : 'no parameter was passed(replace)';
-    // viewData = undefined, because we have replaced block of code higher(lines 13-31)
-    // other params triggered by this methos and work fine.
-    res.setViewData({
-        param1: viewData.param1 + ' AND ' + appendParam + ' AND ' + replaceParam + ' AND queryparam ' + queryparam,
-        param2: res.cachePeriod + ' ' + res.cachePeriodUnit
-    });
-    res.render('/home/homePage');
-    next();
-});
+// server.replace('Show', cache.applyCustomCache, function (req, res, next) {
+//     var viewData = res.getViewData();
+//     var appendParam = 'This is from append';
+//     var replaceParam = 'This is from replace';
+//     var queryparam = req.querystring.param ? req.querystring.param : 'no parameter was passed(replace)';
+//     // viewData = undefined, because we have replaced block of code higher(lines 13-31)
+//     // other params triggered by this methos and work fine.
+//     res.setViewData({
+//         param1: viewData.param1 + ' AND ' + appendParam + ' AND ' + replaceParam + ' AND queryparam ' + queryparam,
+//         param2: res.cachePeriod + ' ' + res.cachePeriodUnit
+//     });
+//     res.render('/home/homePage');
+//     next();
+// });
 
 
 module.exports = server.exports();
