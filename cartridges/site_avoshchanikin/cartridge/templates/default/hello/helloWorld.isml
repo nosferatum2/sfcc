@@ -1,0 +1,1 @@
+<p>${Resource.msg('hello.world','helloWorld',null)} ${pdict.param1}</p>
