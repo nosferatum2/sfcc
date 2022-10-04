@@ -4,12 +4,27 @@
         assets.addJs('/js/productTile.js');
         assets.addCss('/css/homePage.css');
     </isscript>
-    
-    <p>
-        <a href="${pdict.basketShowUrl}">Basket-Show</a>
-    </p>
-    <p>Use of prepend/append/replace using viewData: ${pdict.param1}</p>
-    <p>Custom Cache info: ${pdict.param2}</p>
+
+    <isif condition="${!pdict.numItems}">
+        <div>${Resource.msg('info.busket.empty', 'basket', null)}</div>
+    <iselse>
+        <isloop items="${pdict.items}" var="lineItem">
+            <isprint value = "${lineItem.productName}" /><br/>
+            <isinclude template="cart/productCard/cartProductCardHeader" />
+            <isinclude template="cart/productCard/cartProductCardProductPrice" />
+            <isinclude template="cart/productCard/cartProductCardAvailability" />
+            <iscomment> <p>${JSON.stringify(lineItem.options)}</p> </iscomment>
+
+            <isif condition="${!lineItem.options.empty}">
+                <isloop items="${lineItem.options}" var="lineItemOption">
+                    <isprint value = "${lineItemOption.displayName}" />
+                </isloop>                
+            </isif>
+            <br/>
+            <br/>
+        </isloop>
+    </isif>
+
     
     <!-- +1.888.555.0199 --><!--This phone is a requirement to support existing Gomez monitor of SiteGenesis. Demadware customers can remove this.-->
     <div class="home-main homepage">

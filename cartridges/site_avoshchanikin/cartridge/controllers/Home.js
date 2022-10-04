@@ -2,6 +2,7 @@
 
 var page = module.superModule;
 var server = require('server');
+var URLUtils = require('dw/web/URLUtils');
 
 server.extend(page);
 
@@ -19,13 +20,16 @@ server.prepend('Show', cache.applyDefaultCache, function (req, res, next) {
 
 server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     var viewData = res.getViewData();
+    var basketShowUrl = URLUtils.url('Basket-Show');
+
     // declare param1 as a variable that equals 'General company details.’
     var appendParam = 'This is from append';
     var queryparam = req.querystring.param ? req.querystring.param : 'no parameter was passed';
 
     // Here grab whatever prepend added to viewData + the message here + the optional query string param
     res.setViewData({
-        param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam
+        param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam,
+        basketShowUrl: basketShowUrl
     });
     next();
 });
