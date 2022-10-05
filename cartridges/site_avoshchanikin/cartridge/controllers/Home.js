@@ -20,7 +20,8 @@ server.prepend('Show', cache.applyDefaultCache, function (req, res, next) {
 
 server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     var viewData = res.getViewData();
-    var basketShowUrl = URLUtils.url('Basket-Show');
+    var basketShowUrl = URLUtils.url('Basket-Show').toString();
+    var NewsletterShowUrl = URLUtils.url('Newsletter-Show').toString();
 
     // declare param1 as a variable that equals 'General company details.’
     var appendParam = 'This is from append';
@@ -29,7 +30,8 @@ server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     // Here grab whatever prepend added to viewData + the message here + the optional query string param
     res.setViewData({
         param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam,
-        basketShowUrl: basketShowUrl
+        basketShowUrl: basketShowUrl,
+        NewsletterShowUrl: NewsletterShowUrl
     });
     next();
 });

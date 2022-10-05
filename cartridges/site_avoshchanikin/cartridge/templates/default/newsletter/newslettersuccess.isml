@@ -1,0 +1,7 @@
+<isdecorate template="common/layout/page">
+    <h3>
+        <iscomment> ${Resource.msgf('error.message.required','forms',null)} </iscomment>
+        ${pdict.newsletterForm.firstname.value} ${pdict.newsletterForm.lastname.value}, thank you for registering!
+    </h3>
+    Back to <a href="${pdict.continueUrl}">Newsletter Subscription</a>.
+</isdecorate>
