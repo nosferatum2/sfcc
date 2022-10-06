@@ -1,6 +1,7 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/newsletterSubscribe.js');
         assets.addCss('/css/login.css');
     </isscript>
 
@@ -9,8 +10,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="login-form-nav">
-                        <form action="${pdict.actionUrl}" method="POST" class="newsletter-form" <isprint
-                            value="${pdict.newsletterForm.attributes}" encoding="off" />>
+                        <form action="${pdict.actionUrl}" method="POST" class="newsletter-form" 
+                            <isprint value="${pdict.newsletterForm.attributes}" encoding="off" />>
                         <div class="form-group ${pdict.newsletterForm.firstname.mandatory === true ? 'required' : ''}">
                             <label class="form-control-label">
                                 <isprint value="${pdict.newsletterForm.firstname.label}" encoding="htmlcontent" />

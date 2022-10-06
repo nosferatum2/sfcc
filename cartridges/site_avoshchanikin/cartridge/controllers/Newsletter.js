@@ -1,14 +1,15 @@
 'use strict';
 
 var server = require('server');
-
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('Show',
     server.middleware.https,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var URLUtils = require('dw/web/URLUtils');
 
-        var actionUrl = URLUtils.url('Newsletter-Subscribe').toString();
+        var actionUrl = URLUtils.url('Newsletter-Handler').toString();
         var newsletterForm = server.forms.getForm('newsletter'); // creates empty JSON object using the form definition
         newsletterForm.clear();
 
@@ -19,16 +20,32 @@ server.get('Show',
         next();
     });
 
-server.post('Subscribe',
+server.get('Success',
     server.middleware.https,
+    csrfProtection.generateToken,
+    function (req, res, next) {
+        var URLUtils = require('dw/web/URLUtils');
+
+        var continueUrl = URLUtils.url('Newsletter-Show').toString();
+        var newsletterForm = server.forms.getForm('newsletter'); // creates empty JSON object using the form definition
+
+        res.render('/newsletter/newslettersuccess', {
+            continueUrl: continueUrl,
+            newsletterForm: newsletterForm
+        });
+        next();
+    });
+
+server.post('Handler',
+    server.middleware.https,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
 
         var continueUrl = URLUtils.url('Newsletter-Show').toString();
+        var successUrl = URLUtils.url('Newsletter-Success').toString();
         var newsletterForm = server.forms.getForm('newsletter');
-        var errorTemplate = '/newsletter/newslettererror';
-        var successTemplate = '/newsletter/newslettersuccess';
         var errorMsg;
 
         // newsletterForm.valid = false;
@@ -37,14 +54,15 @@ server.post('Subscribe',
             errorMsg = Resource.msg('error.message.something.goes.wrone', 'forms', null);
 
             res.setStatusCode(500);
-            res.render(errorTemplate, {
+            res.json({
+                error: true,
                 errorMsg: errorMsg,
                 continueUrl: continueUrl
             });
         } else {
-            res.render(successTemplate, {
-                newsletterForm: newsletterForm,
-                continueUrl: continueUrl
+            res.json({
+                success: true,
+                redirectUrl: successUrl
             });
         }
         next();
