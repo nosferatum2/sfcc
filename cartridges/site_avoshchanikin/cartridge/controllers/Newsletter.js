@@ -40,29 +40,22 @@ server.post('Handler',
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
-        var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
 
-        var continueUrl = URLUtils.url('Newsletter-Show').toString();
-        var successUrl = URLUtils.url('Newsletter-Success').toString();
         var newsletterForm = server.forms.getForm('newsletter');
-        var errorMsg;
 
         // newsletterForm.valid = false;
 
         if (!newsletterForm.valid) {
-            errorMsg = Resource.msg('error.message.something.goes.wrone', 'forms', null);
-
             res.setStatusCode(500);
             res.json({
                 error: true,
-                errorMsg: errorMsg,
-                continueUrl: continueUrl
+                redirectUrl: URLUtils.url('Error-Start').toString()
             });
         } else {
             res.json({
                 success: true,
-                redirectUrl: successUrl
+                redirectUrl: URLUtils.url('Newsletter-Success').toString()
             });
         }
         next();
