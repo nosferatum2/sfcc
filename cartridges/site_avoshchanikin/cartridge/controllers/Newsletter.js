@@ -41,22 +41,49 @@ server.post('Handler',
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var URLUtils = require('dw/web/URLUtils');
+        var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+        var Transaction = require('dw/system/Transaction');
+        var CUSTOM_OBJECT_NAME = 'NewsletterSubscriptionAVoshchanikin';
 
         var newsletterForm = server.forms.getForm('newsletter');
 
         // newsletterForm.valid = false;
+        if (newsletterForm.valid) {
+            try {
+                Transaction.wrap(function () {
+                    var co = CustomObjectMgr.createCustomObject(CUSTOM_OBJECT_NAME, newsletterForm.email.value);
+                    co.custom.firstName = newsletterForm.firstname.value;
+                    co.custom.lastName = newsletterForm.lastname.value;
 
-        if (!newsletterForm.valid) {
-            res.setStatusCode(500);
-            res.json({
-                error: true,
-                redirectUrl: URLUtils.url('Error-Start').toString()
-            });
+                    res.json({
+                        success: true,
+                        redirectUrl: URLUtils.url('Newsletter-Success').toString()
+                    });
+                });
+            } catch (e) {
+                // eslint-disable-next-line no-unused-vars
+                var err = e;
+                res.setStatusCode(500);
+                res.json({
+                    error: true,
+                    redirectUrl: URLUtils.url('Error-Start').toString()
+                });
+            }
         } else {
-            res.json({
-                success: true,
-                redirectUrl: URLUtils.url('Newsletter-Success').toString()
-            });
+            // keep existing code
+            // eslint-disable-next-line no-lonely-if
+            if (!newsletterForm.valid) {
+                res.setStatusCode(500);
+                res.json({
+                    error: true,
+                    redirectUrl: URLUtils.url('Error-Start').toString()
+                });
+            } else {
+                res.json({
+                    success: true,
+                    redirectUrl: URLUtils.url('Newsletter-Success').toString()
+                });
+            }
         }
         next();
     });
