@@ -45,6 +45,7 @@ server.post('Handler',
         var CustomObjectMgr = require('dw/object/CustomObjectMgr');
         var Transaction = require('dw/system/Transaction');
         var Logger = require('dw/system/Logger');
+        var HookMgr = require('dw/system/HookMgr');
         var CUSTOM_OBJECT_NAME = 'NewsletterSubscriptionAVoshchanikin';
 
         var newsletterForm = server.forms.getForm('newsletter');
@@ -65,6 +66,9 @@ server.post('Handler',
                     var co = CustomObjectMgr.createCustomObject(CUSTOM_OBJECT_NAME, newsletterForm.email.value);
                     co.custom.firstName = newsletterForm.firstname.value;
                     co.custom.lastName = newsletterForm.lastname.value;
+
+                    /* Send email info to subscriber*/
+                    HookMgr.callHook('newsletter.email', 'send', newsletterForm.email.value);
 
                     res.json({
                         success: true,
