@@ -7,6 +7,8 @@
     
     <p>
         <a href="${pdict.basketShowUrl}">Basket-Show</a>
+        <br />
+        <a href="${pdict.NewsletterShowUrl}">Newsletter-Show</a>
     </p>
     <p>Use of prepend/append/replace using viewData: ${pdict.param1}</p>
     <p>Custom Cache info: ${pdict.param2}</p>
