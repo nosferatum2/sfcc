@@ -75,8 +75,7 @@ server.post('Handler',
                         redirectUrl: URLUtils.url('Newsletter-Success').toString()
                     });
                 });
-            } catch (e) {
-                var err = e;
+            } catch (err) {
                 if (err.javaName === 'MetaDataException') {
                     /* Duplicate primary key on CO: send back message to client-side, but don't log error.
                     This is possible if the user tries to subscribe with the same email multiple times */
