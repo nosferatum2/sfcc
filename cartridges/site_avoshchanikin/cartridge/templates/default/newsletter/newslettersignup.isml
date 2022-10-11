@@ -52,6 +52,20 @@
                                 <isprint value="${pdict.newsletterForm.email.attributes}" encoding="off" />>
                             <div class="invalid-feedback"></div>
                         </div>
+                        <div class="form-group ${pdict.newsletterForm.emailconfirm.mandatory === true ? 'required' : ''}">
+                            <label class="form-control-label">
+                                <isprint value="${pdict.newsletterForm.emailconfirm.label}" encoding="htmlcontent" />
+                            </label>
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="newsletter-form-email"
+                                data-missing-error="${Resource.msg('error.message.required', 'forms', null)}"
+                                data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form', 'forms', null)}"
+                                data-range-error="${Resource.msg('error.message.50orless', 'forms', null)}" 
+                                <isprint value="${pdict.newsletterForm.emailconfirm.attributes}" encoding="off" />>
+                            <div class="invalid-feedback"></div>
+                        </div>
                         <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
                         <button type="submit"
                             class="btn btn-block btn-primary">${Resource.msg('button.form.emailsignup', 'homePage', null)}</button>
