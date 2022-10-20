@@ -1,0 +1,92 @@
+{
+  "step-types": {
+    "script-module-step": [
+      {
+        "@type-id": "custom.DeleteCustomObjectsAVoshchanikin",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "This script deletes all custom object for a given type. It runs in site scope.",
+        "module": "site_avoshchanikin/cartridge/scripts/steps/deleteCustomObjectsAVoshchanikin.js",
+        "function": "deleteCOs",
+        "transactional": "true",
+        "timeout-in-seconds": "900",
+        "parameters": {
+          "parameter": [
+            {
+              "@name": "CustomObjectType",
+              "@type": "string",
+              "@required": "true",
+              "description": "The Custom Object type to delete instances on this site."
+            }
+          ]
+        },
+        "status-codes": {
+          "status": [
+            {
+              "@code": "ERROR",
+              "description": "Used when the step failed with an error."
+            },
+            {
+              "@code": "FINISHED",
+              "description": "Used when the step finished successfully."
+            },
+            {
+              "@code": "FINISHED_WITH_WARNINGS",
+              "description": "Used when the step finished with warnings."
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.ExportCustomersAVoshchanikin",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "This script deletes all custom object for a given type. It runs in site scope.",
+        "module": "site_avoshchanikin/cartridge/scripts/steps/exportCustomersAVoshchanikin.js",
+        "function": "exportCustomers",
+        "transactional": "true",
+        "timeout-in-seconds": "900",
+        "parameters": {
+          "parameter": [
+            {
+              "@name": "startDate",
+              "@type": "date-string",
+              "@required": "true",
+              "description": "The Customer Object type to export instances on this site."
+            },
+            {
+              "@name": "endDate",
+              "@type": "date-string",
+              "@required": "true",
+              "description": "The Customer Object type to export instances on this site."
+            },
+            {
+              "@name": "email",
+              "@type": "string",
+              "@required": "true",
+              "description": "The Customer Object type to export instances on this site."
+            }
+          ]
+        },
+        "status-codes": {
+          "status": [
+            {
+              "@code": "ERROR",
+              "description": "Used when the step failed with an error."
+            },
+            {
+              "@code": "FINISHED",
+              "description": "Used when the step finished successfully."
+            },
+            {
+              "@code": "FINISHED_WITH_WARNINGS",
+              "description": "Used when the step finished with warnings."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
