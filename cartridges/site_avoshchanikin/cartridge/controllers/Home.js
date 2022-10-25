@@ -45,23 +45,31 @@ server.get('Users',
         var usersService = require('*/cartridge/scripts/service/usersservice.js');
         var data = {};
         var showMoreURL;
-        var showUsersFlag;
+        var enableUsersTab;
 
         showMoreURL = Site.current.getCustomPreferenceValue('UsersShowMoreUrlAVoshchanikin');
-        showUsersFlag = Site.current.getCustomPreferenceValue('EnableUsersTab');
+        enableUsersTab = Site.current.getCustomPreferenceValue('EnableUsersTab');
 
         var viewData = res.getViewData();
         viewData.paramName = 'page';
         viewData.pageNumber = 1;
         viewData.showMoreURL = showMoreURL;
-        viewData.showUsersFlag = showUsersFlag;
+        viewData.enableUsersTab = enableUsersTab;
         res.setViewData(viewData);
 
         var getUsersService = usersService.getUsersService(res.viewData);
 
-        data = JSON.parse(getUsersService.object);
-        res.render('home/users', data);
-        next();
+        if (getUsersService.ok) {
+            data = JSON.parse(getUsersService.object);
+
+            res.render('home/users', data);
+            next();
+        } else {
+            res.setStatusCode(500);
+            res.json({
+                error: true
+            });
+        }
     });
 
 // server.replace('Show', cache.applyCustomCache, function (req, res, next) {

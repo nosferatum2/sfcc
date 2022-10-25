@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('Hello from homeusers');
-
 // eslint-disable-next-line valid-jsdoc
 /**
  * Inputs data for rendering at the later time
@@ -37,19 +35,17 @@ $('#show_more').click(function (e) {
         type: 'GET',
         dataType: 'json',
         success: function (response) {
-            console.log('response.page ' + response.page);
             if (response.total_pages <= response.page) {
-                response.data.forEach(user => {
-                    $('#users').append(userTile(user));
-                });
-                console.log(response);
-                currentPage = $('#users').attr('data-page-number', nextPage);
-                $('#show_more').toggle();
+                $('#show_more').toggle().prop('disabled', true);
             }
+
+            response.data.forEach(user => {
+                $('#users').append(userTile(user));
+            });
+            currentPage = $('#users').attr('data-page-number', nextPage);
         },
-        error: function (status, error) {
-            console.log(status);
-            console.log(error);
+        error: function (error) {
+            window.location.href = error.responseJSON.message;
         }
     });
 });

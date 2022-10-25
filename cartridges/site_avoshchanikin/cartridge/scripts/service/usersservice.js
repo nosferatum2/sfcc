@@ -25,9 +25,6 @@ function getUsersService(args) {
      */
     function makeCall() {
         result = service.call();
-
-        // args.svcConfig = svcConfig;
-        // args.httpResult = result;
     }
 
     service = callGet;
