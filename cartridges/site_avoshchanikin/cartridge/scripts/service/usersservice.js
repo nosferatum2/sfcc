@@ -1,40 +1,38 @@
 
 var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
 
-// eslint-disable-next-line valid-jsdoc
 /**
  * UsersServiceAVoshchanikin
- * @param args Inputs data from controller
- * @returns {Object} UsersServiceAVoshchanikin Service
+ * @param {Object} data Inputs data from controller
+ * @returns {Object} UsersServiceAVoshchanikin Service Result
  */
-function getUsersService(args) {
-    var service;
+function getUsersService(data) {
     var result;
     var callGet = LocalServiceRegistry.createService('UsersServiceAVoshchanikin', {
-        // eslint-disable-next-line no-shadow, no-unused-vars
         createRequest: function (svc, args) {
             svc.setRequestMethod('GET');
+            svc.URL += 'users';
+            svc.addHeader('Content-Type', 'application/json')
+                .addParam(args.paramName, args.pageNumber);
+
+            return args;
         },
         parseResponse: function (svc, client) {
-            return client.text;
+            var parse = JSON.parse(client.text);
+            return parse;
         }
     });
 
     /**
      * Executes the request on the service configuration
+     * @param {Object} args Inputs data from controller
      */
-    function makeCall() {
-        result = service.call();
+    function makeCall(args) {
+        result = callGet.call(args);
     }
 
-    service = callGet;
-    service.URL += 'users';
-    service.addHeader('Content-Type', 'application/json')
-        .addParam(args.paramName, args.pageNumber);
-
-
     // Make the service call here
-    makeCall();
+    makeCall(data);
 
     return result;
 }

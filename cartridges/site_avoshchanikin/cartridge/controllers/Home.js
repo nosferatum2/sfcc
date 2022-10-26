@@ -57,10 +57,11 @@ server.get('Users',
         viewData.enableUsersTab = enableUsersTab;
         res.setViewData(viewData);
 
+        // Represents the result of a service call.
         var getUsersService = usersService.getUsersService(res.viewData);
 
         if (getUsersService.ok) {
-            data = JSON.parse(getUsersService.object);
+            data = getUsersService.object;
 
             res.render('home/users', data);
             next();
