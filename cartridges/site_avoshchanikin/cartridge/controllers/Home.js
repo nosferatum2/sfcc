@@ -20,6 +20,7 @@ server.prepend('Show', cache.applyDefaultCache, function (req, res, next) {
 
 server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     var viewData = res.getViewData();
+    var homeUsersUrl = URLUtils.url('Home-Users').toString();
     var basketShowUrl = URLUtils.url('Basket-Show').toString();
     var NewsletterShowUrl = URLUtils.url('Newsletter-Show').toString();
 
@@ -30,11 +31,47 @@ server.append('Show', cache.applyDefaultCache, function (req, res, next) {
     // Here grab whatever prepend added to viewData + the message here + the optional query string param
     res.setViewData({
         param1: viewData.param1 + ' AND ' + appendParam + ' AND querystring param = ' + queryparam,
+        homeUsersUrl: homeUsersUrl,
         basketShowUrl: basketShowUrl,
         NewsletterShowUrl: NewsletterShowUrl
     });
     next();
 });
+
+server.get('Users',
+    server.middleware.https,
+    function (req, res, next) {
+        var Site = require('dw/system/Site');
+        var usersService = require('*/cartridge/scripts/service/usersservice.js');
+        var data = {};
+        var showMoreURL;
+        var enableUsersTab;
+
+        showMoreURL = Site.current.getCustomPreferenceValue('UsersShowMoreUrlAVoshchanikin');
+        enableUsersTab = Site.current.getCustomPreferenceValue('EnableUsersTab');
+
+        var viewData = res.getViewData();
+        viewData.paramName = 'page';
+        viewData.pageNumber = 1;
+        viewData.showMoreURL = showMoreURL;
+        viewData.enableUsersTab = enableUsersTab;
+        res.setViewData(viewData);
+
+        // Represents the result of a service call.
+        var getUsersService = usersService.getUsersService(res.viewData);
+
+        if (getUsersService.ok) {
+            data = getUsersService.object;
+
+            res.render('home/users', data);
+            next();
+        } else {
+            res.setStatusCode(500);
+            res.json({
+                error: true
+            });
+        }
+    });
 
 // server.replace('Show', cache.applyCustomCache, function (req, res, next) {
 //     var viewData = res.getViewData();

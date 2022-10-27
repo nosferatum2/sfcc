@@ -1,0 +1,50 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/productTile.js');
+        assets.addJs('/js/homeUsers.js');
+        assets.addCss('/css/homePage.css');
+        assets.addCss('/css/home/homeUsers.css');
+    </isscript>
+    <div class="row">
+        <div class="enable-users-tab col" data-enable-users-tab="${pdict.enableUsersTab}">
+            <isif condition="${pdict.enableUsersTab}">
+                <div class="enable-users-tab-status bg-primary text-white">
+                    Enable users tab status:
+                    <isprint value="${pdict.enableUsersTab}" encoding="htmlcontent" />
+                </div>
+            <iselse/>
+                <div class="enable-users-tab-status bg-danger text-white">
+                    Enable users tab status:
+                    <isprint value="${pdict.enableUsersTab}" encoding="htmlcontent" />
+                </div>
+            </isif>
+        </div>
+    </div>
+    <div class="container">
+        <isif condition="${pdict.enableUsersTab}">
+            <div id="users" class="users row justify-content-center" data-users-get-url="${pdict.showMoreURL}"
+                data-page-number="${pdict.pageNumber}">
+                <isloop items="${pdict.data}" var="user">
+                    <div class="user col-3 border m-1">
+                        <div class="users-avatar">
+                            <img src="${user.avatar}" alt="${user.id}" />
+                        </div>
+                        <div class="first-name">
+                            <isprint value="${user.first_name}" encoding="off" />
+                        </div>
+                        <div class="last-name">
+                            <isprint value="${user.last_name}" encoding="off" />
+                        </div>
+                        <div class="email border-top">
+                            <isprint value="${user.email}" encoding="off" />
+                        </div>
+                    </div>
+                </isloop>
+            </div>
+            <div class="col text-center">
+                <button id="show_more" class="btn btn-primary">Show More</button>
+            </div>
+        </isif>
+    </div>
+</isdecorate>
