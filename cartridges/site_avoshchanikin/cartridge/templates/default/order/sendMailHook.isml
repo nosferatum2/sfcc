@@ -1,3 +1,37 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/styleGuide.js');
+    assets.addCss('/css/styleGuide.css');
+</isscript>
+
 <pre>
-${JSON.stringify(pdict.context.data)}
+${JSON.stringify(pdict.context, null, 2)}
 </pre>
+
+<img src="${pdict.products[0].img.url}" alt="${pdict.products[0].img.title}" />
+
+<div class="container">
+    <div class="row">
+        <div class="products">
+            <isloop items="${pdict.products}" var="product" status="loopstatus">
+                <div class="product col-3 border m-1">
+                    <div class="product-img">
+                        <img src="${product.url}" alt="${product.alt}">
+                    </div>
+                    <div class="product-id">
+                        <isprint value="${product.id}" encoding="off" />
+                    </div>
+                    <div class="product-name">
+                        <isprint value="${product.productName}" encoding="off" />
+                    </div>
+                    <div class="product-quantity">
+                        <isprint value="${product.quantity}" encoding="off" />
+                    </div>
+                    <div class="product-price">
+                        <isprint value="${product.price}" encoding="off" />
+                    </div>
+                </div>
+            </isloop>
+        </div>
+    </div>
+</div>
