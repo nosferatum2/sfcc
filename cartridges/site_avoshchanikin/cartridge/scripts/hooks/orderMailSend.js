@@ -7,16 +7,29 @@ var Site = require('dw/system/Site');
 var Status = require('dw/system/Status');
 var Logger = require('dw/system/Logger');
 
-function beforePatchSendMail(basket) {
+function beforePatchSendMail(order, orderInput) {
+    var Transaction = require('dw/system/Transaction');
+    var OrderMgr = require('dw/order/OrderMgr');
     var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
     var collections = require('*/cartridge/scripts/util/collections');
-
     var template = 'order/sendMailHook';
     var emailObj;
     var context = {};
 
+    // innitial default value for a custom attributes
+    try {
+        Transaction.wrap(function () {
+            var orderObject = OrderMgr.searchOrder('orderNo = {0}', order.orderNo);
+            orderObject.custom.AVoshchanikinStatus = orderInput.c_AVoshchanikinStatus || 0;
+            orderObject.custom.AVoshchanikinCancelReason = orderInput.c_AVoshchanikinCancelReason
+                || 'My custom cancel reason from vscode.';
+        });
+    } catch (error) {
+        Logger.getLogger('avoshchanikin_scope').error(JSON.stringify(error.message));
+    }
+
     var productItems = [];
-    collections.forEach(basket.productLineItems, function (productLineItem) {
+    collections.forEach(order.productLineItems, function (productLineItem) {
         var productFirstImage = productLineItem.getProduct().getImage('small');
         productItems.push({
             id: productLineItem.product.ID,
@@ -30,18 +43,16 @@ function beforePatchSendMail(basket) {
         });
     });
 
-    context.creationDate = basket.creationDate;
-    context.total = basket.getTotalGrossPrice().value;
-    context.totalShiping = basket.getShippingTotalPrice().value;
-    context.totalTax = basket.getTotalTax().value;
+    context.creationDate = order.creationDate;
+    context.total = order.getTotalGrossPrice().value;
+    context.totalShiping = order.getShippingTotalPrice().value;
+    context.totalTax = order.getTotalTax().value;
     context.totalProducts = productItems.length;
     context.productsData = productItems;
-
-
-    Logger.getLogger('avoshchanikin_scope').info(JSON.stringify(context));
+    context.oderNumber = order.orderNo;
 
     emailObj = {
-        to: basket.customerEmail,
+        to: order.customerEmail,
         subject: 'from avoshchanikin scope',
         from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com'
     };

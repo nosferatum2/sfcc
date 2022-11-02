@@ -7,6 +7,10 @@
         {
             "name": "dw.ocapi.shop.order.beforePATCH",
             "script": "./cartridge/scripts/hooks/orderMailSend.js"
+        },
+        {
+            "name": "dw.ocapi.shop.order.afterPATCH",
+            "script": "./cartridge/scripts/hooks/cancelOrder.js"
         }
     ]
 }
