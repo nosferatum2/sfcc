@@ -43,13 +43,13 @@ function beforePatchSendMail(order, orderInput) {
         });
     });
 
-    context.creationDate = order.creationDate;
+    context.oderNumber = order.orderNo;
+    context.creationDate = order.creationDate.toUTCString();
     context.total = order.getTotalGrossPrice().value;
     context.totalShiping = order.getShippingTotalPrice().value;
     context.totalTax = order.getTotalTax().value;
     context.totalProducts = productItems.length;
     context.productsData = productItems;
-    context.oderNumber = order.orderNo;
 
     emailObj = {
         to: order.customerEmail,

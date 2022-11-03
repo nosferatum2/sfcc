@@ -21,10 +21,10 @@ function cancelOrder(order, orderInput) {
                 }
 
                 var createCO = CustomObjectMgr.createCustomObject('AVoshchanikinRefunds', order.UUID);
-                createCO.custom.c_orderNo = order.currentOrderNo;
-                createCO.custom.c_totalRefund = order.getTotalGrossPrice().value;
-                createCO.custom.c_customerNumber = order.getCustomerNo();
-                createCO.custom.c_paymentToken = order.orderToken;
+                createCO.custom.orderNo = order.currentOrderNo;
+                createCO.custom.totalRefund = order.getTotalGrossPrice().value;
+                createCO.custom.customerNumber = order.getCustomerNo();
+                createCO.custom.paymentToken = order.orderToken;
 
                 var orderObject = OrderMgr.searchOrder('UUID = {0}', order.UUID);
                 orderObject.custom.AVoshchanikinStatus = orderInput.c_AVoshchanikinStatus || 1;
