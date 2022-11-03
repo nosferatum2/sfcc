@@ -38,17 +38,17 @@ function beforePatchSendMail(order, orderInput) {
             price: productLineItem.price.value,
             img: {
                 alt: productFirstImage.alt,
-                url: productFirstImage.getHttpsURL()
+                url: productFirstImage.getHttpsURL().toString()
             }
         });
     });
 
     context.oderNumber = order.orderNo;
     context.creationDate = order.creationDate.toUTCString();
+    context.subTotal = order.getMerchandizeTotalNetPrice().value;
     context.total = order.getTotalGrossPrice().value;
     context.totalShiping = order.getShippingTotalPrice().value;
     context.totalTax = order.getTotalTax().value;
-    context.totalProducts = productItems.length;
     context.productsData = productItems;
 
     emailObj = {
@@ -57,9 +57,7 @@ function beforePatchSendMail(order, orderInput) {
         from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com'
     };
 
-    emailHelpers.send(emailObj, template, {
-        context: context
-    });
+    emailHelpers.send(emailObj, template, context);
 
     return new Status(Status.OK);
 }
