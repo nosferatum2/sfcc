@@ -5,6 +5,7 @@
  * 'hi-res' product image type uses on PDP for zoom
  */
 var base = module.superModule;
+var decorators = require('*/cartridge/models/product/decorators/index');
 
 /**
  * Decorate product with full product information
@@ -16,10 +17,9 @@ var base = module.superModule;
  * @returns {Object} - Decorated product model
  */
 module.exports = function fullProduct(product, apiProduct, options) {
-    var impressionFieldObjectsDecorator = require('*/cartridge/models/product/decorators/impressionFieldObjects');
-
     base.call(this, product, apiProduct, options);
-    impressionFieldObjectsDecorator(product, apiProduct);
+
+    decorators.productFieldObjects(product, apiProduct);
 
     return product;
 };
