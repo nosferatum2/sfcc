@@ -10,7 +10,7 @@
  */
 function productFieldObjects(product, apiProduct) {
     var fieldObject = {};
-    // fieldObject.currencyCode = apiProduct.getPriceModel().price.currencyCode;
+    fieldObject.currencyCode = apiProduct.getPriceModel().price.currencyCode;
     fieldObject.name = product.productName;
     fieldObject.id = product.id;
     fieldObject.price = apiProduct.getPriceModel().price.value;
