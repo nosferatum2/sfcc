@@ -1,19 +1,33 @@
 /* eslint-disable require-jsdoc */
 'use strict';
 
-// function pushDataLayerInfo(data) {
-//     var dataLayer = [];
-//     dataLayer.push(data);
+window.dataLayer = window.dataLayer || [];
+function pushDataLayerInfo(data) {
+    window.dataLayer.push(data);
+}
 
-//     window.dataLayer = dataLayer;
-// }
+function getImpressions() {
+    var dataLayer = {};
+    var ecommerce = {};
+    var impressions = [];
 
-function impressions() {
-    var products = [];
-    $('.product-grid').find('.grid-tile, .product').each(function () {
-        products.push($(this).data('product'));
+    var productsData = $('.product-grid').find('.grid-tile, .product');
+    var currencyCode = $('#product-search-results').data('currency');
+
+    productsData.each(function (idx, element) {
+        var position = idx + 1;
+        var product = $(element).data('product');
+
+        product.position = position;
+
+        impressions.push(product);
     });
-    console.log(products);
+
+    ecommerce.currencyCode = currencyCode;
+    ecommerce.impressions = impressions;
+    dataLayer.ecommerce = ecommerce;
+
+    pushDataLayerInfo(dataLayer);
 }
 function click() {
     $('body').on('click', '#maincontent', function () {
@@ -32,7 +46,7 @@ function addToCart() {
 }
 
 module.exports = {
-    impressions: impressions,
+    getImpressions: getImpressions,
     click: click,
     detail: detail,
     addToCart: addToCart

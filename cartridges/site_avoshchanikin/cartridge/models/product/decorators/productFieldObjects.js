@@ -10,15 +10,11 @@
  */
 function productFieldObjects(product, apiProduct) {
     var fieldObject = {};
-    fieldObject.currencyCode = apiProduct.getPriceModel().price.currencyCode;
     fieldObject.name = product.productName;
     fieldObject.id = product.id;
     fieldObject.price = apiProduct.getPriceModel().price.value;
     fieldObject.brand = product.brand;
-    // fieldObject.category = apiProduct.getPrimaryCategory().displayName || null;
     fieldObject.variant = product.productType;
-
-    fieldObject.ecommerce = JSON.stringify(apiProduct.getPriceModel().price.currencyCode);
 
     return fieldObject;
 }
