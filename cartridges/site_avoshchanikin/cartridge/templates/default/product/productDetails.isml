@@ -11,7 +11,7 @@
     <isset name="isProductSet" value="${pdict.product.productType === 'set'}" scope="page" />
     <isobject object="${product.raw}" view="detail" />
         <div class="container product-detail product-wrapper"
-            data-pid="${product.id}" data-product="${JSON.stringify(product.ecommerce)}">
+            data-pid="${product.id}" data-currency="${pdict.currencyCode}" data-product="${JSON.stringify(product.ecommerce)}">
             <div class="row">
                 <div class="col-12">
                     <!---Breadcrumbs--->

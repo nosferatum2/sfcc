@@ -7,7 +7,11 @@
  */
 function pushDataLayerInfo(data) {
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.length = 0;
+
+    if (window.dataLayer.length) {
+        window.dataLayer.length = 0;
+    }
+
     window.dataLayer.push(data);
 }
 
@@ -70,9 +74,24 @@ function detail() {
         console.log('detail');
     });
 }
-function addToCart() {
-    $('#maincontent').on('click', function () {
-        console.log('addToCart');
+function getAddToCart() {
+    $('button.add-to-cart').on('click', function () {
+        var dataLayer = {};
+        var ecommerce = {};
+        var products = [];
+        var event = 'addToCart';
+        var currencyCode = $('.product-detail').data('currency');
+        var productsData = $('.product-detail').data('product');
+
+        products.push(productsData);
+
+        ecommerce.add = { products };
+        ecommerce.currencyCode = currencyCode;
+
+        dataLayer.event = event;
+        dataLayer.ecommerce = ecommerce;
+
+        pushDataLayerInfo(dataLayer);
     });
 }
 
@@ -81,5 +100,5 @@ module.exports = {
     getShowMore: getShowMore,
     click: click,
     detail: detail,
-    addToCart: addToCart
+    getAddToCart: getAddToCart
 };
