@@ -16,6 +16,7 @@ $(document).ready(function () {
     processInclude(require('base/components/countrySelector'));
     processInclude(require('lyonscg/components/carousels'));
     processInclude(require('lyonscg/components/tooltips'));
+    processInclude(require('./product/base'));
     processInclude(require('./googleAnalitics/googleAnalitics'));
 });
 

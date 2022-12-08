@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                         <iselse/>
-                            <div class="card uuid-${lineItem.UUID}" data-product="${JSON.stringify(lineItem.productName)}">
+                            <div class="card uuid-${lineItem.UUID}" data-currency="${pdict.currencyCode}" data-product="${JSON.stringify(lineItem.ecommerce)}">
                                 <div class="card-body">
                                     <isif condition="${lineItem.noProduct === true}">
                                         <isinclude template="checkout/productCard/uncategorizedProductCard" />

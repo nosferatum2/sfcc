@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 'use strict';
 
 /**
@@ -16,7 +15,7 @@ function pushDataLayerInfo(data) {
 }
 
 /**
- * Generates the data model for a Google Analitics.
+ * Generates the PLP data model.
  */
 function getDataLayer() {
     var dataLayer = {};
@@ -42,7 +41,8 @@ function getDataLayer() {
     pushDataLayerInfo(dataLayer);
 }
 /**
- * Assumes details about the products displayed on a page.
+ * Assumes details about the products displayed on a page
+ * are known at the time the page loads.
  */
 function getImpressions() {
     var productsData = $('.product-grid').find('.grid-tile, .product');
@@ -53,7 +53,7 @@ function getImpressions() {
 }
 
 /**
- * Shows more products displayed on a page.
+ * Assumes details about Show more products displayed on a page.
  */
 function getShowMore() {
     var button = $('.show-more button');
@@ -64,26 +64,43 @@ function getShowMore() {
         });
     });
 }
-function click() {
-    $('body').on('click', '#maincontent', function () {
-        console.log('click');
-    });
+/**
+ * Assumes the detail view occurs on pageload,
+ * and also tracks a standard pageview of the details page.
+ */
+function getProductDetail() {
+    var dataLayer = {};
+    var ecommerce = {};
+    var products = [];
+    var productsData = $('.product-detail').data('product');
+    var actionField = { list: window.pageContext.title };
+
+    if (productsData) {
+        products.push(productsData);
+        ecommerce.detail = { actionField, products };
+        dataLayer.ecommerce = ecommerce;
+
+        pushDataLayerInfo(dataLayer);
+    }
 }
-function detail() {
-    $('#maincontent').on('click', function () {
-        console.log('detail');
-    });
-}
-function getAddToCart() {
-    $('button.add-to-cart').on('click', function () {
-        var dataLayer = {};
-        var ecommerce = {};
-        var products = [];
+/**
+ * Measure additions from a shopping cart using an Add To Cart
+ * @param {Object} response - response from Ajax call
+ * @param {Object} response.product - Product object
+ * @param {Object} response.product.ecommerce - productFieldObjects
+ */
+function getAddToCart(response) {
+    var dataLayer = {};
+    var ecommerce = {};
+    var products = [];
+
+    if (response) {
+        products.push(response.product.ecommerce);
+    }
+
+    $(document).on('click', 'button.add-to-cart, button.add-to-cart-global', function () {
         var event = 'addToCart';
         var currencyCode = $('.product-detail').data('currency');
-        var productsData = $('.product-detail').data('product');
-
-        products.push(productsData);
 
         ecommerce.add = { products };
         ecommerce.currencyCode = currencyCode;
@@ -94,11 +111,41 @@ function getAddToCart() {
         pushDataLayerInfo(dataLayer);
     });
 }
+/**
+ * Measure the removal of a product from a shopping cart.
+ */
+function getRemoveFromCart() {
+    var dataLayer = {};
+    var ecommerce = {};
+    var products = [];
+    var event = 'removeFromCart';
+    var currencyCode = $('.card').data('currency');
+
+    $(document).on('click', 'button.remove-product', function (e) {
+        var product = $(e.target).closest('.card').data('product');
+
+        if (products.length) {
+            products.length = 0;
+        }
+        products.push(product);
+
+        $('button.cart-delete-confirmation-btn').on('click', function () {
+            ecommerce.remove = { products };
+            ecommerce.currencyCode = currencyCode;
+
+            dataLayer.event = event;
+            dataLayer.ecommerce = ecommerce;
+
+            pushDataLayerInfo(dataLayer);
+        });
+    });
+}
+
+$(window).on('load', getProductDetail);
 
 module.exports = {
     getImpressions: getImpressions,
     getShowMore: getShowMore,
-    click: click,
-    detail: detail,
-    getAddToCart: getAddToCart
+    getAddToCart: getAddToCart,
+    getRemoveFromCart: getRemoveFromCart
 };

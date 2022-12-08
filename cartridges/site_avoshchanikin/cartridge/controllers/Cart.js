@@ -15,7 +15,7 @@ server.append('Show', function (req, res, next) {
     next();
 });
 
-server.append('ShowQuickView', function (req, res, next) {
+server.append('MiniCartShow', function (req, res, next) {
     var viewData = res.getViewData();
 
     viewData.currencyCode = req.locale.currency.currencyCode;
@@ -23,4 +23,5 @@ server.append('ShowQuickView', function (req, res, next) {
     res.setViewData(viewData);
     next();
 });
+
 module.exports = server.exports();
