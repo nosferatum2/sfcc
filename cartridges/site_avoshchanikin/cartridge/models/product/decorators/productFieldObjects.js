@@ -1,28 +1,31 @@
-/* eslint-disable valid-jsdoc */
 'use strict';
 
-// dataLayer here
 
 /**
  * Creates an object of the visible attributes for a product
- * @param {dw.catalog.Product} _____ - ____ for a given product.
+ * @param {dw.catalog.Product} apiProduct - Product information returned by the script API
+ * @param {Object} options - Options passed in from the factory
  * @return {Object} an object containing the visible attribute 'ecommerce' for a product.
  */
-function productFieldObjects(product, apiProduct) {
+function productFieldObjects(apiProduct, options) {
     var fieldObject = {};
-    fieldObject.name = product.productName;
-    fieldObject.id = product.id;
+    fieldObject.name = apiProduct.name;
+    fieldObject.id = apiProduct.ID;
     fieldObject.price = apiProduct.getPriceModel().price.value;
-    fieldObject.brand = product.brand;
-    fieldObject.variant = product.productType;
+    fieldObject.brand = apiProduct.getBrand();
+    fieldObject.category = apiProduct.getPrimaryCategory() ? apiProduct.getPrimaryCategory().displayName : apiProduct.getMasterProduct().getPrimaryCategory().displayName;
+
+    if (options) {
+        fieldObject.variant = options.productType || null;
+    }
 
     return fieldObject;
 }
 
-module.exports = function (product, apiProduct) {
+module.exports = function (product, apiProduct, options) {
     Object.defineProperty(product, 'ecommerce', {
         enumerable: true,
-        value: productFieldObjects(product, apiProduct)
+        value: productFieldObjects(apiProduct, options)
     });
 };
 

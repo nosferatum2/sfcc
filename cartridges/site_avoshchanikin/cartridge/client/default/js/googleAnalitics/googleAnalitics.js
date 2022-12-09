@@ -1,4 +1,8 @@
 'use strict';
+/**
+* Enhanced Ecommerce for Tag Manager
+* https://developers.google.com/analytics/devguides/collection/ua/gtm/enhanced-ecommerce#details
+**/
 
 /**
  * Send product to a Google Analitics to track product impressions and product purchases.
