@@ -1,0 +1,20 @@
+<isloop items="${pdict.productSearch.productIds}" var="product" status="loopState">
+
+
+    <isif condition="${loopState.count == pdict.productSearch.category.custom.avoshchanikinTilePos}">
+        <div class="col-6 col-sm-4">
+            <div class="card-body">
+                <isslot id="avoshchanikin-tile" context="category" description="avoshchanikin tile"
+                    context-object="${pdict.productSearch.category}" />
+            </div>
+        </div>
+    </isif>
+
+    <div class="col-6 col-sm-4">
+        <isobject object="${product.productSearchHit}" view="searchhit">
+            <isinclude
+                url="${URLUtils.url('Tile-Show', 'pid', product.productID, 'swatches', true, 'ratings', true)}" />
+        </isobject>
+    </div>
+
+</isloop>
